@@ -14,6 +14,10 @@ a:hover {
     color: #000;
 }
 
+article {
+    text-align: justify;
+}
+
 /* We have a single navigation element, in a different colour, that links back
    to the home page. The rest have the normal link styling. */
 
