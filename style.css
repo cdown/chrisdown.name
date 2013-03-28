@@ -40,3 +40,8 @@ nav li.home a {
 nav li a:hover {
     color: inherit;
 }
+
+footer {
+    border-top: 2px solid #eee;
+    margin-top: 2em;
+}
