@@ -5,6 +5,14 @@ html, body {
     margin: 2em auto 0;
 }
 
+a {
+    color: #a00;
+}
+
+a:hover {
+    color: #000;
+}
+
 /* We have a single navigation element, in a different colour, that links back
    to the home page. The rest have the normal link styling. */
 
@@ -26,4 +34,8 @@ nav li.home a {
                        override it to not have any left margin (whereas the
                        other links in the nav area do. ) */
     color: #a00;
+}
+
+nav li a:hover {
+    color: inherit;
 }
