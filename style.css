@@ -17,31 +17,51 @@ a:hover {
 /* We have a single navigation element, in a different colour, that links back
    to the home page. The rest have the normal link styling. */
 
-nav {
+header nav {
     margin-bottom: 2em;
 }
 
-nav li {
+header nav li {
     display: inline-block;
 }
 
-nav li a {
+header nav li a {
     margin-left: 1em;
     color: #aaa;
 }
 
-nav li.home a {
+header nav li.home a {
     margin-left: 0; /* Since this navigation element is always the leftmost, we
                        override it to not have any left margin (whereas the
                        other links in the nav area do. ) */
     color: #a00;
 }
 
-nav li a:hover {
+header nav li a:hover {
     color: inherit;
 }
 
 footer {
     border-top: 2px solid #eee;
     margin-top: 2em;
+}
+
+footer div.contact {
+    float: left;
+}
+
+footer div.sites {
+    float: right;
+}
+
+footer div.sites nav {
+    text-align: right;
+}
+
+footer div.sites nav li {
+    list-style: none;
+}
+
+footer nav, footer div p {
+    margin: 1em 0 0;
 }
