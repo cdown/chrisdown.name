@@ -71,3 +71,9 @@ footer div.sites nav li {
 footer nav, footer div p {
     margin: 1em 0 0;
 }
+
+pre {
+    overflow: auto;
+    background-color: #eee;
+    padding: 0.6em;
+}
