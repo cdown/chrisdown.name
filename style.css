@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+html, body {
+    max-width: 700px;
+    margin: 2em auto 0;
+}
+
+/* We have a single navigation element, in a different colour, that links back
+   to the home page. The rest have the normal link styling. */
+
+nav {
+    margin-bottom: 2em;
+}
+
+nav li {
+    display: inline-block;
+}
+
+nav li a {
+    margin-left: 1em;
+    color: #aaa;
+}
+
+nav li.home a {
+    margin-left: 0; /* Since this navigation element is always the leftmost, we
+                       override it to not have any left margin (whereas the
+                       other links in the nav area do. ) */
+    color: #a00;
+}
