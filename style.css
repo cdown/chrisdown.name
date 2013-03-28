@@ -25,23 +25,28 @@ header {
     margin-bottom: 2em;
 }
 
-header nav li {
+header nav ul {
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li {
     display: inline-block;
 }
 
-header nav li a {
+header nav ul li a {
     margin-left: 1em;
     color: #aaa;
 }
 
-header nav li.home a {
+header nav ul li.home a {
     margin-left: 0; /* Since this navigation element is always the leftmost, we
                        override it to not have any left margin (whereas the
                        other links in the nav area do. ) */
     color: #a00;
 }
 
-header nav li a:hover {
+header nav ul li a:hover {
     color: inherit;
 }
 
