@@ -1,8 +1,11 @@
 @charset "UTF-8";
 
+@import url(http://fonts.googleapis.com/css?family=Cousine|Open+Sans:400italic,400);
+
 html, body {
     max-width: 700px;
     margin: 2em auto 0;
+    font-family: "Open Sans", sans-serif;
 }
 
 a {
@@ -78,7 +81,9 @@ footer nav, footer div p {
 }
 
 pre {
+    font-family: "Cousine", monospace;
     overflow: auto;
     background-color: #eee;
     padding: 0.6em;
+    font-size: 0.9em;
 }
