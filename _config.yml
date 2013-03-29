@@ -1,0 +1,17 @@
+personal:
+    name: Chris Down
+    job: Sysadmin
+    employer: Initiatives of Change
+    email: chris@chrisdown.name
+
+
+header:
+    links: {
+        git: "http://git.chrisdown.name/cgit/",
+    }
+
+footer:
+    links: {
+        GitHub: "https://github.com/cdown/",
+        "Stack Exchange": "http://stackexchange.com/users/912213/chris-down?tab=accounts"
+    }

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>{{ page.title }}</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <ul>
+                <li class="home"><a href="/">{{ site.personal.name }}</a></li>
+                {% for link in site.header.links %}
+                    <li class="extra"><a href="{{ link[1] }}">{{ link[0] }}</a></li>
+                {% endfor %}
+                </ul>
+            </nav>
+        </header>
+
+        <article>
+        {{ content }}
+        </article>
+
+        <footer>
+            <div class="contact">
+                <p>
+                    {{ site.personal.name }}<br>
+                    {{ site.personal.job }} at {{ site.personal.employer }}<br>
+                    {{ site.personal.email }}
+                </p>
+            </div>
+            <div class="sites">
+                <nav>
+                    <ul>
+                        {% for link in site.footer.links %}
+                            <li><a href="{{ link[1] }}">{{ link[0] }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+        </footer>
+    </body>
+</html>

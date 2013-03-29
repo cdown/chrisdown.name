@@ -1,0 +1,16 @@
+---
+layout: post
+title: On the Noppoo Choc Mini
+---
+
+About a month ago I really started to try to put some effort into improving my comfort when coding for extended periods. For the last two years I have been mixing and matching keyboards all of the time as I move between home and work (much to my own discomfort), and I figured it's time I actually standardised my input devices to improve my comfort and efficiency.
+
+I am slowly moving towards an ascetic lifestyle, and as such I am trying to minimise the number of unneeded items that I am consuming (or not consuming, but like many others have kept around for no real reason). My ultimate goal is to fit all personal items which are non-permanent fixtures into a camping bag come the end of May. Obviously as well a minimising the amount of items, this also brings to mind another consideration &mdash; the actual size of them.
+
+I have been trying the Noppoo Choc Mini with Cherry MX Brown switches for a while now (kindly loaned to me for potential purchase by a friend), and after some initial discomfort, I like it a lot. A lot of the issues that plagued me with my former array of keyboards are solved by design. The brown switches have a nice feel, perhaps a little heavy for my liking when I'm programming for extended periods, but certainly an appreciably better quality than most keyboards I've used before. A common problem I have experienced with membrane keyboards is that when typing fast the different actuation forces required can result in keys being pressed in the wrong order. This may not be such a problem if you are not a fast typist (130+ WPM), but it is definitely something that I have to consider.
+
+One thing that really annoyed me at first is that if you are using the UK layout with this keyboard, the pipe character is nigh-on inaccessible. You can get a broken pipe on the tilde key (and on some operating systems, a "normal" pipe by pressing Mod1-Shift-Tilde), but these are both really out of the way and are completely unusable, especially when using a POSIX-like shell. My solution was to learn the US ANSI layout, which doesn't differ much from the UK layout. My biggest learning curve has been the remapping of the double quote, but after a week or so this isn't a problem any more.
+
+I don't know if it is a manufacturing issue or a problem with the specific model that I got, but when pressing the spacebar on the left-hand-side, I get a squeak from hitting and scraping down the "C" key. This was rectified somewhat by pulling the key and adjusting the stabiliser, but it still remains to some degree. The same effect doesn't happen when pressing it on the right side, although maybe this is because I hit closer to the switch itself when I do that.
+
+Overall, it's not a bad keyboard, and it's nice to type on for extended periods, but I wouldn't shell out more than £50 (even writing this article I remember another thing &mdash; the downside of switching to US ANSI &mdash; no GBP key!) on it, it's just not that much of an upgrade, and whilst the keypresses themselves are comfortable, the joints in my hand feel like absolute crap after a whole day using the thing (probably because it's not ergonomically designed).
