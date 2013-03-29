@@ -5,6 +5,7 @@ personal:
     email: chris@chrisdown.name
 
 name: *name
+url: "http://chrisdown.name"
 
 header:
     links: {
