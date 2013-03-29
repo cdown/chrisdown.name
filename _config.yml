@@ -1,25 +1,25 @@
-personal:
-    name: &name Chris Down
-    job: Sysadmin
-    employers: {
-        "Initiatives of Change":"http://iofc.org",
-        "BetOnMarkets":"https://betonmarkets.com",
-    }
-    email: chris@chrisdown.name
-
-name: *name
+name: &name Chris Down
 url: "http://chrisdown.name"
 
+personal:
+    name: *name
+    job: Sysadmin
+    employers:
+        - name: "Initiatives of Change"
+          url: "http://iofc.org"
+        - name: "BetOnMarkets"
+          url: "https://betonmarkets.com"
+    email: chris@chrisdown.name
+
 header:
-    links: {
-        git: "http://git.chrisdown.name/cgit/",
-    }
+    links: []
 
 footer:
-    links: {
-        GitHub: "https://github.com/cdown/",
-        "Stack Exchange": "http://stackexchange.com/users/912213/chris-down?tab=accounts"
-    }
+    links:
+        - name: GitHub
+          url: "https://github.com/cdown/"
+        - name: Stack Exchange
+          url: "http://stackexchange.com/users/912213/chris-down?tab=accounts"
 
 projects:
     - name: yturl

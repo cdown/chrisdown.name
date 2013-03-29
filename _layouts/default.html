@@ -13,7 +13,7 @@
                 <ul>
                 <li class="home"><a href="/">{{ site.name }}</a></li>
                 {% for link in site.header.links %}
-                    <li class="extra"><a href="{{ link[1] }}">{{ link[0] }}</a></li>
+                    <li class="extra"><a href="{{ link.url }}">{{ link.name }}</a></li>
                 {% endfor %}
                 </ul>
             </nav>
@@ -28,13 +28,13 @@
                 <p>
                     {{ site.personal.name }}<br>
                     {{ site.personal.job }} at
-                    {% for link in site.personal.employers %}
+                    {% for employer in site.personal.employers %}
                         {% if forloop.first %}
-                            <a href="{{ link[1] }}">{{ link[0] }}</a>
+                            <a class="contextless" href="{{ employer.url }}">{{ employer.name }}</a>
                         {% elsif forloop.last %}
-                            and <a href="{{ link[1] }}">{{ link[0] }}</a>
+                            and <a class="contextless" href="{{ employer.url }}">{{ employer.name }}</a>
                         {% else %}
-                            , <a href="{{ link[1] }}">{{ link[0] }}</a>
+                            , <a class="contextless" href="{{ employer.url }}">{{ employer.name }}</a>
                         {% endif %}
                     {% endfor %}
                     <br>
@@ -45,7 +45,7 @@
                 <nav>
                     <ul>
                         {% for link in site.footer.links %}
-                            <li><a href="{{ link[1] }}">{{ link[0] }}</a></li>
+                            <li><a class="contextless" href="{{ link.url }}">{{ link.name }}</a></li>
                         {% endfor %}
                     </ul>
                 </nav>
