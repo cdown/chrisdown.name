@@ -27,7 +27,6 @@ article {
 
 header {
     padding-bottom: 1em;
-    border-bottom: 2px solid #eee;
 }
 
 header nav ul {
@@ -46,12 +45,12 @@ header nav ul li a {
 header nav ul li.extra a {
     padding: 0 0.2em;
     margin-left: 0.8em;
-    color: #666;
+    color: #000;
 }
 
 header nav ul li.extra a:hover {
     color: #fff;
-    background-color: #666;
+    background-color: #444;
 }
 
 header nav ul li.home a {
