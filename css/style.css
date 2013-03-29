@@ -14,6 +14,10 @@ a {
     font-style: italic;
 }
 
+a.contextless {
+    font-style: normal;
+}
+
 a:hover {
     color: #FFF;
     background-color: #CC333F;
