@@ -1,9 +1,10 @@
 personal:
-    name: Chris Down
+    name: &name Chris Down
     job: Sysadmin
     employer: Initiatives of Change
     email: chris@chrisdown.name
 
+name: *name
 
 header:
     links: {
