@@ -74,6 +74,8 @@ header nav ul li.home a {
 footer {
     border-top: 2px solid #eee;
     margin-top: 2em;
+    margin-bottom: 2em;
+    overflow: hidden;
     font-size: 0.8em;
     line-height: 1.4;
 }
