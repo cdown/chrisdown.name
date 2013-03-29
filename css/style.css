@@ -103,11 +103,13 @@ footer nav, footer div p {
 }
 
 pre {
-    font-family: "Cousine", monospace;
     overflow: auto;
     background-color: #eee;
     padding: 0.6em;
-    font-size: 0.9em;
+}
+
+pre, code {
+    font-family: "Cousine", monospace;
 }
 
 h1, h2 {
