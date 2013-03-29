@@ -96,3 +96,11 @@ pre {
     padding: 0.6em;
     font-size: 0.9em;
 }
+
+h1, h2 {
+    font-size: 1em;
+}
+
+h2 {
+    border-bottom: 1px solid #eee;
+}
