@@ -43,6 +43,17 @@ header nav ul li a {
     text-decoration: none;
 }
 
+header nav ul li.home a {
+    color: #FFF;
+    background-color: #CC333F;
+}
+
+header nav ul li.home a:hover {
+    color: #CC333F;
+    background-color: rgba(204, 51, 63, 0.1);
+}
+
+
 header nav ul li.extra a {
     padding: 0 0.4em;
     margin-left: 0.6em;
@@ -59,7 +70,6 @@ header nav ul li.home a {
                        override it to not have any left margin (whereas the
                        other links in the nav area do. ) */
     padding: 0 0.4em;
-    margin-left: -0.4em;
     font-weight: bold;
 }
 
