@@ -1,14 +1,21 @@
 name: &name Chris Down
 url: "http://chrisdown.name"
 
+links:
+    iofc: &iofc-url "http://iofc.org"
+    bom: &bom-url "https://betonmarkets.com"
+    github: &github-url "https://github.com/cdown"
+    stackexchange: &stackexchange-url "http://stackexchange.com/users/912213/chris-down?tab=accounts"
+    internal-git: &internal-git "http://git.chrisdown.name"
+
 personal:
     name: *name
     job: Sysadmin
     employers:
         - name: "Initiatives of Change"
-          url: "http://iofc.org"
+          url: *iofc-url
         - name: "BetOnMarkets"
-          url: "https://betonmarkets.com"
+          url: *bom-url
     email: chris@chrisdown.name
 
 header:
@@ -17,9 +24,9 @@ header:
 footer:
     links:
         - name: GitHub
-          url: "https://github.com/cdown/"
+          url: *github-url
         - name: Stack Exchange
-          url: "http://stackexchange.com/users/912213/chris-down?tab=accounts"
+          url: *stackexchange-url
 
 projects:
     - name: yturl
