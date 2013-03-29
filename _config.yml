@@ -23,8 +23,8 @@ footer:
 
 projects:
     - name: yturl
-      url: "http://git.chrisdown.name/cgit/yturl"
+      url: "http://git.chrisdown.name/cgit/yturl/"
       description: Gets direct URLs to YouTube media
     - name: clarity
-      url: "http://git.illco.de/cgit/clarity"
+      url: "http://git.illco.de/cgit/clarity/"
       description: A digital signage system for minimalists
