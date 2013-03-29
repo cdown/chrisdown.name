@@ -1,7 +1,10 @@
 personal:
     name: &name Chris Down
     job: Sysadmin
-    employer: Initiatives of Change
+    employers: {
+        "Initiatives of Change":"http://iofc.org",
+        "BetOnMarkets":"https://betonmarkets.com",
+    }
     email: chris@chrisdown.name
 
 name: *name

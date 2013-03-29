@@ -27,7 +27,17 @@
             <div class="contact">
                 <p>
                     {{ site.personal.name }}<br>
-                    {{ site.personal.job }} at {{ site.personal.employer }}<br>
+                    {{ site.personal.job }} at
+                    {% for link in site.personal.employers %}
+                        {% if forloop.first %}
+                            <a href="{{ link[1] }}">{{ link[0] }}</a></li>
+                        {% elsif forloop.last %}
+                            and <a href="{{ link[1] }}">{{ link[0] }}</a></li>
+                        {% else %}
+                            , <a href="{{ link[1] }}">{{ link[0] }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    <br>
                     {{ site.personal.email }}
                 </p>
             </div>
