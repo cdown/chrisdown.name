@@ -12,6 +12,7 @@ a {
     color: #CC333F;
     text-decoration: none;
     font-style: italic;
+    transition: all 40ms ease-in;
 }
 
 a.contextless {
