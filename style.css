@@ -10,12 +10,12 @@ html, body {
 
 a {
     color: #CC333F;
+    text-decoration: none;
 }
 
 a:hover {
     color: #FFF;
     background-color: #CC333F;
-    text-decoration: none;
 }
 
 article {
@@ -37,10 +37,6 @@ header nav ul {
 
 header nav ul li {
     display: inline-block;
-}
-
-header nav ul li a {
-    text-decoration: none;
 }
 
 header nav ul li.home a {
