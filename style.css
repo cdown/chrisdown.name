@@ -46,12 +46,12 @@ header nav ul li a {
 header nav ul li.extra a {
     padding: 0 0.2em;
     margin-left: 0.8em;
-    color: #000;
+    color: #222;
 }
 
 header nav ul li.extra a:hover {
     color: #fff;
-    background-color: #444;
+    background-color: #222;
 }
 
 header nav ul li.home a {
