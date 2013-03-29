@@ -44,8 +44,8 @@ header nav ul li a {
 }
 
 header nav ul li.extra a {
-    padding: 0 0.2em;
-    margin-left: 0.8em;
+    padding: 0 0.4em;
+    margin-left: 0.6em;
     color: #222;
 }
 
@@ -58,8 +58,8 @@ header nav ul li.home a {
     margin-left: 0; /* Since this navigation element is always the leftmost, we
                        override it to not have any left margin (whereas the
                        other links in the nav area do. ) */
-    padding: 0 0.2em;
-    margin-left: -0.2em;
+    padding: 0 0.4em;
+    margin-left: -0.4em;
     font-weight: bold;
 }
 
