@@ -8,8 +8,6 @@ links:
     stackexchange: &stackexchange-url "http://stackexchange.com/users/912213/chris-down?tab=accounts"
     internal-git: &internal-git "http://git.chrisdown.name"
 
-email:
-    obfuscated:
 personal:
     name: *name
     job: Sysadmin
