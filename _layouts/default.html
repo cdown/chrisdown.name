@@ -31,11 +31,11 @@
                     {{ site.personal.job }} at
                     {% for employer in site.personal.employers %}
                         {% if forloop.first %}
-                            <a class="contextless" href="{{ employer.url }}">{{ employer.name }}</a>
+                            <a href="{{ employer.url }}">{{ employer.name }}</a>
                         {% elsif forloop.last %}
-                            and <a class="contextless" href="{{ employer.url }}">{{ employer.name }}</a>
+                            and <a href="{{ employer.url }}">{{ employer.name }}</a>
                         {% else %}
-                            , <a class="contextless" href="{{ employer.url }}">{{ employer.name }}</a>
+                            , <a href="{{ employer.url }}">{{ employer.name }}</a>
                         {% endif %}
                     {% endfor %}
                     <br>
@@ -46,7 +46,7 @@
                 <nav>
                     <ul>
                         {% for link in site.footer.links %}
-                            <li><a class="contextless" href="{{ link.url }}">{{ link.name }}</a></li>
+                            <li><a href="{{ link.url }}">{{ link.name }}</a></li>
                         {% endfor %}
                     </ul>
                 </nav>

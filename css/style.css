@@ -12,12 +12,7 @@ html, body {
 a {
     color: #CC333F;
     text-decoration: none;
-    font-style: italic;
     transition: all 40ms ease-in;
-}
-
-a.contextless {
-    font-style: normal;
 }
 
 a:hover {
@@ -49,6 +44,7 @@ header nav ul li {
 header nav ul li.home a {
     color: #FFF;
     background-color: #CC333F;
+    font-style: italic;
 }
 
 header nav ul li.home a:hover {
