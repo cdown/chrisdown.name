@@ -32,9 +32,11 @@ footer:
 
 projects:
     - name: yturl
-      url: "http://git.chrisdown.name/cgit/yturl/"
+      url: "http://github.com/cdown/yturl/"
       description: Gets direct URLs to YouTube media
     - name: clarity
       url: "http://git.illco.de/cgit/clarity/"
-      description: A digital signage system for minimalists
-
+      description: Digital signage for minimalists
+    - name: wifilogin
+      url: "http://github.com/cdown/wifilogin/"
+      description: Bypass captive portal login

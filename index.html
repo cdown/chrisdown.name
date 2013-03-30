@@ -3,6 +3,7 @@ layout: default
 title: Chris Down
 ---
 
+{% if site.posts.size != 0 %}
 <h1>Blog posts</h1>
 <ul>
     {% for post in site.posts %}
@@ -11,7 +12,8 @@ title: Chris Down
 </ul>
 
 <h1>Open source projects</h1>
-<p>I write simple, minimalist applications, mostly to fulfil my own needs. I try to adhere to Dieter Rams' <em><a href="https://www.vitsoe.com/gb/about/good-design">ten principles of good design</a></em> wherever possible. Here are some of my more major projects:</p>
+{% endif %}
+<p>I write simple, minimalist applications, mostly to fulfil my own needs. I try to adhere to Dieter Rams' <em><a href="https://www.vitsoe.com/gb/about/good-design">ten principles of good design</a></em> wherever possible. Here is a small sample of my projects:</p>
 
 <ul>
     {% for project in site.projects %}
@@ -19,6 +21,6 @@ title: Chris Down
     {% endfor %}
 </ul>
 
-<p>This website is also open-source under the MIT license. The source is available <a href="https://github.com/cdown/cdown.github.com/">here</a>.</p>
+<p>You can find the rest of my repositories on my <a href="{{ site.links.github }}">GitHub</a>, which is also <a href="{{ site.links.internal-git }}">mirrored locally</a>.</p>
 
-<p>You can find more of my repositories on my <a href="{{ site.links.github }}">GitHub</a>, which is also <a href="{{ site.links.internal-git }}">mirrored locally</a>.</p>
+<p>This website is also open-source under the MIT license. The source is available <a href="https://github.com/cdown/cdown.github.com/">here</a>.</p>
