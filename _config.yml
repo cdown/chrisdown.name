@@ -8,6 +8,8 @@ links:
     stackexchange: &stackexchange-url "http://stackexchange.com/users/912213/chris-down?tab=accounts"
     internal-git: &internal-git "http://git.chrisdown.name"
 
+email:
+    obfuscated:
 personal:
     name: *name
     job: Sysadmin
@@ -16,7 +18,9 @@ personal:
           url: *iofc-url
         - name: "BetOnMarkets"
           url: *bom-url
-    email: chris@chrisdown.name
+    email:
+        scrim: chrisdown
+        account: chris
 
 header:
     links: []
@@ -35,3 +39,4 @@ projects:
     - name: clarity
       url: "http://git.illco.de/cgit/clarity/"
       description: A digital signage system for minimalists
+
