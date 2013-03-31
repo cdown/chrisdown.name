@@ -1,3 +1,5 @@
+auto: true
+
 name: &name Chris Down
 url: "http://chrisdown.name"
 
