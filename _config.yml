@@ -8,7 +8,6 @@ links:
     bom: &bom-url "https://betonmarkets.com"
     github: &github-url "https://github.com/cdown"
     stackexchange: &stackexchange-url "http://stackexchange.com/users/912213/chris-down?tab=accounts"
-    internal-git: &internal-git "http://git.chrisdown.name"
 
 personal:
     name: *name
