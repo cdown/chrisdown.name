@@ -116,6 +116,10 @@ pre, code {
     font-family: "Cousine", monospace;
 }
 
+code {
+    white-space: nowrap;
+}
+
 h1, h2 {
     font-size: 1em;
 }
