@@ -20,10 +20,6 @@ a:hover {
     background-color: #CC333F;
 }
 
-article p {
-    text-align: justify;
-}
-
 /* We have a single navigation element, in a different colour, that links back
    to the home page. The rest have the normal link styling. */
 
