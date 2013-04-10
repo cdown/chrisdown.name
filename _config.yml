@@ -37,7 +37,7 @@ projects:
       url: "http://github.com/cdown/yturl/"
       description: Gets direct URLs to YouTube media
     - name: clarity
-      url: "http://git.illco.de/clarity/"
+      url: "http://github.com/illcode/clarity/"
       description: Digital signage for minimalists
     - name: wifilogin
       url: "http://github.com/cdown/wifilogin/"
