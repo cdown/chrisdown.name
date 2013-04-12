@@ -4,7 +4,7 @@
 
 html, body {
     max-width: 700px;
-    margin: 0.7em auto;
+    margin: 1em auto;
     padding: 0 0.7em;
     font-family: "Open Sans", sans-serif;
 }
@@ -25,7 +25,7 @@ a:hover {
    to the home page. The rest have the normal link styling. */
 
 header {
-    margin-bottom: 1.3em;
+    margin-bottom: 1.5em;
     font-size: 1.2em;
 }
 
