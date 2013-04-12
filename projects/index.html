@@ -1,0 +1,23 @@
+---
+layout: default
+title: Projects
+---
+
+<table>
+<thead>
+     <tr>
+         <th></th>
+         <th>Description</th>
+         <th>Build status</th>
+     </tr>
+</thead>
+<tbody>
+{% for project in site.projects %}
+<tr>
+    <th><a href="https://github.com{{ project.path }}">{{ project.name }}</a></th>
+    <td>{{ project.description }}</td>
+    <td class="travis"><a href="https://travis-ci.org{{ project.path }}"><img src="https://travis-ci.org{{ project.path }}.png?branch=master"></img></a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
