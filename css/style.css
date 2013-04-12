@@ -13,6 +13,7 @@ a {
     color: #CC333F;
     text-decoration: none;
     transition: all 40ms ease-in;
+    border-radius: 2px;
 }
 
 a:hover {
@@ -121,6 +122,17 @@ footer div.sites nav li {
 footer nav, footer div p {
     margin: 1em 0 0;
 }
+
+article p {
+    text-align: justify;
+}
+
+@media screen and (max-width: 600px) {
+    article p {
+        text-align: left;
+    }
+}
+
 
 pre {
     overflow: auto;
