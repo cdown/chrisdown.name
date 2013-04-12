@@ -22,7 +22,9 @@ personal:
         account: chris
 
 header:
-    links: []
+    links:
+        - name: projects
+          url: /projects
 
 footer:
     links:
@@ -32,12 +34,15 @@ footer:
           url: *stackexchange-url
 
 projects:
-    - name: yturl
-      url: "http://github.com/cdown/yturl/"
-      description: Gets direct URLs to YouTube media
     - name: clarity
-      url: "http://github.com/illcode/clarity/"
+      path: "/illcode/clarity"
       description: Digital signage for minimalists
+    - name: pyaur
+      path: "/cdown/pyaur"
+      description: Python 3 (and 2) Arch User Repository interface
     - name: wifilogin
-      url: "http://github.com/cdown/wifilogin/"
+      path: "/cdown/wifilogin"
       description: Bypass captive portal login
+    - name: yturl
+      path: "/cdown/yturl"
+      description: Gets direct URLs to YouTube media

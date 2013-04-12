@@ -155,3 +155,41 @@ h1, h2 {
 h2 {
     border-bottom: 1px solid #eee;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    font-weight: inherit;
+}
+
+th, td {
+    padding: 0.3em;
+}
+
+thead th {
+    background-color: #f8f8f8;
+}
+
+tbody th {
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color:#f8f8f8;
+}
+
+td.travis {
+    text-align: center;
+}
+
+td.travis a img {
+    vertical-align: middle;
+    margin-top: -5px;
+}
+
+td.travis a:hover {
+    background-color: transparent;
+}
