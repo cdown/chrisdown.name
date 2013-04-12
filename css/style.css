@@ -24,8 +24,16 @@ a:hover {
    to the home page. The rest have the normal link styling. */
 
 header {
-    margin-bottom: 2em;
+    margin-bottom: 1em;
     font-size: 1.2em;
+}
+
+header:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
 }
 
 header nav ul {
@@ -37,31 +45,55 @@ header nav ul li {
     display: inline-block;
 }
 
-header nav ul li.home a {
+header nav ul.home {
+    float: left;
+}
+
+header nav ul.extra {
+    float: right;
+}
+
+header nav ul.home li a {
     color: #FFF;
     background-color: #CC333F;
     font-style: italic;
 }
 
-header nav ul li.home a:hover {
+header nav ul.home li a:hover {
     color: #CC333F;
     background-color: rgba(204, 51, 63, 0.1);
 }
 
 
-header nav ul li.extra a {
+header nav ul.extra li:last-child {
+    border-right: none;
+}
+
+header nav ul.extra li:last-child a {
+    margin-right: 0;
+    padding-right: 0;
+}
+
+header nav ul.extra li {
+    border-right: 1px solid #ccc;
+}
+
+header nav ul.extra li a {
     padding: 0 0.4em;
-    margin-left: 0.6em;
+    margin-left: 0.3em;
+    margin-right: 0.3em;
+    color: #777;
+    font-style: italic;
+}
+
+
+
+header nav ul.extra li a:hover {
     color: #222;
-    font-style: normal;
+    background-color: transparent;
 }
 
-header nav ul li.extra a:hover {
-    color: #fff;
-    background-color: #222;
-}
-
-header nav ul li.home a {
+header nav ul.home li a {
     margin-left: 0; /* Since this navigation element is always the leftmost, we
                        override it to not have any left margin (whereas the
                        other links in the nav area do. ) */
