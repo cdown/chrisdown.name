@@ -73,9 +73,8 @@ header nav ul.extra li:last-child a {
 header nav ul.extra li a {
     padding: 0 0.4em;
     margin: 0 0.5em;
-    color: #777;
+    color: #aaa;
 }
-
 
 header nav ul.extra li a:hover {
     color: #222;
