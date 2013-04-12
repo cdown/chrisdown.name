@@ -37,6 +37,9 @@ projects:
     - name: clarity
       path: "/illcode/clarity"
       description: Digital signage for minimalists
+    - name: mac-cel
+      path: "/cdown/mac-cel"
+      description: Disable mouse/trackpad acceleration on Mac OSX
     - name: pyaur
       path: "/cdown/pyaur"
       description: Python 3 (and 2) Arch User Repository interface
