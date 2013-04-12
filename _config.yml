@@ -22,13 +22,7 @@ personal:
         account: chris
 
 header:
-    links:
-        - name: projects
-          url: /projects
-        - name: projects
-          url: /projects
-        - name: projects
-          url: /projects
+    links: []
 
 footer:
     links:
