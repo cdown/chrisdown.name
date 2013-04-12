@@ -12,10 +12,12 @@
     <body>
         <header>
             <nav>
-                <ul>
-                <li class="home"><a href="/">{{ site.name }}</a></li>
+                <ul class="home">
+                <li><a href="/">{{ site.name }}</a></li>
+                </ul>
+                <ul class="extra">
                 {% for link in site.header.links %}
-                    <li class="extra"><a href="{{ link.url }}">{{ link.name }}</a></li>
+                    <li><a href="{{ link.url }}">{{ link.name }}</a></li>
                 {% endfor %}
                 </ul>
             </nav>
