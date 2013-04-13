@@ -14,7 +14,7 @@ personal:
     name: *name
     job: Sysadmin
     employers:
-        - name: "Initiatives of Change"
+        - name: "IofC"
           url: *iofc-url
         - name: "BetOnMarkets"
           url: *bom-url
