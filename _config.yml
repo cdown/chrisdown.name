@@ -8,7 +8,7 @@ links:
     bom: &bom-url "https://betonmarkets.com"
     github: &github-url "https://github.com/cdown"
     stackexchange: &stackexchange-url "http://stackexchange.com/users/912213/chris-down?tab=accounts"
-    aur: &aur-url "https://aur.archlinux.org/packages/?SeB=m&K=cdown"
+    aur: &aur-url "https://aur.archlinux.org/packages/?SeB=m&amp;K=cdown"
 
 personal:
     name: *name
