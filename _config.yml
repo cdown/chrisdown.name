@@ -21,18 +21,18 @@ personal:
     email:
         scrim: chrisdown
         account: chris
+    phone:
+        malaysia: "+60(0)1118625221"
+        uk: "+44(0)7926811688"
 
 header:
     links:
+        - name: stack exchange
+          url: *stackexchange-url
+        - name: github
+          url: *github-url
         - name: projects
           url: /projects
-
-footer:
-    links:
-        - name: GitHub
-          url: *github-url
-        - name: Stack Exchange
-          url: *stackexchange-url
 
 projects:
     - name: clarity

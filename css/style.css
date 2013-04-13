@@ -100,23 +100,23 @@ footer {
     line-height: 1.4;
 }
 
-footer div.contact {
+footer div.info {
     float: left;
 }
 
-footer div.sites {
+footer div.contact {
     float: right;
 }
 
-footer div.sites a {
+footer div.contact a {
     font-style: normal;
 }
 
-footer div.sites nav {
+footer div.contact nav {
     text-align: right;
 }
 
-footer div.sites nav li {
+footer div.contact nav li {
     list-style: none;
 }
 

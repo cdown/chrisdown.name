@@ -28,7 +28,7 @@
         </article>
 
         <footer>
-            <div class="contact">
+            <div class="info">
                 <p>
                     {{ site.personal.name }}<br>
                     {{ site.personal.job }} at
@@ -42,15 +42,15 @@
                         {% endif %}
                     {% endfor %}
                     <br>
-                    <a id="email" href="http://scr.im/{{ site.personal.email.scrim }}">{{ site.personal.email.account }}@...</a> / <a href="http://chrisdown.name/pgp/personal.asc">0xA7CC9B4D</a>
+                    PGP: <a href="http://chrisdown.name/pgp/personal.asc">0xA7CC9B4D</a>
                 </p>
             </div>
-            <div class="sites">
+            <div class="contact">
                 <nav>
                     <ul>
-                        {% for link in site.footer.links %}
-                            <li><a href="{{ link.url }}">{{ link.name }}</a></li>
-                        {% endfor %}
+                        <li><a id="email" href="http://scr.im/{{ site.personal.email.scrim }}">{{ site.personal.email.account }}@...</a></li>
+                        <li>{{ site.personal.phone.malaysia }}</li>
+                        <li>{{ site.personal.phone.uk }}</li>
                     </ul>
                 </nav>
             </div>
