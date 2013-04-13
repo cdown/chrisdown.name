@@ -27,8 +27,6 @@ personal:
 
 header:
     links:
-        - name: stack exchange
-          url: *stackexchange-url
         - name: github
           url: *github-url
         - name: projects
