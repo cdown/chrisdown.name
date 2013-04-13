@@ -13,7 +13,6 @@ a {
     color: #CC333F;
     text-decoration: none;
     transition: all 40ms ease-in;
-    border-radius: 2px;
     display: inline;
 }
 
@@ -60,6 +59,7 @@ header nav ul.home li a {
     color: #FFF;
     background-color: #CC333F;
     font-style: italic;
+    border-radius: 2px;
 }
 
 header nav ul.home li a:hover {
