@@ -12,7 +12,10 @@ html, body {
 a {
     color: #CC333F;
     text-decoration: none;
-    transition: all 40ms ease-in;
+    -webkit-transition: all 40ms ease-in;  /* Chrome 1-25, Safari 3.2+ */
+    -moz-transition: all 40ms ease-in;     /* Firefox 4-15 */
+    -o-transition: all 40ms ease-in;       /* Opera 10.50-12.00 */
+    transition: all 40ms ease-in;          /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
     display: inline;
 }
 
@@ -60,7 +63,10 @@ header nav ul.home li a {
     background-color: #CC333F;
     font-style: italic;
     border-radius: 2px;
-    transition: all 75ms ease-in;
+    -webkit-transition: all 75ms ease-in;  /* Chrome 1-25, Safari 3.2+ */
+    -moz-transition: all 75ms ease-in;     /* Firefox 4-15 */
+    -o-transition: all 75ms ease-in;       /* Opera 10.50-12.00 */
+    transition: all 75ms ease-in;          /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
 }
 
 header nav ul.home li a:hover {
@@ -100,7 +106,10 @@ footer {
     font-size: 0.8em;
     line-height: 1.4;
     opacity:0.6;
-    transition: opacity 100ms ease-in;
+    -webkit-transition: opacity 100ms ease-in;  /* Chrome 1-25, Safari 3.2+ */
+    -moz-transition: opacity 100ms ease-in;     /* Firefox 4-15 */
+    -o-transition: opacity 100ms ease-in;       /* Opera 10.50-12.00 */
+    transition: opacity 100ms ease-in;          /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
 }
 
 footer:hover {
