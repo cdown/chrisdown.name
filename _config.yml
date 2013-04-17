@@ -33,6 +33,9 @@ header:
           url: /projects
 
 projects:
+    - name: auditall
+      path: "/cdown/auditall"
+      description: Generate audit rules for a host and its containers
     - name: clarity
       path: "/illcode/clarity"
       description: Digital signage for minimalists
