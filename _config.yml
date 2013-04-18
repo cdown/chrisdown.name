@@ -7,7 +7,7 @@ links:
     iofc: &iofc-url "http://iofc.org"
     bom: &bom-url "https://betonmarkets.com"
     github: &github-url "https://github.com/cdown"
-    stackexchange: &stackexchange-url "http://stackexchange.com/users/912213/chris-down?tab=accounts"
+    stackexchange: &stackexchange-url "http://unix.stackexchange.com/users/10762/chris-down"
     aur: &aur-url "https://aur.archlinux.org/packages/?SeB=m&amp;K=cdown"
 
 personal:
