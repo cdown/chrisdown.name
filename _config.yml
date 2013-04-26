@@ -45,9 +45,9 @@ projects:
     - name: pyaur
       path: "/cdown/pyaur"
       description: Python 3 (and 2) Arch User Repository interface
-    - name: rabbi
-      path: "/cdown/rabbi"
-      description: Automates building rsnapshot configs and cron jobs
+    # - name: rabbi
+    #   path: "/cdown/rabbi"
+    #   description: Automates building rsnapshot configs and cron jobs
     - name: wifilogin
       path: "/cdown/wifilogin"
       description: Bypass captive portal login
