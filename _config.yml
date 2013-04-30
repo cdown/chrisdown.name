@@ -37,6 +37,9 @@ projects:
     - name: auditall
       path: "/cdown/auditall"
       description: Generate audit rules for a host and its containers
+    - name: chrisdown.name
+      path: "/cdown/cdown.github.com"
+      description: Personal website
     - name: clarity
       path: "/illcode/clarity"
       description: Digital signage for minimalists
