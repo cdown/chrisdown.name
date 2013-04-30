@@ -6,5 +6,5 @@ before_install:
     - "sudo apt-get install -qq ruby-dev"
     - "sudo gem install jekyll"
     - "sudo gem install redcarpet"
-install: "pip install _tests/requirements.txt --use-mirrors"
+install: "pip install -r _tests/requirements.txt --use-mirrors"
 script: "./_run-tests"
