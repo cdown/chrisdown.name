@@ -1,0 +1,9 @@
+language: python
+python:
+    - "3.3"
+before_install:
+    - "rvm use 1.9.3@test --create"
+    - "gem install jekyll"
+    - "gem install redcarpet"
+install: "pip install -r _tests/requirements.txt --use-mirrors"
+script: "./_run-tests"
