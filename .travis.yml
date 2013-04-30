@@ -8,4 +8,4 @@ before_script:
     - "bash -c 'jekyll --server 1234 &'"
     - "sleep 5"
 script:
-    - "linkchecker http://localhost:1234/"
+    - "linkchecker --no-warnings http://localhost:1234/"
