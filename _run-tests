@@ -1,9 +1,0 @@
-#!/bin/bash -e
-
-jekyll --no-server
-
-for cmd in nosetests nosetests3; do
-    if type -p "$cmd" >/dev/null 2>&1; then
-        "$cmd" _tests/
-    fi
-done
