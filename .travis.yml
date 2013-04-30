@@ -1,0 +1,10 @@
+language: python
+python:
+    - "3,3"
+before_install:
+    - "sudo apt-get update -qq"
+    - "sudo apt-get install -qq ruby-dev"
+    - "sudo gem install jekyll"
+    - "sudo gem install redcarpet"
+install: "pip install _tests/requirements.txt --use-mirrors"
+script: "./_run-tests"

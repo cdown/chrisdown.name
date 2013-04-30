@@ -1,4 +1,5 @@
-auto: true
+source: .
+destination: ./_site
 
 name: &name Chris Down
 url: "http://chrisdown.name"
