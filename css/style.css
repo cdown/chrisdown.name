@@ -56,10 +56,6 @@ header nav ul.extra {
     float: right;
 }
 
-header nav ul li a {
-    text-transform: lowercase;
-}
-
 header nav ul.home li a {
     color: #FFF;
     background-color: #CC333F;
@@ -85,6 +81,7 @@ header nav ul.extra li a {
     padding: 0 0.4em;
     margin: 0 0.5em;
     color: #aaa;
+    text-transform: lowercase;
 }
 
 header nav ul.extra li a:hover {
