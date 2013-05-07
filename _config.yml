@@ -37,9 +37,6 @@ projects:
     - name: auditall
       path: "/cdown/auditall"
       description: Generate audit rules for a host and its containers
-    - name: chrisdown.name
-      path: "/cdown/cdown.github.com"
-      description: This website
     - name: clarity
       path: "/illcode/clarity"
       description: Digital signage for minimalists
@@ -49,9 +46,6 @@ projects:
     - name: pyaur
       path: "/cdown/pyaur"
       description: Python 3 (and 2) Arch User Repository interface
-    # - name: rabbi
-    #   path: "/cdown/rabbi"
-    #   description: Automates building rsnapshot configs and cron jobs
     - name: wifilogin
       path: "/cdown/wifilogin"
       description: Bypass captive portal login
