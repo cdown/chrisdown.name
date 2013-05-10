@@ -30,10 +30,10 @@ header:
     links:
         - name: GitHub
           url: *github-url
-        - name: Projects
-          url: /projects
+        - name: Builds
+          url: /builds
 
-projects:
+builds:
     - name: auditall
       path: "/cdown/auditall"
       description: Generate audit rules for a host and its containers
