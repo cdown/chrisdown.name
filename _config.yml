@@ -10,6 +10,7 @@ links:
     github: &github-url "https://github.com/cdown"
     stackexchange: &stackexchange-url "http://unix.stackexchange.com/users/10762/chris-down"
     aur: &aur-url "https://aur.archlinux.org/packages/?SeB=m&amp;K=cdown"
+    linkedin: &linkedin-url "http://www.linkedin.com/in/chrisldown"
 
 personal:
     name: *name
@@ -28,6 +29,8 @@ personal:
 
 header:
     links:
+        - name: LinkedIn
+          url: *linkedin-url
         - name: GitHub
           url: *github-url
         - name: Builds
