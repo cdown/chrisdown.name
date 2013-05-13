@@ -33,25 +33,3 @@ header:
           url: *linkedin-url
         - name: GitHub
           url: *github-url
-        - name: Builds
-          url: /builds
-
-builds:
-    - name: auditall
-      path: "/cdown/auditall"
-      description: Generate audit rules for a host and its containers
-    - name: clarity
-      path: "/illcode/clarity"
-      description: Digital signage for minimalists
-    - name: mac-cel
-      path: "/cdown/mac-cel"
-      description: Disable mouse/trackpad acceleration on Mac OSX
-    - name: pyaur
-      path: "/cdown/pyaur"
-      description: Python 3 (and 2) Arch User Repository interface
-    - name: wifilogin
-      path: "/cdown/wifilogin"
-      description: Bypass captive portal login
-    - name: yturl
-      path: "/cdown/yturl"
-      description: Gets direct URLs to YouTube media
