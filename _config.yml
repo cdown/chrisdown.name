@@ -5,22 +5,14 @@ exclude:
 
 url: "http://chrisdown.name"
 
-links:
-    iofc: &iofc-url "http://iofc.org"
-    bom: &bom-url "https://betonmarkets.com"
-    github: &github-url "https://github.com/cdown"
-    stackexchange: &stackexchange-url "http://unix.stackexchange.com/users/10762/chris-down"
-    aur: &aur-url "https://aur.archlinux.org/packages/?SeB=m&amp;K=cdown"
-    linkedin: &linkedin-url "http://www.linkedin.com/in/chrisldown"
-
 personal:
     name: Chris Down
     job: Sysadmin
     employers:
         - name: "IofC"
-          url: *iofc-url
+          url: "http://iofc.org"
         - name: "BetOnMarkets"
-          url: *bom-url
+          url: "https://betonmarkets.com"
     email:
         scrim: chrisdown
         account: chris
@@ -31,6 +23,6 @@ personal:
 header:
     links:
         - name: LinkedIn
-          url: *linkedin-url
+          url: "http://www.linkedin.com/in/chrisldown"
         - name: GitHub
-          url: *github-url
+          url: "https://github.com/cdown"
