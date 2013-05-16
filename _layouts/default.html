@@ -51,8 +51,9 @@
                 <nav>
                     <ul>
                         <li><a id="email" href="http://scr.im/{{ site.personal.email.scrim }}">{{ site.personal.email.account }}@...</a></li>
-                        <li>{{ site.personal.phone.malaysia }}</li>
-                        <li>{{ site.personal.phone.uk }}</li>
+                        {% for phone in site.personal.phones %}
+                            <li>{{ phone }}</li>
+                        {% endfor %}
                     </ul>
                 </nav>
             </div>

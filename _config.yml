@@ -16,9 +16,9 @@ personal:
     email:
         scrim: chrisdown
         account: chris
-    phone:
-        malaysia: "+60(0)1118625221"
-        uk: "+44(0)7926811688"
+    phones:
+        - "+60(0)1118625221"
+        - "+44(0)7926811688"
 
 header:
     links:
