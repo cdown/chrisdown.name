@@ -17,8 +17,10 @@ personal:
         scrim: chrisdown
         account: chris
     phones:
-        - +60(0)1118625221
-        - +44(0)7926811688
+        - visual: +60(0)1118625221
+          literal: +601118625221
+        - visual: +44(0)7926811688
+          literal: +447926811688
 
 header:
     links:
