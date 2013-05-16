@@ -3,26 +3,26 @@ exclude:
     - CNAME
     - LICENSE
 
-url: "http://chrisdown.name"
+url: http://chrisdown.name
 
 personal:
     name: Chris Down
     job: Sysadmin
     employers:
-        - name: "IofC"
-          url: "http://iofc.org"
-        - name: "BetOnMarkets"
-          url: "https://betonmarkets.com"
+        - name: IofC
+          url: http://iofc.org
+        - name: BetOnMarkets
+          url: https://betonmarkets.com
     email:
         scrim: chrisdown
         account: chris
     phones:
-        - "+60(0)1118625221"
-        - "+44(0)7926811688"
+        - +60(0)1118625221
+        - +44(0)7926811688
 
 header:
     links:
         - name: LinkedIn
-          url: "http://www.linkedin.com/in/chrisldown"
+          url: http://www.linkedin.com/in/chrisldown
         - name: GitHub
-          url: "https://github.com/cdown"
+          url: https://github.com/cdown
