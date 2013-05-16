@@ -1,6 +1,11 @@
 source: .
 destination: ./_site
 
+exclude:
+    - .git
+    - CNAME
+    - LICENSE
+
 name: &name Chris Down
 url: "http://chrisdown.name"
 
