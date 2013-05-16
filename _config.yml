@@ -1,12 +1,8 @@
-source: .
-destination: ./_site
-
 exclude:
     - .git
     - CNAME
     - LICENSE
 
-name: &name Chris Down
 url: "http://chrisdown.name"
 
 links:
@@ -18,7 +14,7 @@ links:
     linkedin: &linkedin-url "http://www.linkedin.com/in/chrisldown"
 
 personal:
-    name: *name
+    name: Chris Down
     job: Sysadmin
     employers:
         - name: "IofC"
