@@ -137,6 +137,7 @@ footer div.contact nav li {
 
 footer nav, footer div p {
     margin: 1em 0 0;
+    list-style-position: inside;
 }
 
 article p {
