@@ -148,7 +148,7 @@ article p {
         text-align: left;
     }
 
-    footer div {
+    footer div.info, footer div.contact {
         float: none;
     }
 }
