@@ -150,6 +150,9 @@ article p {
 
     footer div.info, footer div.contact {
         float: none;
+    }
+
+    footer div.contact nav {
         text-align: left;
     }
 }
