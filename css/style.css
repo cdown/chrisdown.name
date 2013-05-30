@@ -150,6 +150,7 @@ article p {
 
     footer div.info, footer div.contact {
         float: none;
+        text-align: left;
     }
 }
 
