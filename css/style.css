@@ -147,6 +147,10 @@ article p {
     article p {
         text-align: left;
     }
+
+    footer div {
+        float: none;
+    }
 }
 
 
