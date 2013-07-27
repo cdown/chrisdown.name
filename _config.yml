@@ -4,6 +4,7 @@ exclude:
     - LICENSE
 
 url: http://chrisdown.name
+description: Minimalist programmer, designer, and Unix advocate.
 
 personal:
     name: Chris Down
