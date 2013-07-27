@@ -152,10 +152,6 @@ article p {
     footer div.contact p {
         text-align: left;
     }
-
-    header nav ul.home, header nav ul.extra {
-        float: none;
-    }
 }
 
 h1 {
