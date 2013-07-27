@@ -46,14 +46,12 @@
                 </p>
             </div>
             <div class="contact">
-                <nav>
-                    <ul>
-                        <li><a href="mailto:{{ site.personal.email }}">{{ site.personal.email }}</a></li>
-                        {% for phone in site.personal.phones %}
-                            <li><a href="tel:{{ phone.literal }}">{{ phone.visual }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </nav>
+                <p>
+                    <a href="mailto:{{ site.personal.email }}">{{ site.personal.email }}</a><br>
+                    {% for phone in site.personal.phones %}
+                        <a href="tel:{{ phone.literal }}">{{ phone.visual }}</a><br>
+                    {% endfor %}
+                </p>
             </div>
         </footer>
     </body>
