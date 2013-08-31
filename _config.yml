@@ -27,5 +27,7 @@ header:
     links:
         - icon: linkedin
           url: http://www.linkedin.com/in/chrisldown
+        - icon: stackexchange
+          url: http://unix.stackexchange.com/users/10762/chris-down
         - icon: github-alt
           url: https://github.com/cdown
