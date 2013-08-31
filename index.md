@@ -15,6 +15,10 @@ centre][caux] in Caux, Switzerland.
 In my free time I design robust applications with a focus on correctness and
 ease of operation. You can find my public code on [my GitHub][github].
 
+I'm always interested in hearing about ideas for new projects. If you have
+something you'd like me to help out on,
+<a href="mailto:{{ site.personal.email }}">get in touch</a>.
+
 [caux]:   http://caux.ch
 [github]: https://github.com/cdown
 [iofc]:   http://iofc.org
