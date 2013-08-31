@@ -23,7 +23,7 @@ personal:
 
 header:
     links:
-        - name: LinkedIn
+        - icon: linkedin
           url: http://www.linkedin.com/in/chrisldown
-        - name: GitHub
+        - icon: github-alt
           url: https://github.com/cdown
