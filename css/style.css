@@ -75,12 +75,10 @@ header nav ul.home li a:hover {
 
 header nav ul.extra li:last-child a {
     margin-right: 0;
-    padding-right: 0;
 }
 
 header nav ul.extra li a {
-    padding: 0 0.4em;
-    margin: 0 0.5em;
+    margin: 0 0.6em;
     color: #aaa;
     text-transform: lowercase;
 }
