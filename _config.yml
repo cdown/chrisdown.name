@@ -2,6 +2,8 @@ exclude:
     - .git
     - CNAME
     - LICENSE
+    - Gemfile
+    - Gemfile.lock
 
 url: http://chrisdown.name
 description: Minimalist programmer, designer, and Unix/Linux advocate.
