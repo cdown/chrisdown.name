@@ -21,13 +21,13 @@ eventually become probably the most widely used in TF2 today, both in public
 and competitive play. Very quickly Arie stepped in and offered to provide web
 hosting for the configs, and they quickly became the most requested thing on
 the FakkelBrigade site. Many thanks go to him for his patience and support over
-the years.<
+the years.
 
 I stopped playing competitive TF2 in early 2012 to focus on other things, and
 slowly over time I became less and less in touch with the TF2 community, and
 the technical details of TF2's implementation of Source. Valve frequently
 releases updates which change the way that game internals work, and being so
-out of touch with what was going on affected the quality of these configs.<
+out of touch with what was going on affected the quality of these configs.
 
 I should have offered them up earlier, as I have basically been unable to
 continue maintaining them for over half a year now. My knowledge of the Source
