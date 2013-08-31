@@ -96,6 +96,14 @@ header nav ul.home li a {
     font-weight: bold;
 }
 
+h1 {
+    font-size: 1.7em;
+}
+
+h2 {
+    font-size: 1.3em;
+}
+
 footer {
     border-top: 2px solid #eee;
     margin-top: 2em;
@@ -150,8 +158,4 @@ article p {
     footer div.contact p {
         text-align: left;
     }
-}
-
-h1 {
-    font-size: 1em;
 }
