@@ -10,8 +10,8 @@ exclude:
     - Gemfile.lock
 
 description:
-    "The 6th most trusted expert globally on Unix & Linux Stack Exchange.
-    Minimalist programmer, designer, and Unix/Linux advocate."
+    "I'm a minimalist programmer and designer with strong experience in
+    Unix/Linux, currently living in Malaysia."
 
 links:
     caux: http://caux.ch
