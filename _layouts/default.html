@@ -53,8 +53,8 @@
             <div class="contact">
                 <p>
                     <a href="mailto:{{ site.personal.email }}">{{ site.personal.email }}</a><br>
-                    {% for phone in site.personal.phones %}
-                        <a href="tel:{{ phone.literal }}">{{ phone.visual }}</a><br>
+                    {% for phone_number in site.personal.phone_numbers %}
+                        <a href="tel:{{ phone_number }}">{{ phone_number }}</a><br>
                     {% endfor %}
                 </p>
             </div>

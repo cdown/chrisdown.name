@@ -18,11 +18,9 @@ personal:
         - name: Binary.com
           url: https://binary.com
     email: chris@chrisdown.name
-    phones:
-        - visual: +35679293856
-          literal: +35679293856
-        - visual: +44(0)7926811688
-          literal: +447926811688
+    phone_numbers:
+        - +35679293856
+        - +447926811688
 
 header:
     links:
