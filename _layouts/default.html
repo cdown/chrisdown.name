@@ -18,7 +18,11 @@
                 </ul>
                 <ul class="extra">
                 {% for link in site.header.links %}
-                    <li><a href="{{ link.url }}"><i class="icon-{{ link.icon }}"></i></a></li>
+                    <li title="{{ link.title }}" alt="{{ link.title }}">
+                        <a href="{{ link.url }}">
+                            <i class="icon-{{ link.icon }}"></i>
+                        </a>
+                    </li>
                 {% endfor %}
                 </ul>
             </nav>
