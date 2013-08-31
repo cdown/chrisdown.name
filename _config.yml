@@ -5,8 +5,9 @@ exclude:
     - Gemfile
     - Gemfile.lock
 
-url: http://chrisdown.name
-description: "The 6th most trusted expert globally on Unix & Linux Stack Exchange. Minimalist programmer, designer, and Unix/Linux advocate."
+description: >
+    The 6th most trusted expert globally on Unix & Linux Stack Exchange.
+    Minimalist programmer, designer, and Unix/Linux advocate.
 
 personal:
     name: Chris Down
