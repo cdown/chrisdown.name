@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "About"
+title: "Chris Down"
 ---
 
 I'm the 6th most trusted expert globally on Unix & Linux Stack Exchange, and a
