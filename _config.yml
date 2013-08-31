@@ -5,9 +5,9 @@ exclude:
     - Gemfile
     - Gemfile.lock
 
-description: >
-    The 6th most trusted expert globally on Unix & Linux Stack Exchange.
-    Minimalist programmer, designer, and Unix/Linux advocate.
+description:
+    "The 6th most trusted expert globally on Unix & Linux Stack Exchange.
+    Minimalist programmer, designer, and Unix/Linux advocate."
 
 links:
     caux: http://caux.ch
