@@ -15,6 +15,7 @@ description:
 
 links:
     caux: http://caux.ch
+    binary: &binary https://binary.com
     iofc: &iofc http://iofc.org
     rmg: &rmg http://regentmarkets.com
     github: &github https://github.com/cdown
@@ -24,15 +25,11 @@ links:
 personal:
     name: Chris Down
     job: Sysadmin
-    employers:
-        - name: IofC
-          url: *iofc
-        - name: Regent Markets Group
-          url: *rmg
+    employer:
+        name: Binary.com
+        url: *binary
     email: chris@chrisdown.name
-    phone_numbers:
-        - +35679293856
-        - +447926811688
+    phone: +35679293856
 
 header:
     links:

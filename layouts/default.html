@@ -40,26 +40,15 @@
             <div class="info">
                 <p>
                     {{ site.personal.name }}<br>
-                    {{ site.personal.job }} at
-                    {% for employer in site.personal.employers %}
-                        {% if forloop.first %}
-                            <a href="{{ employer.url }}">{{ employer.name }}</a>
-                        {% elsif forloop.last %}
-                            and <a href="{{ employer.url }}">{{ employer.name }}</a>
-                        {% else %}
-                            , <a href="{{ employer.url }}">{{ employer.name }}</a>
-                        {% endif %}
-                    {% endfor %}
-                    <br>
+                    {{ site.personal.job }} at <a href="{{ site.personal.employer.url }}">{{ site.personal.employer.name }}</a><br>
                     PGP: <a href="/pgp">0xA7CC9B4D</a>
                 </p>
             </div>
             <div class="contact">
                 <p>
                     <a href="mailto:{{ site.personal.email }}">{{ site.personal.email }}</a><br>
-                    {% for phone_number in site.personal.phone_numbers %}
-                        <a href="tel:{{ phone_number }}">{{ phone_number }}</a><br>
-                    {% endfor %}
+                    <a href="tel:{{ site.personal.phone }}">{{ site.personal.phone }}</a><br>
+                    <a href="irc://irc.freenode.net/cdown">cdown</a> on <a href="https://freenode.net">freenode</a>
                 </p>
             </div>
         </footer>
