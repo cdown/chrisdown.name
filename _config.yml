@@ -9,14 +9,22 @@ description: >
     The 6th most trusted expert globally on Unix & Linux Stack Exchange.
     Minimalist programmer, designer, and Unix/Linux advocate.
 
+links:
+    caux: http://caux.ch
+    iofc: &iofc http://iofc.org
+    rmg: &rmg http://regentmarkets.com
+    github: &github https://github.com/cdown
+    ulse: &ulse http://unix.stackexchange.com/users/10762/chris-down
+    linkedin: &linkedin http://www.linkedin.com/in/chrisldown
+
 personal:
     name: Chris Down
     job: Sysadmin
     employers:
         - name: IofC
-          url: http://iofc.org
-        - name: Binary.com
-          url: https://binary.com
+          url: *iofc
+        - name: Regent Markets Group
+          url: *rmg
     email: chris@chrisdown.name
     phone_numbers:
         - +35679293856
@@ -25,11 +33,11 @@ personal:
 header:
     links:
         - icon: linkedin
-          url: http://www.linkedin.com/in/chrisldown
+          url: *linkedin
           title: My LinkedIn profile
         - icon: stackexchange
-          url: http://unix.stackexchange.com/users/10762/chris-down
+          url: *ulse
           title: My Unix & Linux Stack Exchange profile
         - icon: github-alt
-          url: https://github.com/cdown
+          url: *github
           title: My GitHub profile

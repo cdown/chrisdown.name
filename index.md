@@ -20,9 +20,9 @@ centre][caux] in Caux, Switzerland.
 I'm always interested in hearing about ideas for new projects. If you have
 something you'd like me to help out on, [get in touch][email].
 
-[caux]:            http://caux.ch
-[github]:          https://github.com/cdown
-[iofc]:            http://iofc.org
-[rmg]:             http://www.regentmarkets.com
+[caux]:            {{ site.links.caux }}
+[github]:          {{ site.links.github }}
+[iofc]:            {{ site.links.iofc }}
+[rmg]:             {{ site.links.rmg }}
 [email]:           mailto:{{ site.personal.email }}
 [tencommandments]: https://www.vitsoe.com/gb/about/good-design
