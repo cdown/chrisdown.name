@@ -1,3 +1,7 @@
+source: source
+destination: deploy
+layouts: ../layouts
+
 exclude:
     - .git
     - CNAME
