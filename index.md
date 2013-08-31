@@ -3,9 +3,9 @@ layout: default
 title: "Chris Down"
 ---
 
-I'm the 6th most trusted expert globally on Unix & Linux Stack Exchange, and a
-regular on many Unix mailing lists. Correctness and simplicity (in that order)
-are my main goals when developing any system.
+I'm the 6th most trusted expert globally on [Unix & Linux Stack
+Exchange][ulse], and a regular on many Unix mailing lists. Correctness and
+simplicity (in that order) are my main goals when developing any system.
 
 In my free time, I design robust, concise applications across a wide spectrum
 of languages; you can find my public code on [my GitHub][github]. I am highly
@@ -21,8 +21,9 @@ I'm always interested in hearing about ideas for new projects. If you have
 something you'd like me to help out on, [get in touch][email].
 
 [caux]:            {{ site.links.caux }}
+[email]:           mailto:{{ site.personal.email }}
 [github]:          {{ site.links.github }}
 [iofc]:            {{ site.links.iofc }}
 [rmg]:             {{ site.links.rmg }}
-[email]:           mailto:{{ site.personal.email }}
 [tencommandments]: https://www.vitsoe.com/gb/about/good-design
+[ulse]:            {{ site.links.ulse }}
