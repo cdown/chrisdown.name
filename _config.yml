@@ -2,6 +2,8 @@ source: source
 destination: deploy
 layouts: ../layouts
 
+pygments: true
+
 exclude:
     - .git
     - CNAME
