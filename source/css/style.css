@@ -166,6 +166,10 @@ blockquote {
     text-align: left;
 }
 
+#disqus_thread {
+    margin-top: 3em;
+}
+
 @media screen and (max-width: 600px) {
     article p {
         text-align: left;
