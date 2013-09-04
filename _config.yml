@@ -11,9 +11,11 @@ exclude:
     - Gemfile
     - Gemfile.lock
 
+name: "Chris Down"
 description:
     "I'm a minimalist programmer and designer with strong experience in
     Unix/Linux, currently living in Malaysia."
+url: "http://chrisdown.name"
 
 links:
     caux: http://caux.ch
