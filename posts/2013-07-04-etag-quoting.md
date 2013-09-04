@@ -33,7 +33,8 @@ The semantics for `quoted-string` are denoted in [RFC 2822][quoting-rfc]:
 
 In our case, all that's required is surrounding the checksum with quotes to
 make it legal. Your case may differ, though, check the two previously mentioned
-RFCs.
+RFCs. If you use weak ETags with the "W/" prefix, you should leave "W/"
+unquoted and quote the remainder of the opaque-tag.
 
 [etag-rfc]:    http://tools.ietf.org/html/rfc2616#section-3.11
 [quoting-rfc]: http://tools.ietf.org/html/rfc2822#section-3.2.5
