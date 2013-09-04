@@ -21,6 +21,6 @@ I agree that *strong* etags should not be used except for when bit-for-bit
 equivalence is guaranteed, which it obviously isn't in this case, but stripping
 weak etags seems a bit over the top when you're only using CloudFlare to
 provide CDN features. Even if CloudFlare does change page details (which, from
-a quick look using `diff`, it generally doesn't in our case) or change the
+a quick look using diff, it generally doesn't in our case) or change the
 bit-for-bit equivalence of the gzipped bytes, it would still be semantically
 equivalent enough to use weak etags in our case.

@@ -3,7 +3,7 @@ layout: post
 title: ETag quoting
 ---
 
-One of the nice things about ETags is that while `Last-Modified` has second
+One of the nice things about ETags is that while Last-Modified has second
 granularity, ETags have an infinite resolution (well, up to the point at which
 you get a 413). In some cases (like, for example in our case with dynamic
 generation) being able to represent cache status with a hash of the data is
@@ -25,7 +25,7 @@ terms of [RFC 2616][etag-rfc], which specifies the format as:
 >     weak       = "W/"
 >     opaque-tag = quoted-string
 
-The semantics for `quoted-string` are denoted in [RFC 2822][quoting-rfc]:
+The semantics for quoted-string are denoted in [RFC 2822][quoting-rfc]:
 
 > Strings of characters that include characters other than those allowed in
 > atoms may be represented in a quoted string format, where the characters are
