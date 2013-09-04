@@ -41,4 +41,4 @@ absolutely anything you want with them. You do not need to credit me (in fact,
 if you are making modifications, please do not associate me with them).
 
 [github]: https://github.com/tf2configs/tf2configs
-[zip]: /tf2/tf2configs-final.zip
+[zip]: https://github.com/tf2configs/tf2configs/archive/2.016.zip
