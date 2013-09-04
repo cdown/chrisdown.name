@@ -146,6 +146,22 @@ article p {
     text-align: justify;
 }
 
+pre, code {
+    font-family: "Droid Sans Mono", monospace;
+}
+
+code {
+    font-size: 0.8em;
+}
+
+pre {
+    line-height: 1;
+    background-color: #f7f7f7;
+    border: 1px solid #eee;
+    padding: 0.6em;
+    overflow: auto;
+}
+
 @media screen and (max-width: 600px) {
     article p {
         text-align: left;
