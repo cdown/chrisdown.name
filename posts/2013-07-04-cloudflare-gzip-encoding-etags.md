@@ -1,6 +1,7 @@
 ---
 layout: post
 title: CloudFlare, gzip encoding, and ETags
+description: omit
 ---
 
 According to an e-mail from Marty Strong from CloudFlare support, apparently

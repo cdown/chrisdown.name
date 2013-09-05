@@ -3,10 +3,12 @@
     <head>
         <meta charset="utf-8">
         <title>{{ page.title }}</title>
-        {% if page.description %}
-            <meta name="description" content="{{ page.description }}">
-        {% else %}
-            <meta name="description" content="{{ site.description }}">
+        {% if page.description != "omit" %}
+            {% if page.description %}
+                <meta name="description" content="{{ page.description }}">
+            {% else %}
+                <meta name="description" content="{{ site.description }}">
+            {% endif %}
         {% endif %}
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">

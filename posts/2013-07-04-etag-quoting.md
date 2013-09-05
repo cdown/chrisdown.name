@@ -1,6 +1,7 @@
 ---
 layout: post
 title: ETag quoting
+description: omit
 ---
 
 One of the nice things about ETags is that while Last-Modified has second
