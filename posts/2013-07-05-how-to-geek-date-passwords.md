@@ -12,7 +12,7 @@ recommend the following methods of generating a random password (quoting from
 >
 >     date +%s | sha256sum | base64 | head -c 32 ; echo
 >
-> And here’s the easiest way to make a password from the command line, which
+> And here's the easiest way to make a password from the command line, which
 > works in Linux, Windows with Cygwin, and probably Mac OS X \[...\]
 >
 >     date | md5sum
