@@ -20,8 +20,9 @@ hopefully this will save some others.
     ETag: 949ffdddf907f30917d6d003538e0865
 
 While this ETag may appear to be legal, it's actually illegal according to the
-terms of [RFC 2616][etag-rfc], which specifies the format as quoted-string. The
-semantics for quoted-string are denoted in [RFC 2822][quoting-rfc]:
+terms of [RFC 2616][etag-rfc], which specifies the format for the opaque-tag as
+quoted-string. The semantics for quoted-string are denoted in [RFC
+2822][quoting-rfc]:
 
 > Strings of characters that include characters other than those allowed in
 > atoms may be represented in a quoted string format, where the characters are
