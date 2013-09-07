@@ -98,6 +98,20 @@ username.
 
 In the next 5 minutes, you should see your public repositories on cgit.
 
+You can also optionally initialise the last modified time to the time of the
+last commit for each repository so that they don't all display the time at
+which you first cloned for repos that you no longer commit to -- here's a
+little script I wrote. The source shows that if it fails to find
+info/web/last-modified, then head/refs/\[default branch\], then it looks at
+packed-refs. As such, we update the mtime of packed-refs to match the time of
+the last commit.
+
+    #!/bin/bash
+    for dir in /srv/git/*.git; do
+        commit_time="$(GIT_DIR="$dir" git --no-pager log -1 --format='%ai')"
+        touch -d "$commit_time" "$dir/packed-refs"
+    done
+
 ## git-daemon
 
 You'll want to have an init script to run git-daemon. I wrote this one up, I
