@@ -31,6 +31,7 @@ Replace "chrisdown.name" with the server you will be running git-daemon on.
     make install
 
     cat > /etc/cgitrc << 'EOF'
+    root-desc=Mirror of https://github.com/cdown
     virtual-root=/
     logo=/cgit.png
     css=/cgit.css
