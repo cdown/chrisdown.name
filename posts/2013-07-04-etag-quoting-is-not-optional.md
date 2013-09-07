@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ETag quoting
+title: ETag quoting is not optional
 description: omit
 ---
 
