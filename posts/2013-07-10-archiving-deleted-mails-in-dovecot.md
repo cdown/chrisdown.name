@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Archiving deleted mails in Dovecot
+title: Archiving deleted mails in Dovecot without using a namespace
 ---
 
 When I first started using Dovecot, I looked high and low for a way to archive
@@ -31,6 +31,6 @@ archiving mails looks like this:
 Big thanks go out to [Lex Brugman][lex], who authored the plugin, and has now
 saved me from certain insanity at the hands of lazy\_expunge.
 
-[le]:  http://wiki.dovecot.org/Plugins/Lazyexpunge
+[le]:  http://wiki2.dovecot.org/Plugins/Lazyexpunge
 [dtt]: https://github.com/lexbrugman/dovecot_deleted_to_trash
 [lex]: https://github.com/lexbrugman
