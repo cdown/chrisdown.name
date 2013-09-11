@@ -3,7 +3,7 @@ layout: post
 title: Moving to TeamCity from Jenkins
 ---
 
-At [RMG][rmg], we're starting to migrate from using [Jenkins][jenkins], to
+At [RMG][rmg], we're starting to migrate from using [Jenkins][jenkins] to
 [TeamCity][teamcity]. My experiences using Jenkins for small projects have been
 good in the past (although I have switched pretty much everything on GitHub to
 use [Travis][travis] now), but these have mostly been projects where only me
