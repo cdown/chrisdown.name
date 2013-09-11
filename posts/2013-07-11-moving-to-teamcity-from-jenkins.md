@@ -50,7 +50,7 @@ alone, and it's gone pretty well.
 
 There are supposedly more advanced features in Jenkins that don't exist in
 TeamCity (yet), but I don't think we use them. I'll quit happily take
-simplicity and ease of use over advanced functionality that I have yes to have
+simplicity and ease of use over advanced functionality that I have yet to have
 use for.
 
 I am possibly in the "fluffy cloud" stage of adopting a new technology right
