@@ -59,8 +59,8 @@ simplicity and ease of use over advanced functionality that I have yet to have
 use for.
 
 I am possibly in the "fluffy cloud" stage of adopting a new technology right
-now, so maybe I'm being too nice in some regards. I'll undoubtedly revisit
-TeamCity in the future.
+now, so maybe I'm being too nice in some regards. I'll probably revisit this
+subject after we've used TeamCity for a while.
 
 [jenkins]: http://jenkins-ci.org/
 [teamcity]: http://www.jetbrains.com/teamcity/
