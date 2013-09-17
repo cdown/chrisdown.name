@@ -14,8 +14,10 @@ Add the following to main.cf:
 
     smtp_header_checks = regexp:/etc/postfix/smtp_header_checks
 
-Then, strip "Received" headers by ignoring them:
+Then, strip "Received" headers by ignoring them, and reload the configuration:
 
     cat > /etc/postfix/smtp_header_checks << 'EOF'
     /^Received:/ IGNORE
     EOF
+
+    service postfix reload
