@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Archiving deleted mails in Dovecot without using a namespace
+description: omit
 ---
 
 When I first started using Dovecot, I looked high and low for a way to archive

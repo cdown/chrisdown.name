@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Moving to TeamCity from Jenkins
+description: omit
 ---
 
 At [RMG][rmg], we're starting to migrate from using [Jenkins][jenkins] to
