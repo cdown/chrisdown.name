@@ -50,11 +50,13 @@
             </div>
             <div class="contact">
                 <p>
-                    <a href="mailto:{{ site.personal.email }}">{{ site.personal.email }}</a><br>
+                    <a id="email" href="http://scr.im/{{ site.personal.email.scrim }}">{{ site.personal.email.account }}@[this domain]</a><br>
                     <a href="tel:{{ site.personal.phone }}">{{ site.personal.phone }}</a><br>
                     <a href="irc://irc.freenode.net/cdown">cdown</a> on <a href="https://freenode.net">freenode</a>
                 </p>
             </div>
         </footer>
+
+        <script src="/js/email.js"></script>
     </body>
 </html>

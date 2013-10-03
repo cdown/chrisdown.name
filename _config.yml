@@ -35,7 +35,9 @@ personal:
     employer:
         name: Binary.com
         url: *binary
-    email: chris@chrisdown.name
+    email:
+        account: chris
+        scrim: chrisdown
     phone: +601118625221
 
 header:
