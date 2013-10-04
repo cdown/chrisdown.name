@@ -1,7 +1,7 @@
 ---
 layout: post
 title: ETag quoting is not optional
-description: omit
+excerpt: Discussion of legal etag usage, and the basics requirements of the format.
 ---
 
 One of the nice things about ETags is that while Last-Modified has second

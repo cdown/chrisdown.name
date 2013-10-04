@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Mutt may suck less, but it still sucks
-description: omit
+description: A discussion of the less savoury parts of the mutt mail client.
 ---
 
 I've used [mutt][mutt] to manage my mail for a good few years now, and in

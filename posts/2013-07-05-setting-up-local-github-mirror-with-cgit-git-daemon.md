@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Setting up a local GitHub mirror with cgit and git daemon
-description: omit
+title: Setting up a local GitHub mirror with cgit, gh-mirror, and git daemon
+excerpt: Discover how to easily set up a local GitHub mirror.
 ---
 
 I just finished setting up [a local GitHub mirror][local-git] so that I can

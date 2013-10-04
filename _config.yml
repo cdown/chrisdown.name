@@ -4,6 +4,7 @@ destination: deploy
 layouts: ../layouts
 
 pygments: true
+excerpt_separator: "<!-- excerpt -->"
 
 exclude:
     - .git
