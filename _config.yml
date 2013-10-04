@@ -28,7 +28,7 @@ links:
     ulse: &ulse http://unix.stackexchange.com/users/10762/chris-down
     linkedin: &linkedin http://www.linkedin.com/in/chrisldown
     internal-git: http://git.chrisdown.name
-    blog: &blog http://chrisdown.name/archive.html
+    blog: &blog /archive.html
 
 personal:
     name: Chris Down
