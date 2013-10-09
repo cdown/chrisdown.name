@@ -9,15 +9,6 @@ going great. I've been longing to get back into playing games since I stopped
 playing competitive TF2 two or so years ago, and it's been a real treat to be
 able to do it again.
 
-I downloaded Steam, and the first thing that came up in my favourites at the
-top of the browser was Deus Ex: Human Revolution. It was one of the last games
-that I played, but it feels recent. Funny to think it was nearly two years ago
-that I last played anything. It seemed a good enough place to start. Apparently
-I had also bought the DLC, [The Missing Link][missinglink], which I hadn't
-played in my previous playthrough, probably because I only bought it
-afterwards, hoping to play it in my next playthrough that never came. Two years
-later, I finally played it.
-
 Anyone who knows me in person knows that when I discuss video games, I almost
 inevitably bring up the original [Deus Ex][dx]. I picked a copy of it up in a
 bargain bin around 2002-03, and I distinctly remember having to lower the
@@ -27,11 +18,6 @@ sinister atmosphere presented by the music, the lighting, the characters was
 all coherent, and extremely immersing. The storyline was just the right mix of
 the ludicrous and familiar to invoke a real feeling of involvement. To this
 day, I still think Deus Ex is the best video game of all time.
-
-I still enjoyed its sequel, Invisible War. I was young, and more interested in
-atmosphere than gameplay, so I didn't notice the backsteps that had been taken
-in terms of unified ammunition and the like. I still loved it, no matter what
-the reviews said.
 
 I paid a lot of attention when DX:HR was announced through the teaser clips that
 Eidos put out. It was clear that they were pining for commercial success, and I
