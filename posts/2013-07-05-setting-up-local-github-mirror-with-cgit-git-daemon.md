@@ -15,7 +15,7 @@ public on this server. This post covers setting up the mirroring (using
 
 Replace "chrisdown.name" with the server you will be running git-daemon on.
 
-    apt-get install fcgiwrap spawn-fcgi git build-essential
+    apt-get install git build-essential
 
     git clone git://git.zx2c4.com/cgit /usr/src/cgit
 
@@ -47,7 +47,7 @@ HTML.
 
 Replace "git.chrisdown.name" with your domain.
 
-    apt-get install nginx
+    apt-get install fcgiwrap spawn-fcgi nginx
 
     cat > /etc/nginx/sites-available/git.chrisdown.name << 'EOF'
     server {
