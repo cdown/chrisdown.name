@@ -37,7 +37,7 @@ Replace "chrisdown.name" with the server you will be running git-daemon on.
     css=/cgit.css
     scan-path=/srv/git
     remove-suffix=1
-    clone-prefix=git://chrisdown.name
+    clone-prefix=git://git.chrisdown.name
     EOF
 
 If everything went well, executing /srv/http/cgit/cgit.cgi should output some
@@ -182,7 +182,7 @@ I tried to follow it as closely as I could.
 
 You should now be able to clone:
 
-    $ git clone git://chrisdown.name/osmo.git
+    $ git clone git://git.chrisdown.name/osmo.git
     Cloning into 'osmo'...
     remote: Counting objects: 660, done.
     remote: Compressing objects: 100% (336/336), done.
