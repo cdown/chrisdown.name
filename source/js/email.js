@@ -3,11 +3,16 @@
 
 document.addEventListener("DOMContentLoaded", function() {
     "use strict";
-    var el, address;
+    var els, address;
 
-    el = document.getElementById("email");
+    els = document.getElementsByClassName("email");
     address = [ "{{ site.personal.email.account }}", "{{ site.url | split: '/' | last }}" ].join("@");
 
-    el.href = "mailto:" + address
-    el.innerHTML = address
+    Array.prototype.forEach.call(els, function(el) {
+        el.href = "mailto:" + address;
+        var classes = el.className.split(/\s+/);
+        if (classes.indexOf("no-replace-text") === -1) {
+            el.innerHTML = address;
+        }
+    });
 });

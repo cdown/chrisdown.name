@@ -18,7 +18,8 @@ mostly maintaining and implementing systems for use in the [Caux conference
 centre][caux] in Caux, Switzerland.
 
 I'm always interested in hearing about ideas for new projects. If you have
-something you'd like me to help out with, [get in touch][email].
+something you'd like me to help out with, <a class="email no-replace-text"
+href="http://scr.im/{{ site.personal.email.scrim }}">get in touch</a>.
 
 [caux]:            {{ site.links.caux }}
 [email]:           mailto:{{ site.personal.email }}
