@@ -138,7 +138,7 @@ I tried to follow it as closely as I could.
 
     pid_file=/run/git-daemon.pid
     daemon=(
-        "$(type -p git)" -- daemon \
+        "$(type -p git)" daemon \
             --{user,group}=git-ro \
             --reuseaddr \
             --pid-file="$pid_file" \
@@ -150,7 +150,7 @@ I tried to follow it as closely as I could.
             log_daemon_msg "Starting Git daemon" "git-daemon"
             start-stop-daemon --start --background --quiet --oknodo \
                 --pidfile "$pid_file" \
-                --exec "${daemon[@]}"
+                --exec "${daemon[0]}" -- "${daemon[@]:1}"
             log_end_msg "$?"
             ;;
         stop)
