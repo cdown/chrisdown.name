@@ -3,7 +3,7 @@ layout: default
 title: "Chris Down"
 ---
 
-I'm the 6th most trusted expert globally on [Unix & Linux Stack
+I'm the 5th most trusted expert globally on [Unix & Linux Stack
 Exchange][ulse], and a regular on many Unix mailing lists. Correctness and
 simplicity (in that order) are my main goals when developing any system.
 
