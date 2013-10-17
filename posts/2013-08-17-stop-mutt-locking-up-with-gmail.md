@@ -14,5 +14,5 @@ which is the default in 1.5.21 unless you set it explicitly). I'm now using
 these settings, which seem to work without lockups:
 
     set imap_keepalive = 300
-    set mail_check     = 60
-    set timeout        = 300
+    set mail_check     = 30
+    set timeout        = 60
