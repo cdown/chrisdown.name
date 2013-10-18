@@ -29,9 +29,10 @@ archiving mails looks like this:
       deleted_to_trash_folder = Archive
     }
 
-Big thanks go out to [Lex Brugman][lex], who authored the plugin, and has now
-saved me from certain insanity at the hands of lazy\_expunge.
+If you feel like patching Mutt, you can also use the [trash folder
+patch][trash].
 
 [le]:  http://wiki2.dovecot.org/Plugins/Lazyexpunge
 [dtt]: https://github.com/lexbrugman/dovecot_deleted_to_trash
 [lex]: https://github.com/lexbrugman
+[trash]: http://cedricduval.free.fr/mutt/patches/
