@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'chrisdown-fontawesome';
+  src: url('/fonts/chrisdown-fontawesome.woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  font-family: chrisdown-fontawesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+}
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  text-decoration: inherit;
+  display: inline-block;
+  speak: none;
+}
+
+.icon-book:before { content: '\e803'; } /* '' */
+.icon-linkedin:before { content: '\e802'; } /* '' */
+.icon-github-alt:before { content: '\e800'; } /* '' */
+.icon-stackexchange:before { content: '\e801'; } /* '' */
