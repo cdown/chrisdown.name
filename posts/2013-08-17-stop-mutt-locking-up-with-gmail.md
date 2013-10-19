@@ -11,7 +11,7 @@ synchronous IO, yuck) random lockups in the Mutt interface.
 
 The solution is to turn off IMAP idling altogether (by unsetting imap\_idle,
 which is the default in 1.5.21 unless you set it explicitly). I'm now using
-these settings, which seem to work without lockups:
+these settings, which seem to work without freezes:
 
     set imap_keepalive = 300
     set mail_check     = 30
