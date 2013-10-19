@@ -1,13 +1,13 @@
 @font-face {
-  font-family: 'chrisdown-fontawesome';
-  src: url('/fonts/chrisdown-fontawesome.woff');
+  font-family: 'fontawesome-stripped';
+  src: url('/fonts/fontawesome-stripped.woff');
   font-weight: normal;
   font-style: normal;
 }
 
 [class^="icon-"],
 [class*=" icon-"] {
-  font-family: chrisdown-fontawesome;
+  font-family: fontawesome-stripped;
   font-weight: normal;
   font-style: normal;
   text-decoration: inherit;
