@@ -1,8 +1,18 @@
 © 2013 Christopher Down <chris@chrisdown.name>
 
+# "posts" directory
+
 The blog content in the "posts" directory is licensed under a Creative Commons
 Attribution-NonCommercial-NoDerivs 3.0 Unported license, see
 http://creativecommons.org/licenses/by-nc-nd/3.0/.
+
+# Fonts
+
+The icon font used is a modified version of Font Awesome with glyphs stripped.
+Font Awesome is licensed under the SIL Open Font License, which can be found at
+http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL.
+
+# All content EXCLUDING the "posts" directory
 
 All content EXCLUDING the "posts" directory is licensed under the following MIT
 license:
