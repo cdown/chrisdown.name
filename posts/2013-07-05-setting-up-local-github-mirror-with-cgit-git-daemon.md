@@ -13,7 +13,7 @@ public on this server. This post covers setting up the mirroring (using
 
 ## Setting up cgit
 
-Replace "chrisdown.name" with the server you will be running git-daemon on.
+Replace "git.chrisdown.name" with the server you will be running git-daemon on.
 
     apt-get install git build-essential
 
