@@ -142,6 +142,7 @@ pre, code {
 }
 
 code {
+    white-space: nowrap;
     font-size: 0.8em;
 }
 
