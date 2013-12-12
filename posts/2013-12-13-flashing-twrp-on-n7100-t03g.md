@@ -4,9 +4,6 @@ title: Flashing TWRP on the N7100/t03g
 excerpt: How to flash TWRP on the N7100/t03g on Arch Linux
 ---
 
-I always forget how to do this and end up reading lots of conflicting "advice",
-so it seems wise to put it here:
-
 - [Download the latest TWRP image in .img format][dl]. The latest ones appear
   to be at the bottom (go figure);
 - Check the md5sum matches what goo.im said when you downloaded it;
