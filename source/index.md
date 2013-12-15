@@ -17,14 +17,10 @@ in Cyberjaya, Malaysia. I'm also involved with [Initiatives of Change][iofc],
 mostly maintaining and implementing systems for use in the [Caux conference
 centre][caux] in Caux, Switzerland.
 
-I also do contract work in the areas of Unix, Linux, Bash, and Python, with
-negotiable rates depending on the nature of the job. <a class="email
-no-replace-text" href="http://scr.im/{{ site.personal.email.scrim }}">Send me
-an e-mail</a> for a personalised quote.
-
-I'm always interested in hearing about ideas for new projects. If you have
-something you'd like me to help out with, <a class="email no-replace-text"
-href="http://scr.im/{{ site.personal.email.scrim }}">get in touch</a>.
+I also contract on Unix, Linux, Bash, and Python, with negotiable rates
+depending on the nature of the job. <a class="email no-replace-text"
+href="http://scr.im/{{ site.personal.email.scrim }}">Send me an e-mail</a> for
+a personalised quote.
 
 [caux]:            {{ site.links.caux }}
 [email]:           mailto:{{ site.personal.email }}
