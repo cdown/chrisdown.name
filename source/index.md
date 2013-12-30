@@ -12,8 +12,8 @@ languages; you can find my public code on [my GitHub][github] (or, if you
 prefer, it is also [mirrored locally][internal-git]). I am highly influenced by functionalist
 design, especially the work of [Dieter Rams][tencommandments].
 
-I currently work as a sysadmin and programmer for [Regent Markets Group][rmg]
-in Cyberjaya, Malaysia. I'm also involved with [Initiatives of Change][iofc],
+I currently work as a sysadmin and programmer at [Binary.com][binary] in
+Cyberjaya, Malaysia. I'm also involved with [Initiatives of Change][iofc],
 mostly maintaining and implementing systems for use in the [Caux conference
 centre][caux] in Caux, Switzerland.
 
@@ -27,6 +27,6 @@ a personalised quote.
 [github]:          {{ site.links.github }}
 [internal-git]:    {{ site.links.internal-git }}
 [iofc]:            {{ site.links.iofc }}
-[rmg]:             {{ site.links.rmg }}
+[binary]:          {{ site.links.binary }}
 [tencommandments]: https://www.vitsoe.com/gb/about/good-design
 [ulse]:            {{ site.links.ulse }}
