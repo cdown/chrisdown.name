@@ -1,23 +1,8 @@
-source: source
-plugins: plugins
-destination: deploy
-layouts: ../layouts
-
-pygments: true
-excerpt_separator: "<!-- excerpt -->"
-
-exclude:
-    - .git
-    - CNAME
-    - LICENSE
-    - Gemfile
-    - Gemfile.lock
-
-name: "Chris Down"
+name: Chris Down
 description:
-    "Minimalist programmer and designer, Python lover, and Unix sysadmin. This
-    site contains links to my code, blog, and other miscellania."
-url: "https://chrisdown.name"
+    "Minimalist programmer, designer, and Unix/Linux sysadmin. This site
+    contains links to my code, blog, and other miscellania."
+url: https://chrisdown.name
 
 links:
     caux: http://caux.ch
@@ -55,3 +40,8 @@ header:
         - icon: github-alt
           url: *github
           title: My GitHub profile
+
+source: source
+plugins: plugins
+destination: deploy
+layouts: ../layouts
