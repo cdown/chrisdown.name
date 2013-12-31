@@ -1,6 +1,9 @@
 ---
 layout: default
 title: "Chris Down"
+description:
+    "Minimalist programmer, designer, and Unix/Linux sysadmin. This site
+    contains links to my code, blog, and other miscellania."
 ---
 
 I'm the 4th most trusted expert globally on [Unix & Linux Stack
