@@ -51,7 +51,7 @@ generally accepted constants (for example, what is suggested by
 [FreeBSD][fbsdsysexits]), and then do something like the following when using
 them:
 
-    OS_CONFIG = getattr(os, "EX_CONFIG", 78)
+    _EX_CONFIG = getattr(os, "EX_CONFIG", 78)
 
 This can be a bit of a nightmare, though. The most important thing is that you
 make sure the exit codes your program returns are well documented, even if you
