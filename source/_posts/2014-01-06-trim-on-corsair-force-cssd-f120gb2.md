@@ -6,7 +6,7 @@ excerpt: How to get around TRIM issues on Linux with the CSSD-F120GB2.
 
 I experienced a few problems with TRIM on this drive:
 
-- ext4's "discard" option is (very) slow on file deletes on this drive;
+- ext4's "discard" option is (very) slow on inode deletes on this drive;
 - Using `fstrim` results in "FITRIM ioctl failed: Input/output error", and a
   warning in the kernel message buffer that DATA SET MANAGEMENT failed (this
   [seems to be known about][cforum], although the answers from support are not
