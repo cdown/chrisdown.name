@@ -16,12 +16,12 @@ I initially thought that this might be a problem with the drive, but SMART
 looks fine, and it seems to operate normally otherwise.
 
 I ended up using wiper.sh in a cron job. On Arch Linux, that's bundled with the
-hdparm package. After installing it, you can trim every month by doing
+hdparm package. After installing it, you can trim twice every month by doing
 something like the following:
 
     PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-    0 6 1 * * root wiper.sh --commit --please-prematurely-wear-out-my-ssd [filesystem]
+    0 6 1,15 * * root wiper.sh --commit --please-prematurely-wear-out-my-ssd [filesystem]
 
 The amusingly named "--please-prematurely-wear-out-my-ssd" is required to skip
 the prompt that usually appears when using --commit. I assume it exists to stop
