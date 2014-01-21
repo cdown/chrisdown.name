@@ -23,8 +23,8 @@ something like the following:
 
     0 6 1,15 * * root wiper.sh --commit --please-prematurely-wear-out-my-ssd [filesystem]
 
-The amusingly named "--please-prematurely-wear-out-my-ssd" is required to skip
-the prompt that usually appears when using --commit. I assume it exists to stop
-people from trimming with stupid frequency.
+The amusingly named `--please-prematurely-wear-out-my-ssd` is required to skip
+the prompt that usually appears when using `--commit`. I assume it exists to
+stop people from trimming with stupid frequency.
 
 [cforum]: http://forum.corsair.com/v3/showthread.php?t=88056
