@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Stop Mutt locking up with Gmail"
-excerpt: "tl;dr: Turn off imap_idle"
+description: "tl;dr: Turn off imap_idle"
 ---
 
 I've been experiencing random lockups with Gmail and Mutt ever since I switched

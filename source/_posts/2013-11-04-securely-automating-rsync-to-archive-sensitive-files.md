@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Securely automating rsync to archive sensitive files
-excerpt: "How to set up a secure implementation of automated rsync archiving"
+description: "How to set up a secure implementation of automated rsync archiving"
 ---
 
 Before I begin, please note that [sync is not backup][syncisnotbackup]. If you

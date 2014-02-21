@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Unlocking storage devices locked using a password made of scancodes
-excerpt:
+description:
     "Most BIOSes use a password made up of the scancodes from your keyboard
     instead of deferring to a character encoding scheme. Here are instructions
     on how to unlock a drive in such a situation."

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Fixing stale SSH sockets in tmux
-excerpt: When reattaching to tmux, you'll get the old SSH socket. This post shows you how to fix this.
+description: When reattaching to tmux, you'll get the old SSH socket. This post shows you how to fix this.
 ---
 
 I use tmux on my devbox with ssh-agent forwarding, so that I can access our git

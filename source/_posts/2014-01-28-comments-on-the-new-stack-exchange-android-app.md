@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Comments on the new Stack Exchange Android app
-excerpt: The new app is great, but it has some way to improve.
+description: The new app is great, but it has some way to improve.
 ---
 
 [Stack Exchange for Android just got released][seblog]. It's awesome, albeit

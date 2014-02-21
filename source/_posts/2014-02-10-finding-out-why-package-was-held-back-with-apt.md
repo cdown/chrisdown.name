@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Finding out why a package was held back with apt
-excerpt:
+description:
     "The default error message is not very helpful, but you can get debug
     output."
 ---

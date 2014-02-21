@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Backing up EFS and modem on the N7100/t03g
-excerpt: How to back up EFS and modem on the N7100/t03g
+description: How to back up EFS and modem on the N7100/t03g
 ---
 
 - Reboot into recovery (you can do this with superuser while Android is
