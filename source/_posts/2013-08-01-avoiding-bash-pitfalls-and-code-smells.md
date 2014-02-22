@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Avoiding bash pitfalls and code smells
-description: A video of the talk I did at WebCamp Kuala Lumpur about Bash pitfalls.
 ---
 
 A few months ago, I did a talk at [WebCamp KL][wckl] about avoiding bash

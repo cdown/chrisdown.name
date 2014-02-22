@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Archiving deleted mails in Dovecot without using a namespace
-description: Discussion about using the dovecot_deleted_to_trash plugin for archival purposes.
 ---
 
 When I first started using Dovecot, I looked high and low for a way to archive

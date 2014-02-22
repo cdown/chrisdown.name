@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Removing the source IP in Postfix
-description: How to remove your local IP from appearing in the "Received" headers when using Postfix.
 ---
 
 I don't really care who knows about my source IP when I send mails, but it

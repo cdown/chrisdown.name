@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Best practises when designating exit codes in command line programs
-description: How to use exit codes in accordance with standards, and in a sane way.
 ---
 
 There is one thing which I frequently see in command line applications,

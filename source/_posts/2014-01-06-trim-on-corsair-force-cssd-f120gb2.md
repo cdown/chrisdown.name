@@ -1,7 +1,6 @@
 ---
 layout: post
 title: TRIM on the Corsair Force CSSD-F120GB2
-description: How to get around TRIM issues on Linux with the CSSD-F120GB2.
 ---
 
 I experienced a few problems with TRIM on this drive:

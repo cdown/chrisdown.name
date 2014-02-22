@@ -1,9 +1,6 @@
 ---
 layout: post
 title: Finding out why a package was held back with apt
-description:
-    "The default error message is not very helpful, but you can get debug
-    output."
 ---
 
 I recently encountered some issues on a QA server where a package was being

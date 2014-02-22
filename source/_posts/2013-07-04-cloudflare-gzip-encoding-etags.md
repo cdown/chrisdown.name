@@ -1,7 +1,6 @@
 ---
 layout: post
 title: CloudFlare, gzip encoding, and ETags
-description: A discussion of the limitations of CloudFlare's ETag propagation.
 ---
 
 According to an e-mail from Marty Strong from CloudFlare support, apparently

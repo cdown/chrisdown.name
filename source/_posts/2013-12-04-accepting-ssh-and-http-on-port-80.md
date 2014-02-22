@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Accepting SSH and HTTP on port 80
-description: "How to accept both SSH and HTTP connections on port 80"
 ---
 
 I sometimes need to access the SSH server for this server from hotels, or other
