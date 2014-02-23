@@ -1,3 +1,3 @@
-This is the [Jekyll][jekyll] site that runs https://chrisdown.name.
+This is the [Jekyll][jekyll] site that runs http://chrisdown.name.
 
 [jekyll]: http://jekyllrb.com/
