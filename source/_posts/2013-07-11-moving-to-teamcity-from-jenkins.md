@@ -12,17 +12,11 @@ shown me that Jenkins can actually be a real pain in the ass when you have a
 moderately large team working on a humungous code base.
 
 The biggest difference for me straight out of the box is that the user
-experience on TeamCity is much better. I think this entire experience can be
-summed up fairly well just by looking at their index pages (with the same
-tests:
-[TeamCity](http://farm4.staticflickr.com/3710/9725615004_604b6e51c8_o.jpg) and
-[Jenkins](http://farm3.staticflickr.com/2889/9722386993_fee81b154a_o.jpg)).
-
-Jenkins makes me feel attached to test suites, and not my commits. This is a
-quite severe UX problem. The last 5 builds passed, so you get a nice sunny
-icon. Good, but that doesn't tell me anything at all, since we don't
-release/test branches in a linear fashion (like you usually would on a smaller
-project).
+experience on TeamCity is much better. Jenkins makes me feel attached to test
+suites, and not my commits. This is a quite severe UX problem. The last 5
+builds passed, so you get a nice sunny icon. Good, but that doesn't tell me
+anything at all, since we don't release/test branches in a linear fashion (like
+you usually would on a smaller project).
 
 Jenkins' UI doesn't get to the point. I don't care about executor status, when
 things last succeeded or failed (since our branches are not in a linear order),
