@@ -27,7 +27,9 @@ layout, but you get the idea):
         tr '1234567890qwertyuiopasdfghjklzxcvbnm' '\2-\13\20-\31\36-\46\54-\62'
 
 Note that if you are using a USB keyboard you [may be using a totally different
-set of scancodes][usb], and will need to translate accordingly to that instead.
+set of scancodes][usb], and will need to translate accordingly to that instead
+(although some BIOSes map these to the more traditional scancodes, so maybe
+not).
 
 After you've determined the right scancodes, you can feed the output to
 hdparm's `--security-unlock` or similar.
