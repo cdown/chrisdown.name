@@ -138,15 +138,14 @@ article p {
 
 pre, code {
     font-family: "Droid Sans Mono", monospace;
+    font-size: 1em;
 }
 
 code {
-    font-size: 0.8em;
     white-space: pre;
 }
 
 pre {
-    line-height: 1;
     background-color: #f7f7f7;
     border: 1px solid #eee;
     padding: 0.6em;
