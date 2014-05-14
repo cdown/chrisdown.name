@@ -18,3 +18,11 @@ wrote this function, which fixes this (run it after attaching):
             export SSH_AUTH_SOCK="$socket_path"
         fi
     }
+
+[Trent Lloyd suggests][status] an alternative method; symlinking the path
+pointed to by SSH\_AUTH\_SOCK on login, and then changing it to point to the
+symlink. As long as you are either only using a single key to log in and
+forward to each server, or you have some way of determining the identity of the
+key on the remote, this is a more easily automatable solution.
+
+[status]: https://twitter.com/lathiat/status/466413801932603392
