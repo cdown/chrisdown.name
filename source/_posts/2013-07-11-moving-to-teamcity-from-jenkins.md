@@ -3,62 +3,44 @@ layout: post
 title: Moving to TeamCity from Jenkins
 ---
 
-At [RMG][rmg], we're starting to migrate from using [Jenkins][jenkins] to
-[TeamCity][teamcity]. My experiences using Jenkins for small projects have been
-good in the past (although I have switched pretty much everything on GitHub to
-use [Travis][travis] now), but these have mostly been projects where only me
-and another few people are working on the codebase. My experience at RMG has
-shown me that Jenkins can actually be a real pain in the ass when you have a
-moderately large team working on a humungous code base.
+At work, we're slowly migrating from [Jenkins][] to [TeamCity][] in the hope of
+ending some of our recurring problems with continuous integration. My use of
+Jenkins prior to this job has been almost strictly on a personal basis,
+although I pretty much only use [Travis][] nowadays.
 
-The biggest difference for me straight out of the box is that the user
-experience on TeamCity is much better. Jenkins makes me feel attached to test
-suites, and not my commits. This is a quite severe UX problem. The last 5
-builds passed, so you get a nice sunny icon. Good, but that doesn't tell me
-anything at all, since we don't release/test branches in a linear fashion (like
-you usually would on a smaller project).
+The biggest difference upon initial inspection is that TeamCity is far more
+focused on validating individual commits rather than certain types of tests.
+Jenkins' front page presents information that is simply not useful in a
+non-linear development environment, where people are often working in vastly
+different directions. How many of the previous tests passed/failed is not
+really salient information in this kind of situation.
 
-Jenkins' UI doesn't get to the point. I don't care about executor status, when
-things last succeeded or failed (since our branches are not in a linear order),
-all I want to do is either look at a build, or (more likely) schedule one to
-run on a certain branch. TeamCity makes this easy, click the "..." button on
-the test suite you want to run (although I wish it wasn't so easy to click
-"Run" by accident when doing this). Jenkins, however, doesn't.
+Running specific tests for individual commits on TeamCity is far more trivial
+in terms of interface complexity than Jenkins. TeamCity just involves clicking
+the "..." button in the corner on any test type (although I wish it wasn't so
+easy to click "Run" by accident).
 
-[Kenneth Reitz][reitz] once said the following (in [Python for Humans][pfh]):
+I generally find TeamCity a lot more intuitive than Jenkins out of the box.
+There's a point at which you feel that if you have to scour the documentation
+to do anything remotely complex in an application, you're dealing with a bad
+interface.
 
-> If you have to refer to the documentation every time you use a module, find
-> or build a new module.
+One disappointing thing in both is that inter-branch merges improperly trigger
+e-mails to unrelated committers. I suppose it is fairly difficult to
+determine who to notify about failure in situations like these, though. It
+seems like TeamCity pulls up the first parent of the merge commit and sends the
+e-mail to them, when in reality it's usually the merge author that should be
+getting that information. Maybe I'm just ignorant of where to find a setting to
+change that behaviour.
 
-Any time I want to do anything remotely complex in Jenkins, I have to consult
-the documentation. So far in TeamCity, I have just winged it based on interface
-alone, and it's gone pretty well.
-
-Another thing which irritates me is Jenkins' poor branch handling -- Jenkins
-handles inter-branch merges very badly. Merged a branch that contains commits
-by others? Expect them to get an e-mail about the state of your branch.
-TeamCity has a lot of options for notifications, and doesn't make assumptions
-about who owns a branch. You tell it what to notify you for, with extreme
-granularity (if you want it). This works a lot better for me.
-
-When I'm doing a release, I want to be able to easily jump the queue to run all
-the tests. In Jenkins, you have to rudely kick other people off (which often
-results in angry e-mails to the dev list because you stopped the builds for a
-branch...). In TeamCity, you can just ask it to jump the queue without
-affecting anyone else.
+Being able to jump the queue is useful when releasing. It requires a plugin to
+do in a sane way in Jenkins, unless you're willing to kick everyone else out of
+the queue. TeamCity can do it by default, and it's obvious how to do so when
+scheduling the tests.
 
 There are supposedly more advanced features in Jenkins that don't exist in
-TeamCity (yet), but I don't think we use them. I'll quit happily take
-simplicity and ease of use over advanced functionality that I have yet to have
-use for.
+TeamCity (yet), but I don't think we use them.
 
-I am possibly in the "fluffy cloud" stage of adopting a new technology right
-now, so maybe I'm being too nice in some regards. I'll probably revisit this
-subject after we've used TeamCity for a while.
-
-[jenkins]: http://jenkins-ci.org/
-[teamcity]: http://www.jetbrains.com/teamcity/
-[travis]: https://travis-ci.org/
-[reitz]: http://kennethreitz.org/projects/
-[pfh]: http://python-for-humans.heroku.com/
-[rmg]: {{ site.links.rmg }}
+[Jenkins]: http://jenkins-ci.org/
+[TeamCity]: http://www.jetbrains.com/teamcity/
+[Travis]: https://travis-ci.org/
