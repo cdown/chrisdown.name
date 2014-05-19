@@ -3,18 +3,15 @@ layout: post
 title: Unlocking storage devices locked using a password made of scancodes
 ---
 
-A colleague of mine recently came to me with a problem -- he had been handed a
-drive that had been locked using the BIOS on another machine, and while he knew
-the password, he could not unlock it using hdparm or similar tools.
+Today marks the third time now that I have encountered problems unlocking solid
+state drives locked by Dell staff laptops. The problem here lies in the way
+that the BIOS interprets the data that constitutes your hard drive password.
+Many BIOSes (I am ignorant of what UEFI does here, it may take a more
+high-level approach) do not store your password in a character encoded format,
+but instead as a sequence of [keyboard scancodes][scancodes].
 
-The problem here lies in the way that the BIOS interprets the data that
-constitutes your hard drive password. Many BIOSes (I am ignorant of what UEFI
-does here, it may take a more high-level approach) do not store your password
-in a character encoded format, but instead as a sequence of [keyboard
-scancodes][scancodes].
-
-This also has the consequence that often passwords are case insensitive, since
-scancodes are per-key (interestingly HP holds [a patent][patent] to store
+This sometimes also has the consequence that passwords become case insensitive,
+since scancodes are per-key (interestingly HP holds [a patent][patent] to store
 case-related information for BIOS passwords, but I don't know if this also
 relates to passwords it applies to hard disks, or even if they use the patent
 right now).
