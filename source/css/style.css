@@ -159,6 +159,13 @@ blockquote {
     border-left: 3px solid #ddd;
 }
 
+.screen-reader-text {
+    position: absolute;
+    /* The next two lines are among the worst shite I've ever written. */
+    top: -9999px;
+    left: -9999px;
+}
+
 @media screen and (max-width: 600px) {
     article p {
         text-align: left;
