@@ -1,0 +1,10 @@
+before_install:
+    - sudo apt-get update
+install:
+    - sudo apt-get install linkchecker
+    - bundle install
+before_script:
+    - "jekyll serve --port 24895 &"
+    - sleep 5
+script:
+    - linkchecker --no-warnings http://localhost:24895
