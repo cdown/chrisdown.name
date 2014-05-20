@@ -4,7 +4,7 @@ This is the source code for the website that is displayed at
 [chrisdown.name]: https://chrisdown.name
 [Jekyll]: http://jekyllrb.com
 
-## Dependency resolution
+## Installing dependencies
 
 Using [bundler][]'s `bundle install` should give you everything you need.
 
