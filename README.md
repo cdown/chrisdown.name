@@ -16,6 +16,23 @@ You can build the output files with `jekyll build`, and they will appear in
 "deploy". There is a rake task for this that is also linked to a deploy task,
 which you might want to adjust to match your own server and path details.
 
+## Stripped fonts
+
+I use a small subset of [Font Awesome][] to provide link icons in the header.
+These are stripped using [Fontello][] to only the icons used to minimise
+transmission and load time.
+
+I also use two other fonts from [Google Fonts][]: [Open Sans][] and [Droid Sans
+Mono][]. These are currently loaded from Google's CDN by the client, and are
+not stored in the repository. I eventually plan to strip these to a subset of
+their total characters, too.
+
+[Font Awesome]: http://fortawesome.github.io/Font-Awesome/
+[Fontello]: http://fontello.com
+[Google Fonts]: https://www.google.com/fonts
+[Open Sans]: http://www.google.com/fonts/specimen/Open+Sans
+[Droid Sans Mono]: http://www.google.com/fonts/specimen/Droid+Sans+Mono
+
 ## License
 
 Since this repository contains part code and part content, the contents is
