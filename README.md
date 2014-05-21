@@ -33,6 +33,17 @@ their total characters, too.
 [Open Sans]: http://www.google.com/fonts/specimen/Open+Sans
 [Droid Sans Mono]: http://www.google.com/fonts/specimen/Droid+Sans+Mono
 
+## Testing
+
+[![Build status][travis-image]][travis-builds]
+
+Right now, testing just includes looking for broken links (external or
+internal) on the site. In future I'd like to also perform some usability tests,
+especially for screen readers.
+
+[travis-builds]: https://travis-ci.org/cdown/chrisdown.name
+[travis-image]: https://travis-ci.org/cdown/chrisdown.name.png?branch=master
+
 ## License
 
 Since this repository contains part code and part content, the contents is
