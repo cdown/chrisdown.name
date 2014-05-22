@@ -5,8 +5,8 @@
   font-style: normal;
 }
 
-[class^="icon-"],
-[class*=" icon-"] {
+[class^="font-awesome-"],
+[class*=" font-awesome-"] {
   font-family: fontawesome-stripped;
   font-weight: normal;
   font-style: normal;
@@ -14,14 +14,14 @@
   -webkit-font-smoothing: antialiased;
   *margin-right: .3em;
 }
-[class^="icon-"]:before,
-[class*=" icon-"]:before {
+[class^="font-awesome-"]:before,
+[class*=" font-awesome-"]:before {
   text-decoration: inherit;
   display: inline-block;
   speak: none;
 }
 
-.icon-book:before { content: '\e803'; } /* '' */
-.icon-linkedin:before { content: '\e802'; } /* '' */
-.icon-github-alt:before { content: '\e800'; } /* '' */
-.icon-stackexchange:before { content: '\e801'; } /* '' */
+.font-awesome-book:before { content: '\e803'; } /* '' */
+.font-awesome-linkedin:before { content: '\e802'; } /* '' */
+.font-awesome-github-alt:before { content: '\e800'; } /* '' */
+.font-awesome-stackexchange:before { content: '\e801'; } /* '' */
