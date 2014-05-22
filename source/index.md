@@ -11,8 +11,7 @@ Exchange][ulse], and a regular on many Unix mailing lists. Correctness and
 simplicity are my main goals when developing any system.
 
 In my free time I design robust, concise applications across a wide spectrum of
-languages; you can find my public code on [my GitHub][github]. If you
-prefer, it is also [mirrored locally][internal-git].
+languages; you can find my public code on [my GitHub][github].
 
 I currently work as a sysadmin and programmer at [Binary.com][binary] in
 Cyberjaya, Malaysia. I'm also involved with [Initiatives of Change][iofc], my

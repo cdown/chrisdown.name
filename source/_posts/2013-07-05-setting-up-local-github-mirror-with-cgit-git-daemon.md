@@ -3,10 +3,10 @@ layout: post
 title: Setting up a local GitHub mirror with cgit, gh-mirror, and git daemon
 ---
 
-I just finished setting up [a local GitHub mirror][local-git] so that I can
-have a local copy of my GitHub repositories on this server at all times. I
-figured since I have them here, I might as well also make them available to the
-public on this server. This post covers setting up the mirroring (using
+I just finished setting up a local GitHub mirror so that I can have a local
+copy of my GitHub repositories on this server at all times. I figured since I
+have them here, I might as well also make them available to the public on this
+server. This post covers setting up the mirroring (using
 [gh-mirror][gh-mirror]), a web interface (using [cgit][cgit] through
 [nginx][nginx]), and a clone interface (using [git-daemon][git-daemon]).
 
@@ -192,6 +192,5 @@ You should now be able to clone:
 
 [gh-mirror]:  https://github.com/cdown/gh-mirror
 [cgit]:       http://git.zx2c4.com/cgit/
-[local-git]:  {{ site.links.internal-git }}
 [git-daemon]: http://git-scm.com/book/en/Git-on-the-Server-Git-Daemon
 [nginx]:      http://nginx.org
