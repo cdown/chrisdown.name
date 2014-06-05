@@ -24,7 +24,7 @@ Overall though, this gives me hope. The app is extremely pleasant to look at,
 and is generally fairly functional even at this early stage. Nice work!
 
 [seblog]: http://blog.stackoverflow.com/2014/01/stack-exchange-for-android-is-here
-[upvote]: /images/blog/se-android//upvote.png
-[accepted]: /images/blog/se-android//accepted.png
-[bare]: /images/blog/se-android//bare.png
-[dragcode]: /images/blog/se-android//dragcode.png
+[upvote]: /images/blog/se-android/upvote.png
+[accepted]: /images/blog/se-android/accepted.png
+[bare]: /images/blog/se-android/bare.png
+[dragcode]: /images/blog/se-android/dragcode.png
