@@ -18,10 +18,6 @@ Cyberjaya, Malaysia. I'm also involved with [Initiatives of Change][iofc], my
 primary focus being on maintaining and implementing systems for use in the
 [Caux conference centre][caux] in Caux, Switzerland.
 
-I also do consulting, feel free to <a class="email no-replace-text"
-href="http://scr.im/{{ site.personal.email.scrim }}">send me an e-mail</a> for
-a personalised quote, or you can find me on [AirPair][].
-
 [caux]:            {{ site.links.caux }}
 [email]:           mailto:{{ site.personal.email }}
 [github]:          {{ site.links.github }}
@@ -30,4 +26,3 @@ a personalised quote, or you can find me on [AirPair][].
 [binary]:          {{ site.links.binary }}
 [tencommandments]: https://www.vitsoe.com/gb/about/good-design
 [ulse]:            {{ site.links.ulse }}
-[AirPair]:         https://airpair.com
