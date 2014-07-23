@@ -3,7 +3,7 @@ url: https://chrisdown.name
 
 links:
     caux: http://caux.ch
-    binary: &binary https://binary.com
+    facebook: &facebook https://facebook.com
     iofc: &iofc http://iofc.org
     rmg: &rmg http://regentmarkets.com
     github: &github https://github.com/cdown
@@ -14,10 +14,10 @@ links:
 
 personal:
     name: Chris Down
-    job: Sysadmin
+    job: Systems Engineer
     employer:
-        name: Binary.com
-        url: *binary
+        name: Facebook
+        url: *facebook
     email:
         account: chris
         scrim: chrisdown
