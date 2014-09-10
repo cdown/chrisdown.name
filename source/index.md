@@ -6,7 +6,7 @@ description:
     contains links to my code, blog, and other miscellania."
 ---
 
-I'm the 4th most trusted expert on [Unix & Linux Stack Exchange][ulse], and a
+I'm the 5th most trusted expert on [Unix & Linux Stack Exchange][ulse], and a
 regular on many Unix mailing lists. Correctness and simplicity are my main
 goals when developing any system. In my free time I design robust, concise
 applications across a wide spectrum of languages; you can find my public code
