@@ -19,6 +19,11 @@ a:hover {
     background-color: #CC333F;
 }
 
+li p {
+    margin: 0;
+    padding: 0;
+}
+
 /* We have a single navigation element, in a different colour, that links back
    to the home page. The rest have the normal link styling. */
 header {
