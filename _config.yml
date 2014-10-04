@@ -2,15 +2,10 @@ name: Chris Down
 url: https://chrisdown.name
 
 links:
-    caux: http://caux.ch
     facebook: &facebook https://facebook.com
-    iofc: &iofc http://iofc.org
-    rmg: &rmg http://regentmarkets.com
     github: &github https://github.com/cdown
     ulse: &ulse http://unix.stackexchange.com/users/10762/chris-down
     linkedin: &linkedin http://www.linkedin.com/in/chrisldown
-    internal-git: http://git.chrisdown.name
-    blog: &blog /archive.html
 
 personal:
     name: Chris Down
@@ -25,7 +20,7 @@ personal:
 header:
     links:
         - icon: book
-          url: *blog
+          url: /archive.html
           title: Blog archive
         - icon: linkedin
           url: *linkedin
