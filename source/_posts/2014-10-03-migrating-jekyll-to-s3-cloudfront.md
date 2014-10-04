@@ -3,7 +3,7 @@ layout: post
 title: Migrating Jekyll to Amazon S3 and CloudFront
 ---
 
-This site is now entirely served using Amazon S3/Cloudfront. I'd looked into
+This site is now entirely served using Amazon S3/CloudFront. I'd looked into
 doing this a while back, but the lack of TLS support was a no go at the time.
 It seems that CloudFront supports using your own SSL certificates for free now,
 as long as you don't care about clients that don't support SNI (or you have
