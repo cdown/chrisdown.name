@@ -7,4 +7,4 @@ before_script:
     - "jekyll serve --port 24895 &"
     - sleep 5
 script:
-    - linkchecker --no-warnings http://localhost:24895
+    - "linkchecker --no-warnings --ignore-url='^https://chrisdown.name' http://localhost:24895"
