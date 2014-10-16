@@ -33,7 +33,7 @@ Now all that's required are two things:
   the ssh configuration)
 
 Automated initialisation can be done by putting all of the keys inside one
-directory (I use ~/.ssh/private), looping over the files, and launching an
+directory (I use ~/.ssh/keys), looping over the files, and launching an
 instance for each. You can see the changes made to do that
 [here][loop-over-keys].
 
