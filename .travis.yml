@@ -1,10 +1,13 @@
 before_install:
-    - sudo apt-get update
+    - sudo add-apt-repository ppa:techzilla/misc -y
+    - sudo apt-get update -q
 install:
     - sudo apt-get install linkchecker
+    - sudo apt-get install tidy
     - bundle install
 before_script:
     - "jekyll serve --port 24895 &"
     - sleep 5
 script:
     - "linkchecker --no-warnings --ignore-url='^https://chrisdown.name' http://localhost:24895"
+    - "! find deploy/ -name '*.html' -exec tidy -e {} + 2>&1 | grep '[1-9] error'"
