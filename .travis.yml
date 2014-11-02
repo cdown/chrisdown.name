@@ -6,6 +6,7 @@ install:
     - sudo apt-get install tidy
     - bundle install
 before_script:
+    - 'tidy -v'
     - "jekyll serve --port 24895 &"
     - sleep 5
 script:
