@@ -2,34 +2,34 @@ name: Chris Down
 url: https://chrisdown.name
 
 links:
-    github: &github https://github.com/cdown
-    ulse: &ulse http://unix.stackexchange.com/users/10762/chris-down
-    linkedin: &linkedin http://www.linkedin.com/in/chrisldown
+  github: &github https://github.com/cdown
+  ulse: &ulse http://unix.stackexchange.com/users/10762/chris-down
+  linkedin: &linkedin http://www.linkedin.com/in/chrisldown
 
 personal:
-    name: Chris Down
-    job: Systems Administrator
-    employer:
-        name: Facebook
-        url: https://facebook.com
+  name: Chris Down
+  job: Systems Administrator
+  employer:
+    name: Facebook
+    url: https://facebook.com
     email:
-        account: chris
-        scrim: chrisdown
+      account: chris
+      scrim: chrisdown
 
 header:
-    links:
-        - icon: book
-          url: /archive.html
-          title: Blog archive
-        - icon: linkedin
-          url: *linkedin
-          title: My LinkedIn profile
-        - icon: stackexchange
-          url: *ulse
-          title: My Unix & Linux Stack Exchange profile
-        - icon: github-alt
-          url: *github
-          title: My GitHub profile
+  links:
+    - icon: book
+      url: /archive.html
+      title: Blog archive
+    - icon: linkedin
+      url: *linkedin
+      title: My LinkedIn profile
+    - icon: stackexchange
+      url: *ulse
+      title: My Unix & Linux Stack Exchange profile
+    - icon: github-alt
+      url: *github
+      title: My GitHub profile
 
 source: source
 plugins: plugins
