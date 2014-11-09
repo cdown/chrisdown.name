@@ -11,10 +11,10 @@ title: Build status
      </tr>
 </thead>
 <tbody>
-{% for build in site.builds %}
+{% for repo in site.builds %}
 <tr>
-    <th><a href="https://github.com{{ build.path }}">{{ build.name }}</a></th>
-    <td class="travis"><a href="https://travis-ci.org{{ build.path }}"><img src="https://api.travis-ci.org{{ build.path }}.png?branch=master" alt="Build status for {{ build.name }}" /></a></td>
+    <th><a href="https://github.com/cdown/{{ repo }}">{{ repo }}</a></th>
+    <td class="travis"><a href="https://travis-ci.org/cdown/{{ repo }}"><img src="https://api.travis-ci.org/cdown/{{ repo }}.png?branch=master" alt="Build status for {{ repo }}" /></a></td>
 </tr>
 {% endfor %}
 </tbody>

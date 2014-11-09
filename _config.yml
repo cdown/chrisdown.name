@@ -32,15 +32,17 @@ header:
       title: My GitHub profile
 
 builds:
-  - name: chrisdown.name
-    path: /cdown/chrisdown.name
-    description: blergle wergle
-  - name: chrisdown.name
-    path: /cdown/chrisdown.name
-    description: blergle wergle
-  - name: chrisdown.name
-    path: /cdown/chrisdown.name
-    description: blergle wergle
+  - chrisdown.name
+  - defeat
+  - download-flickr-set
+  - gh-mirror
+  - imurl
+  - osmo
+  - pinyin
+  - pyaur
+  - radiusweb
+  - rtorrent-cookbook
+  - yturl
 
 source: source
 plugins: plugins
