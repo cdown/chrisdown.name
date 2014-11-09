@@ -1,13 +1,12 @@
 ---
 layout: default
-title: Builds
+title: Build status
 ---
 
 <table>
 <thead>
      <tr>
-         <th></th>
-         <th>Description</th>
+         <th>Repository</th>
          <th>Build status</th>
      </tr>
 </thead>
@@ -15,7 +14,6 @@ title: Builds
 {% for build in site.builds %}
 <tr>
     <th><a href="https://github.com{{ build.path }}">{{ build.name }}</a></th>
-    <td>{{ build.description }}</td>
     <td class="travis"><a href="https://travis-ci.org{{ build.path }}"><img src="https://api.travis-ci.org{{ build.path }}.png?branch=master" alt="Build status for {{ build.name }}" /></a></td>
 </tr>
 {% endfor %}
