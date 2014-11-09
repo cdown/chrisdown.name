@@ -1,3 +1,10 @@
+notifications:
+  email:
+    recipients:
+      - chris+travis@chrisdown.name
+    on_success: never
+    on_failure: always
+
 before_install:
     - sudo add-apt-repository ppa:techzilla/misc -y
     - sudo apt-get update -q
