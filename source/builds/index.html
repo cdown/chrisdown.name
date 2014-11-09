@@ -8,13 +8,15 @@ title: Build status
      <tr>
          <th>Repository</th>
          <th>Build status</th>
+         <th>Coverage</th>
      </tr>
 </thead>
 <tbody>
 {% for repo in site.builds %}
 <tr>
     <th><a href="https://github.com/cdown/{{ repo }}">{{ repo }}</a></th>
-    <td class="travis"><a href="https://travis-ci.org/cdown/{{ repo }}"><img src="https://api.travis-ci.org/cdown/{{ repo }}.png?branch=master" alt="Build status for {{ repo }}" /></a></td>
+    <td class="status-image"><a href="https://travis-ci.org/cdown/{{ repo }}"><img src="https://api.travis-ci.org/cdown/{{ repo }}.png?branch=master" alt="Build status for {{ repo }}" /></a></td>
+    <td class="status-image"><a href='https://coveralls.io/r/cdown/{{ repo }}?branch=master'><img src='https://coveralls.io/repos/cdown/{{ repo }}/badge.png?branch=master' alt='Coverage status for {{ repo }}' /></a></td>
 </tr>
 {% endfor %}
 </tbody>

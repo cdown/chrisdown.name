@@ -236,15 +236,15 @@ tr:nth-child(even) {
     background-color:#f8f8f8;
 }
 
-td.travis {
+td.status-image {
     text-align: center;
 }
 
-td.travis a img {
+td.status-image a img {
     vertical-align: middle;
     margin-top: -5px;
 }
 
-td.travis a:hover {
+td.status-image a:hover {
     background-color: transparent;
 }
