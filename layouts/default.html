@@ -23,10 +23,10 @@
                 </ul>
                 <ul class="extra">
                 {% for link in site.header.links %}
-                    <li title="{{ link.title }}">
+                    <li title="{{ link.title | xml_escape }}">
                         <a href="{{ link.url }}">
                             <span aria-hidden="true" class="font-awesome-{{ link.icon }}"></span>
-                            <span class="screen-reader-text">{{ link.title }}</span>
+                            <span class="screen-reader-text">{{ link.title | xml_escape }}</span>
                         </a>
                     </li>
                 {% endfor %}
