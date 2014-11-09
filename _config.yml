@@ -31,6 +31,17 @@ header:
       url: *github
       title: My GitHub profile
 
+builds:
+  - name: chrisdown.name
+    path: /cdown/chrisdown.name
+    description: blergle wergle
+  - name: chrisdown.name
+    path: /cdown/chrisdown.name
+    description: blergle wergle
+  - name: chrisdown.name
+    path: /cdown/chrisdown.name
+    description: blergle wergle
+
 source: source
 plugins: plugins
 destination: deploy
