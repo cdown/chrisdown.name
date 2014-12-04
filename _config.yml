@@ -12,9 +12,9 @@ personal:
   employer:
     name: Facebook
     url: https://facebook.com
-    email:
-      account: chris
-      scrim: chrisdown
+  email:
+    account: chris
+    scrim: chrisdown
 
 header:
   links:
