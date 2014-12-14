@@ -3,15 +3,13 @@ layout: post
 title: Migrating Jekyll to Amazon S3 and CloudFront
 ---
 
-This site is now entirely served using Amazon S3/CloudFront. I'd looked into
-doing this a while back, but the lack of TLS support was a no go at the time.
-It seems that CloudFront supports using your own SSL certificates for free now,
-as long as you don't care about clients that don't support SNI (or you have
-money up the wazoo for a dedicated IP).
+As of this morning, this site is now being served using CloudFront backed by an
+S3 bucket. I'd looked into doing this a while back, but the TLS support wasn't
+there (I believe they had support, but you needed to get a dedicated IP, which
+cost an arm and a leg). You can now get TLS support using SNI only for free.
 
-The set up is mostly self-explanatory, but in typical Amazon fashion, it
-requires steps that are bafflingly non-intuitive and/or poorly documented. So,
-in the interests of my own documentation, here's what I did:
+The setup is mostly self explanatory, with some steps that are not so obvious
+from the Amazon documentation.
 
 ## S3 setup
 
