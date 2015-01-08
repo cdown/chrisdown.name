@@ -32,16 +32,22 @@ header:
       title: My GitHub profile
 
 builds:
+  - chinese-tools
   - chrisdown.name
   - defeat
   - download-flickr-set
+  - fix-srt-order
   - gh-mirror
   - imurl
+  - jingui
   - osmo
   - pinyin
   - pyaur
   - radiusweb
   - rtorrent-cookbook
+  - scurl
+  - tinysrt
+  - tzupdate
   - yturl
 
 source: source
