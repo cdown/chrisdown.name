@@ -9,14 +9,34 @@ title: Build status
          <th>Repository</th>
          <th>Build status</th>
          <th>Coverage</th>
+         <th>Code quality</th>
+         <th>Dependencies</th>
      </tr>
 </thead>
 <tbody>
 {% for repo in site.builds %}
 <tr>
     <th><a href="https://github.com/cdown/{{ repo }}">{{ repo }}</a></th>
-    <td class="status-image"><a href="https://travis-ci.org/cdown/{{ repo }}"><img src="https://api.travis-ci.org/cdown/{{ repo }}.png?branch=master" alt="Build status for {{ repo }}" /></a></td>
-    <td class="status-image"><a href='https://coveralls.io/r/cdown/{{ repo }}?branch=master'><img src='https://coveralls.io/repos/cdown/{{ repo }}/badge.png?branch=master' alt='Coverage status for {{ repo }}' /></a></td>
+    <td class="status-image">
+        <a href="https://travis-ci.org/cdown/{{ repo }}">
+            <img src="https://img.shields.io/travis/cdown/{{ repo }}/master.svg" alt="Build status for {{ repo }}" />
+        </a>
+    </td>
+    <td class="status-image">
+        <a href="https://coveralls.io/r/cdown/{{ repo }}">
+            <img src="https://img.shields.io/coveralls/cdown/{{ repo }}/master.svg" alt="Coverage for {{ repo }}" />
+        </a>
+    </td>
+    <td class="status-image">
+        <a href="https://scrutinizer-ci.com/g/cdown/{{ repo }}/code-structure/master/hot-spots">
+            <img src="https://img.shields.io/scrutinizer/g/cdown/{{ repo }}.svg" alt="Code quality for {{ repo }}" />
+        </a>
+    </td>
+    <td class="status-image">
+        <a href="https://requires.io/github/cdown/{{ repo }}/requirements/?branch=master">
+            <img src="https://img.shields.io/requires/github/cdown/{{ repo }}.svg" alt="Dependency status for {{ repo }}" />
+        </a>
+    </td>
 </tr>
 {% endfor %}
 </tbody>
