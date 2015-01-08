@@ -208,3 +208,43 @@ iframe {
         text-align: left;
     }
 }
+
+/* Builds page */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    font-weight: inherit;
+}
+
+th, td {
+    padding: 0.3em;
+}
+
+thead th {
+    background-color: #f8f8f8;
+}
+
+tbody th {
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color:#f8f8f8;
+}
+
+td.status-image {
+    text-align: center;
+}
+
+td.status-image a img {
+    vertical-align: middle;
+    margin-top: -5px;
+}
+
+td.status-image a:hover {
+    background-color: transparent;
+}
