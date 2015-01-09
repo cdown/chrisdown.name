@@ -32,23 +32,31 @@ header:
       title: My GitHub profile
 
 builds:
-  - chinese-tools
-  - chrisdown.name
-  - defeat
-  - download-flickr-set
-  - fix-srt-order
-  - gh-mirror
-  - imurl
-  - jingui
-  - osmo
-  - pinyin
-  - pyaur
-  - radiusweb
-  - rtorrent-cookbook
-  - scurl
-  - tinysrt
-  - tzupdate
-  - yturl
+  - name: chinese-tools
+  - name: chrisdown.name
+    disable:
+      - coveralls
+      - scrutinizer
+      - requires  # TODO: Ruby requires?
+  - name: defeat
+  - name: download-flickr-set
+  - name: fix-srt-order
+  - name: gh-mirror
+  - name: imurl
+  - name: jingui
+  - name: osmo
+  - name: pinyin
+  - name: pyaur
+  - name: radiusweb
+  - name: rtorrent-cookbook
+    disable:
+      - coveralls
+      - scrutinizer
+      - requires
+  - name: scurl
+  - name: tinysrt
+  - name: tzupdate
+  - name: yturl
 
 source: source
 plugins: plugins
