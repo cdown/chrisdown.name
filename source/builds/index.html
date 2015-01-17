@@ -7,9 +7,10 @@ title: Build status
   <thead>
     <tr>
       <th>Repository</th>
-      <th>Build status</th>
+      <th>Linux build</th>
+      <th>Windows build</th>
       <th>Coverage</th>
-      <th>Code quality</th>
+      <th>Code health</th>
       <th>Dependencies</th>
     </tr>
   </thead>
@@ -22,7 +23,16 @@ title: Build status
         N/A
         {% else %}
         <a href="https://travis-ci.org/cdown/{{ repo.name }}">
-          <img src="https://img.shields.io/travis/cdown/{{ repo.name }}/master.svg" alt="Build status for {{ repo.name }}" />
+          <img src="https://img.shields.io/travis/cdown/{{ repo.name }}/master.svg?label=linux" alt="Linux build status for {{ repo.name }}" />
+        </a>
+        {% endif %}
+      </td>
+      <td class="status-image">
+        {% if repo.disable contains 'appveyor' %}
+        N/A
+        {% else %}
+        <a href="https://ci.appveyor.com/project/cdown/{{ repo.name }}">
+          <img src="https://img.shields.io/appveyor/ci/cdown/{{ repo.name }}/master.svg?label=windows" alt="Mac build status for {{ repo.name }}" />
         </a>
         {% endif %}
       </td>
@@ -36,11 +46,11 @@ title: Build status
         {% endif %}
       </td>
       <td class="status-image">
-        {% if repo.disable contains 'scrutinizer' %}
+        {% if repo.disable contains 'landscape' %}
         N/A
         {% else %}
-        <a href="https://scrutinizer-ci.com/g/cdown/{{ repo.name }}/code-structure/master/hot-spots">
-          <img src="https://img.shields.io/scrutinizer/g/cdown/{{ repo.name }}.svg" alt="Code quality for {{ repo.name }}" />
+        <a href="https://landscape.io/github/cdown/{{ repo.name }}/master">
+          <img src="https://landscape.io/github/cdown/{{ repo.name }}/master/landscape.svg" alt="Code health for {{ repo.name }}" />
         </a>
         {% endif %}
       </td>

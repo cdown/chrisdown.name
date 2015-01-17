@@ -32,11 +32,12 @@ header:
       title: My GitHub profile
 
 builds:
-  - name: chinese-tools
+  - name: cedict_json
   - name: chrisdown.name
     disable:
       - coveralls
-      - scrutinizer
+      - appveyor
+      - landscape
       - requires  # TODO: Ruby requires?
   - name: defeat
   - name: download-flickr-set
@@ -50,8 +51,9 @@ builds:
   - name: radiusweb
   - name: rtorrent-cookbook
     disable:
+      - appveyor
       - coveralls
-      - scrutinizer
+      - landscape
       - requires
   - name: scurl
   - name: tinysrt
