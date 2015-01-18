@@ -10,7 +10,7 @@ before_install:
     - sudo apt-get update -q
 install:
     - sudo apt-get install linkchecker
-    - sudo apt-get install tidy
+    - sudo apt-get install tidy --force-yes
     - bundle install
 before_script:
     - 'tidy -v'
