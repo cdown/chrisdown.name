@@ -45,6 +45,8 @@ builds:
   - name: gh-mirror
   - name: imurl
   - name: jingui
+    disable:
+      - appveyor
   - name: osmo
   - name: pinyin
   - name: pyaur
