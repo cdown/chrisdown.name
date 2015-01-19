@@ -6,11 +6,30 @@ description:
     contains links to my code, blog, and other miscellania."
 ---
 
-I'm the 5th most trusted expert on [Unix & Linux Stack Exchange][ulse], and a
-regular on many Unix mailing lists. Correctness and simplicity are my main
-goals when developing any system. In my free time I design robust, concise
-applications across a wide spectrum of languages; you can find my public code
-on [my GitHub][github].
+Hey there! I'm a software developer and system administrator living in London,
+England, currently building stuff at [Facebook][].
 
-[github]: {{ site.links.github }}
-[ulse]:   {{ site.links.ulse }}
+## Things on this site
+
+- [Status dashboard for my projects][]
+- [Assorted notes and thoughts][]
+- [My PGP public key][]
+- [My SSH public key][]
+
+## Things not on this site
+
+- [My code projects on GitHub][]
+- [My LinkedIn profile][]
+- [My Unix and Linux Stack Exchange profile][]
+- [My Facebook profile][]
+
+[Assorted notes and thoughts]: /archive.html
+[GitHub]: {{ site.links.github }}
+[My Facebook profile]: https://www.facebook.com/christopherdown
+[Facebook]: https://www.facebook.com
+[My LinkedIn profile]: {{ site.links.linkedin }}
+[My PGP public key]: /pgp
+[My SSH public key]: /ssh
+[My Unix and Linux Stack Exchange profile]: {{ site.links.ulse }}
+[My code projects on GitHub]: {{ site.links.github }}
+[Status dashboard for my projects]: /builds
