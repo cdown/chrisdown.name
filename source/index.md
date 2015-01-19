@@ -21,11 +21,9 @@ England, currently building stuff in the security team at [Facebook][].
 - [My code projects on GitHub][]
 - [My LinkedIn profile][]
 - [My Unix and Linux Stack Exchange profile][]
-- [My Facebook profile][]
 
 [Assorted notes]: /archive.html
 [GitHub]: {{ site.links.github }}
-[My Facebook profile]: https://www.facebook.com/christopherdown
 [Facebook]: https://www.facebook.com
 [My LinkedIn profile]: {{ site.links.linkedin }}
 [My PGP public key]: /pgp
