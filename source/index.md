@@ -15,7 +15,6 @@ England, currently building stuff at [Facebook][].
 - [Assorted notes and thoughts][]
 - [My PGP public key][]
 - [My SSH public key][]
-- [My (outdated) TF2 configs][], back from when I used to play TF2
 
 ## Things not on this site
 
@@ -24,7 +23,6 @@ England, currently building stuff at [Facebook][].
 - [My Unix and Linux Stack Exchange profile][]
 - [My Facebook profile][]
 
-[My (outdated) TF2 configs]: /tf2
 [Assorted notes and thoughts]: /archive.html
 [GitHub]: {{ site.links.github }}
 [My Facebook profile]: https://www.facebook.com/christopherdown
