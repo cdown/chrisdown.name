@@ -12,7 +12,7 @@ England, currently building stuff at [Facebook][].
 ## Things on this site
 
 - [Status dashboard for my projects][]
-- [Assorted notes and thoughts][]
+- [Assorted notes][]
 - [My PGP public key][]
 - [My SSH public key][]
 
@@ -23,7 +23,7 @@ England, currently building stuff at [Facebook][].
 - [My Unix and Linux Stack Exchange profile][]
 - [My Facebook profile][]
 
-[Assorted notes and thoughts]: /archive.html
+[Assorted notes]: /archive.html
 [GitHub]: {{ site.links.github }}
 [My Facebook profile]: https://www.facebook.com/christopherdown
 [Facebook]: https://www.facebook.com
