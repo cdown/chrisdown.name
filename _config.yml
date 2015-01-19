@@ -8,7 +8,7 @@ links:
 
 personal:
   name: Chris Down
-  job: Systems Administrator
+  job: System Administrator
   employer:
     name: Facebook
     url: https://facebook.com
@@ -39,6 +39,12 @@ builds:
       - appveyor
       - landscape
       - requires  # TODO: Ruby requires?
+  - name: chrisdown.name-ssl
+    disable:
+      - coveralls
+      - appveyor
+      - landscape
+      - requires
   - name: defeat
   - name: download-flickr-set
   - name: fix-srt-order

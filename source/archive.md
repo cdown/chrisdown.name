@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Blog archive
+title: Assorted notes
 description: Recent blog posts by Chris Down.
 ---
 
-# Blog archive
+# Assorted notes
 
 {% for post in site.posts %}
 - [{{ post.title }}]({{ post.url }}){% endfor %}
