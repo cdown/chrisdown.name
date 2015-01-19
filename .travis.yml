@@ -17,9 +17,5 @@ before_script:
     - "jekyll serve --port 24895 &"
     - sleep 5
 script:
-    - >
-      linkchecker --no-warnings
-      --ignore-url='^https://chrisdown.name'
-      --ignore-url='^https://www.facebook.com/christopherdown'
-      http://localhost:24895
+    - linkchecker --no-warnings http://localhost:24895
     - "! find deploy/ -name '*.html' -exec tidy -e {} + 2>&1 | grep '[1-9] error'"

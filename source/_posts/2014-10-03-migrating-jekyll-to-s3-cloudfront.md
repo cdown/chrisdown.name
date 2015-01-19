@@ -35,7 +35,6 @@ from the Amazon documentation.
 
 3. Enable static website hosting
 4. Set up the www bucket to redirect to the literal non-www url for your site
-   (for example, [https://chrisdown.name](https://chrisdown.name))
 5. Set up Jekyll to deploy to S3, here's the [diff][] where I did that
 
 [diff]: https://github.com/cdown/chrisdown.name/commit/aac8e5f0ba01bbf92f5b58ea
