@@ -7,7 +7,7 @@ description:
 ---
 
 Hey there! I'm a software developer and system administrator living in London,
-England, currently building stuff in the security team at [Facebook][].
+England, currently building stuff as part of the security team at [Facebook][].
 
 ## Things on this site
 
