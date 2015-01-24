@@ -1,3 +1,19 @@
+---
+header:
+  links:
+    - icon: book
+      url: /archive.html
+      title: Blog archive
+    - icon: linkedin
+      url: *linkedin
+      title: My LinkedIn profile
+    - icon: stackexchange
+      url: *ulse
+      title: My Unix & Linux Stack Exchange profile
+    - icon: github-alt
+      url: *github
+      title: My GitHub profile
+---
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -34,7 +50,7 @@
                 <li><a href="/">{{ site.personal.name }}</a></li>
                 </ul>
                 <ul class="extra">
-                {% for link in site.header.links %}
+                {% for link in page.header.links %}
                     <li title="{{ link.title | xml_escape }}">
                         <a href="{{ link.url }}">
                             <span aria-hidden="true" class="font-awesome-{{ link.icon }}"></span>

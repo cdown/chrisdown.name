@@ -1,6 +1,43 @@
 ---
 layout: default
 title: Build status
+
+builds:
+  - name: cedict_json
+  - name: chrisdown.name
+    disable:
+      - coveralls
+      - appveyor
+      - landscape
+      - requires  # TODO: Ruby requires?
+  - name: chrisdown.name-ssl
+    disable:
+      - coveralls
+      - appveyor
+      - landscape
+      - requires
+  - name: defeat
+  - name: download-flickr-set
+  - name: fix-srt-order
+  - name: gh-mirror
+  - name: imurl
+  - name: jingui
+    disable:
+      - appveyor
+  - name: osmo
+  - name: pinyin
+  - name: pyaur
+  - name: radiusweb
+  - name: rtorrent-cookbook
+    disable:
+      - appveyor
+      - coveralls
+      - landscape
+      - requires
+  - name: scurl
+  - name: tinysrt
+  - name: tzupdate
+  - name: yturl
 ---
 
 <table>
@@ -15,7 +52,7 @@ title: Build status
     </tr>
   </thead>
   <tbody>
-    {% for repo in site.builds %}
+    {% for repo in page.builds %}
     <tr>
       <th><a href="https://github.com/cdown/{{ repo.name }}">{{ repo.name }}</a></th>
       <td class="status-image">

@@ -16,58 +16,6 @@ personal:
     account: chris
     scrim: chrisdown
 
-header:
-  links:
-    - icon: book
-      url: /archive.html
-      title: Blog archive
-    - icon: linkedin
-      url: *linkedin
-      title: My LinkedIn profile
-    - icon: stackexchange
-      url: *ulse
-      title: My Unix & Linux Stack Exchange profile
-    - icon: github-alt
-      url: *github
-      title: My GitHub profile
-
-builds:
-  - name: cedict_json
-  - name: chrisdown.name
-    disable:
-      - coveralls
-      - appveyor
-      - landscape
-      - requires  # TODO: Ruby requires?
-  - name: chrisdown.name-ssl
-    disable:
-      - coveralls
-      - appveyor
-      - landscape
-      - requires
-  - name: defeat
-  - name: download-flickr-set
-  - name: fix-srt-order
-  - name: gh-mirror
-  - name: imurl
-  - name: jingui
-    disable:
-      - appveyor
-  - name: osmo
-  - name: pinyin
-  - name: pyaur
-  - name: radiusweb
-  - name: rtorrent-cookbook
-    disable:
-      - appveyor
-      - coveralls
-      - landscape
-      - requires
-  - name: scurl
-  - name: tinysrt
-  - name: tzupdate
-  - name: yturl
-
 source: source
 plugins: plugins
 destination: deploy
