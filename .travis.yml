@@ -18,5 +18,5 @@ before_script:
     - sleep 5
 script:
     - linkchecker --no-warnings http://localhost:24895
-    - "! find deploy/ -name '*.html' -exec tidy -e {} + 2>&1 | grep '[1-9] error'"
+    - "! find deploy/ -name '*.html' -exec tidy -e {} + 2>&1 | LC_ALL=C grep '[0-9] error' | grep -v '0 error'"
     - "! grep -R 'href=\"\"' deploy"
