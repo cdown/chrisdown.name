@@ -23,11 +23,10 @@ England, currently building stuff as part of the security team at [Facebook][].
 - [My Unix and Linux Stack Exchange profile][]
 
 [Assorted notes]: /archive.html
-[GitHub]: {{ site.links.github }}
 [Facebook]: https://www.facebook.com
-[My LinkedIn profile]: {{ site.links.linkedin }}
+[My LinkedIn profile]: https://www.linkedin.com/in/chrisldown
 [My PGP public key]: /pgp
 [My SSH public key]: /ssh
-[My Unix and Linux Stack Exchange profile]: {{ site.links.ulse }}
-[My code projects on GitHub]: {{ site.links.github }}
+[My Unix and Linux Stack Exchange profile]: http://unix.stackexchange.com/users/10762/chris-down
+[My code projects on GitHub]: https://github.com/cdown
 [Status dashboard for my projects]: /builds

@@ -2,9 +2,9 @@ name: Chris Down
 url: https://chrisdown.name
 
 links:
-  github: &github https://github.com/cdown
-  ulse: &ulse http://unix.stackexchange.com/users/10762/chris-down
-  linkedin: &linkedin http://www.linkedin.com/in/chrisldown
+  github: https://github.com/cdown
+  ulse: http://unix.stackexchange.com/users/10762/chris-down
+  linkedin: https://www.linkedin.com/in/chrisldown
 
 personal:
   name: Chris Down
