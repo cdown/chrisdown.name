@@ -19,3 +19,4 @@ before_script:
 script:
     - linkchecker --no-warnings http://localhost:24895
     - "! find deploy/ -name '*.html' -exec tidy -e {} + 2>&1 | grep '[1-9] error'"
+    - "! grep -R 'href=\"\"' deploy"
