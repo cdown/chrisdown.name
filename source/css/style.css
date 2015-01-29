@@ -95,11 +95,22 @@ header nav ul.home li a {
 }
 
 h1 {
-    font-size: 1.4em;
+    font-size: 1.6em;
+    margin: 1em 0;
 }
 
 h2 {
+    font-size: 1.6em;
+    padding-bottom: 0.1em;
+    border-bottom: 1px solid #ccc;
+}
+
+h3 {
     font-size: 1.2em;
+    padding-bottom: 0.1em;
+    border-bottom: 1px solid #ccc;
+    font-style: italic;
+    font-weight: bold;
 }
 
 footer {
