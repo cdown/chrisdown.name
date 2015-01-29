@@ -83,9 +83,9 @@ looks:
 
 ![Zhongwen](/images/blog/chinese-proficiency/zhongwen.png)
 
-### Youdao (有道)
+### Youdao
 
-[Youdao][] is a Chinese dictionary, mostly aimed at Chinese speakers.  The
+[Youdao][] (有道) is a Chinese dictionary, mostly aimed at Chinese speakers.  The
 [Android app][Youdao Android app] is pretty awesome, although the interface is
 all in Chinese, which might be intimidating if you can't read many characters
 yet. If MDBG doesn't understand your phrase and only gives the meaning of
@@ -115,9 +115,9 @@ for me, except it doesn't encourage structured learning. I mostly use these
 sites to learn idiomatic phrasing and vocabulary for a particular topic that I
 want to talk about.
 
-### Ichacha (查查在线翻译)
+### Ichacha
 
-Despite [Ichacha][] pitching itself as an "online translation" (在线翻译) tool,
+Despite [Ichacha][] (查查) pitching itself as an "online translation" tool,
 it's actually more like a dictionary that also has a great deal of example
 sentences.
 
@@ -127,9 +127,9 @@ repository of (human translated) example sentences. I have no idea where it
 gets them from, but the examples are numerous, and almost always excellent
 idiomatic representations of their English counterparts.
 
-### Iciba (爱词霸)
+### Iciba
 
-[Iciba][] is another awesome source of example sentences that is pitched as a
+[Iciba][] (爱词霸) is another awesome source of example sentences that is pitched as a
 joint dictionary, translation tool, and source of example sentences. The
 subdomain you actually want is [dj.iciba.com](http://dj.iciba.com), which
 contains a detailed database of example sentences.
