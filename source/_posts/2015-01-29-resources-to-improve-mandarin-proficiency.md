@@ -22,7 +22,7 @@ grammar rules that you won't even use until later.
 
 ### Pimsleur
 
-I was quite lucky to have [a good friend of mine][Carlos] recommend the
+I was quite lucky to have [a friend][Carlos] recommend the
 [Pimsleur][] technique to me just before I got started in earnest. There's a
 lot of marketing bullshit around it, but basically, in every lesson, you learn
 some phrases, and repeat some old ones to refresh your memory. These phrases
@@ -102,12 +102,18 @@ Note that Zdic is all in Chinese, and sometimes quite fancy Chinese at that. It
 can be difficult to read, but it contains a lot of deep insights that you won't
 find elsewhere.
 
+### LINE
+
+[The dictionary provided by LINE][] is not bad, and the example sentences are
+generally pretty good. I've not used it enough to comment much, though.
+
 ## Sentence examples
 
-One of the most motivational aspects of learning Chinese is being able to speak
-it with other people. Unfortunately, while you may have the right idea about
-basic Chinese grammar, if you're anything like me, your vocabulary will be
-quite limited even after a year of learning.
+One of the most motivational aspects of learning Chinese using the Pimsleur
+method is that you can quite quickly pick up conversational Chinese and use it
+in a reasonable way with other Chinese speakers. Unfortunately, while you may
+have the right idea about basic Chinese grammar, if you're anything like me,
+your vocabulary will be quite limited even after a year of learning.
 
 Examples sentences are very important to give you some feeling about when to
 use which word, and how to use it. It has much the same function as Pimsleur
@@ -144,11 +150,6 @@ sentences. It's human curated and is generally of good quality, but example
 sentences for Chinese are a bit lacking (examples for European languages are
 far more numerous). Good for finding basic sentences, but lacking a bit in
 quantity.
-
-### LINE
-
-[The dictionary provided by LINE][] is not bad, and the example sentences are
-generally pretty good. I've not used it enough to comment much, though.
 
 [Pimsleur]: http://www.pimsleur.com/Learn-Chinese-Mandarin
 [Quizlet]: http://quizlet.com
