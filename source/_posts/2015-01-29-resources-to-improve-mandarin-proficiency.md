@@ -159,7 +159,7 @@ quantity.
 [Youdao]: http://www.youdao.com
 [Youdao Android app]: https://play.google.com/store/apps/details?id=com.youdao.dict
 [Zdic]: http://www.zdic.net
-[Zhongwen]: https://chrome.google.com/webstore/detail/zhongwen-a-chinese-englis/kkmlkjmombglmlpbpapmhcaljde
+[Zhongwen]: https://chrome.google.com/webstore/detail/zhongwen-a-chinese-englis/kkmlkkjojmombglmlpbpapmhcaljjkde
 [Carlos]: http://carloslima.name
 [CC-CEDICT]: http://cc-cedict.org
 [Ichacha]: http://www.ichacha.net
