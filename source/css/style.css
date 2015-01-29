@@ -91,7 +91,6 @@ header nav ul.home li a {
                        override it to not have any left margin (whereas the
                        other links in the nav area do. ) */
     padding: 0 0.4em;
-    font-weight: bold;
 }
 
 h1 {
