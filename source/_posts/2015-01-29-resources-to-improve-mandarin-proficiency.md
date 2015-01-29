@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Resources to improve your Mandarin proficiency, or get started
+title: Mandarin learning resources and advice
 ---
 
 When I started learning Mandarin last year, it's not something that I sincerely
