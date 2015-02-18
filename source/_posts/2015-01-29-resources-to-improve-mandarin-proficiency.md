@@ -151,6 +151,13 @@ sentences for Chinese are a bit lacking (examples for European languages are
 far more numerous). Good for finding basic sentences, but lacking a bit in
 quantity.
 
+## Miscellanea of merit
+
+### Jin Zhang's tone information
+
+Jin Zhang, who teaches Chinese at MIT, has [a pretty useful page][tones] about
+the subtleties of Chinese tonality.
+
 [Pimsleur]: http://www.pimsleur.com/Learn-Chinese-Mandarin
 [Quizlet]: http://quizlet.com
 [MDBG]: http://www.mdbg.net
@@ -164,3 +171,4 @@ quantity.
 [CC-CEDICT]: http://cc-cedict.org
 [Ichacha]: http://www.ichacha.net
 [The dictionary provided by LINE]: http://linedictionary.naver.com/dict.html
+[tones]: http://web.mit.edu/jinzhang/www/pinyin/tones/
