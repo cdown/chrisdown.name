@@ -16,7 +16,4 @@ personal:
     account: chris
     scrim: chrisdown
 
-source: source
-plugins: plugins
-destination: deploy
-layouts: ../layouts
+destination: _deploy
