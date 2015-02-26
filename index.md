@@ -2,8 +2,8 @@
 layout: default
 title: "Chris Down"
 description:
-    "Minimalist programmer, designer, and Unix/Linux sysadmin. This site
-    contains links to my code, blog, and other miscellania."
+    "Software developer and system administrator living in London, England,
+    currently building stuff as part of the security team at Facebook."
 ---
 
 Hey there! I'm a software developer and system administrator living in London,
