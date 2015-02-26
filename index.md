@@ -11,7 +11,6 @@ England, currently building stuff as part of the security team at [Facebook][].
 
 ## Things on this site
 
-- [Status dashboard for my projects][]
 - [Assorted notes][]
 - [My PGP public key][]
 - [My SSH public key][]
@@ -31,4 +30,3 @@ England, currently building stuff as part of the security team at [Facebook][].
 [My old TF2 configs]: /tf2
 [My Unix and Linux Stack Exchange profile]: http://unix.stackexchange.com/users/10762/chris-down
 [My code projects on GitHub]: https://github.com/cdown
-[Status dashboard for my projects]: /builds
