@@ -15,7 +15,7 @@ install:
 before_script:
     - 'tidy -v'
     - "jekyll serve --port 24895 &"
-    - sleep 5
+    - sleep 10
 script:
     - linkchecker --no-warnings http://localhost:24895
     - "! find deploy/ -name '*.html' -exec tidy -e {} + 2>&1 | LC_ALL=C grep '[0-9] error' | grep -v '0 error'"
