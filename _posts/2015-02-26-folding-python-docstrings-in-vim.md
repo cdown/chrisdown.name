@@ -24,9 +24,19 @@ like the following:
 
     autocmd FileType python setlocal foldenable foldmethod=syntax
 
-Then, add the following line to `~/.vim/after/syntax/python.vim`:
+Then, add the following lines to `~/.vim/after/syntax/python.vim`:
 
-    syn region String start=/\('''\|"""\)/ end=/\('''\|"""\)/ fold
+    syn region pythonString
+          \ start=+[uU]\=\z('''\|"""\)+ end="\z1" keepend fold
+          \ contains=pythonEscape,pythonSpaceError,pythonDoctest,@Spell
+    syn region pythonRawString
+          \ start=+[uU]\=[rR]\z('''\|"""\)+ end="\z1" keepend fold
+          \ contains=pythonSpaceError,pythonDoctest,@Spell
+
+These lines are ripped straight from `syntax/python.vim` shipped with vim 7.4,
+and have just been edited to include `fold`. It's possible that a future update
+would change the syntax names, but realistically this should be fine for the
+forseeable future, and is not difficult to fix if that were to happen.
 
 You can also optionally set the fold to show the first line of the docstring
 (assuming you always add a newline after your docstring starts):
