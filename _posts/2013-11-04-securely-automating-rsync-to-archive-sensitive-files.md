@@ -190,6 +190,6 @@ should keep the passphrase to the key (and, of course, the key itself) secure.
 [duplicity]: http://duplicity.nongnu.org/
 [rsnapshot]: http://www.rsnapshot.org/
 [syncisnotbackup]: http://lawyerist.com/file-sync-is-not-backup/
-[CVE-2011-1097]: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-1097
-[CVE-2007-6200]: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6200
+[CVE-2011-1097]: https://access.redhat.com/security/cve/CVE-2011-1097
+[CVE-2007-6200]: https://access.redhat.com/security/cve/CVE-2007-6200
 [crypt]: http://linux.die.net/man/3/crypt
