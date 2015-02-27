@@ -17,6 +17,6 @@ before_script:
     - "jekyll serve --port 24895 &"
     - sleep 10
 script:
-    - 'for (( i=0; i<3; i++ )); do linkchecker --no-warnings http://localhost:24895; done'
+    - 'for (( i=0; i<3; i++ )); do linkchecker --no-warnings http://localhost:24895  --ignore-url="^https://web.archive.org"; done'
     - "! find deploy/ -name '*.html' -exec tidy -e {} + 2>&1 | LC_ALL=C grep '[0-9] error' | grep -v '0 error'"
     - "! grep -R 'href=\"\"' deploy"
