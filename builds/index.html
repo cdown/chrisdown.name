@@ -17,10 +17,17 @@ builds:
       - landscape
       - requires
   - name: defeat
+  - name: dotfiles
+    disable:
+      - coveralls
+      - appveyor
+      - landscape
+      - requires
   - name: download-flickr-set
   - name: fix-srt-order
   - name: gh-mirror
   - name: imurl
+  - name: jdcharfreq
   - name: jingui
     disable:
       - appveyor
@@ -37,7 +44,7 @@ builds:
       - landscape
       - requires
   - name: scurl
-  - name: tinysrt
+  - name: srt
   - name: tzupdate
   - name: yturl
 ---

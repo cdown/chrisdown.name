@@ -52,4 +52,4 @@ To something like this:
 ![Vim screenshot with docstrings folded](/images/blog/fold-docstrings/after.png)
 
 [Sphinx]: http://sphinx-doc.org
-[after directory]: http://vimdoc.sourceforge.net/htmldoc/options.html#'runtimepath'
+[after directory]: http://vimdoc.sourceforge.net/htmldoc/options.html#%27runtimepath%27
