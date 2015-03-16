@@ -9,7 +9,7 @@ before_install:
     - sudo add-apt-repository ppa:techzilla/misc -y
     - sudo apt-get update -q
 install:
-    - sudo apt-get install linkchecker
+    - sudo pip install linkchecker
     - sudo apt-get install tidy --force-yes
     - bundle install
 before_script:
