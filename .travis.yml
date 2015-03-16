@@ -9,7 +9,7 @@ before_install:
     - sudo add-apt-repository ppa:techzilla/misc -y
     - sudo apt-get update -q
 install:
-    - sudo apt-get install linkchecker
+    - sudo pip install linkchecker
     - sudo apt-get install tidy --force-yes
     - bundle install
 before_script:
@@ -17,6 +17,11 @@ before_script:
     - "jekyll serve --port 24895 &"
     - sleep 10
 script:
-    - 'for (( i=0; i<3; i++ )); do linkchecker -a --no-warnings http://localhost:24895 --ignore-url="^http://vimdoc.sourceforge.net"  --ignore-url="^https://web.archive.org" && break; done'
+    - |
+      for (( i=0; i<3; i++ )); do
+        linkchecker -a --no-warnings http://localhost:24895 \
+          --check-extern \
+          --ignore-url="^https://web.archive.org" && break
+      done
     - "! find deploy/ -name '*.html' -exec tidy -e {} + 2>&1 | LC_ALL=C grep '[0-9] error' | grep -v '0 error'"
     - "! grep -R 'href=\"\"' deploy"
