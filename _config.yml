@@ -16,4 +16,11 @@ personal:
     account: chris
     scrim: chrisdown
 
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README.md
+  - Rakefile
+
 destination: _deploy
