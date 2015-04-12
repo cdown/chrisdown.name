@@ -7,8 +7,10 @@ A few months ago, I did a talk at [WebCamp KL][wckl] about avoiding bash
 pitfalls and code smells. The talk went down very well, so here it is for
 posterity.
 
-
-{% youtube iZdLJULTG2Y %}
+<div class="youtube-container">
+<iframe allowfullscreen="allowfullscreen" src="//www.youtube.com/embed/iZdLJULTG2Y">
+</iframe>
+</div>
 
 The talk was also available on the WCKL Ustream channel (link now 404, perhaps
 they are not on Ustream any more), but the audio was only present in the left
