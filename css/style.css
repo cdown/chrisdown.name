@@ -157,6 +157,10 @@ pre, code {
 }
 
 code {
+    white-space: pre-wrap;
+}
+
+pre code {
     white-space: pre;
 }
 
