@@ -25,7 +25,7 @@ England, currently building stuff as part of the security team at [Facebook][].
 [Assorted notes]: /archive.html
 [Facebook]: https://www.facebook.com
 [My LinkedIn profile]: https://www.linkedin.com/in/chrisldown
-[My PGP public key]: /pgp
+[My PGP public key]: https://pgp.mit.edu/pks/lookup?op=get&search=0xDF8D21B616118070
 [My SSH public key]: /ssh
 [My old TF2 configs]: /tf2
 [My Unix and Linux Stack Exchange profile]: http://unix.stackexchange.com/users/10762/chris-down
