@@ -22,5 +22,6 @@ exclude:
   - LICENSE
   - README.md
   - Rakefile
+  - env
 
 destination: _deploy
