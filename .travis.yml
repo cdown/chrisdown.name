@@ -11,7 +11,11 @@ before_install:
 install:
     - sudo pip install linkchecker
     - sudo apt-get install tidy --force-yes
+    - sudo apt-get install python-virtualenv
     - bundle install
+    - virtualenv env
+    - . env/bin/activate
+    - pip install -r requirements.txt
 before_script:
     - 'tidy -v'
     - "jekyll serve --port 24895 &"
