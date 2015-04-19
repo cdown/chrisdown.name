@@ -25,3 +25,11 @@ exclude:
   - env
 
 destination: _deploy
+
+gems:
+  - jekyll/minibundle
+
+minibundle:
+  minifier_commands:
+    css: python -m csscompressor /dev/stdin
+    js: slimit

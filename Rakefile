@@ -11,9 +11,7 @@ task :gzip => :build_raw do
 end
 
 task :minify => :build_raw do
-  sh 'find _deploy/ -type f -name "*.js" -exec sh -c "slimit -m -t > /tmp/q < \"\$0\"" {} \; -exec mv /tmp/q {} \;'
   sh 'find _deploy/ -type f -name "*.html" -exec sh -c "htmlmin -c -s > /tmp/q < \"\$0\"" {} \; -exec mv /tmp/q {} \;'
-  sh 'find _deploy/ -type f -name "*.css" -exec python -m csscompressor -o {} {} \;'
 end
 
 task :build_raw do
