@@ -24,4 +24,4 @@ script:
           --ignore-url="^https://web.archive.org" && break
       done
     - "! find deploy/ -name '*.html' -exec tidy -e {} + 2>&1 | LC_ALL=C grep '[0-9] error' | grep -v '0 error'"
-    - "! grep -R 'href=\"\"' deploy"
+    - "! grep -R 'href=\"\"' _deploy"
