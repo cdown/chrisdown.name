@@ -9,6 +9,7 @@ before_install:
     - sudo add-apt-repository ppa:techzilla/misc -y
     - sudo apt-get update -q
 install:
+    - sudo pip install requests==2.6.0
     - sudo pip install linkchecker
     - sudo apt-get install tidy --force-yes
     - bundle install
