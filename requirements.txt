@@ -1,3 +1,4 @@
 csscompressor
 htmlmin
 slimit
+s3cmd
