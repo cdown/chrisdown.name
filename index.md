@@ -19,13 +19,15 @@ England, currently building stuff as part of the security team at [Facebook][].
 ## Things not on this site
 
 - [My code projects on GitHub][]
-- [My Keybase profile][]
-- [My LinkedIn profile][]
 - [My Unix and Linux Stack Exchange profile][]
+- [My LinkedIn profile][]
+- [My Keybase profile][]
+- [My Instagram profile][]
 
 [Assorted notes]: /archive.html
 [Facebook]: https://www.facebook.com
 [My LinkedIn profile]: https://www.linkedin.com/in/chrisldown
+[My Instagram profile]: https://instagram.com/chrisldown
 [My Keybase profile]: https://keybase.io/cdown
 [My PGP public key]: https://keybase.io/cdown/key.asc
 [My SSH public key]: /ssh
