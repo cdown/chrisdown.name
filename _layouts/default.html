@@ -16,70 +16,70 @@ header:
 ---
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>{{ page.title }}</title>
-        {% if page.description %}
-            <meta name="description" content="{{ page.description }}">
-        {% endif %}
-        <meta name="viewport" content="width=device-width">
-        <meta name="robots" content="noodp,noydir">
-        <link rel="stylesheet" href="/css/fontawesome-stripped.css">
-        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:700italic,400italic,400,700">
-        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Droid+Sans+Mono">
-        <link rel="stylesheet" href="/css/style.css">
-        <link rel="alternate" type="application/atom+xml" title="Recent blog posts" href="/feed.xml">
-        <link rel="icon" href="/favicon.ico">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ page.title }}</title>
+    {% if page.description %}
+    <meta name="description" content="{{ page.description }}">
+    {% endif %}
+    <meta name="viewport" content="width=device-width">
+    <meta name="robots" content="noodp,noydir">
+    <link rel="stylesheet" href="/css/fontawesome-stripped.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:700italic,400italic,400,700">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Droid+Sans+Mono">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="Recent blog posts" href="/feed.xml">
+    <link rel="icon" href="/favicon.ico">
 
-        <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-          ga('create', 'UA-58706842-1', 'auto');
-          ga('require', 'displayfeatures');
-          ga('send', 'pageview');
-        </script>
-    </head>
-    <body>
-        <header>
-            <nav>
-                <ul class="home">
-                <li><a href="/">{{ site.personal.name }}</a></li>
-                </ul>
-                <ul class="extra">
-                {% for link in page.header.links %}
-                    <li title="{{ link.title | xml_escape }}">
-                        <a href="{{ link.url }}">
-                            <span aria-hidden="true" class="font-awesome-{{ link.icon }}"></span>
-                            <span class="screen-reader-text">{{ link.title | xml_escape }}</span>
-                        </a>
-                    </li>
-                {% endfor %}
-                </ul>
-            </nav>
-        </header>
+ga('create', 'UA-58706842-1', 'auto');
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+    </script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul class="home">
+          <li><a href="/">{{ site.personal.name }}</a></li>
+        </ul>
+        <ul class="extra">
+          {% for link in page.header.links %}
+          <li title="{{ link.title | xml_escape }}">
+            <a href="{{ link.url }}">
+              <span aria-hidden="true" class="font-awesome-{{ link.icon }}"></span>
+              <span class="screen-reader-text">{{ link.title | xml_escape }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </header>
 
-        <article>
-        {{ content }}
-        </article>
+    <article>
+      {{ content }}
+    </article>
 
-        <footer>
-            <div class="info">
-                <p>
-                    {{ site.personal.name }}<br>
-                    PGP: <a href="https://keybase.io/cdown/key.asc">0xDF8D21B616118070</a>
-                </p>
-            </div>
-            <div class="contact">
-                <p>
-                    Questions or comments?<br>
-                    My e-mail is <a class="email" href="http://scr.im/{{ site.personal.email.scrim }}">{{ site.personal.email.account }}@[this domain]</a>.
-                </p>
-            </div>
-        </footer>
-        <script src="/js/email.js"></script>
-        <script src="/js/outbound_track.js"></script>
-    </body>
+    <footer>
+      <div class="info">
+        <p>
+        {{ site.personal.name }}<br>
+        PGP: <a href="https://keybase.io/cdown/key.asc">0xDF8D21B616118070</a>
+        </p>
+      </div>
+      <div class="contact">
+        <p>
+        Questions or comments?<br>
+        My e-mail is <a class="email" href="http://scr.im/{{ site.personal.email.scrim }}">{{ site.personal.email.account }}@[this domain]</a>.
+        </p>
+      </div>
+    </footer>
+    <script src="/js/email.js"></script>
+    <script src="/js/outbound_track.js"></script>
+  </body>
 </html>
