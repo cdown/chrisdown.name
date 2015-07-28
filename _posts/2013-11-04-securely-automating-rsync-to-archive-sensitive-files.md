@@ -67,7 +67,9 @@ the commands accepted by sudo to allow unprompted elevation.
 On the remote, create the new "rsync" user that we will use exclusively to
 elevate to root when we do the sync:
 
-    useradd -m -d /srv/rsync -r -s /bin/bash -p NP rsync
+{% highlight bash %}
+useradd -m -d /srv/rsync -r -s /bin/bash -p NP rsync
+{% endhighlight %}
 
 We need to use "-p NP" so that the account does not become locked, because
 without it, sshd will not allow us to log in. This does not mean that the
@@ -81,15 +83,19 @@ account using our SSH key.
 On your local machine, generate a new key that will be used exclusively for
 syncing (do this as the same user as you are going to be syncing as):
 
-    mkdir -pm700 ~/.ssh/keys
-    ssh-keygen -f ~/.ssh/keys/rsync_archive -C rsync-archive
+{% highlight bash %}
+mkdir -pm700 ~/.ssh/keys
+ssh-keygen -f ~/.ssh/keys/rsync_archive -C rsync-archive
+{% endhighlight %}
 
 Use a good passphrase that you can remember, you'll need it when adding the key
 to the SSH agent. You might as well start up an agent and add it now, since
 you're going to need it for the next steps:
 
-    mkdir -m700 ~/.ssh/agents
-    eval "$(ssh-agent | tee ~/.ssh/agents/rsync_archive)"
+{% highlight bash %}
+mkdir -m700 ~/.ssh/agents
+eval "$(ssh-agent | tee ~/.ssh/agents/rsync_archive)"
+{% endhighlight %}
 
 ### Work out what command is going to be run on the server
 
@@ -166,18 +172,20 @@ created the agent as root earlier to preserve ownership information (you could
 also run the agent as your own user and source that, instead, as long as you
 are running the job as root), the following should work to sync every hour:
 
-    cat > /usr/local/bin/sync-foo << 'EOF'
-    #!/bin/sh
+{% highlight bash %}
+cat > /usr/local/bin/sync-foo << 'EOF'
+#!/bin/sh
 
-    . ~/.ssh/agents/rsync_archive
-    rsync -avzHAX --numeric-ids --rsync-path='sudo rsync' rsync@foo:/var/lib/couchdb /sync/foo-couch
-    EOF
-    chmod a+x /usr/local/bin/sync-foo
+. ~/.ssh/agents/rsync_archive
+rsync -avzHAX --numeric-ids --rsync-path='sudo rsync' rsync@foo:/var/lib/couchdb /sync/foo-couch
+EOF
+chmod a+x /usr/local/bin/sync-foo
 
-    cat > /etc/cron.d/sync-foo << 'EOF'
-    PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-    0 * * * * root sync-foo
-    EOF
+cat > /etc/cron.d/sync-foo << 'EOF'
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+0 * * * * root sync-foo
+EOF
+{% endhighlight %}
 
 Obviously, this requires that your SSH agent has the key added and unlocked.
 That's your responsibility (when you boot the server), otherwise rsync will

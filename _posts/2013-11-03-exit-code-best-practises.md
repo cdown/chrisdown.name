@@ -11,8 +11,10 @@ people code in a way that makes their exit codes suck.
 In Python, for example, the following sort of thing is a common sight in
 command line programs:
 
-    if args["--yes"] and args["--no"]:
-        raise ArgumentError("Nonsense options: can't have both --yes and --no")
+{% highlight python %}
+if args["--yes"] and args["--no"]:
+    raise ArgumentError("Nonsense options: can't have both --yes and --no")
+{% endhighlight %}
 
 It doesn't make sense to raise an exception in this manner. Exceptions are only
 really useful when you're expecting that in, at least in some fringe situation,
@@ -34,14 +36,16 @@ conditions and their appropriate exit codes. To this effect, on many Unices
 sysexits.h actually defines some more "standard" exit codes, which you should
 probably prefer. In Python, you can [access these via the os module][osexit]:
 
-    $ python << 'EOF'
-    > import os
-    > import sys
-    >
-    > sys.exit(os.EX_CONFIG)
-    > EOF
-    $ echo "$?"
-    78
+{% highlight bash %}
+$ python << 'EOF'
+> import os
+> import sys
+>
+> sys.exit(os.EX_CONFIG)
+> EOF
+$ echo "$?"
+78
+{% endhighlight %}
 
 This method won't work on systems that don't support sysexits.h, though (like
 Windows, for example), and (as usual) not all Unices agree on what the standard
@@ -50,7 +54,9 @@ generally accepted constants (for example, what is suggested by
 [FreeBSD][fbsdsysexits]), and then do something like the following when using
 them:
 
-    _EX_CONFIG = getattr(os, "EX_CONFIG", 78)
+{% highlight python %}
+_EX_CONFIG = getattr(os, "EX_CONFIG", 78)
+{% endhighlight %}
 
 This can be a bit of a nightmare, though. The most important thing is that you
 make sure the exit codes your program returns are well documented, even if you

@@ -22,16 +22,20 @@ To do this, first make sure folding is enabled and your `foldmethod` is set to
 `syntax` in your config. You can do this just for Python by doing something
 like the following:
 
-    autocmd FileType python setlocal foldenable foldmethod=syntax
+{% highlight vim %}
+autocmd FileType python setlocal foldenable foldmethod=syntax
+{% endhighlight %}
 
 Then, add the following lines to `~/.vim/after/syntax/python.vim`:
 
-    syn region pythonString
-          \ start=+[uU]\=\z('''\|"""\)+ end="\z1" keepend fold
-          \ contains=pythonEscape,pythonSpaceError,pythonDoctest,@Spell
-    syn region pythonRawString
-          \ start=+[uU]\=[rR]\z('''\|"""\)+ end="\z1" keepend fold
-          \ contains=pythonSpaceError,pythonDoctest,@Spell
+{% highlight vim %}
+syn region pythonString
+      \ start=+[uU]\=\z('''\|"""\)+ end="\z1" keepend fold
+      \ contains=pythonEscape,pythonSpaceError,pythonDoctest,@Spell
+syn region pythonRawString
+      \ start=+[uU]\=[rR]\z('''\|"""\)+ end="\z1" keepend fold
+      \ contains=pythonSpaceError,pythonDoctest,@Spell
+{% endhighlight %}
 
 These lines are ripped straight from `syntax/python.vim` shipped with vim 7.4,
 and have just been edited to include `fold`. It's possible that a future update

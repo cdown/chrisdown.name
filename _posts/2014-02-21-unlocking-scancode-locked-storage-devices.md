@@ -20,8 +20,10 @@ You can convert your passwords to scancodes by using something like the
 following (this only translates part of ASCII, and assumes a US keyboard
 layout, but you get the idea):
 
-    <<< "The password" tr '[:upper:]' '[:lower:]' |
-        tr '1234567890qwertyuiopasdfghjklzxcvbnm' '\2-\13\20-\31\36-\46\54-\62'
+{% highlight bash %}
+<<< "The password" tr '[:upper:]' '[:lower:]' |
+    tr '1234567890qwertyuiopasdfghjklzxcvbnm' '\2-\13\20-\31\36-\46\54-\62'
+{% endhighlight %}
 
 Note that if you are using a USB keyboard you [may be using a totally different
 set of scancodes][usb], and will need to translate accordingly to that instead

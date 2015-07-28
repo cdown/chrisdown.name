@@ -14,30 +14,32 @@ server. This post covers setting up the mirroring (using
 
 Replace "git.chrisdown.name" with the server you will be running git-daemon on.
 
-    apt-get install git build-essential
+{% highlight bash %}
+apt-get install git build-essential
 
-    git clone git://git.zx2c4.com/cgit /usr/src/cgit
+git clone git://git.zx2c4.com/cgit /usr/src/cgit
 
-    cd /usr/src/cgit
-    git submodule update --init
+cd /usr/src/cgit
+git submodule update --init
 
-    cat > cgit.conf << 'EOF'
-    prefix = /srv/http/cgit
-    CGIT_SCRIPT_PATH = $(prefix)
-    CGIT_DATA_PATH = $(prefix)
-    EOF
+cat > cgit.conf << 'EOF'
+prefix = /srv/http/cgit
+CGIT_SCRIPT_PATH = $(prefix)
+CGIT_DATA_PATH = $(prefix)
+EOF
 
-    make install
+make install
 
-    cat > /etc/cgitrc << 'EOF'
-    root-desc=Mirror of https://github.com/cdown
-    virtual-root=/
-    logo=/cgit.png
-    css=/cgit.css
-    scan-path=/srv/git
-    remove-suffix=1
-    clone-prefix=git://git.chrisdown.name
-    EOF
+cat > /etc/cgitrc << 'EOF'
+root-desc=Mirror of https://github.com/cdown
+virtual-root=/
+logo=/cgit.png
+css=/cgit.css
+scan-path=/srv/git
+remove-suffix=1
+clone-prefix=git://git.chrisdown.name
+EOF
+{% endhighlight %}
 
 If everything went well, executing /srv/http/cgit/cgit.cgi should output some
 HTML.
@@ -46,33 +48,35 @@ HTML.
 
 Replace "git.chrisdown.name" with your domain.
 
-    apt-get install fcgiwrap spawn-fcgi nginx
+{% highlight bash %}
+apt-get install fcgiwrap spawn-fcgi nginx
 
-    cat > /etc/nginx/sites-available/git.chrisdown.name << 'EOF'
-    server {
-        server_name git.chrisdown.name;
-        root /srv/http/cgit;
+cat > /etc/nginx/sites-available/git.chrisdown.name << 'EOF'
+server {
+    server_name git.chrisdown.name;
+    root /srv/http/cgit;
 
-        location / {
-            try_files $uri @cgit;
-        }
-
-        location @cgit {
-            index cgit.cgi;
-            fastcgi_param SCRIPT_FILENAME $document_root/cgit.cgi;
-            fastcgi_pass unix:/var/run/fcgiwrap.socket;
-            fastcgi_param HTTP_HOST $server_name;
-            fastcgi_param PATH_INFO $uri;
-            fastcgi_param QUERY_INFO $uri;
-            include "fastcgi_params";
-
-        }
+    location / {
+        try_files $uri @cgit;
     }
-    EOF
 
-    ln -s /etc/nginx/sites-{available,enabled}/git.chrisdown.name
+    location @cgit {
+        index cgit.cgi;
+        fastcgi_param SCRIPT_FILENAME $document_root/cgit.cgi;
+        fastcgi_pass unix:/var/run/fcgiwrap.socket;
+        fastcgi_param HTTP_HOST $server_name;
+        fastcgi_param PATH_INFO $uri;
+        fastcgi_param QUERY_INFO $uri;
+        include "fastcgi_params";
 
-    service nginx reload
+    }
+}
+EOF
+
+ln -s /etc/nginx/sites-{available,enabled}/git.chrisdown.name
+
+service nginx reload
+{% endhighlight %}
 
 You should now get a cgit page at git.chrisdown.name that proudly displays "no
 repositories found" (assuming you have no repositories in /srv/git already).
@@ -85,15 +89,17 @@ work for you.
 This will mirror from GitHub every 5 minutes. Replace "cdown" with your
 username.
 
-    useradd -m -d /srv/git -r -s "$(type -p git-shell)" git
+{% highlight bash %}
+useradd -m -d /srv/git -r -s "$(type -p git-shell)" git
 
-    wget -O /usr/local/bin/gh-mirror https://raw.github.com/cdown/gh-mirror/master/gh-mirror
-    chmod a+x /usr/local/bin/gh-mirror
+wget -O /usr/local/bin/gh-mirror https://raw.github.com/cdown/gh-mirror/master/gh-mirror
+chmod a+x /usr/local/bin/gh-mirror
 
-    cat > /etc/cron.d/github-mirror << 'EOF'
-    PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-    */5 * * * * git cd && gh-mirror cdown
-    EOF
+cat > /etc/cron.d/github-mirror << 'EOF'
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+*/5 * * * * git cd && gh-mirror cdown
+EOF
+{% endhighlight %}
 
 In the next 5 minutes, you should see your public repositories on cgit.
 
@@ -105,11 +111,13 @@ info/web/last-modified, then head/refs/\[default branch\], then it looks at
 packed-refs. As such, we update the mtime of packed-refs to match the time of
 the last commit.
 
-    #!/bin/bash
-    for dir in /srv/git/*.git; do
-        commit_time="$(GIT_DIR="$dir" git --no-pager log -1 --format='%ai')"
-        touch -d "$commit_time" "$dir/packed-refs"
-    done
+{% highlight bash %}
+#!/bin/bash
+for dir in /srv/git/*.git; do
+    commit_time="$(GIT_DIR="$dir" git --no-pager log -1 --format='%ai')"
+    touch -d "$commit_time" "$dir/packed-refs"
+done
+{% endhighlight %}
 
 ## git-daemon
 
@@ -117,67 +125,69 @@ You'll want to have an init script to run git-daemon. I wrote this one up, I
 don't know if it's totally compliant with the Debian packaging guidelines, but
 I tried to follow it as closely as I could.
 
-    useradd -m -d /srv/git -r -s "$(type -p git-shell)" git-ro
+{% highlight bash %}
+useradd -m -d /srv/git -r -s "$(type -p git-shell)" git-ro
 
-    cat > /etc/init.d/git-daemon << 'EOF'
-    #!/bin/bash
+cat > /etc/init.d/git-daemon << 'EOF'
+#!/bin/bash
 
-    ### BEGIN INIT INFO
-    # Provides:        git-daemon
-    # Required-Start:  $network
-    # Required-Stop:   $network
-    # Default-Start:   2 3 4 5
-    # Default-Stop:
-    # Short-Description: Git daemon
-    ### END INIT INFO
+### BEGIN INIT INFO
+# Provides:        git-daemon
+# Required-Start:  $network
+# Required-Stop:   $network
+# Default-Start:   2 3 4 5
+# Default-Stop:
+# Short-Description: Git daemon
+### END INIT INFO
 
-    PATH=/sbin:/bin:/usr/sbin:/usr/bin
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
-    . /lib/lsb/init-functions
+. /lib/lsb/init-functions
 
-    pid_file=/run/git-daemon.pid
-    daemon=(
-        "$(type -p git)" daemon \
-            --{user,group}=git-ro \
-            --reuseaddr \
-            --pid-file="$pid_file" \
-            {--base-path=,}/srv/git/
-    )
+pid_file=/run/git-daemon.pid
+daemon=(
+    "$(type -p git)" daemon \
+        --{user,group}=git-ro \
+        --reuseaddr \
+        --pid-file="$pid_file" \
+        {--base-path=,}/srv/git/
+)
 
-    case "$1" in
-        start)
-            log_daemon_msg "Starting Git daemon" "git-daemon"
-            start-stop-daemon --start --background --quiet --oknodo \
-                --pidfile "$pid_file" \
-                --exec "${daemon[0]}" -- "${daemon[@]:1}"
-            log_end_msg "$?"
-            ;;
-        stop)
-            log_daemon_msg "Stopping Git daemon" "git-daemon"
-            start-stop-daemon --stop --quiet --oknodo --pidfile "$pid_file"
-            log_end_msg "$?"
-            rm -f "$pid_file"
-            ;;
-        restart|reload|force-reload)
-            "$0" stop && "$0" start
-            ;;
-        status)
-            if { kill -0 "$(<"$pid_file")" ; } >/dev/null 2>&1; then
-                echo "git-daemon is running"
-            else
-                echo "git-daemon is not running"
-            fi
-            ;;
-        *)
-            echo "Usage: $0 {start|stop|restart|status}"
-            exit 2
-            ;;
-    esac
-    EOF
+case "$1" in
+    start)
+        log_daemon_msg "Starting Git daemon" "git-daemon"
+        start-stop-daemon --start --background --quiet --oknodo \
+            --pidfile "$pid_file" \
+            --exec "${daemon[0]}" -- "${daemon[@]:1}"
+        log_end_msg "$?"
+        ;;
+    stop)
+        log_daemon_msg "Stopping Git daemon" "git-daemon"
+        start-stop-daemon --stop --quiet --oknodo --pidfile "$pid_file"
+        log_end_msg "$?"
+        rm -f "$pid_file"
+        ;;
+    restart|reload|force-reload)
+        "$0" stop && "$0" start
+        ;;
+    status)
+        if { kill -0 "$(<"$pid_file")" ; } >/dev/null 2>&1; then
+            echo "git-daemon is running"
+        else
+            echo "git-daemon is not running"
+        fi
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 2
+        ;;
+esac
+EOF
 
-    chmod a+x /etc/init.d/git-daemon
-    insserv git-daemon
-    service git-daemon start
+chmod a+x /etc/init.d/git-daemon
+insserv git-daemon
+service git-daemon start
+{% endhighlight %}
 
 You should now be able to clone:
 

@@ -25,3 +25,5 @@ exclude:
   - env
 
 destination: _deploy
+
+highlighter: pygments
