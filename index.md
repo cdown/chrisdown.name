@@ -18,22 +18,22 @@ England, currently building stuff as part of the security team at [Facebook][].
 
 ## Profiles elsewhere
 
-- [My code projects on GitHub][]
-- [My Unix and Linux Stack Exchange profile][]
-- [My LinkedIn profile][]
-- [My Keybase profile][]
-- [My Instagram profile][]
-- [My profile on the suckless.org people directory][] (my [dwm][] patches are here)
+- [GitHub][]
+- [Unix and Linux Stack Exchange][]
+- [LinkedIn][]
+- [Keybase][]
+- [Instagram][]
+- [suckless.org][] (my [dwm][] patches are here)
 
 [Assorted notes]: /archive.html
 [Facebook]: https://www.facebook.com
-[My LinkedIn profile]: https://www.linkedin.com/in/chrisldown
-[My Instagram profile]: https://instagram.com/chrisldown
-[My Keybase profile]: https://keybase.io/cdown
+[LinkedIn]: https://www.linkedin.com/in/chrisldown
+[Instagram]: https://instagram.com/chrisldown
+[Keybase]: https://keybase.io/cdown
 [My PGP public key]: https://keybase.io/cdown/key.asc
 [My SSH public key]: /ssh
 [My old TF2 configs]: /tf2
-[My Unix and Linux Stack Exchange profile]: http://unix.stackexchange.com/users/10762/chris-down
-[My code projects on GitHub]: https://github.com/cdown
-[My profile on the suckless.org people directory]: http://suckless.org/people/cdown
+[Unix and Linux Stack Exchange]: http://unix.stackexchange.com/users/10762/chris-down
+[GitHub]: https://github.com/cdown
+[suckless.org]: http://suckless.org/people/cdown
 [dwm]: http://dwm.suckless.org/
