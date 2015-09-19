@@ -32,6 +32,8 @@ England, currently building stuff as part of the security team at [Facebook][].
 
 ### Open source
 
+- [aur](https://github.com/cdown/aur) — interface to the
+  [Arch User Repository][]
 - [clipmenu](https://github.com/cdown/clipmenu) — a clipboard manager with a
   [dmenu][] frontend
 - [mac-cel](https://github.com/cdown/mac-cel) — remove mouse acceleration on
@@ -51,6 +53,7 @@ list, I'm probably not actively developing them.
 [dmenu]: http://tools.suckless.org/dmenu/
 [mpd]: http://mpd.wikia.com/
 [Hanyu Pinyin]: https://en.wikipedia.org/wiki/Pinyin
+[Arch User Repository]: https://aur.archlinux.org/
 
 ### Facebook
 
