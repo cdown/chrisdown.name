@@ -56,4 +56,4 @@ Now, the documentation looks like this:
 [after directory]: http://vimdoc.sourceforge.net/htmldoc/options.html#%27runtimepath%27
 [autoclass]: http://sphinx-doc.org/ext/autodoc.html#directive-autoclass
 [autodoc-process-docstring]: http://sphinx-doc.org/ext/autodoc.html#event-autodoc-process-docstring
-[namedtuples]: https://docs.python.org/library/collections.html
+[namedtuples]: https://docs.python.org/2/library/collections.html#namedtuple-factory-function-for-tuples-with-named-fields
