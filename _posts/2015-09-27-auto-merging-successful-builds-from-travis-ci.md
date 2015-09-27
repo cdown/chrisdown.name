@@ -79,8 +79,9 @@ after_success:
 - The script also needs `GITHUB_SECRET_TOKEN`, but that will be provided by the
   secret we generated above.
 
-All things going well, now you should have auto-merge on successful builds! :-)
+All things going well, now you should have auto-merge on successful builds! You
+can see an example of this working in the [srt repo][] if you get stuck.
 
 [travis gem]: https://rubygems.org/gems/travis
 [here]: https://github.com/cdown/travis-automerge/blob/master/travis-automerge
-
+[srt repo]: https://github.com/cdown/srt/blob/develop/.travis.yml
