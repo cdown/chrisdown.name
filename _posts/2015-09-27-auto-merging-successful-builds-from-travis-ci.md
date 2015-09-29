@@ -84,4 +84,4 @@ can see an example of this working in the [srt repo][] if you get stuck.
 
 [travis gem]: https://rubygems.org/gems/travis
 [here]: https://github.com/cdown/travis-automerge/blob/master/travis-automerge
-[srt repo]: https://github.com/cdown/srt/blob/develop/.travis.yml
+[srt repo]: https://github.com/cdown/srt/blob/49e45aeb267/.travis.yml
