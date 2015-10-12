@@ -3,6 +3,16 @@ layout: post
 title: Fixing stale SSH sockets in tmux
 ---
 
+### Update (as of 2015-10-12)
+
+This is actually available by default in modern versions of `tmux`: just add
+`SSH_AUTH_SOCK` to an `update-environment` call in your tmux configuration.
+
+The rest of this article is only preserved as a record, I suggest you use
+`update-environment` (see `man tmux`) instead.
+
+---
+
 I use tmux on my devbox with ssh-agent forwarding, so that I can access our git
 server transparently. Unfortunately, when reattaching to a tmux session, you'll
 get the old SSH\_AUTH\_SOCK, and there's no immediate way to update this. I
