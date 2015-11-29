@@ -32,6 +32,8 @@ England, currently building stuff as part of the security team at [Facebook][].
 
 ### Open source
 
+I maintain the following personal projects:
+
 - [aur](https://github.com/cdown/aur) — interface to the
   [Arch User Repository][]
 - [clipmenu](https://github.com/cdown/clipmenu) — a clipboard manager with a
@@ -46,8 +48,15 @@ England, currently building stuff as part of the security team at [Facebook][].
 - [yturl](https://github.com/cdown/yturl) — watch YouTube videos on the command
   line
 
+I also am a contributor to some other projects, including:
+
+- [Hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced
+  Quickcheck style testing library for Python
+- [osquery](https://github.com/facebook/osquery) — an operating system
+  instrumentation framework for OS X and Linux
+
 You can find other projects on my [GitHub][], although if they're not on this
-list, I'm probably not actively developing them.
+list, I'm probably not actively developing or maintaining them.
 
 [SRT files]: https://en.wikipedia.org/wiki/SubRip#SubRip_text_file_format
 [dmenu]: http://tools.suckless.org/dmenu/
