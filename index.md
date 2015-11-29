@@ -50,7 +50,7 @@ I maintain the following personal projects:
 
 I also am a contributor to some other projects, including:
 
-- [Hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced
+- [hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced
   Quickcheck style testing library for Python
 - [osquery](https://github.com/facebook/osquery) — an operating system
   instrumentation framework for OS X and Linux
