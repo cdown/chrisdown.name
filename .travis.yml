@@ -5,6 +5,9 @@ notifications:
     on_success: never
     on_failure: always
 
+rvm:
+  - ruby-2.1.2
+
 before_install:
     - sudo add-apt-repository ppa:techzilla/misc -y
     - sudo apt-get update -q
