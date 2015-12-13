@@ -21,7 +21,7 @@ England, currently building stuff as part of the security team at [Facebook][].
 ## Profiles elsewhere
 
 - [GitHub][]
-- [Unix and Linux Stack Exchange](http://unix.stackexchange.com/users/10762)
+- [Unix and Linux Stack Exchange]({{ site.links.ulse }})
 - [LinkedIn](https://www.linkedin.com/in/chrisldown)
 - [Keybase](https://keybase.io/cdown)
 - [Instagram](https://instagram.com/_u/chrisldown)
