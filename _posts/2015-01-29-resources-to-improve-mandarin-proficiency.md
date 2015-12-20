@@ -63,17 +63,45 @@ achievements.
 
 ## Dictionaries
 
-### MDBG/CC-CEDICT
+### Hanping
 
-[MDBG][] is an awesome dictionary using [CC-CEDICT][], an open source Chinese to
-English dictionary. Unlike many other dictionaries, its entries are almost
-strictly about equivalent words, not descriptions of meaning or etymologies. It
-also contains a lot of information about colloquial phrases, which is largely
-lacking in other dictionaries that I've tried. MDBG is a great reference
-dictionary when you see a Chinese word and want to know what it means quickly,
-without having to wade through more information than you need. It's also a
-great place to find Chinese equivalents to English words, although you might
-want to narrow them down further by cross referencing with [Youdao][] to
+[Hanping][] is an awesome dictionary using [CC-CEDICT][] (you can also purchase
+the [ABC][] dictionary for use in the app), an open source Chinese to English
+dictionary. I used to almost exclusively use MDBG, which we will go into later,
+but this has taken over as my favourite app for a few reasons.
+
+Some of those reasons include:
+
+- Ability to use multiple dictionaries &mdash; sometimes CC-EDICT doesn't give
+  you what you need, and sometimes ABC doesn't give you what you need. Having
+  both makes it more likely that you will find the description that you are
+  looking for.
+- Totally offline &mdash; all of the dictionaries you install are stored
+  offline, which makes searching them convienient when you don't have a
+  connection, and it also makes the app super fast. When I want to look up a
+  word while I'm having a conversation, Hanping is fast to use in ways that
+  other online dictionaries aren't.
+
+[embermitre][], the developer of the Hanping set of apps, also has some very
+useful related apps, for example the [Chinese camera][], and the [popup
+translator][]. None of these apps are free, but they are totally worth it if
+you are serious about studying Chinese.
+
+[Hanping]: https://play.google.com/store/apps/details?id=com.embermitre.hanping.app.pro
+[embermitre]: https://play.google.com/store/apps/dev?id=4845954736942800726
+[Chinese camera]: https://play.google.com/store/apps/details?id=com.embermitre.hanping.app.reader.pro
+[popup translator]: https://play.google.com/store/apps/details?id=com.embermitre.hanping.app.popup
+
+### MDBG
+
+[MDBG][] also uses CC-CEDICT. Unlike many other dictionaries, its entries are
+almost strictly about equivalent words, not descriptions of meaning or
+etymologies. It also contains a lot of information about colloquial phrases,
+which is largely lacking in other dictionaries that I've tried. MDBG is a great
+reference dictionary when you see a Chinese word and want to know what it means
+quickly, without having to wade through more information than you need. It's
+also a great place to find Chinese equivalents to English words, although you
+might want to narrow them down further by cross referencing with [Youdao][] to
 determine subtle mearnings.
 
 The [Zhongwen][] Chrome extension also uses CC-CEDICT, and allows you to hover
