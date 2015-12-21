@@ -40,3 +40,7 @@ script:
     # lets it go through without fatalling (and sets the link to nothing). We
     # manually check for these to avoid that.
     - "! grep -R 'href=\"\"' _deploy"
+    # Newer versions of the markdown interpreter just put the raw anchor text
+    # if you failed to give it a link reference, so we should look for those
+    # too.
+    - "! grep -FR '][]' _deploy/"
