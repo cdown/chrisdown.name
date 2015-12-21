@@ -14,9 +14,8 @@ install -r requirements.txt` should give you all of the Python dependencies.
 
 ## Deployment
 
-You can build the output files with `jekyll build`, and they will appear in
-"deploy". There is a rake task for this that is also linked to a deploy task,
-which you might want to adjust to match your own server and path details.
+Deployment to S3 and CloudFront invalidation can be done by running `rake
+deploy`.
 
 ## Stripped fonts
 
