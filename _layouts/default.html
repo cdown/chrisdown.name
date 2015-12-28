@@ -57,6 +57,15 @@
           var address = ['chris', 'chrisdown.name'].join('@');
           el.href = 'mailto:' + address;
           el.innerHTML = address;
+
+          var images = document.getElementsByTagName('img');
+          var image_list = Array.prototype.slice.call(images);
+          image_list.forEach(function(img, _, _) {
+            var a = document.createElement('a');
+            a.href = img.src;
+            img.parentNode.replaceChild(a, img);
+            a.appendChild(img);
+          })
       });
     </script>
   </body>
