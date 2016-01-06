@@ -30,9 +30,12 @@ an alias for a field number. Doing so is as simple as adding this function to
 {% highlight python %}
 def no_namedtuple_attrib_docstring(app, what, name,
                                    obj, options, lines):
-    if any('Alias for field number' in line for line in lines):
-        # This is a namedtuple with a useless docstring,
-        # in-place purge all of the lines.
+    is_namedtuple_docstring = (
+        len(lines) == 1 and
+        lines[0].startswith('Alias for field number')
+    )
+    if is_namedtuple_docstring:
+        # We don't return, so we need to purge in-place
         del lines[:]
 {% endhighlight %}
 
