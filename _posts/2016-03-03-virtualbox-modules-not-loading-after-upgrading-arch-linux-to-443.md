@@ -26,6 +26,10 @@ Instead, you should rebuild [virtualbox-guest-modules][] &mdash; or more
 specifically its parent package, [virtualbox-modules][] &mdash; from [ABS][].
 Here's how to do it.
 
+**NOTE:** These steps must be run from the emergency shell *after* rebooting
+into kernel 4.4.3. If you do them before upgrading/rebooting, you will be
+building for the wrong kernel version, and it won't work.
+
 [virtualbox-guest-modules]: https://www.archlinux.org/packages/community/x86_64/virtualbox-guest-modules/
 [virtualbox-modules]: https://www.archlinux.org/packages/community/x86_64/virtualbox-modules/
 [ABS]: https://www.archlinux.org/packages/community/x86_64/virtualbox-modules/
