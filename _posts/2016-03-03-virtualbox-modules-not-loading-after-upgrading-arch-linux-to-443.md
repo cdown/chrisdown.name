@@ -3,8 +3,11 @@ layout: post
 title: VirtualBox modules not loading in Arch Linux after upgrade to Linux 4.4.3
 ---
 
-I just saw this on two of my machines after upgrading to 4.4.3. Symptoms
-include:
+I just saw this on two of my machines after upgrading to 4.4.3. Since many
+people load these modules by default on system start, you'll likely get dropped
+into an emergency shell. :-(
+
+Once there, symptoms include:
 
     % systemctl --state=failed
       UNIT                         LOAD   ACTIVE SUB    DESCRIPTION
