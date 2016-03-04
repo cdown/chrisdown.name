@@ -286,6 +286,14 @@ img:not(.nonstandard) {
   box-shadow: 0px 0px 2em 0px rgba(0,0,0,0.35);
 }
 
+/* Damn son, Chrome's default margins for figure are crazy */
+figure {
+  all: initial;
+  * {
+    all: unset;
+  }
+}
+
 /* Syntax highlighting */
 
 .highlight  { background: #ffffff; }
