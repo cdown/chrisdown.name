@@ -211,16 +211,15 @@ pre, code {
 }
 
 code {
-    white-space: pre-wrap;
-}
-
-pre code {
     white-space: pre;
 }
 
-pre {
+pre, :not(pre) > code {
     background-color: #f7f7f7;
     border: 1px solid #eee;
+}
+
+pre {
     padding: 0.6em;
     overflow: auto;
 }
