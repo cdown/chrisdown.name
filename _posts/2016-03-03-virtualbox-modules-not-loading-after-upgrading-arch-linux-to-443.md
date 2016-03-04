@@ -28,12 +28,10 @@ Here's how to do it.
 [ABS]: https://www.archlinux.org/packages/community/x86_64/virtualbox-modules/
 
 1. Enter your root password at the emergency mode prompt to enter a root shell
-2. Get a network connection.
-
-   Since the system didn't start up properly, systemctl's process management
-   functionality just results in permission errors ("error getting authority").
-
-   You can call dhcpcd directly to get an IP address with `dhcpcd <interface>`.
+2. Get a network connection. Since the system didn't start up properly,
+   systemctl's process management functionality just results in permission
+   errors ("error getting authority"). You can call dhcpcd directly to get an
+   IP address with `dhcpcd <interface>`.
 3. Install the `abs` package if you don't already have it.
 4. Run `abs community/virtualbox-modules` as root to sync the package source
    from the upstream ABS tree.
@@ -41,12 +39,9 @@ Here's how to do it.
 6. Copy the package ABS downloaded to a new directory (to keep ABS clean) by
    doing `mkdir ~/abs && cp -a /var/abs/community/virtualbox-modules ~/abs/` or
    similar.
-7. Install deps for the package, build it, and then install the package.
-
-   This can be done with `makepkg -si` inside the new
-   `~/abs/virtualbox-modules` directory.
-
-   Side note: `makepkg` used to have a `--pkg` option to indicate you only
-   wanted a subset of packages from a split package, but it seems to have gone
-   missing... oh well.
+7. Install deps for the package, build it, and then install the package. This
+   can be done with `makepkg -si` inside the new `~/abs/virtualbox-modules`
+   directory. Side note: `makepkg` used to have a `--pkg` option to indicate
+   you only wanted a subset of packages from a split package, but it seems to
+   have gone missing... oh well.
 8. Reboot. Everything should be golden now!
