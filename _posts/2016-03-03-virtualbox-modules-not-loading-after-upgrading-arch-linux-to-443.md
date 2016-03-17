@@ -3,6 +3,14 @@ layout: post
 title: VirtualBox modules not loading in Arch Linux after upgrade to Linux 4.4.3
 ---
 
+**UPDATE:** Due to this debacle, Arch has actually now totally removed the
+virtualbox-modules package (and its virtualbox-guest-modules subpackage) and
+replaced it with [virtualbox-guest-dkms][], which builds at install time and on
+kernel upgrades using [DKMS][] instead of using pregenerated modules. This
+should hopefully avoid things like this happening again.
+
+---
+
 I just saw this on two of my machines after upgrading to 4.4.3. Since many
 people load these modules by default on system start, you'll likely get dropped
 into an emergency shell. :-(
@@ -33,6 +41,8 @@ building for the wrong kernel version, and it won't work.
 [virtualbox-guest-modules]: https://www.archlinux.org/packages/community/x86_64/virtualbox-guest-modules/
 [virtualbox-modules]: https://www.archlinux.org/packages/community/x86_64/virtualbox-modules/
 [ABS]: https://www.archlinux.org/packages/community/x86_64/virtualbox-modules/
+[virtualbox-guest-dkms]: https://www.archlinux.org/packages/community/x86_64/virtualbox-guest-dkms/
+[DKMS]: https://en.wikipedia.org/wiki/Dynamic_Kernel_Module_Support
 
 1. Enter your root password at the emergency mode prompt to enter a root shell
 2. Get a network connection. Since the system didn't start up properly,
