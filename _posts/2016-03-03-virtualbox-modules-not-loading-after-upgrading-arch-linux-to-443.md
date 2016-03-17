@@ -30,17 +30,15 @@ Some posts on the Arch forums suggest downgrading the kernel back down to
 4.4.1. While that *might* work for a time, you'll be running a partial upgrade
 that could break at any time when others upgrade their modules for 4.4.3.
 
-Instead, you should rebuild [virtualbox-guest-modules][] &mdash; or more
-specifically its parent package, [virtualbox-modules][] &mdash; from [ABS][].
+Instead, you should rebuild virtualbox-guest-modules &mdash; or more
+specifically its parent package, virtualbox-modules &mdash; from [ABS][].
 Here's how to do it.
 
 **NOTE:** These steps must be run from the emergency shell *after* rebooting
 into kernel 4.4.3. If you do them before upgrading/rebooting, you will be
 building for the wrong kernel version, and it won't work.
 
-[virtualbox-guest-modules]: https://www.archlinux.org/packages/community/x86_64/virtualbox-guest-modules/
-[virtualbox-modules]: https://www.archlinux.org/packages/community/x86_64/virtualbox-modules/
-[ABS]: https://www.archlinux.org/packages/community/x86_64/virtualbox-modules/
+[ABS]: https://wiki.archlinux.org/index.php/Arch_Build_System
 [virtualbox-guest-dkms]: https://www.archlinux.org/packages/community/x86_64/virtualbox-guest-dkms/
 [DKMS]: https://en.wikipedia.org/wiki/Dynamic_Kernel_Module_Support
 
