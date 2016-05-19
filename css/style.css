@@ -210,7 +210,11 @@ pre, code {
     font-size: 1em;
 }
 
-code {
+:not(pre) > code {
+    white-space: pre-wrap;
+}
+
+pre > code {
     white-space: pre;
 }
 
