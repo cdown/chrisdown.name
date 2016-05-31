@@ -35,6 +35,8 @@ some thoughts about the experience, some specific to Arch, some more general.
 
 ## The ugly
 
+**UPDATE:** These seem way better after compiling 4.7.0-rc1-mainline. Yay!
+
 - I get kernel panics when connecting an external monitor over mini DisplayPort
   sometimes. Apparently this is fixed in kernel 4.6 (I'm still on 4.5.4, but
   may try compiling it later today and seeing if it helps).
