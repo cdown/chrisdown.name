@@ -3,13 +3,17 @@ layout: default
 title: "Chris Down"
 description:
     "Software developer and system administrator living in London, England,
-    currently building stuff as part of the security team at Facebook."
+    currently helping keep Facebook running as part of the Web Foundation
+    Production Engineering team."
 ---
 
-Hey there! I'm a software developer and system administrator living in London,
-England, currently building stuff as part of the security team at [Facebook][].
+
+Hey there! I'm a software developer and system administrator, currently helping
+keep [Facebook][] running and reliable as part of the Web Foundation [Production
+Engineering][] team in London.
 
 [Facebook]: https://www.facebook.com
+[Production Engineering]: https://www.quora.com/What-is-it-like-to-be-a-Production-Engineer-at-Facebook/answer/Larry-Schrof
 
 ## Things on this site
 
