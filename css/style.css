@@ -280,7 +280,7 @@ iframe {
     }
 }
 
-img:not(.nonstandard) {
+img:not(.nonstandard), video:not(.nonstandard) {
   display: block;
   max-width:100%;
   margin: 2em auto;

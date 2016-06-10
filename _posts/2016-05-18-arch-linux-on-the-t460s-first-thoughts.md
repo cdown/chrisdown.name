@@ -14,7 +14,9 @@ some thoughts about the experience, some specific to Arch, some more general.
   (`xf86-input-synaptics`) is required if you don't want totally bizarre
   trackpad behaviour like this:
 
-{% youtube VPUbIuN-Gf0 %}
+<video controls>
+   <source src="/images/blog/t460s-first-thoughts/t460s-trackpad.mp4" type="video/mp4">
+</video>
 
 - I haven't noticed any problems with any lacking hardware support so far.
   Allegedly the fingerprint reader is not supported by [fprint][] yet, but I
