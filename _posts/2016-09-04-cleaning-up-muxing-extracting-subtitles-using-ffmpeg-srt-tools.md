@@ -16,8 +16,8 @@ to mine.
 Things you will need:
 
 - [ffmpeg][], a set of tools to manipulate multimedia data
-- [srt][], a Python library and set of tools for dealing with SRT files
-  (install with `pip install srt`)
+- [srt][], a Python library and set of tools I've written for dealing with SRT
+  files (install with `pip install srt`)
 
 [ffmpeg]: https://ffmpeg.org/
 [srt]: https://github.com/cdown/srt
