@@ -320,3 +320,4 @@ to langdetect. This fixes the problem above:
 
 [lines-matching]: https://github.com/cdown/srt/blob/develop/srt_tools/srt-lines-matching
 [hanzidentifier]: https://github.com/tsroten/hanzidentifier
+[langdetect]: https://github.com/Mimino666/langdetect
