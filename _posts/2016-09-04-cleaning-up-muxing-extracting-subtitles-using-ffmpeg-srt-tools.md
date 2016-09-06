@@ -163,8 +163,8 @@ the SRT file directly is a good idea.
 The srt project contains two tools to deal with this:
 
 - [fixed-timeshift][], which shifts all subtitles by a fixed amount. For
-  example, you want to shift all subtitles back 2.5 seconds to sync properly
-  with your video.
+  example, you may want to shift all subtitles back a certain number of seconds
+  to sync properly with your video.
 
       % srt fixed-timeshift --seconds -34.579 < ES-spanish.srt
       1
