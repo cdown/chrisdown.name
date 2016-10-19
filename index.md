@@ -67,13 +67,3 @@ list, I'm probably not actively developing or maintaining them.
 [mpd]: http://mpd.wikia.com/
 [Hanyu Pinyin]: https://en.wikipedia.org/wiki/Pinyin
 [Arch User Repository]: https://aur.archlinux.org/
-
-### Facebook
-
-When I worked in Security at Facebook, most of my work involved developing
-software to securely automate our complex SSL infrastructure. For the
-timebeing, regrettably these pieces of software are not open source, but you
-can check out [Lemur][] as an awesome alternative.
-
-[GitHub]: https://github.com/cdown
-[Lemur]: https://github.com/Netflix/lemur
