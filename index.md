@@ -2,18 +2,17 @@
 layout: default
 title: "Chris Down"
 description:
-    "Software developer and system administrator living in London, England,
-    currently helping keep Facebook running as part of the Web Foundation
-    Production Engineering team."
+    "Linux sysadmin and developer living in London, England, currently helping
+    Facebook scale to more than 1.7 billion users."
 ---
 
 
-Hey there! I'm a software developer and system administrator, currently helping
-keep [Facebook][] running and reliable as part of the Web Foundation [Production
-Engineering][] team in London.
+Hey there! I'm a software developer and system administrator, currently working
+as a [Production Engineer][]/SRE at [Facebook][]. I concieve, design, and
+improve systems that make Facebook more performant, scalable, and reliable.
 
 [Facebook]: https://www.facebook.com
-[Production Engineering]: https://www.quora.com/What-is-it-like-to-be-a-Production-Engineer-at-Facebook/answer/Larry-Schrof
+[Production Engineer]: https://www.quora.com/What-is-it-like-to-be-a-Production-Engineer-at-Facebook/answer/Larry-Schrof
 
 ## Things on this site
 
