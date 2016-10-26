@@ -46,6 +46,8 @@ I maintain the following personal projects:
 - [mpdmenu](https://github.com/cdown/mpdmenu) — control [mpd][] from [dmenu][]
 - [pinyin](https://github.com/cdown/pinyin) — manipulate [Hanyu Pinyin][]
 - [srt](https://github.com/cdown/srt) — a library to deal with [SRT files][]
+- [travis-automerge](https://github.com/cdown/travis-automerge) — automatically
+  merge successful builds from [Travis CI][]
 - [tzupdate](https://github.com/cdown/tzupdate) — update /etc/localtime
   automatically using geolocation
 - [xinput-toggle](https://github.com/cdown/xinput-toggle) — tool to manipulate
@@ -69,3 +71,4 @@ list, I'm probably not actively developing or maintaining them.
 [Hanyu Pinyin]: https://en.wikipedia.org/wiki/Pinyin
 [Arch User Repository]: https://aur.archlinux.org/
 [GitHub]: https://github.com/cdown
+[Travis CI]: https://travis-ci.org
