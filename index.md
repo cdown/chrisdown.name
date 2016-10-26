@@ -43,6 +43,8 @@ I maintain the following personal projects:
   [dmenu][] frontend
 - [daily](https://github.com/cdown/daily) — super simple daily logs with
   your $EDITOR + git
+- [gh-mirror](https://github.com/cdown/gh-mirror) — mirror all public
+  repositories for a user to your local machine
 - [mac-cel](https://github.com/cdown/mac-cel) — remove mouse acceleration on
   OSX
 - [mpdmenu](https://github.com/cdown/mpdmenu) — control [mpd][] from [dmenu][]
