@@ -48,6 +48,8 @@ I maintain the following personal projects:
 - [srt](https://github.com/cdown/srt) — a library to deal with [SRT files][]
 - [tzupdate](https://github.com/cdown/tzupdate) — update /etc/localtime
   automatically using geolocation
+- [xinput-toggle](https://github.com/cdown/xinput-toggle) — tool to manipulate
+  arbitrary xinput devices, designed for Yubikey timeout toggling
 - [yturl](https://github.com/cdown/yturl) — watch YouTube videos on the command
   line
 
