@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Sadly linkchecker is totally broken, so this will have to do in the interim until we find something better.
+
+temp_dir=$(mktemp -d)
+trap 'rm -rf "$temp_dir"' EXIT
+
+whitelist=(
+    # Extra crawler detection
+    https://linkedin.com/in/chrisldown
+    https://www.quora.com/What-is-it-like-to-be-a-Production-Engineer-at-Facebook/answer/Larry-Schrof
+)
+
+grep -RPo '((?<=href=")|(?<=src="))[^"]*' _deploy/ -h | grep -v '^#' |
+    sed 's|^/|https://localhost:4000/|' | sort | uniq |
+    while read -r uri; do
+        {
+            printf '%s: ' "$uri"
+            curl -A 'Mozilla/5.0 (X11; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0' \
+                -Lo /dev/null --silent --head --write-out '%{http_code}\n' "$uri" |
+                head -1
+        } > "$(mktemp -p "$temp_dir")" &
+    done
+
+wait
+
+! { grep -Rhv '2..$' "$temp_dir" | grep -vf <(printf '%s\n' "${whitelist[@]}"); }

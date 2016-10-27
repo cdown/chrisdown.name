@@ -14,3 +14,9 @@ end
 task :build_raw do
   sh "jekyll build"
 end
+
+task :check_links do
+  # External link stuff is flaky. As long as it isn't totally dead, that's
+  # fine.
+  sh "for ((i=0; i<3; i++ )); do ./hacky_linkchecker && break; done"
+end
