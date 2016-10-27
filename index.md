@@ -33,8 +33,6 @@ improve systems that make Facebook more performant, scalable, and reliable.
 
 ## Software
 
-### Open source
-
 I maintain the following personal projects:
 
 - [aur](https://github.com/cdown/aur) — interface to the
