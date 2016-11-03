@@ -30,6 +30,8 @@ improve systems that make Facebook more performant, scalable, and reliable.
 - [Instagram](https://instagram.com/_u/chrisldown)
 - [suckless.org](http://suckless.org/people/cdown)
   (my [dwm](http://dwm.suckless.org/) patches are here)
+- [Facebook][]
+- [Twitter][]
 
 ## Software
 
@@ -74,3 +76,5 @@ list, I'm probably not actively developing or maintaining them.
 [Arch User Repository]: https://aur.archlinux.org/
 [GitHub]: https://github.com/cdown
 [Travis CI]: https://travis-ci.org
+[Facebook]: https://facebook.com/christopherdown
+[Twitter]: https://twitter.com/unixchris/with_replies
