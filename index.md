@@ -79,4 +79,4 @@ list, I'm probably not actively developing or maintaining them.
 [Travis CI]: https://travis-ci.org
 [Facebook]: https://facebook.com/christopherdown
 [Twitter]: https://twitter.com/unixchris/with_replies
-[last.fm]: https://last.fm/user/unixchris
+[last.fm]: http://last.fm/user/unixchris
