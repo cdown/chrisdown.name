@@ -14,7 +14,7 @@ The traditional technique to deal with this was to drop all your caches (with
 know about you, but I don't want my entire environment to slow to a crawl on
 I/O just because I want to run this one experiment.
 
-dd has a nice oflag available since 8.11 called "nocache". This option expunges
+dd has a nice flag available since 8.11 called "nocache". This option expunges
 the pages present for the specified file from the page cache. For example:
 
     dd of=file oflag=nocache conv=notrunc,fdatasync count=0
