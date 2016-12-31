@@ -23,8 +23,9 @@ You can also drop just part of a file from the cache:
 
     dd if=file iflag=nocache skip=10 count=10 of=/dev/null
 
-Now all that remains is to get the files to drop caches on, which is trivially
-achieved by processing output from [BCC's
+Now all that remains is to get the files to drop caches on. Here I use `ls
+~cdown` as the example command &mdash; you'll want to substitute your real one.
+This is trivially achieved by processing output from [BCC's
 opensnoop](https://github.com/iovisor/bcc/blob/master/tools/opensnoop.py) (note
 that opensnoop's PID filtering is currently TID based rather than TGID based):
 
