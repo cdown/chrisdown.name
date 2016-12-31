@@ -30,7 +30,7 @@ opensnoop](https://github.com/iovisor/bcc/blob/master/tools/opensnoop.py) (note
 that opensnoop's PID filtering is currently TID based rather than TGID based):
 
     % bash -c 'ls ~cdown > /dev/null' & pid=$!; { kill -STOP "$pid"; sleep 5; kill -CONT "$pid"; } &
-    % opensnoop -p "$pid" | awk '{ print $NF }' | sort -u | tee todrop
+    % opensnoop -p "$pid" | perl -ane '(-f $F[3]) and print "$F[3]\n";' | sort -u | tee todrop
     ^C
     /etc/ld.so.cache
     /etc/nsswitch.conf
