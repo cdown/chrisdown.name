@@ -21,7 +21,7 @@ builds:
   <thead>
     <tr>
       <th>Repository</th>
-      <th>Linux build</th>
+      <th>Linux &amp; Mac builds</th>
       <th>Windows build</th>
       <th>Coverage</th>
       <th>Dependencies</th>
@@ -36,7 +36,7 @@ builds:
         N/A
         {% else %}
         <a href="https://travis-ci.org/cdown/{{ repo.name }}">
-          <img class="nonstandard" src="https://img.shields.io/travis/cdown/{{ repo.name }}/develop.svg?label=is" alt="Linux build status for {{ repo.name }}" />
+          <img class="nonstandard" src="https://img.shields.io/travis/cdown/{{ repo.name }}/develop.svg?label=are" alt="Linux build status for {{ repo.name }}" />
         </a>
         {% endif %}
       </td>
@@ -62,8 +62,8 @@ builds:
         {% if repo.disable contains 'requires' %}
         N/A
         {% else %}
-        <a href="https://requires.io/github/cdown/{{ repo.name }}/requirements/?branch=develop">
-          <img class="nonstandard" src="https://img.shields.io/requires/github/cdown/{{ repo.name }}.svg?label=are" alt="Dependency status for {{ repo.name }}" />
+        <a href="https://libraries.io/github/cdown/{{ repo.name}}">
+          <img class="nonstandard" src="https://img.shields.io/librariesio/github/cdown/{{ repo.name }}.svg?label=are" alt="Dependency status for {{ repo.name }}" />
         </a>
         {% endif %}
       </td>
