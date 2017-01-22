@@ -34,7 +34,9 @@ script:
       for (( i=0; i<3; i++ )); do
         linkchecker -a --no-warnings http://localhost:24895 \
           --check-extern \
-          --ignore-url="^https://web.archive.org" && break
+          --ignore-url="^https://web.archive.org" \
+          --ignore-url="^https://assrt.net" \
+          --ignore-url="^https://travis-ci.org" && break
       done
     # `tidy` doesn't allow you to ignore warnings in exit codes, so we need to
     # explicitly check for errors with `grep`.
