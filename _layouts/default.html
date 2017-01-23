@@ -66,36 +66,8 @@
         </p>
       </div>
     </footer>
-    <script>
-      !function(c,d,o,w,n){c.GoogleAnalyticsObject=o;c[o]||(c[o]=function(){
-      (c[o].q=c[o].q||[]).push(arguments)});c[o].l=+new Date;w=d.createElement('script');
-      n=d.scripts[0];w.src='//www.google-analytics.com/analytics.js';
-      n.parentNode.insertBefore(w,n)}(window,document,'ga');
-
-      ga('create', 'UA-58706842-1', 'auto');
-      ga('require', 'displayfeatures');
-      ga('send', 'pageview');
-    </script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-          var el = document.getElementById('footer-email')
-          var address = ['chris', 'chrisdown.name'].join('@');
-          el.href = 'mailto:' + address;
-          el.innerHTML = address;
-
-          var images = document.getElementsByTagName('img');
-          var image_list = Array.prototype.slice.call(images);
-          image_list.forEach(function(img, _, _) {
-            if (img.className.indexOf('nonstandard') >= 0) {
-              return;
-            }
-
-            var a = document.createElement('a');
-            a.href = img.src;
-            img.parentNode.replaceChild(a, img);
-            a.appendChild(img);
-          })
-      });
-    </script>
+    <script src="/js/ga.js"></script>
+    <script src="/js/email.js"></script>
+    <script src="/js/img-link.js"></script>
   </body>
 </html>
