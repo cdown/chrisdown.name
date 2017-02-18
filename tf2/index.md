@@ -26,3 +26,21 @@ early days, these configs would not have been so widely disseminated.
 [github]: https://github.com/tf2configs/tf2configs
 [zip]: https://github.com/tf2configs/tf2configs/archive/2.016.zip
 [FakkelBrigade]: http://fakkelbrigade.eu
+
+## FAQ
+
+### How do I install the config?
+
+Put the contents of the config that you want to use in `cfg/autoexec.cfg`.
+
+### How do I uninstall the config?
+
+The Source engine stores some values by itself outside of `cfg/autoexec.cfg`,
+so removal is not enough. Reinstalling may not work either, since Steam Cloud
+may restore the config you want to remove. Here's how to do it:
+
+1. Remove `cfg/autoexec.cfg`
+2. Add `-autoconfig` to your launch options
+3. Launch the game
+4. Quit the game
+5. Remove `-autoconfig` from your launch options
