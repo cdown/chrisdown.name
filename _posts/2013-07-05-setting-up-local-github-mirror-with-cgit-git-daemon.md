@@ -202,5 +202,5 @@ You should now be able to clone:
 
 [gh-mirror]:  https://github.com/cdown/gh-mirror
 [cgit]:       http://git.zx2c4.com/cgit/
-[git-daemon]: http://git-scm.com/book/en/Git-on-the-Server-Git-Daemon
+[git-daemon]: https://git-scm.com/book/en/Git-on-the-Server-Git-Daemon
 [nginx]:      http://nginx.org
