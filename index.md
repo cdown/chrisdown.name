@@ -70,6 +70,20 @@ I also am a contributor to some other projects, including:
 You can find other projects on my [GitHub][], although if they're not on this
 list, I'm probably not actively developing or maintaining them.
 
+## Talks
+
+- [cgroupv2: Linux's new unified control group
+  hierarchy](https://www.youtube.com/watch?v=XKwBtDhZ2Gc) — FOSDEM/QCon London
+- [Lessons learned running SSL at
+  scale](https://www.youtube.com/watch?v=9Ya8H-9Hrp4) — FOSDEM
+- The Web Foundation model — University College London lecture
+- [Bash pitfalls and code
+  smells](http://slides.com/chrisdown/avoiding-bash-pitfalls-and-code-smells/fullscreen)
+  — LVL.UP Kuala Lumpur
+- [Pragmatic minimalism as a software design
+  tool](http://slides.com/chrisdown/pragmaticminimalism/fullscreen) — LVL.UP
+  Kuala Lumpur
+
 [SRT files]: https://en.wikipedia.org/wiki/SubRip#SubRip_text_file_format
 [dmenu]: http://tools.suckless.org/dmenu/
 [mpd]: http://mpd.wikia.com/
