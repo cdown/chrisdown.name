@@ -26,6 +26,7 @@ improve systems that make Facebook more performant, scalable, and reliable.
 - [GitHub][]
 - [Unix and Linux Stack Exchange]({{ site.links.ulse }})
 - [LinkedIn](https://www.linkedin.com/in/chrisldown)
+- [Reddit][]
 - [Keybase](https://keybase.io/cdown)
 - [Instagram](https://instagram.com/_u/chrisldown)
 - [suckless.org](http://suckless.org/people/cdown)
@@ -94,3 +95,4 @@ list, I'm probably not actively developing or maintaining them.
 [Facebook]: https://facebook.com/christopherdown
 [Twitter]: https://twitter.com/unixchris/with_replies
 [last.fm]: http://last.fm/user/unixchris
+[Reddit]: https://www.reddit.com/user/chrisdown/
