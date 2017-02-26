@@ -23,17 +23,17 @@ improve systems that make Facebook more performant, scalable, and reliable.
 
 ## Profiles elsewhere
 
+- [Facebook][]
 - [GitHub][]
-- [Unix and Linux Stack Exchange]({{ site.links.ulse }})
+- [Instagram](https://instagram.com/_u/chrisldown)
+- [Keybase](https://keybase.io/cdown)
+- [last.fm][]
 - [LinkedIn](https://www.linkedin.com/in/chrisldown)
 - [Reddit][]
-- [Keybase](https://keybase.io/cdown)
-- [Instagram](https://instagram.com/_u/chrisldown)
 - [suckless.org](http://suckless.org/people/cdown)
   (my [dwm](http://dwm.suckless.org/) patches are here)
-- [Facebook][]
 - [Twitter][]
-- [last.fm][]
+- [Unix and Linux Stack Exchange]({{ site.links.ulse }})
 
 ## Software
 
