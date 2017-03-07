@@ -49,8 +49,9 @@ that opensnoop's PID filtering is currently TID based rather than TGID based):
 
 You can also do this with strace + perl, but be aware that if your
 application's startup flow is latency dependent, system call tracing using
-ptrace is really, really slow and so may bias your results (whereas eBPF uses
-the `k{,ret}probe` interface and is generally so fast as to be unnoticeable):
+ptrace is really, really slow and so may bias your results (whereas eBPF can
+use the `k{,ret}probe` interface and is generally so fast as to be
+unnoticeable):
 
     % strace -f -e open -o startfiles bash -c 'ls ~cdown > /dev/null'
     % perl -F\" -ane '(-f $F[1]) and print "$F[1]\n";' startfiles | sort -u | tee todrop
