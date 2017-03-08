@@ -195,8 +195,8 @@ The srt project contains two tools to deal with this:
       <i>Pensamientos al azar</i>
       <i>para el Día de San Valentín, 2004.</i>
 
-[fixed-timeshift]: https://github.com/cdown/srt-tools/blob/develop/fixed-timeshift
-[linear-timeshift]: https://github.com/cdown/srt-tools/blob/develop/linear-timeshift
+[fixed-timeshift]: https://github.com/cdown/srt/blob/develop/srt_tools/srt-fixed-timeshift
+[linear-timeshift]: https://github.com/cdown/srt/blob/develop/srt_tools/srt-linear-timeshift
 
 ## Muxing subtitles together
 
