@@ -95,6 +95,6 @@ list, I'm probably not actively developing or maintaining them.
 [GitHub]: https://github.com/cdown
 [Travis CI]: https://travis-ci.org
 [Facebook]: https://facebook.com/christopherdown
-[Twitter]: https://twitter.com/unixchris/with_replies
+[Twitter]: https://twitter.com/unixchris
 [last.fm]: http://last.fm/user/unixchris
 [Reddit]: https://www.reddit.com/user/chrisdown/
