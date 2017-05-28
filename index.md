@@ -107,11 +107,7 @@ list, I'm probably not actively developing or maintaining them.
 <meta itemprop="email" content="chris@chrisdown.name">
 <meta itemprop="url" content="https://chrisdown.name">
 <meta itemprop="image" content="https://chrisdown.name/images/headshot.jpg">
-<meta itemprop="memberOf" content="Facebook">
-<span itemprop="name">
-  <link itemprop="sameAs" href="https://github.com/cdown">
-  <link itemprop="sameAs" href="https://keybase.io/cdown">
-  <link itemprop="sameAs" href="https://www.linkedin.com/in/chrisldown">
-  <link itemprop="sameAs" href="https://twitter.com/unixchris">
-  <link itemprop="sameAs" href="https://unix.stackexchange.com/users/10762/chris-down">Chris Down</span> is a software developer and system administrator, currently working as a Production Engineer/SRE at Facebook. He works as part of the Web Foundation team, responsible for the overall performance and reliability of Facebook’s user-facing products.
+<meta itemprop="worksFor" content="Facebook">
+<meta itemprop="name" content="Chris Down">
+<meta itemprop="description" content="Chris Down is a software developer and system administrator, currently working as a Production Engineer/SRE at Facebook. He works as part of the Web Foundation team, responsible for the overall performance and reliability of Facebook’s user-facing products.">
 </div>
