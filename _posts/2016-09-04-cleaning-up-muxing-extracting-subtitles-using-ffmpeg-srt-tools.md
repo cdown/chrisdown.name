@@ -24,16 +24,17 @@ Things you will need:
 
 ## Conversion from other formats to SRT
 
-[SRT][] is by far my favourite subtitle format. Its spec has its oddities (not
-least that there is no widely accepted formal spec), but in general if you
-stick to the accepted commonalities of the format between media players, you'll
-find it's not only simple, but easy to modify and script around.
+[The SRT format][] is by far my favourite subtitle format. Its spec has its
+oddities (not least that there is no widely accepted formal spec), but in
+general if you stick to the accepted commonalities of the format between media
+players, you'll find it's not only simple, but easy to modify and script
+around.
 
 If you have another format, like [SSA][], for example, you'll probably find
 that [ffmpeg][] does a pretty good job converting it with `ffmpeg -i foo.ssa
 foo.srt`.
 
-[SRT]: http://matroska.org/technical/specs/subtitles/srt.html
+[The SRT format]: http://matroska.org/technical/specs/subtitles/srt.html
 [SSA]: http://matroska.org/technical/specs/subtitles/ssa.html
 
 ## Acquiring subtitles
