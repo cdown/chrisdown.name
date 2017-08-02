@@ -15,10 +15,6 @@ before_install:
     - sudo add-apt-repository ppa:techzilla/misc -y
     - sudo apt-get update -q
 install:
-    # linkchecker is broken on versions of requests > 2.6.0, see
-    # https://github.com/wummel/linkchecker/issues/593
-    - sudo pip install requests==2.6.0
-    - sudo pip install linkchecker
     # The signatures on the Techzilla PPA are busted, sadly. :-(
     - sudo apt-get install tidy --force-yes
     - bundle install
@@ -27,17 +23,6 @@ before_script:
     - "jekyll serve --port 24895 &"
     - sleep 10
 script:
-    # Testing external links can be kinda flaky, so as long as one of the three
-    # attempts passes, we consider everything to be OK. If the site is flaky,
-    # it's ok, as long as the link isn't dead.
-    - |
-      for (( i=0; i<3; i++ )); do
-        linkchecker -a --no-warnings http://localhost:24895 \
-          --check-extern \
-          --ignore-url="^https://web.archive.org" \
-          --ignore-url="^https://assrt.net" \
-          --ignore-url="^https://travis-ci.org" && break
-      done
     # `tidy` doesn't allow you to ignore warnings in exit codes, so we need to
     # explicitly check for errors with `grep`.
     - "! find deploy/ -name '*.html' -exec tidy -e {} + 2>&1 | LC_ALL=C grep '[0-9] error' | grep -v '0 error'"
