@@ -33,4 +33,4 @@ script:
     # Newer versions of the markdown interpreter just put the raw anchor text
     # if you failed to give it a link reference, so we should look for those
     # too.
-    - "! grep -FR '][]' _deploy/"
+    - "! grep -IFR '][]' _deploy/"
