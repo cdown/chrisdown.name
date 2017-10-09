@@ -2,14 +2,14 @@
 layout: default
 title: "Chris Down"
 description:
-    "Linux sysadmin and developer living in London, England, currently helping
-    Facebook scale to more than 2 billion users."
+    "Linux sysadmin, SRE, and developer living in London, England, currently
+    helping Facebook scale to more than 2 billion users."
 ---
 
 
-Hey there! I'm a software developer and system administrator, currently working
-as a [Production Engineer][]/SRE at [Facebook][]. I work as part of the Web
-Foundation team, responsible for the overall performance and reliability of
+Hey there! I'm a SRE, software developer, and system administrator, currently
+working as a [Production Engineer][]/SRE at [Facebook][]. I work as part of the
+Web Foundation team, responsible for the overall performance and reliability of
 Facebook's user-facing products. I concieve, design, and improve systems that
 make Facebook more performant, scalable, and reliable.
 
