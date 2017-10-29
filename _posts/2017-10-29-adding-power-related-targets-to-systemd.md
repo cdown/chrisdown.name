@@ -14,7 +14,7 @@ I want to use these to do some power tweaks when coming on to and off of
 battery.
 
 You need [acpid](https://sourceforge.net/projects/acpid2/), since systemd
-currently has no support for ACPI events.
+currently has only very limited support for ACPI events.
 
 First off, create the two targets that you want to use for AC/battery:
 
