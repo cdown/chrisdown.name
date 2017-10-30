@@ -40,28 +40,22 @@ the binding points for services that we want to run when we switch to and from
 AC/battery.
 
 Now, we need to tell acpid to start `ac.target` when it sees us coming on to
-AC, and start `battery.target` when it sees us coming off of AC. This should be
-simple, but unfortunately on my T470s, coming on and off of battery looks like
-this:
+AC, and start `battery.target` when it sees us coming off of AC. To find the
+events we need to attach to, we can use `acpi_listen`:
 
-    % acpi_listen | grep battery
-    battery PNP0C0A:00 00000080 00000001 <-- unplug
-    battery PNP0C0A:00 00000080 00000001 <-- plug
+    % acpi_listen | grep ac_adapter
+    ac_adapter ACPI0003:00 00000080 00000000
+    ac_adapter ACPI0003:00 00000080 00000001
 
-Well, that's not very helpful. We get exactly the same battery event for unplug
-and plug in acpid. This means that we need to look elsewhere to get information
-about the AC state, but we can still use acpid to assist us in knowing when to
-run. A useful file here is `/sys/class/power_supply/AC/online`, which tells
-whether we are on power (value "1"), or off power (value "0"). You may have
-more than one `AC*` directory if you have multiple power supplies.
 
 This means that we can then do our activation in a script,
-`/usr/local/bin/powertargets`, like so:
+`/usr/local/bin/powertargets`, like so (`$4` comes from acpid, which we'll set
+up in a moment):
 
 {% highlight bash %}
 #!/bin/bash -e
 
-on_ac=$(cat /sys/class/power_supply/AC/online)
+on_ac=$4
 
 if (( on_ac )); then
     exec systemctl start ac.target
@@ -76,7 +70,7 @@ to run it, which can be done by placing a file in acpid's `events` directory
 
     cat > /etc/acpi/events/powertargets << 'EOF'
     event=battery.*
-    action=/usr/local/bin/powertargets
+    action=/usr/local/bin/powertargets %e
     EOF
 
 After reloading acpid's config, we can now test it out by unplugging the power
@@ -123,6 +117,3 @@ too:
 
 Plug it back in, and you should also see the same for whatever you have
 attached to `ac.target`.
-
-The commit in which I add all of this to my config management is
-[433013fa](https://github.com/cdown/ansible-desktop/commit/433013fafb2c03cc7b94ae80299e1c001b06263b).
