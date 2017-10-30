@@ -38,6 +38,10 @@ their total characters, too.
 
 [![Build status][travis-image]][travis-builds]
 
+Right now, testing just includes looking for broken links (external or
+internal) on the site. In future I'd like to also perform some usability tests,
+especially for screen readers.
+
 [travis-builds]: https://travis-ci.org/cdown/chrisdown.name
 [travis-image]: https://travis-ci.org/cdown/chrisdown.name.png?branch=master
 
