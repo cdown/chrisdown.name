@@ -15,8 +15,8 @@ before_install:
     - sudo add-apt-repository ppa:techzilla/misc -y
     - sudo apt-get update -q
 install:
-    - sudo pip install requests
-    - sudo pip install git+https://github.com/linkcheck/linkchecker.git
+    - sudo pip install -U requests>=2.4.0
+    - sudo pip install -U git+https://github.com/linkcheck/linkchecker.git
     # The signatures on the Techzilla PPA are busted, sadly. :-(
     - sudo apt-get install tidy --force-yes
     - bundle install
