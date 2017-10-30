@@ -41,6 +41,6 @@ scheduling the tests.
 There are supposedly more advanced features in Jenkins that don't exist in
 TeamCity (yet), but I don't think we use them.
 
-[Jenkins]: http://jenkins-ci.org/
+[Jenkins]: https://jenkins.io
 [TeamCity]: http://www.jetbrains.com/teamcity/
 [Travis]: https://travis-ci.org/
