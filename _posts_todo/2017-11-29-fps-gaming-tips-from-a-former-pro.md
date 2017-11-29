@@ -19,6 +19,8 @@ will not turn you into a pro gamer, obviously.
 - choosing the right mouse
     - mx518 was my first, then razer deathadder old version, now g400
     - angle snap
+        - open paint, draw some straight lines and see if they come out
+          straight
     - accel (neg and pos)
     - prediction
     - suggestions
@@ -29,17 +31,29 @@ will not turn you into a pro gamer, obviously.
     - size
 - mouse settings
     - mouse accel fix in windows
-    - Mouse HZ polling
+        - markc cpl window s10
+        - only needed for older games
+    - Mouse HZ polling/500hz
+        - see "file" for instructions in documents
+        - mouse rate checker
 - game settings
     - raw mouse input if possible
     - lerp/interp
     - high priority in windows
+        - process hakcer (open source) to make this permanent, start on startup
     - no vsync
     - frame rate limiter -- latency of next frame
     - fps config
     - FOV
     - shadows on
     - ragdolls off if possible
+    - audio
+        - 2 speakers -- best location
+        - use headphones
+        - music off/announcer off
+    - subtitles on, give more info
 - choosing the right keyboard
     - hand positioning
     - suggestions
+- other
+    - ssd
