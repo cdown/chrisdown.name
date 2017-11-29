@@ -23,6 +23,7 @@ exclude:
   - README.md
   - Rakefile
   - env
+  - _posts_todo
 
 destination: _deploy
 
