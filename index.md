@@ -77,11 +77,14 @@ list, I'm probably not actively developing or maintaining them.
 
 ## Talks
 
-- [cgroupv2: Linux's new unified control group
-  hierarchy](https://www.youtube.com/watch?v=XKwBtDhZ2Gc) — FOSDEM/QCon London
+- [cgroupv2: Linux's new unified resource
+  hierarchy](https://www.youtube.com/watch?v=XKwBtDhZ2Gc) —
+  [FOSDEM](https://archive.fosdem.org/2017/schedule/event/cgroupv2/)/DevOpsDays/[ASG](https://cfp.all-systems-go.io/en/ASG2017/public/events/96)
 - [Lessons learned running SSL at
-  scale](https://www.youtube.com/watch?v=9Ya8H-9Hrp4) — FOSDEM
-- The Web Foundation model — University College London lecture
+  scale](https://www.youtube.com/watch?v=9Ya8H-9Hrp4) —
+  [FOSDEM](https://archive.fosdem.org/2016/schedule/event/sslmanagement/)
+- The Web Foundation model — [University College
+  London](https://www.ucl.ac.uk/) lecture
 - [Bash pitfalls and code
   smells](http://slides.com/chrisdown/avoiding-bash-pitfalls-and-code-smells/fullscreen)
   — LVL.UP Kuala Lumpur
