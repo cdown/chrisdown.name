@@ -18,11 +18,12 @@ make Facebook more performant, scalable, and reliable.
 
 ## Things on this site
 
-- [Assorted notes](/archive.html)
-- [Data exported from my RYM profile](/rym.html)
+- [Assorted technology-related notes](/archive.html)
+- [Sim racing data/notes](/racing.html)
 - [My PGP public key](https://keybase.io/cdown/key.asc)
 - [My SSH public key](/ssh)
 - [My old TF2 configs](/tf2)
+- [RYM profile export](/rym.html)
 
 ## Profiles elsewhere
 
