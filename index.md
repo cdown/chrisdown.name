@@ -22,6 +22,13 @@ of Facebook-internal technologies.
 [Facebook]: https://www.facebook.com
 [Production Engineer]: https://www.quora.com/What-is-it-like-to-be-a-Production-Engineer-at-Facebook/answer/Larry-Schrof
 
+## Recent blog posts
+
+{% for post in site.posts limit:5 %}- [{{ post.title }}]({{ post.url }})
+{% endfor %}
+
+More posts are available on the [archive page](/archive.html).
+
 ## Things on this site
 
 - [Assorted technology-related notes](/archive.html)
