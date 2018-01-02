@@ -16,8 +16,8 @@ make Facebook more performant, scalable, and reliable.
 Most of my active work is around operating system primitives, like
 [cgroups](https://www.youtube.com/watch?v=ikZ8_mRotT4),
 [systemd](https://github.com/systemd/systemd),
-[eBPF](https://www.iovisor.org/technology/ebpf), and a bunch of
-Facebook-internal technologies.
+[eBPF](https://www.iovisor.org/technology/ebpf), containerisation, and a bunch
+of Facebook-internal technologies.
 
 [Facebook]: https://www.facebook.com
 [Production Engineer]: https://www.quora.com/What-is-it-like-to-be-a-Production-Engineer-at-Facebook/answer/Larry-Schrof
