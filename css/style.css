@@ -233,6 +233,7 @@ blockquote {
     margin-left: 1.5em;
     padding-left: 0.7em;
     border-left: 3px solid #ddd;
+    font-style: italic;
 }
 
 iframe {

@@ -13,6 +13,12 @@ Web Foundation team, responsible for the overall performance and reliability of
 Facebook's user-facing products. I concieve, design, and improve systems that
 make Facebook more performant, scalable, and reliable.
 
+Most of my active work is around operating system primitives, like
+[cgroups](https://www.youtube.com/watch?v=ikZ8_mRotT4),
+[systemd](https://github.com/systemd/systemd),
+[eBPF](https://www.iovisor.org/technology/ebpf), and a bunch of
+Facebook-internal technologies.
+
 [Facebook]: https://www.facebook.com
 [Production Engineer]: https://www.quora.com/What-is-it-like-to-be-a-Production-Engineer-at-Facebook/answer/Larry-Schrof
 
@@ -69,6 +75,10 @@ I maintain the following personal projects:
 
 I also am a contributor to some other projects, including:
 
+- [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) — modern resource
+  control and accounting
+- [systemd](https://github.com/systemd/systemd) — a system and service
+  manager for Linux
 - [hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced
   Quickcheck style testing library for Python
 - [osquery](https://github.com/facebook/osquery) — an operating system
