@@ -150,7 +150,7 @@ uncommon scenarios:
 2. During the program's normal operation, we may allocate memory which is only
    used rarely. It may make more sense for overall system performance to
    required a [major fault](https://en.wikipedia.org/wiki/Page_fault#Types) to
-   page these these in from disk on demand, instead using the memory for
+   page these in from disk on demand, instead using the memory for
    something else that's more important.
 
 ## Examining what happens with/without swap
@@ -185,7 +185,12 @@ v2](https://www.youtube.com/watch?v=ikZ8_mRotT4).
 
 ### Under temporary spikes in memory usage
 
-- **With swap:** The OOM killer is triggered more quickly as anonymous pages
+- **With swap:** We're more resilient to temporary spikes, but in cases of
+  severe memory starvation, the period from memory thrashing beginning to the
+  OOM killer may be prolonged. We have more visibility into the instigators of
+  memory pressure and can act on them more reasonably, and can perform a
+  controlled intervention.
+- **Without swap:** The OOM killer is triggered more quickly as anonymous pages
   are locked into memory and cannot be reclaimed. We're more likely to thrash
   on memory, but the time between thrashing and OOMing is reduced. Depending on
   your application, this may be better or worse. For example, a queue-based
@@ -194,11 +199,6 @@ v2](https://www.youtube.com/watch?v=ikZ8_mRotT4).
   invoked at moments of severe starvation, and relying on this method for such
   behaviour would be better replaced with more opportunistic killing of
   processes as memory contention is reached in the first place.
-- **Without swap:** We're more resilient to temporary spikes, but in cases of
-  severe memory starvation, the period from memory thrashing beginning to the
-  OOM killer may be prolonged. We have more visibility into the instigators of
-  memory pressure and can act on them more reasonably, and can perform a
-  controlled intervention.
 
 ### Ok, so I want system swap, but how can I tune it for individual applications?
 
