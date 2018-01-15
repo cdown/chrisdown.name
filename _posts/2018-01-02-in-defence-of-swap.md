@@ -10,6 +10,11 @@ tl;dr:
 2. Swap is not generally about getting emergency memory, it's about making
    memory reclamation egalitarian and efficient. In fact, using it as
    "emergency memory" is generally actively harmful.
+3. Disabling swap does not prevent disk I/O from becoming a problem under
+   memory contention, it simply shifts the disk I/O thrashing from anonymous
+   pages to file pages. Not only may this be less efficient, as we have a
+   smaller pool of pages to select from for reclaim, but it may also contribute
+   to getting into this high contention state in the first place.
 
 ---
 
