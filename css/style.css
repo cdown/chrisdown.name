@@ -23,10 +23,11 @@
   speak: none;
 }
 
-.font-awesome-book:before { content: '\e803'; } /* '' */
-.font-awesome-linkedin:before { content: '\e802'; } /* '' */
-.font-awesome-github-alt:before { content: '\e800'; } /* '' */
-.font-awesome-stackexchange:before { content: '\e801'; } /* '' */
+.font-awesome-book:before { content: '\e800'; } /* '' */
+.font-awesome-twitter:before { content: '\f099'; } /* '' */
+.font-awesome-linkedin:before { content: '\f0e1'; } /* '' */
+.font-awesome-github:before { content: '\f113'; } /* '' */
+.font-awesome-stackoverflow:before { content: '\f16c'; } /* '' */
 
 @font-face {
   font-family: 'Droid Sans Mono';

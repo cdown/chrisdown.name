@@ -39,9 +39,12 @@ header:
     - icon: linkedin
       url: https://www.linkedin.com/in/chrisldown
       title: My LinkedIn profile
-    - icon: stackexchange
+    - icon: stackoverflow
       url: https://unix.stackexchange.com/users/10762/chris-down?tab=profile
       title: My Unix & Linux Stack Exchange profile
-    - icon: github-alt
+    - icon: github
       url: https://github.com/cdown
       title: My GitHub profile
+    - icon: twitter
+      url: https://twitter.com/unixchris
+      title: My Twitter profile
