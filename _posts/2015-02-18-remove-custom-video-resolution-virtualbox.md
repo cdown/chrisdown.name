@@ -21,7 +21,7 @@ like:
     $ VBoxManage guestproperty enumerate chef.cdown.local | grep Video
     Name: /VirtualBox/GuestAdd/Vbgl/Video/SavedMode, value: 640x480x32, timestamp: 1424177936866662000, flags
 
-This led me to the believe that `.../Video/[id]` is where custom modes are
+This led me to believe that `.../Video/[id]` is where custom modes are
 stored, since it was not present on a host without any video mode hints.
 
 Then I went to delete the key, only to find that `VBoxManage guestproperty` has
