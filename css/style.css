@@ -14,7 +14,6 @@
   font-style: normal;
   text-decoration: inherit;
   -webkit-font-smoothing: antialiased;
-  *margin-right: .3em;
 }
 [class^="font-awesome-"]:before,
 [class*=" font-awesome-"]:before {
@@ -102,8 +101,8 @@ header nav ul {
 }
 
 header nav ul li {
-    display: inline-block;
     float: left;
+    list-style-type: none;
 }
 
 header nav ul.home {
@@ -241,7 +240,7 @@ blockquote {
 iframe {
     /* lol browsers */
     border: none;
-    border-width: 0px;
+    border-width: 0;
 }
 
 .screen-reader-text {
@@ -288,17 +287,19 @@ img:not(.nonstandard), video:not(.nonstandard) {
   max-width:100%;
   margin: 2em auto;
   height: auto;
-  -webkit-box-shadow: 0px 0px 2em 0px rgba(0,0,0,0.35);
-  -moz-box-shadow: 0px 0px 2em 0px rgba(0,0,0,0.35);
-  box-shadow: 0px 0px 2em 0px rgba(0,0,0,0.35);
+  -webkit-box-shadow: 0 0 2em 0 rgba(0,0,0,0.35);
+  -moz-box-shadow: 0 0 2em 0 rgba(0,0,0,0.35);
+  box-shadow: 0 0 2em 0 rgba(0,0,0,0.35);
 }
 
 /* Damn son, Chrome's default margins for figure are crazy */
 figure {
-  all: initial;
-  * {
-    all: unset;
-  }
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  display: block;
 }
 
 /* Builds page */
@@ -405,6 +406,6 @@ td.status-image a:hover {
 .highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
 
 /* Make line numbers unselectable: excludes line numbers from copy-paste user ops */
-.highlight .lineno {-webkit-user-select: none;-moz-user-select: none; -o-user-select: none;}
+.highlight .lineno {-webkit-user-select: none;-moz-user-select: none; -o-user-select: none; -ms-user-select: none}
 .lineno::-moz-selection {background-color: transparent;} /* Mozilla specific */
 .lineno::selection {background-color: transparent;} /* Other major browsers */
