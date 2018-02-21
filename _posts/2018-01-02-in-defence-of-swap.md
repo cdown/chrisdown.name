@@ -15,6 +15,21 @@ tl;dr:
    pages to file pages. Not only may this be less efficient, as we have a
    smaller pool of pages to select from for reclaim, but it may also contribute
    to getting into this high contention state in the first place.
+4. The swapper on kernels before 4.0 has a lot of pitfalls, and has contributed
+   to a lot of people's negative perceptions about swap due to its
+   overeagerness to swap out pages. On kernels >4.0, the situation is
+   significantly better.
+5. On SSDs, swapping out anonymous pages and reclaiming file pages are
+   essentially equivalent in terms of performance. On older spinning disks,
+   swap reads are slower due to random reads, so a lower `vm.swappiness`
+   setting makes sense there (read on for more about `vm.swappiness`).
+6. Disabling swap doesn't prevent pathological behaviour at near-OOM, although
+   it's true that having swap may prolong it. Whether the system global OOM
+   killer is invoked with or without swap, or was invoked sooner or later, the
+   result is the same: you are left with a system in an unpredictable state.
+   Having no swap doesn't avoid this.
+7. You can achieve better swap behaviour under memory pressure and prevent
+   thrashing using `memory.low` and friends in cgroup v2.
 
 ---
 
