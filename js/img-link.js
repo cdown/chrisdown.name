@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+InstantClick.on('change', function() {
   var images = document.getElementsByTagName('img');
   var image_list = Array.prototype.slice.call(images);
   image_list.forEach(function(img, _, _) {

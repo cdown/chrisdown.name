@@ -3,6 +3,8 @@
 n=d.scripts[0];w.src='//www.google-analytics.com/analytics.js';
 n.parentNode.insertBefore(w,n)}(window,document,'ga');
 
-ga('create', 'UA-58706842-1', 'auto');
-ga('require', 'displayfeatures');
-ga('send', 'pageview');
+InstantClick.on('change', function() {
+    ga('create', 'UA-58706842-1', 'auto');
+    ga('require', 'displayfeatures');
+    ga('send', 'pageview', location.pathname + location.search);
+});
