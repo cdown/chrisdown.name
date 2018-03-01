@@ -88,6 +88,13 @@ I also am a contributor to some other projects, including:
   Quickcheck style testing library for Python
 - [osquery](https://github.com/facebook/osquery) — an operating system
   instrumentation framework for OS X and Linux
+- [the Pro Git book](https://git-scm.com/book/en/v2) - a guide to Git and its
+  internals
+- [pacaur](https://github.com/rmarquis/pacaur) - an AUR helper that minimises
+  user interaction
+- [pass](https://www.passwordstore.org/) - the standard Unix password manager
+- [aurweb](https://github.com/lfos/aurweb) - the website powering the Arch User
+  Repository
 
 You can find other projects on my [GitHub][], although if they're not on this
 list, I'm probably not actively developing or maintaining them.
