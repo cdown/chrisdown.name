@@ -3,7 +3,7 @@ layout: post
 title: "The curious case of squashfs page faults"
 ---
 
-Here's an interesting issue I looked at with [Tejun](https://github.com/htejun)
+Here's an interesting issue I and [Tejun](https://github.com/htejun) looked at
 a few days back that I thought might be interesting to share with a wider
 audience.
 
@@ -78,19 +78,22 @@ service the request for data by loading it into main memory, and in this case
 the file is on a squashfs mount, so we need to call squashfs-specific functions
 to access it.
 
-In the second stack, we're trying to read a file from disk. That's what
-`sys_read` (frame 12) does, although it passes most of the hard work to
-`vfs_read` (frame 11). Eventually, this works out that it should call
-squashfs-specific functions to read from the squashfs filesystem, resulting in
-the call to `squashfs_readpage` at frame 5.
+In the second stack, we're trying to read a file from disk using the `read`
+syscall. That's what `sys_read` (frame 12) does, although it passes most of the
+hard work to `vfs_read` (frame 11). Eventually, this works out that it should
+call squashfs-specific functions to read from the squashfs filesystem,
+resulting in the call to [`squashfs_readpage` at frame
+5](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git/tree/fs/squashfs/file.c?h=linux-4.15.y#n453).
 
-Both stacks end in `__schedule()`, called by `schedule()`. This is a way of
-voluntarily hinting to the kernel's CPU scheduler that we are about to perform
-a slow operation (like disk I/O) and that it should consider finding another
-process to schedule instead of us for now. This is good, as it allows us to see
-when it is a good idea to go ahead and pick a process that will actually make
-use of the CPU instead of one which is waiting for a response from something
-that may take a while.
+Both stacks end in `schedule()`, which is a thin wrapper around the
+[`__schedule()`
+function](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git/tree/kernel/sched/core.c?h=linux-4.15.y#n3288).
+`__schedule()` is a way of voluntarily hinting to the kernel's CPU
+scheduler that we are about to perform a slow operation (like disk I/O) and
+that it should consider finding another process to schedule instead of us for
+now. This is good, as it allows us to see when it is a good idea to go ahead
+and pick a process that will actually make use of the CPU instead of one which
+is waiting for a response from something that may take a while.
 
 Disk or network I/O are big reasons that an application may voluntarily signal
 the scheduler to choose another process, and that's certainly what we see in
@@ -103,16 +106,13 @@ The second stack gets more interesting when you look at it in comparison with
 the first one, and when you consider that many threads are blocked in it. We've
 called `schedule()`, as before, but this time it's not because of I/O. Instead,
 the reason we schedule is because of something related to getting data from the
-squashfs block cache (see `fs/squashfs/cache.c`). Intriguing!
+squashfs block cache (as indicated by `squashfs_cache_get` being the frame
+above). Intriguing!
 
+Looking at `fs/squashfs/cache.c`, which is where `squashfs_cache_get` is
+defined, we can see that squashfs internally uses a fixed-size cache as part of
+its read/decompress path. 
 
-
-So far these two stacks seem very similar -- they both want to perform I/O.
-
-In both stacks we're trying to read in data a [major
-fault](https://en.wikipedia.org/wiki/Page_fault#Major). Essentially, this means
-that we have to actually perform I/O to service the request for data by loading
-it into main memory. 
 
 While using squashfs is totally fine, before I get started I'd like to suggest
 that if you are thinking about starting a new production service that needs
