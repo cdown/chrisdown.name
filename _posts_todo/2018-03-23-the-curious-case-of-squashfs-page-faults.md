@@ -234,3 +234,7 @@ that were uncommon or didn't exist when squashfs was invented, like resource
 enforcement with cgroups, huge numbers of accessing threads, etc, etc. In my
 experience there are generally less surprises when using btrfs nowadays
 compared to squashfs.
+
+I know plenty of people who get stuck when encountering issues that seem to
+lead into the kernel. Hopefully this post can help you become more familiar
+with some of the common tropes encountered when looking at kernel issues.
