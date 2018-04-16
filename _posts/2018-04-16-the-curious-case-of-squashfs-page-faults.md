@@ -166,7 +166,7 @@ this](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/fs
 /* Allocate read_page block */
 msblk->read_page = squashfs_cache_init("data",
     squashfs_max_decompressors(), msblk->block_size);
-{% endhilight %}
+{% endhighlight %}
 
 The second parameter passed to `squashfs_cache_init()` here is the number of
 cache entries available. Here, it's set to the same value as
@@ -237,4 +237,5 @@ compared to squashfs.
 
 I know plenty of people who get stuck when encountering issues that seem to
 lead into the kernel. Hopefully this post can help you become more familiar
-with some of the common tropes encountered when looking at kernel issues.
+with some of the common tropes encountered when looking at kernel issues, and
+possibly give you the confidence to dive into a few yourself :-)
