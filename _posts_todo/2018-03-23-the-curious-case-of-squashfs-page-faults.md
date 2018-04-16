@@ -5,7 +5,9 @@ title: "The curious case of squashfs page faults"
 
 Here's an interesting issue I and [Tejun](https://github.com/htejun) looked at
 a few days back that I thought might be interesting to share with a wider
-audience.
+audience. I hope it can serve as an example that kernel internals aren't just a
+black box when it comes to debugging, and it's possible to work these things
+out with a little patience and a careful eye.
 
 squashfs lives an incredibly versatile life. Many Linux users know it as the
 read-only filesystem that has powered almost the entire history of Linux Live
@@ -22,12 +24,12 @@ transfer these squashfs images over the network to the servers providing
 compute power for the service, mount the squashfs mounts, and away we go.
 
 So here we are after transporting the squashfs images, getting ready to use the
-files inside in the program. We go to load them in the program, and usually all
-goes well. Sometimes, however, when under I/O contention on the underlying
-block device, an interesting situation happens -- we seem to stall, but even
-worse than we would usually expect for this level of I/O contention. Take a
-look at the following two kernel stacks for two threads from the application,
-and have a think about what looks weird here.
+files inside in the program. We go to load files from them in the program, and
+usually all goes well. Sometimes, however, when under I/O contention on the
+underlying block device, an interesting situation happens -- we seem to stall,
+but even worse than we would usually expect for this level of I/O contention.
+Take a look at the following two kernel stacks for two threads from the
+application, and have a think about what looks weird here.
 
 Here's how one thread looks:
 
@@ -106,22 +108,129 @@ The second stack gets more interesting when you look at it in comparison with
 the first one, and when you consider that many threads are blocked in it. We've
 called `schedule()`, as before, but this time it's not because of I/O. Instead,
 the reason we schedule is because of something related to getting data from the
-squashfs block cache (as indicated by `squashfs_cache_get` being the frame
-above). Intriguing!
+squashfs block cache as indicated by `squashfs_cache_get` being the frame
+above the call to `schedule()`.
 
 Looking at `fs/squashfs/cache.c`, which is where `squashfs_cache_get` is
-defined, we can see that squashfs internally uses a fixed-size cache as part of
-its read/decompress path. 
+defined, we can see from the code structure that [squashfs internally uses a
+fixed-size cache as part of its read/decompress
+path](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/fs/squashfs/cache.c?h=v4.16#n65).
+If we read into `squashfs_cache_get` a bit, we start to see where we might
+become blocked in this function. One place that clearly stands out is where we
+explicitly [wait until a cache entry is available for
+use](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/fs/squashfs/cache.c?h=v4.16#n83):
 
+{% highlight c %}
+/*
+ * Block not in cache, if all cache entries are used
+ * go to sleep waiting for one to become available.
+ */
+if (cache->unused == 0) {
+    cache->num_waiters++;
+    spin_unlock(&cache->lock);
+    wait_event(cache->wait_queue, cache->unused);
+    spin_lock(&cache->lock);
+    cache->num_waiters--;
+    continue;
+}
+{% endhighlight %}
 
-While using squashfs is totally fine, before I get started I'd like to suggest
-that if you are thinking about starting a new production service that needs
-transparent compression, consider using [btrfs with compression
+`wait_event()` here is what we're really looking for -- where we start waiting
+for a cache entry to become available. This brings up a question: how big is
+the cache?
+
+Looking at the the next frame up, `squashfs_get_datablock` that calls
+`squashfs_cache_get()`, [we can see that the cache in question is
+`msblk->read_page`](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/fs/squashfs/cache.c?h=v4.16#n404):
+
+{% highlight c %}
+/*
+ * Read and decompress the datablock located at <start_block> in the
+ * filesystem.  The cache is used here to avoid duplicating locking and
+ * read/decompress code.
+ */
+struct squashfs_cache_entry *squashfs_get_datablock(struct super_block *sb,
+				u64 start_block, int length)
+{
+	struct squashfs_sb_info *msblk = sb->s_fs_info;
+
+	return squashfs_cache_get(sb, msblk->read_page, start_block, length);
+}
+{% endhighlight %}
+
+All we have to do now is find where `msblk->read_page` is initialised to find
+the cache size. Searching for `read_page =` [reveals
+this](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/fs/squashfs/super.c?h=v4.16#n209):
+
+{% highlight c %}
+/* Allocate read_page block */
+msblk->read_page = squashfs_cache_init("data",
+    squashfs_max_decompressors(), msblk->block_size);
+{% endhilight %}
+
+The second parameter passed to `squashfs_cache_init()` here is the number of
+cache entries available. Here, it's set to the same value as
+`squashfs_max_decompressors()`, which is the number of decompressor threads
+that squashfs can use. The fact that a single decompressor only gets a single
+cache entry is somewhat intriguing, as it implies that calling this a "cache"
+in this case is somewhat misleading -- this isn't really a cache, it's really
+just a work area for temporary storage. We don't really cache anything in the
+read cache past its initial use.
+
+Now the big question is what the value returned from
+`squashfs_max_decompressors()` is. Looking at its definition shows it in three
+files:
+
+- In fs/squashfs/decompressor_multi.c, it's defined as the number of online
+  CPUs, multiplied by two;
+- In fs/squashfs/decompressor_multi_percpu.c, it's defined as the number of
+  *possible* CPUs. "Possible" here means the total number of possible CPUs that
+  may come online (for example, via hotplug);
+- In fs/squashfs/decompressor_single.c, it's just hardcoded to `return 1`.
+
+Usually when there are multiple definitions of a single function in the kernel,
+it means that there is a config option which decides which is eventually passed
+to the compiler. This case is no exception, and [we can see the following in
+fs/squashfs/Makefile](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/fs/squashfs/Makefile/?h=v4.16):
+
+    squashfs-$(CONFIG_SQUASHFS_DECOMP_SINGLE) += decompressor_single.o
+    squashfs-$(CONFIG_SQUASHFS_DECOMP_MULTI) += decompressor_multi.o
+    squashfs-$(CONFIG_SQUASHFS_DECOMP_MULTI_PERCPU) += decompressor_multi_percpu.o
+
+Ok, so which of these is the one enabled on the machine having the issue? One
+nice config option which most people have on is `CONFIG_IKCONFIG_PROC`, which
+emits the config for the currently running kernel at `/proc/config.gz`. Using
+that we can now tell which of these we actually built:
+
+    $ zgrep CONFIG_SQUASHFS_DECOMP_ /proc/config.gz
+    CONFIG_SQUASHFS_DECOMP_SINGLE=y
+    # CONFIG_SQUASHFS_DECOMP_MULTI is not set
+    # CONFIG_SQUASHFS_DECOMP_MULTI_PERCPU is not set
+
+Well, this is concerning. Since our kernel was configured to use a single
+squashfs decompressor, and now we know that the number of decompressors is
+directly used as the number of cache entries, we also know that this means that
+we can only do one major fault or read at a time within a block as any further
+reads occurring at the same time will become blocked in the `wait_event()` code
+mentioned earlier. This is why we get descheduled from the CPU and overall
+forward progress of our program stalls.
+
+This setting probably makes some sense in squashfs's embedded usecases where
+memory savings are critical, but it doesn't really on production servers. As
+for where this comes from, as of 4.16, using a single decompressor is still the
+default decompressor setting for most architectures when you enable squashfs.
+
+In most cases, changing your kernel config to use
+`CONFIG_SQUASHFS_DECOMP_MULTI` should work around this issue well enough by
+introducing higher concurrency limits, thus avoiding having to wait for the
+cache entry to become free to continue reading from squashfs.
+
+While that workaround will probably be fine, it's worth also pointing out that
+if you are thinking about starting a new production service that needs
+transparent compression, you might consider using [btrfs with compression
 support](https://btrfs.wiki.kernel.org/index.php/Compression) -- it's generally
 more featureful and has been built with consideration for modern situations
 that were uncommon or didn't exist when squashfs was invented, like resource
 enforcement with cgroups, huge numbers of accessing threads, etc, etc. In my
 experience there are generally less surprises when using btrfs nowadays
 compared to squashfs.
-
-
