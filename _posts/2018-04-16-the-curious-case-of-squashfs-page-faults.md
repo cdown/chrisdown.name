@@ -166,7 +166,7 @@ struct squashfs_cache_entry *squashfs_get_datablock(struct super_block *sb,
 {% endhighlight %}
 
 All we have to do now is find where `msblk->read_page` is initialised to find
-the cache size. Searching for `msblk->read_page =` [reveals this piece of code
+the cache size. Searching for `->read_page` [reveals this piece of code
 in
 fs/squashfs/super.c](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/fs/squashfs/super.c?h=v4.16#n209):
 
@@ -218,12 +218,12 @@ thus which file we actually considered during compilation:
 
 Well, this is interesting. Since our kernel was configured to use a single
 squashfs decompressor, and now we know that the number of decompressors is
-directly used as the number of cache entries, we also know that this means that
-we can only do one major fault or read at a time within a block as any further
-reads occurring at the same time will become blocked in the `wait_event()` code
-mentioned earlier. This clearly shows as being the reason why we get
-descheduled from the CPU, and thus the reason why overall forward progress of
-our program stalls.
+directly used as the number of cache entries, we also now know that this means
+that we can only do one major fault or read at a time within a block as any
+further reads occurring at the same time will become blocked in the
+`wait_event()` code mentioned earlier. This clearly shows as being the reason
+why we get descheduled from the CPU, and thus the reason why overall forward
+progress of our program stalls.
 
 This setting probably makes some sense in squashfs's embedded usecases where
 memory savings are critical, but it doesn't really on production servers. As of
