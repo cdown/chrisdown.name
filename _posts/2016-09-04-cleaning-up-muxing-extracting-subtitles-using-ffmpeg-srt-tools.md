@@ -125,7 +125,8 @@ entities, like &lt;b&gt;, &lt;color&gt;, etc. These are not part of the SRT
 spec, they remain to be interpreted by the media player. Since not all media
 players support this sometimes they are just shown raw, which looks quite bad.
 
-The srt project contains a tool to deal with this called [strip-html][]:
+The srt project contains a tool to deal with this called [process][], which can
+perform arbitrary operations on files:
 
     % cat ES-spanish.srt
     1
@@ -137,7 +138,7 @@ The srt project contains a tool to deal with this called [strip-html][]:
     <i>Pensamientos al azar</i>
     <i>para el Día de San Valentín, 2004.</i>
 
-    % srt strip-html < ES-spanish.srt
+    % srt process -m re -f 'lambda sub: re.sub("<[^<]+?>", "", sub)' < ES-spanish.srt
     1
     00:01:34,579 --> 00:01:37,099
     Tren a Montauk en la vía B.
@@ -147,7 +148,7 @@ The srt project contains a tool to deal with this called [strip-html][]:
     Pensamientos al azar
     para el Día de San Valentín, 2004.
 
-[strip-html]: https://github.com/cdown/srt/blob/develop/srt_tools/srt-strip-html
+[process]: https://github.com/cdown/srt/blob/develop/srt_tools/srt-process
 
 ## Correcting time shifts
 
