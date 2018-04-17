@@ -224,6 +224,12 @@ pre, :not(pre) > code {
     border: 1px solid #eee;
 }
 
+pre:hover, :not(pre) > code:hover {
+    background-color: transparent;
+    border: none;
+    margin: 1px; /* emulate border to avoid jiggling on hover */
+}
+
 pre {
     padding: 0.6em;
     overflow: auto;
