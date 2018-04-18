@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The curious case of slow squashfs reads"
+title: "Kernel adventures: the curious case of stalled squashfs reads"
 ---
 
 Here's an interesting issue I and [Tejun](https://github.com/htejun) looked at
