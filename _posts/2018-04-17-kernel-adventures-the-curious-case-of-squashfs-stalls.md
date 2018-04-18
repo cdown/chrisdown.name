@@ -227,6 +227,8 @@ further reads occurring at the same time will become blocked in the
 why we get descheduled from the CPU, and thus the reason why overall forward
 progress of our program stalls.
 
+![Priority inversions? In *my* Linux? It's more likely than you think.](/images/blog/squashfs/archer.png)
+
 This setting probably makes some sense in squashfs's embedded usecases where
 memory savings are critical, but it doesn't really on production servers. As of
 kernel 4.16, using a single decompressor is still the default decompressor
