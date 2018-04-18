@@ -34,7 +34,7 @@ don't expect applications to stall entirely. Take a look at the following two
 kernel stacks for two threads from the application, and have a think about what
 looks weird here.
 
-Here's how one thread looks (from `/proc/[pid]/task/[tid]/stack`):
+Here's how one thread looks (derived from `/proc/[pid]/task/[tid]/stack`):
 
      #0 __schedule
      #1 schedule
