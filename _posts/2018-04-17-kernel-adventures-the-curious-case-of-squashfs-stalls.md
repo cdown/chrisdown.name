@@ -34,46 +34,46 @@ don't expect applications to stall entirely. Take a look at the following two
 kernel stacks for two threads from the application, and have a think about what
 looks weird here.
 
-Here's how one thread looks:
+Here's how one thread looks (from `/proc/[pid]/task/[tid]/stack`):
 
-     #0 [ffffc9000d6778c0] __schedule at ffffffff818eed27
-     #1 [ffffc9000d677940] schedule at ffffffff818ef386
-     #2 [ffffc9000d677958] io_schedule at ffffffff810b3a06
-     #3 [ffffc9000d677970] bit_wait_io at ffffffff818efaf1
-     #4 [ffffc9000d677988] __wait_on_bit at ffffffff818ef724
-     #5 [ffffc9000d6779c8] out_of_line_wait_on_bit at ffffffff818ef892
-     #6 [ffffc9000d677a38] __wait_on_buffer at ffffffff8124d3d7
-     #7 [ffffc9000d677a48] squashfs_read_data at ffffffffa01fc1b8 [squashfs]
-     #8 [ffffc9000d677ac0] squashfs_cache_get at ffffffffa01fc6ad [squashfs]
-     #9 [ffffc9000d677b28] squashfs_get_datablock at ffffffffa01fce41 [squashfs]
-    #10 [ffffc9000d677b38] squashfs_readpage_block at ffffffffa01ff8a8 [squashfs]
-    #11 [ffffc9000d677bb8] squashfs_readpage at ffffffffa01fdbed [squashfs]
-    #12 [ffffc9000d677c50] __do_page_cache_readahead at ffffffff8119c6a8
-    #13 [ffffc9000d677d08] filemap_fault at ffffffff81190f15
-    #14 [ffffc9000d677dd0] __do_fault at ffffffff811c28fe
-    #15 [ffffc9000d677df0] __handle_mm_fault at ffffffff811c71a9
-    #16 [ffffc9000d677ea0] handle_mm_fault at ffffffff811c78d1
-    #17 [ffffc9000d677ed0] __do_page_fault at ffffffff81050f39
-    #18 [ffffc9000d677f40] do_page_fault at ffffffff810511bc
-    #19 [ffffc9000d677f50] page_fault at ffffffff818f49a2
+     #0 __schedule
+     #1 schedule
+     #2 io_schedule
+     #3 bit_wait_io
+     #4 __wait_on_bit
+     #5 out_of_line_wait_on_bit
+     #6 __wait_on_buffer
+     #7 squashfs_read_data
+     #8 squashfs_cache_get
+     #9 squashfs_get_datablock
+    #10 squashfs_readpage_block
+    #11 squashfs_readpage
+    #12 __do_page_cache_readahead
+    #13 filemap_fault
+    #14 __do_fault
+    #15 __handle_mm_fault
+    #16 handle_mm_fault
+    #17 __do_page_fault
+    #18 do_page_fault
+    #19 page_fault
 
 Here's how some other threads look -- the stack is similar, but subtly
 different:
 
-     #0 [ffffc900085e7a58] __schedule at ffffffff818eed27
-     #1 [ffffc900085e7ad8] schedule at ffffffff818ef386
-     #2 [ffffc900085e7af0] squashfs_cache_get at ffffffffa01fc7fa [squashfs]
-     #3 [ffffc900085e7b58] squashfs_get_datablock at ffffffffa01fce41 [squashfs]
-     #4 [ffffc900085e7b68] squashfs_readpage_block at ffffffffa01ff8a8 [squashfs]
-     #5 [ffffc900085e7be8] squashfs_readpage at ffffffffa01fdbed [squashfs]
-     #6 [ffffc900085e7c80] __do_page_cache_readahead at ffffffff8119c6a8
-     #7 [ffffc900085e7d38] ondemand_readahead at ffffffff8119c859
-     #8 [ffffc900085e7d80] page_cache_sync_readahead at ffffffff8119cb21
-     #9 [ffffc900085e7d90] generic_file_read_iter at ffffffff8119021a
-    #10 [ffffc900085e7e48] __vfs_read at ffffffff81217dbe
-    #11 [ffffc900085e7ec8] vfs_read at ffffffff81218c2c
-    #12 [ffffc900085e7ef8] sys_read at ffffffff8121a106
-    #13 [ffffc900085e7f38] do_syscall_64 at ffffffff8100285d
+     #0 __schedule
+     #1 schedule
+     #2 squashfs_cache_get
+     #3 squashfs_get_datablock
+     #4 squashfs_readpage_block
+     #5 squashfs_readpage
+     #6 __do_page_cache_readahead
+     #7 ondemand_readahead
+     #8 page_cache_sync_readahead
+     #9 generic_file_read_iter
+    #10 __vfs_read
+    #11 vfs_read
+    #12 sys_read
+    #13 do_syscall_64
 
 In the first stack, we're trying to read in data as part of a [major
 fault](https://en.wikipedia.org/wiki/Page_fault#Major). Essentially, this means
