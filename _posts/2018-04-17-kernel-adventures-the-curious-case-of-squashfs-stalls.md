@@ -26,11 +26,13 @@ compute power for the service, mount the squashfs mounts, and away we go.
 Visualise such a situation: we've just finished transporting the squashfs
 images and are getting ready to use the files inside in the program. We go to
 load files from within this squashfs mount within the program, and usually all
-goes well. Sometimes, however, when under I/O contention on the underlying
-block device, an interesting situation happens -- we seem to stall, but even
-worse than we would usually expect for this level of I/O contention. Take a
-look at the following two kernel stacks for two threads from the application,
-and have a think about what looks weird here.
+goes well. Sometimes, however, many of the program's threads seem to stall
+while trying to read data from this squashfs image, resulting in slower startup
+times. In this case, we found this when testing I/O limits as part of
+cgroup v2 work -- in this case we expect I/O throughput to be reduced, but we
+don't expect applications to stall entirely. Take a look at the following two
+kernel stacks for two threads from the application, and have a think about what
+looks weird here.
 
 Here's how one thread looks:
 
