@@ -114,7 +114,7 @@ basically just `schedule()` with more checks up front). If this note was
 confusing, don't worry, you don't need it to understand the rest of the post
 :-)</small>
 
-Disk or network I/O are big reasons that an application may voluntarily signal
+Disk or network I/O are major reasons that an application may voluntarily signal
 the scheduler to choose another process, and that's certainly what we see in
 the first stack -- `io_schedule()` is a wrapper around `schedule()` that also
 does some statistical accounting for things like
