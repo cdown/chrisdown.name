@@ -93,14 +93,24 @@ resulting in the call to [`squashfs_readpage` at frame
 Both stacks end in `schedule()`, which is a thin wrapper around the
 [`__schedule()`
 function](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git/tree/kernel/sched/core.c?h=linux-4.15.y#n3288)
-inside the kernel. `__schedule()` is a way of voluntarily hinting to the
-kernel's CPU scheduler that we are about to perform a high-latency operation
+inside the kernel. `__schedule()` here is a way of voluntarily hinting to the
+kernel's CPU scheduler<sup>* well, kind of</sup> that we are about to perform a high-latency operation
 (like disk or network I/O) and that it should consider finding another process
 to schedule instead of us for now. This is good, as it allows us to signal to
 the kernel that it is a good idea to go ahead and pick a process that will
 actually make use of the CPU instead of wasting time on one which can't
 continue until it's finished waiting for a response from something that may
 take a while.
+
+<small><sup>*</sup> `schedule()` is also used in some involuntary cases when
+`TIF_NEED_RESCHED` is set, but I could write a whole other post on preemptible
+kernels, `TIF_NEED_RESCHED`, and the like. You can tell the difference here
+because this path is not in interrupt handling, which is another common path
+checking `TIF_NEED_RESCHED`. This is also how timeslice management works (using
+timer interrupts). We also have some kind of "implicitly voluntary" cases --
+the main one being returning from a syscall. `schedule()` can also be called as
+part of `preempt_enable` and `cond_resched`. If this note was confusing, don't
+worry, you don't need it to understand the rest of the post :-)</small>
 
 Disk or network I/O are big reasons that an application may voluntarily signal
 the scheduler to choose another process, and that's certainly what we see in
