@@ -104,13 +104,15 @@ take a while.
 
 <small><sup>*</sup> `schedule()` is also used in some involuntary cases when
 `TIF_NEED_RESCHED` is set, but I could write a whole other post on preemptible
-kernels, `TIF_NEED_RESCHED`, and the like. You can tell the difference here
-because this path is not in interrupt handling, which is another common path
-checking `TIF_NEED_RESCHED`. This is also how timeslice management works (using
-timer interrupts). We also have some kind of "implicitly voluntary" cases --
-the main one being returning from a syscall. `schedule()` can also be called as
-part of `preempt_enable` and `cond_resched`. If this note was confusing, don't
-worry, you don't need it to understand the rest of the post :-)</small>
+kernels, `TIF_NEED_RESCHED`, and the like, so I won't go into that here. You
+can tell the difference here because this path is not in interrupt handling,
+which is the main place where involuntary context switches using `schedule()`
+happen. We also have some kind of "implicitly voluntary" cases -- the main one
+being returning from a syscall. `schedule()` can also be called as part of
+`preempt_enable` (when we enable preemption) and `cond_resched` (which is
+basically just `schedule()` with more checks up front). If this note was
+confusing, don't worry, you don't need it to understand the rest of the post
+:-)</small>
 
 Disk or network I/O are big reasons that an application may voluntarily signal
 the scheduler to choose another process, and that's certainly what we see in
