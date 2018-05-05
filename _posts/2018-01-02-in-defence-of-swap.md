@@ -20,8 +20,8 @@ tl;dr:
    overeagerness to swap out pages. On kernels >4.0, the situation is
    significantly better.
 5. On SSDs, swapping out anonymous pages and reclaiming file pages are
-   essentially equivalent in terms of performance. On older spinning disks,
-   swap reads are slower due to random reads, so a lower `vm.swappiness`
+   essentially equivalent in terms of performance/latency. On older spinning
+   disks, swap reads are slower due to random reads, so a lower `vm.swappiness`
    setting makes sense there (read on for more about `vm.swappiness`).
 6. Disabling swap doesn't prevent pathological behaviour at near-OOM, although
    it's true that having swap may prolong it. Whether the system global OOM
