@@ -17,12 +17,17 @@ competitively with sim racing.
 ### World record
 
 - [X2010 Step1 @ La Sarthe](https://www.youtube.com/watch?v=6gJL3ZT8fCo),
-  Assetto Corsa 
+  Assetto Corsa
 - [SP300R @ Brands Hatch Indy](https://www.youtube.com/watch?v=qvyPT3P8aHw),
   Project CARS
 
 ### Other
 
+- [Dallara F312 @ Barcelona Moto](https://www.youtube.com/watch?v=JLnOfKBerpc),
+  Assetto Corsa, 3rd fastest all time
+- [McLaren 650S @ Brands Hatch
+  GP](https://www.youtube.com/watch?v=cAo6T45IUGE), Assetto Corsa, 10th fastest
+  all time
 - [FOX @ RO7](https://www.youtube.com/watch?v=wO0XxZdd-XQ), Live for Speed, 4th
   fastest all time
 - [FOX @ AS1R](https://www.youtube.com/watch?v=bpRAhw2Phlc), Live for Speed,
@@ -32,11 +37,23 @@ competitively with sim racing.
 
 ## Recorded races
 
-I record some of my races, as well. I currently race in ACRL EU and SRS. Here
-are some selected ones:
+I record some of my races, as well. I currently race in
+[ACRL](https://www.reddit.com/r/acrl/), [SRS](http://www.simracingsystem.com/),
+and
+[RD](https://www.racedepartment.com/forums/assetto-corsa-racing-club-leagues.171/).
+Here are some selected ones:
 
-- [Porsche 911 Supercup @ VIR, race 1](https://www.youtube.com/watch?v=yTx6WUKrnpE)
-- [Porsche 911 Supercup @ VIR, race 2](https://www.youtube.com/watch?v=EDi5Gzz6IPs) (first pro-class podium in AC)
+### ACRL
+
+- [Porsche 911 Supercup @ VIR](https://www.youtube.com/watch?v=EDi5Gzz6IPs)
+- [Porsche 911 Supercup @ Red Bull Ring](https://www.youtube.com/watch?v=WVCEv0N39W0)
 - [Porsche 911 Supercup @ Hockenheim](https://www.youtube.com/watch?v=7kts4C-pBhc)
-- [Porsche 911 Supercup @ Red Bull Ring, race 1](https://www.youtube.com/watch?v=YWNXX7B8fj4)
-- [Porsche 911 Supercup @ Red Bull Ring, race 2](https://www.youtube.com/watch?v=WVCEv0N39W0)
+
+### RD
+
+- [Formula 3 @ Barcelona](https://www.youtube.com/watch?v=3Bfn3qkzGRs)
+- [GT3 @ Brands Hatch](https://www.youtube.com/watch?v=0w7eXvuIFWQ)
+- [Porsche 911 Supercup @ Imola](https://www.youtube.com/watch?v=or8lJBGkA5Q)
+- [Formula 3 @ Monza](https://www.youtube.com/watch?v=Isg5zc-JMQg)
+- [GT4 @ Brands Hatch](https://www.youtube.com/watch?v=eJ9YsVkOGDs)
+- [60s LMP @ Spa](https://www.youtube.com/watch?v=ncaGx8nJC-A)
