@@ -28,6 +28,12 @@ competitively with sim racing.
 - [McLaren 650S @ Brands Hatch
   GP](https://www.youtube.com/watch?v=cAo6T45IUGE), Assetto Corsa, 10th fastest
   all time
+- [McLaren 650S @ Chang (Buriram)
+  International](https://www.youtube.com/watch?v=9xpdLmuXRYs), Assetto Corsa,
+  2nd fastest all time
+- [Porsche 911 Carrera RSR 3.0 @ Laguna
+  Seca](https://www.youtube.com/watch?v=cjzQoYVtUi8), Assetto Corsa, 4th
+  fastest all time
 - [FOX @ RO7](https://www.youtube.com/watch?v=wO0XxZdd-XQ), Live for Speed, 4th
   fastest all time
 - [FOX @ AS1R](https://www.youtube.com/watch?v=bpRAhw2Phlc), Live for Speed,
@@ -51,9 +57,16 @@ Here are some selected ones:
 
 ### RD
 
+#### 2018
+
 - [Formula 3 @ Barcelona](https://www.youtube.com/watch?v=3Bfn3qkzGRs)
 - [GT3 @ Brands Hatch](https://www.youtube.com/watch?v=0w7eXvuIFWQ)
 - [Porsche 911 Supercup @ Imola](https://www.youtube.com/watch?v=or8lJBGkA5Q)
 - [Formula 3 @ Monza](https://www.youtube.com/watch?v=Isg5zc-JMQg)
 - [GT4 @ Brands Hatch](https://www.youtube.com/watch?v=eJ9YsVkOGDs)
 - [60s LMP @ Spa](https://www.youtube.com/watch?v=ncaGx8nJC-A)
+- [911 Carrera @ Laguna
+  Seca](https://www.youtube.com/watch?v=mVhwrII5F_w)
+- [GT3 @ Chang (Buriram)
+  International](https://www.youtube.com/watch?v=F7-ztn30jYs)
+- [DTM @ Nurburgring](https://www.youtube.com/watch?v=aJ7CUZadSyY)
