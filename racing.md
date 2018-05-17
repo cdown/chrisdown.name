@@ -16,6 +16,8 @@ competitively with sim racing.
 
 ### World record
 
+- [Maserati GranTurismo GT4 @
+  NJMP](https://www.youtube.com/watch?v=-Dc0mfbhX8E), Assetto Corsa
 - [X2010 Step1 @ La Sarthe](https://www.youtube.com/watch?v=6gJL3ZT8fCo),
   Assetto Corsa
 - [SP300R @ Brands Hatch Indy](https://www.youtube.com/watch?v=qvyPT3P8aHw),
