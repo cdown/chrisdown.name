@@ -16,32 +16,22 @@ competitively with sim racing.
 
 ### World record
 
-- [Maserati GranTurismo GT4 @
-  NJMP](https://www.youtube.com/watch?v=-Dc0mfbhX8E), Assetto Corsa
-- [X2010 Step1 @ La Sarthe](https://www.youtube.com/watch?v=6gJL3ZT8fCo),
-  Assetto Corsa
-- [SP300R @ Brands Hatch Indy](https://www.youtube.com/watch?v=qvyPT3P8aHw),
-  Project CARS
+- [Maserati GranTurismo GT4 @ NJMP](https://www.youtube.com/watch?v=-Dc0mfbhX8E), Assetto Corsa
+- [SP300R @ Brands Hatch Indy](https://www.youtube.com/watch?v=qvyPT3P8aHw), Project CARS
+- [X2010 Step1 @ La Sarthe](https://www.youtube.com/watch?v=6gJL3ZT8fCo), Assetto Corsa
 
 ### Other
 
-- [Dallara F312 @ Barcelona Moto](https://www.youtube.com/watch?v=JLnOfKBerpc),
-  Assetto Corsa, 3rd fastest all time
-- [McLaren 650S @ Brands Hatch
-  GP](https://www.youtube.com/watch?v=cAo6T45IUGE), Assetto Corsa, 10th fastest
-  all time
-- [McLaren 650S @ Chang (Buriram)
-  International](https://www.youtube.com/watch?v=9xpdLmuXRYs), Assetto Corsa,
-  2nd fastest all time
-- [Porsche 911 Carrera RSR 3.0 @ Laguna
-  Seca](https://www.youtube.com/watch?v=cjzQoYVtUi8), Assetto Corsa, 4th
-  fastest all time
-- [FOX @ RO7](https://www.youtube.com/watch?v=wO0XxZdd-XQ), Live for Speed, 4th
-  fastest all time
-- [FOX @ AS1R](https://www.youtube.com/watch?v=bpRAhw2Phlc), Live for Speed,
-  10th fastest all time
-- [FOX @ SO6](https://www.youtube.com/watch?v=JFZJsbta5po), Live for Speed,
-  10th fastest all time
+- [Dallara F312 @ Barcelona Moto](https://www.youtube.com/watch?v=JLnOfKBerpc), Assetto Corsa, 3rd fastest all time
+- [Dallara F317 @ Gilles Villeneuve](https://www.youtube.com/watch?v=ybEdh1IlZfY), Assetto Corsa, 2nd fastest all time
+- [FOX @ AS1R](https://www.youtube.com/watch?v=bpRAhw2Phlc), Live for Speed, 10th fastest all time
+- [FOX @ RO7](https://www.youtube.com/watch?v=wO0XxZdd-XQ), Live for Speed, 4th fastest all time
+- [FOX @ SO6](https://www.youtube.com/watch?v=JFZJsbta5po), Live for Speed, 10th fastest all time
+- [McLaren 650S @ Brands Hatch GP](https://www.youtube.com/watch?v=cAo6T45IUGE), Assetto Corsa, 10th fastest all time
+- [McLaren 650S @ Chang (Buriram) International](https://www.youtube.com/watch?v=9xpdLmuXRYs), Assetto Corsa, 2nd fastest all time
+- [McLaren 650S @ Paul Ricard Blancpain](https://www.youtube.com/watch?v=XmMqyLV5Z5k), Assetto Corsa, 3rd fastest all time
+- [Porsche 911 Carrera RSR 3.0 @ Laguna Seca](https://www.youtube.com/watch?v=cjzQoYVtUi8), Assetto Corsa, 4th fastest all time
+- [Seat Leon TCR @ Brands Hatch GP](https://www.youtube.com/watch?v=ZULk1UoxBeI), Assetto Corsa, 2nd fastest all time
 
 ## Recorded races
 
@@ -61,14 +51,18 @@ Here are some selected ones:
 
 #### 2018
 
-- [Formula 3 @ Barcelona](https://www.youtube.com/watch?v=3Bfn3qkzGRs)
-- [GT3 @ Brands Hatch](https://www.youtube.com/watch?v=0w7eXvuIFWQ)
-- [Porsche 911 Supercup @ Imola](https://www.youtube.com/watch?v=or8lJBGkA5Q)
-- [Formula 3 @ Monza](https://www.youtube.com/watch?v=Isg5zc-JMQg)
-- [GT4 @ Brands Hatch](https://www.youtube.com/watch?v=eJ9YsVkOGDs)
+- [599XX @ Daytona Road](https://www.youtube.com/watch?v=rfmC8BEI9Yw)
 - [60s LMP @ Spa](https://www.youtube.com/watch?v=ncaGx8nJC-A)
-- [911 Carrera @ Laguna
-  Seca](https://www.youtube.com/watch?v=mVhwrII5F_w)
-- [GT3 @ Chang (Buriram)
-  International](https://www.youtube.com/watch?v=F7-ztn30jYs)
+- [911 Carrera @ Laguna Seca](https://www.youtube.com/watch?v=mVhwrII5F_w)
 - [DTM @ Nurburgring](https://www.youtube.com/watch?v=aJ7CUZadSyY)
+- [Formula 3 @ Barcelona](https://www.youtube.com/watch?v=3Bfn3qkzGRs)
+- [Formula 3 @ Gilles Villeneuve](https://www.youtube.com/watch?v=9tpiBxb743I)
+- [Formula 3 @ Monza](https://www.youtube.com/watch?v=Isg5zc-JMQg)
+- [GT3 @ Brands Hatch](https://www.youtube.com/watch?v=0w7eXvuIFWQ)
+- [GT3 @ Chang (Buriram) International](https://www.youtube.com/watch?v=F7-ztn30jYs)
+- [GT3 @ Paul Ricard](https://www.youtube.com/watch?v=AXTnM_iHSsE)
+- [GT3 @ Watkins Glen Boot](https://www.youtube.com/watch?v=mhe-b2D15wk)
+- [GT4 @ Brands Hatch](https://www.youtube.com/watch?v=eJ9YsVkOGDs)
+- [GTA @ Feldbergring](https://www.youtube.com/watch?v=JrilFgXe918)
+- [Porsche 911 Supercup @ Imola](https://www.youtube.com/watch?v=or8lJBGkA5Q)
+- [Seat Leon TCR @ Brands Hatch](https://www.youtube.com/watch?v=UnoY-okv1oE)
