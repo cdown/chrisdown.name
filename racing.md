@@ -17,7 +17,9 @@ competitively with sim racing.
 ### World record
 
 - [Maserati GranTurismo GT4 @ NJMP](https://www.youtube.com/watch?v=-Dc0mfbhX8E), Assetto Corsa
+- [McLaren 650S GT3 @ Road Atlanta](https://www.youtube.com/watch?v=Q-Ho6vwZ3uA), Assetto Corsa
 - [SP300R @ Brands Hatch Indy](https://www.youtube.com/watch?v=qvyPT3P8aHw), Project CARS
+- [Seat Leon TCR @ Donington GP](https://www.youtube.com/watch?v=CgQbzRjC8ZA), Assetto Corsa
 - [X2010 Step1 @ La Sarthe](https://www.youtube.com/watch?v=6gJL3ZT8fCo), Assetto Corsa
 
 ### Other
@@ -27,9 +29,9 @@ competitively with sim racing.
 - [FOX @ AS1R](https://www.youtube.com/watch?v=bpRAhw2Phlc), Live for Speed, 10th fastest all time
 - [FOX @ RO7](https://www.youtube.com/watch?v=wO0XxZdd-XQ), Live for Speed, 4th fastest all time
 - [FOX @ SO6](https://www.youtube.com/watch?v=JFZJsbta5po), Live for Speed, 10th fastest all time
-- [McLaren 650S @ Brands Hatch GP](https://www.youtube.com/watch?v=cAo6T45IUGE), Assetto Corsa, 10th fastest all time
-- [McLaren 650S @ Chang (Buriram) International](https://www.youtube.com/watch?v=9xpdLmuXRYs), Assetto Corsa, 2nd fastest all time
-- [McLaren 650S @ Paul Ricard Blancpain](https://www.youtube.com/watch?v=XmMqyLV5Z5k), Assetto Corsa, 3rd fastest all time
+- [McLaren 650S GT3 @ Brands Hatch GP](https://www.youtube.com/watch?v=cAo6T45IUGE), Assetto Corsa, 10th fastest all time
+- [McLaren 650S GT3 @ Chang (Buriram) International](https://www.youtube.com/watch?v=9xpdLmuXRYs), Assetto Corsa, 2nd fastest all time
+- [McLaren 650S GT3 @ Paul Ricard Blancpain](https://www.youtube.com/watch?v=XmMqyLV5Z5k), Assetto Corsa, 3rd fastest all time
 - [Porsche 911 Carrera RSR 3.0 @ Laguna Seca](https://www.youtube.com/watch?v=cjzQoYVtUi8), Assetto Corsa, 4th fastest all time
 - [Seat Leon TCR @ Brands Hatch GP](https://www.youtube.com/watch?v=ZULk1UoxBeI), Assetto Corsa, 2nd fastest all time
 
@@ -61,6 +63,7 @@ Here are some selected ones:
 - [GT3 @ Brands Hatch](https://www.youtube.com/watch?v=0w7eXvuIFWQ)
 - [GT3 @ Chang (Buriram) International](https://www.youtube.com/watch?v=F7-ztn30jYs)
 - [GT3 @ Paul Ricard](https://www.youtube.com/watch?v=AXTnM_iHSsE)
+- [GT3 @ Road Atlanta](https://www.youtube.com/watch?v=0Ww99BLcnfI)
 - [GT3 @ Watkins Glen Boot](https://www.youtube.com/watch?v=mhe-b2D15wk)
 - [GT4 @ Brands Hatch](https://www.youtube.com/watch?v=eJ9YsVkOGDs)
 - [GTA @ Feldbergring](https://www.youtube.com/watch?v=JrilFgXe918)
