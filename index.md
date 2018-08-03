@@ -13,10 +13,11 @@ Web Foundation team, responsible for the overall performance and reliability of
 Facebook's user-facing products. I concieve, design, and improve systems that
 make Facebook more performant, scalable, and reliable.
 
-Most of my active work is around operating system primitives, like
+Most of my active work is around operating systems, like
 [cgroups](https://www.youtube.com/watch?v=ikZ8_mRotT4),
 [systemd](https://github.com/systemd/systemd),
-[eBPF](https://www.iovisor.org/technology/ebpf), containerisation, and a bunch
+[eBPF](https://www.iovisor.org/technology/ebpf), [the Linux
+kernel](https://www.kernel.org/), containerisation, and a bunch
 of Facebook-internal technologies.
 
 [Facebook]: https://www.facebook.com
