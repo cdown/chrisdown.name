@@ -67,6 +67,7 @@ I maintain the following personal projects:
   OSX
 - [nota](https://github.com/cdown/nota) — super simple daily logs with
   your $EDITOR + git
+- [mack](https://github.com/cdown/mack) — an opinionated, fast music organiser
 - [mpdmenu](https://github.com/cdown/mpdmenu) — control [mpd][] from [dmenu][]
 - [pinyin](https://github.com/cdown/pinyin) — manipulate [Hanyu Pinyin][]
 - [srt](https://github.com/cdown/srt) — a library to deal with [SRT files][]
@@ -81,21 +82,15 @@ I maintain the following personal projects:
 
 I also am a contributor to some other projects, including:
 
-- [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) — modern resource
-  control and accounting
-- [systemd](https://github.com/systemd/systemd) — a system and service
-  manager for Linux
-- [hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced
-  Quickcheck style testing library for Python
-- [osquery](https://github.com/facebook/osquery) — an operating system
-  instrumentation framework for OS X and Linux
-- [the Pro Git book](https://git-scm.com/book/en/v2) - a guide to Git and its
-  internals
-- [pacaur](https://github.com/rmarquis/pacaur) - an AUR helper that minimises
-  user interaction
+- [aurweb](https://github.com/lfos/aurweb) - the website powering the Arch User Repository
+- [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) — modern resource control and accounting
+- [hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced Quickcheck style testing library for Python
+- [osquery](https://github.com/facebook/osquery) — an operating system instrumentation framework for OS X and Linux
+- [pacaur](https://github.com/rmarquis/pacaur) - an AUR helper that minimises user interaction
 - [pass](https://www.passwordstore.org/) - the standard Unix password manager
-- [aurweb](https://github.com/lfos/aurweb) - the website powering the Arch User
-  Repository
+- [systemd](https://github.com/systemd/systemd) — a system and service manager for Linux
+- [taglib-rust](https://github.com/ebassi/taglib-rust) - Rust FFI bindings for taglib
+- [the Pro Git book](https://git-scm.com/book/en/v2) - a guide to Git and its internals
 
 You can find other projects on my [GitHub][], although if they're not on this
 list, I'm probably not actively developing or maintaining them.
