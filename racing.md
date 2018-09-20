@@ -7,10 +7,13 @@ title: "Sim racing history"
 
 - [Maserati GranTurismo GT4 @ NJMP](https://www.youtube.com/watch?v=-Dc0mfbhX8E), Assetto Corsa
 - [McLaren 650S GT3 @ Bridgehampton](https://www.youtube.com/watch?v=LvUUHBSTIbw), Assetto Corsa
+- [McLaren 650S GT3 @ Donington GP](https://www.youtube.com/watch?v=6AUg5jqUoes), Assetto Corsa
+- [McLaren 650S GT3 @ Le Mans](https://www.youtube.com/watch?v=-_zZXx1DiZY&t=90s), Assetto Corsa
+- [McLaren 650S GT3 @ Portimão](https://www.youtube.com/watch?v=8adD9P4gM7A), Assetto Corsa
+- [McLaren 650S GT3 @ Riverside](https://www.youtube.com/watch?v=tbeb8gpFbNw), Assetto Corsa
 - [McLaren 650S GT3 @ Road Atlanta](https://www.youtube.com/watch?v=Q-Ho6vwZ3uA), Assetto Corsa
 - [SP300R @ Brands Hatch Indy](https://www.youtube.com/watch?v=qvyPT3P8aHw), Project CARS
 - [Seat Leon TCR @ Donington GP](https://www.youtube.com/watch?v=CgQbzRjC8ZA), Assetto Corsa
-- [X2010 Step1 @ La Sarthe](https://www.youtube.com/watch?v=6gJL3ZT8fCo), Assetto Corsa
 
 ## Other PBs
 
@@ -39,6 +42,8 @@ title: "Sim racing history"
 - [GT3 @ Brands Hatch](https://www.youtube.com/watch?v=0w7eXvuIFWQ)
 - [GT3 @ Bridgehampton](https://www.youtube.com/watch?v=YoTAXaICFxs)
 - [GT3 @ Chang (Buriram) International](https://www.youtube.com/watch?v=F7-ztn30jYs)
+- [GT3 @ Donington GP](https://www.youtube.com/watch?v=ZA5vARvRk6Y)
+- [GT3 @ Okayama](https://www.youtube.com/watch?v=iYxqzHmi9R4)
 - [GT3 @ Paul Ricard](https://www.youtube.com/watch?v=AXTnM_iHSsE)
 - [GT3 @ Road Atlanta](https://www.youtube.com/watch?v=0Ww99BLcnfI)
 - [GT3 @ Spa](https://www.youtube.com/watch?v=-C675sbunvs)
