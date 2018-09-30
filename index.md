@@ -38,6 +38,7 @@ More posts are available on the [archive page](/archive.html).
 - [My SSH public key](/ssh)
 - [My old TF2 configs](/tf2)
 - [RYM profile export](/rym.html)
+- [Old game miscellania](/oldgames.html)
 
 ## Profiles elsewhere
 
