@@ -31,7 +31,8 @@ Possible values are:
 ## Bonus levels
 
 Someone kindly provided the bonus levels not in the Steam version
-[here](https://steamcommunity.com/sharedfiles/filedetails/?id=464988984).
+[here](https://steamcommunity.com/sharedfiles/filedetails/?id=464988984). Be
+warned: they are unpolished and not very interesting.
 
 ## FOV changes
 
