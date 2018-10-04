@@ -82,3 +82,10 @@ ShadowResolution=2
 AntiAliasing=2
 EffectsQuality=3
 ```
+
+# Splinter Cell: Pandora Tomorrow
+
+## Shadow/reflection fix
+
+[This page](http://www.jiri-dvorak.cz/scellpt/) contains a fix for the vertex
+shader garbage.
