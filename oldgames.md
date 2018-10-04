@@ -89,3 +89,9 @@ EffectsQuality=3
 
 [This page](http://www.jiri-dvorak.cz/scellpt/) contains a fix for the vertex
 shader garbage.
+
+## Mouse acceleration
+
+The mouse acceleration in this game verges on making it unusable (why?!). In
+`offline\system\ESetting.ini`, change all `useAimTuning` lines from `v=1` to
+`v=0`. You need to create a new save to register the change.
