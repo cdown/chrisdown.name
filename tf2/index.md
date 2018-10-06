@@ -2,6 +2,7 @@
 layout: default
 title: Chris' TF2 configs
 description: The official site for Chris' TF2 configs.
+ads: true
 ---
 
 # TF2 configs
