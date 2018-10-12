@@ -96,3 +96,18 @@ shader garbage.
 The mouse acceleration in this game verges on making it unusable (why?!). In
 `offline\system\ESetting.ini`, change all `useAimTuning` lines from `v=1` to
 `v=0`. You need to create a new save to register the change.
+
+# Splinter Cell: Chaos Theory
+
+## Shadow/reflection fix
+
+Software TnL emulation is needed, which can be provided by the ancient
+[3D-Analyze](https://www.tommti-systems.de/start.html).
+
+Select "Gun Metal Demo fix". There's also conveniently an option to save a
+batch file which will launch with these settings.
+
+## Mouse acceleration
+
+In `System\SplinterCell3Settings.ini`, change all `biasCut` values to `v=0.0`.
+Once again, you need to have a fresh load to register the change. Sigh...
