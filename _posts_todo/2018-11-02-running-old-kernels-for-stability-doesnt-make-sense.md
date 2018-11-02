@@ -1,0 +1,3 @@
+- hitting a known issue everywhere at once, instead of a new one sporadically
+- you will never be able to hire great kernel engineers to fix things, nobody wants to have to forward-port or backport every patch
+- you are condemning yourself to never really be able to get compelling solutions when things do break
