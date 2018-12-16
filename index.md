@@ -99,7 +99,7 @@ list, I'm probably not actively developing or maintaining them.
 ## Talks
 
 - [cgroupv2: Linux's new unified resource
-  hierarchy](https://www.youtube.com/watch?v=XKwBtDhZ2Gc) —
+  hierarchy](https://www.youtube.com/watch?v=ikZ8_mRotT4) —
   [FOSDEM](https://archive.fosdem.org/2017/schedule/event/cgroupv2/)/DevOpsDays/[ASG](https://cfp.all-systems-go.io/en/ASG2017/public/events/96)
 - [Lessons learned running SSL at
   scale](https://www.youtube.com/watch?v=9Ya8H-9Hrp4) —
