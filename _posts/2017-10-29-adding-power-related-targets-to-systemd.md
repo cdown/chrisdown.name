@@ -45,6 +45,19 @@ events we need to attach to, we can use `udevadm monitor --environment`:
     [...]
     POWER_SUPPLY_ONLINE=0
 
+You can also use `udevadm info -a -p /sys/class/power_supply/AC` to tie this
+information to the relevant keys in udev:
+
+    % udevadm info -a -p /sys/class/power_supply/AC
+
+    looking at device '/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:19/PNP0C09:00/ACPI0003:00/power_supply/AC':
+       KERNEL=="AC"
+       SUBSYSTEM=="power_supply"
+       DRIVER==""
+       ATTR{SUBSYSTEM}=="power_supply"
+       ATTR{POWER_SUPPLY_NAME}=="AC"
+       ATTR{POWER_SUPPLY_ONLINE}=="1"
+
 Based on this, we can see that we need to attach our target startup to the
 `power_supply` object, on the `online` attribute. All we have to do now is to
 tell udev to do this by creating a rules file:
