@@ -50,8 +50,8 @@ Based on this, we can see that we need to attach our target startup to the
 tell udev to do this by creating a rules file:
 
     cat > /etc/udev/rules.d/99-powertargets.rules << 'EOF'
-    SUBSYSTEM=="power_supply", ATTR{online}=="0", RUN+="/usr/sbin/systemctl start battery.target"
-    SUBSYSTEM=="power_supply", ATTR{online}=="1", RUN+="/usr/sbin/systemctl start ac.target"
+    SUBSYSTEM=="power_supply", KERNEL=="AC", ATTR{online}=="0", RUN+="/usr/sbin/systemctl start battery.target"
+    SUBSYSTEM=="power_supply", KERNEL=="AC", ATTR{online}=="1", RUN+="/usr/sbin/systemctl start ac.target"
     EOF
 
 We can now reload and apply udev's new config:
