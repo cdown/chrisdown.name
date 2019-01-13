@@ -111,3 +111,23 @@ batch file which will launch with these settings.
 
 In `System\SplinterCell3Settings.ini`, change all `biasCut` values to `v=0.0`.
 Once again, you need to have a fresh load to register the change. Sigh...
+
+# Oblivion
+
+## Useful resources
+
+- [Load order advice](http://wiki.tesnexus.com/index.php/Load_order_recommendations)
+- [Mod install ordering](https://web.archive.org/web/20190113233526/http://wiki.theassimilationlab.com/tescosi/A_General_Order_for_Installing_Mods_(Oblivion))
+- [OBMM](https://www.nexusmods.com/oblivion/mods/2097)
+
+## Mods
+
+- [EngineBugFixes](https://www.nexusmods.com/oblivion/mods/47085)
+- [Light of Oblivion](https://www.nexusmods.com/oblivion/mods/46131) (use the Bravil mesh)
+- [OBSE](https://obse.silverlock.org/)
+- [OOO](https://www.nexusmods.com/oblivion/mods/46199)
+- [RTNM](https://www.nexusmods.com/oblivion/mods/38204) (download part 1, 2, and shivering isles "fixed")
+- [Unofficial Oblivion DLC Patch](https://www.nexusmods.com/oblivion/mods/9969)
+- [Unofficial Oblivion Patch](https://www.nexusmods.com/oblivion/mods/5296)
+- [Unofficial Shivering Isles Patch](https://www.nexusmods.com/oblivion/mods/10739)
+- [Vilja](https://www.nexusmods.com/oblivion/mods/28977) (use the noise reduction BSA)
