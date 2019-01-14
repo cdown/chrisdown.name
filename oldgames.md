@@ -118,16 +118,52 @@ Once again, you need to have a fresh load to register the change. Sigh...
 
 - [Load order advice](http://wiki.tesnexus.com/index.php/Load_order_recommendations)
 - [Mod install ordering](https://web.archive.org/web/20190113233526/http://wiki.theassimilationlab.com/tescosi/A_General_Order_for_Installing_Mods_(Oblivion))
-- [OBMM](https://www.nexusmods.com/oblivion/mods/2097)
+- [OBMM](https://www.nexusmods.com/oblivion/mods/2097) ("full manual")
+- [OBSE](https://obse.silverlock.org/)
 
 ## Mods
 
 - [EngineBugFixes](https://www.nexusmods.com/oblivion/mods/47085)
 - [Light of Oblivion](https://www.nexusmods.com/oblivion/mods/46131) (use the Bravil mesh)
-- [OBSE](https://obse.silverlock.org/)
 - [OOO](https://www.nexusmods.com/oblivion/mods/46199)
 - [RTNM](https://www.nexusmods.com/oblivion/mods/38204) (download part 1, 2, and shivering isles "fixed")
 - [Unofficial Oblivion DLC Patch](https://www.nexusmods.com/oblivion/mods/9969)
 - [Unofficial Oblivion Patch](https://www.nexusmods.com/oblivion/mods/5296)
 - [Unofficial Shivering Isles Patch](https://www.nexusmods.com/oblivion/mods/10739)
 - [Vilja](https://www.nexusmods.com/oblivion/mods/28977) (use the noise reduction BSA)
+
+## Order
+
+After each one, check Oblivion starts up. Also, it's quite confusing that Oblivion.esm isn't checked in the load order, but it works anyway, so...
+
+OBMM also seems to use the same thread for UI and disk IO, so don't be surprised if it hangs.
+
+Import process in OBMM:
+
+1. "Create" at the bottom
+2. "Add archive" or "add folder"
+3. Name it anything reasonable
+4. Create OMOD
+5. Once it's done, double click the OMOD on the right, it will turn from green to blue
+
+1. OBSE
+    1. Copy obse_1_2_416.dll, obse_editor_1_2.dll, and obse_steam_loader.dll to your Oblivion directory.
+    2. Also copy obse_loader.exe just for OBMM -- Steam won't use it but some OMODs won't recognise OBSE otherwise
+    3. Ensure you have enabled the Steam community in-game, or OBSE will fail to load. Go to Steam > Settings > In-Game and check the box marked "Enable Steam Overlay".
+2. OBMM
+    1. Copy everything to Oblivion directory 
+    2. Check Oblivion runs (but it won't work through "launch" button in OBMM itself, since it wants to load using obse_loader.exe)
+3. Light of Oblivion, Bravil
+4. Unofficial Oblivion Patch
+5. Unofficial Oblivion DLC Patch (UOPCastleCeilingLightMount.NIF conflicts with UOP for some reason, just accept it)
+6. Unofficial Shivering Isles Patch (tons of conflicts with UOP, accept them all)
+7. EngineBugFixes (don't worry, nothing will show up because it has no ESPs)
+8. Vilja
+    1. Extract both
+    2. Put the BSA inside the Companion directory structure with the ESP
+    3. "Add folder" with the inner folder
+9. RTNM
+    1. Part 1
+    2. Part 2
+    3. Shivering Isles
+10. OOO
