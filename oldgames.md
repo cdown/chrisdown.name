@@ -152,11 +152,11 @@ Import process in OBMM:
 2. OBMM
     1. Copy everything to Oblivion directory 
     2. Check Oblivion runs (but it won't work through "launch" button in OBMM itself, since it wants to load using obse_loader.exe)
-3. Light of Oblivion, Bravil
-4. Unofficial Oblivion Patch
-5. Unofficial Oblivion DLC Patch (UOPCastleCeilingLightMount.NIF conflicts with UOP for some reason, just accept it)
-6. Unofficial Shivering Isles Patch (tons of conflicts with UOP, accept them all)
-7. EngineBugFixes (don't worry, nothing will show up because it has no ESPs)
+3. Unofficial Oblivion Patch
+4. Unofficial Oblivion DLC Patch (UOPCastleCeilingLightMount.NIF conflicts with UOP for some reason, just accept it)
+5. Unofficial Shivering Isles Patch (tons of conflicts with UOP, accept them all)
+6. EngineBugFixes (don't worry, nothing will show up because it has no ESPs)
+7. Light of Oblivion, Bravil
 8. Vilja
     1. Extract both
     2. Put the BSA inside the Companion directory structure with the ESP
@@ -165,3 +165,6 @@ Import process in OBMM:
     1. Part 1
     2. Part 2
     3. Shivering Isles
+10. Archive invalidation (BSA redirection)
+
+Don't use the Oblivion launcher "data files" section to enable stuff any more, since it will mess up the load order.
