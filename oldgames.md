@@ -125,7 +125,6 @@ Once again, you need to have a fresh load to register the change. Sigh...
 
 - [EngineBugFixes](https://www.nexusmods.com/oblivion/mods/47085)
 - [Light of Oblivion](https://www.nexusmods.com/oblivion/mods/46131) (use the Bravil mesh)
-- [OOO](https://www.nexusmods.com/oblivion/mods/46199)
 - [RTNM](https://www.nexusmods.com/oblivion/mods/38204) (download part 1, 2, and shivering isles "fixed")
 - [Unofficial Oblivion DLC Patch](https://www.nexusmods.com/oblivion/mods/9969)
 - [Unofficial Oblivion Patch](https://www.nexusmods.com/oblivion/mods/5296)
@@ -166,4 +165,3 @@ Import process in OBMM:
     1. Part 1
     2. Part 2
     3. Shivering Isles
-10. OOO
