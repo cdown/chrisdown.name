@@ -120,6 +120,7 @@ Once again, you need to have a fresh load to register the change. Sigh...
 - [Mod install ordering](https://web.archive.org/web/20190113233526/http://wiki.theassimilationlab.com/tescosi/A_General_Order_for_Installing_Mods_(Oblivion))
 - [OBMM](https://www.nexusmods.com/oblivion/mods/2097) ("full manual")
 - [OBSE](https://obse.silverlock.org/)
+- [BOSS](https://boss-developers.github.io/)
 
 ## Mods
 
@@ -129,7 +130,6 @@ Once again, you need to have a fresh load to register the change. Sigh...
 - [Unofficial Oblivion DLC Patch](https://www.nexusmods.com/oblivion/mods/9969)
 - [Unofficial Oblivion Patch](https://www.nexusmods.com/oblivion/mods/5296)
 - [Unofficial Shivering Isles Patch](https://www.nexusmods.com/oblivion/mods/10739)
-- [Vilja](https://www.nexusmods.com/oblivion/mods/28977) (use the noise reduction BSA)
 
 ## Order
 
@@ -157,14 +157,14 @@ Import process in OBMM:
 5. Unofficial Shivering Isles Patch (tons of conflicts with UOP, accept them all)
 6. EngineBugFixes (don't worry, nothing will show up because it has no ESPs)
 7. Light of Oblivion, Bravil
-8. Vilja
-    1. Extract both
-    2. Put the BSA inside the Companion directory structure with the ESP
-    3. "Add folder" with the inner folder
-9. RTNM
+8. RTNM
     1. Part 1
     2. Part 2
     3. Shivering Isles
-10. Archive invalidation (BSA redirection)
+9. Archive invalidation (BSA redirection)
 
 Don't use the Oblivion launcher "data files" section to enable stuff any more, since it will mess up the load order.
+
+## Reordering
+
+Use BOSS.
