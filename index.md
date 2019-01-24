@@ -86,6 +86,7 @@ I also am a contributor to some other projects, including:
 - [aurweb](https://github.com/lfos/aurweb) — the website powering the Arch User Repository
 - [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) — modern resource control and accounting
 - [hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced Quickcheck style testing library for Python
+- [Linux](https://lore.kernel.org/patchwork/project/lkml/list/?submitter=25468&state=%2A&archive=both) — a free and open-source OS kernel
 - [osquery](https://github.com/facebook/osquery) — an OS instrumentation, monitoring, and analysis framework
 - [pacaur](https://github.com/rmarquis/pacaur) — an AUR helper that minimises user interaction
 - [pass](https://www.passwordstore.org/) — the standard Unix password manager
