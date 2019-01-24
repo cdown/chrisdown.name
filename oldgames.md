@@ -130,6 +130,7 @@ Once again, you need to have a fresh load to register the change. Sigh...
 - [Unofficial Oblivion DLC Patch](https://www.nexusmods.com/oblivion/mods/9969)
 - [Unofficial Oblivion Patch](https://www.nexusmods.com/oblivion/mods/5296)
 - [Unofficial Shivering Isles Patch](https://www.nexusmods.com/oblivion/mods/10739)
+- [Hear No Evil](https://www.nexusmods.com/oblivion/mods/25462)
 
 ## Order
 
@@ -161,7 +162,8 @@ Import process in OBMM:
     1. Part 1
     2. Part 2
     3. Shivering Isles
-9. Archive invalidation (BSA redirection)
+9. Hear No Evil
+10. Archive invalidation (BSA redirection)
 
 Don't use the Oblivion launcher "data files" section to enable stuff any more, since it will mess up the load order.
 
