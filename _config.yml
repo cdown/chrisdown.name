@@ -3,7 +3,7 @@ url: https://chrisdown.name
 
 links:
   github: https://github.com/cdown
-  ulse: https://unix.stackexchange.com/users/10762/chris-down?tab=profile
+  ulse: https://unix.stackexchange.com/users/10762/chris-down?tab=topactivity
   linkedin: https://www.linkedin.com/in/chrisldown
 
 personal:
@@ -40,7 +40,7 @@ header:
       url: https://www.linkedin.com/in/chrisldown
       title: My LinkedIn profile
     - icon: stackoverflow
-      url: https://unix.stackexchange.com/users/10762/chris-down?tab=profile
+      url: https://unix.stackexchange.com/users/10762/chris-down?tab=topactivity
       title: My Unix & Linux Stack Exchange profile
     - icon: github
       url: https://github.com/cdown
