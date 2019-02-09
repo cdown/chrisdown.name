@@ -30,33 +30,22 @@ of Facebook-internal technologies.
 
 More posts are available on the [archive page](/archive.html).
 
-## Things on this site
-
-- [Assorted technology-related notes](/archive.html)
-- [Sim racing data/notes](/racing.html)
-- [My PGP public key](https://keybase.io/cdown/key.asc)
-- [My SSH public key](/ssh)
-- [My old TF2 configs](/tf2)
-- [RYM profile export](/rym.html)
-- [Old game miscellania](/oldgames.html)
-
-## Profiles elsewhere
-
-- [Facebook][]
-- [GitHub][]
-- [Instagram](https://instagram.com/_u/chrisldown)
-- [Keybase](https://keybase.io/cdown)
-- [last.fm][]
-- [LinkedIn](https://www.linkedin.com/in/chrisldown)
-- [Reddit][]
-- [suckless.org](http://suckless.org/people/cdown)
-  (my [dwm](http://dwm.suckless.org/) patches are here)
-- [Twitter][]
-- [Unix and Linux Stack Exchange]({{ site.links.ulse }})
-
 ## Software
 
-I maintain the following personal projects:
+I am a contributor and/or maintainer to the following projects, including:
+
+- [aurweb](https://github.com/lfos/aurweb) — the website powering the Arch User Repository
+- [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) — modern resource control and accounting
+- [hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced Quickcheck style testing library for Python
+- [Linux](https://lore.kernel.org/patchwork/project/lkml/list/?submitter=25468&state=%2A&archive=both) — a free and open-source OS kernel
+- [osquery](https://github.com/facebook/osquery) — an OS instrumentation, monitoring, and analysis framework
+- [pacaur](https://github.com/rmarquis/pacaur) — an AUR helper that minimises user interaction
+- [pass](https://www.passwordstore.org/) — the standard Unix password manager
+- [systemd](https://github.com/systemd/systemd) — a system and service manager for Linux
+- [taglib-rust](https://github.com/ebassi/taglib-rust) — Rust FFI bindings for taglib
+- [the Pro Git book](https://git-scm.com/book/en/v2) — a guide to Git and its internals
+
+I also maintain the following personal projects:
 
 - [aur](https://github.com/cdown/aur) — interface to the
   [Arch User Repository][]
@@ -81,21 +70,32 @@ I maintain the following personal projects:
 - [yturl](https://github.com/cdown/yturl) — watch YouTube videos on the command
   line
 
-I also am a contributor to some other projects, including:
-
-- [aurweb](https://github.com/lfos/aurweb) — the website powering the Arch User Repository
-- [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) — modern resource control and accounting
-- [hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced Quickcheck style testing library for Python
-- [Linux](https://lore.kernel.org/patchwork/project/lkml/list/?submitter=25468&state=%2A&archive=both) — a free and open-source OS kernel
-- [osquery](https://github.com/facebook/osquery) — an OS instrumentation, monitoring, and analysis framework
-- [pacaur](https://github.com/rmarquis/pacaur) — an AUR helper that minimises user interaction
-- [pass](https://www.passwordstore.org/) — the standard Unix password manager
-- [systemd](https://github.com/systemd/systemd) — a system and service manager for Linux
-- [taglib-rust](https://github.com/ebassi/taglib-rust) — Rust FFI bindings for taglib
-- [the Pro Git book](https://git-scm.com/book/en/v2) — a guide to Git and its internals
-
 You can find other projects on my [GitHub][], although if they're not on this
 list, I'm probably not actively developing or maintaining them.
+
+## Things on this site
+
+- [Assorted technology-related notes](/archive.html)
+- [Sim racing data/notes](/racing.html)
+- [My PGP public key](https://keybase.io/cdown/key.asc)
+- [My SSH public key](/ssh)
+- [My old TF2 configs](/tf2)
+- [RYM profile export](/rym.html)
+- [Old game miscellania](/oldgames.html)
+
+## Profiles elsewhere
+
+- [Facebook][]
+- [GitHub][]
+- [Instagram](https://instagram.com/_u/chrisldown)
+- [Keybase](https://keybase.io/cdown)
+- [last.fm][]
+- [LinkedIn](https://www.linkedin.com/in/chrisldown)
+- [Reddit][]
+- [suckless.org](http://suckless.org/people/cdown)
+  (my [dwm](http://dwm.suckless.org/) patches are here)
+- [Twitter][]
+- [Unix and Linux Stack Exchange]({{ site.links.ulse }})
 
 ## Talks
 
