@@ -18,7 +18,7 @@ Most of my active work is around operating systems, like
 [cgroups](https://www.youtube.com/watch?v=ikZ8_mRotT4),
 [systemd](https://github.com/systemd/systemd),
 [eBPF](https://www.iovisor.org/technology/ebpf), [the Linux
-kernel](https://www.kernel.org/), containerisation, and a bunch
+kernel](https://lore.kernel.org/patchwork/project/lkml/list/?submitter=25468&state=%2A&archive=both), containerisation, and a bunch
 of Facebook-internal technologies.
 
 [Facebook]: https://www.facebook.com
