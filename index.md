@@ -9,9 +9,10 @@ description:
 
 Hey there! I'm a SRE, software developer, and system administrator, currently
 working as a [Production Engineer][]/SRE at [Facebook][]. I work as part of the
-Web Foundation team, responsible for the overall performance and reliability of
-Facebook's user-facing products. I concieve, design, and improve systems that
-make Facebook more performant, scalable, and reliable.
+Linux Kernel team, responsible for kernel-related developments that improve the
+overall scalability, performance, and reliability of Facebook's user-facing
+products. In general, my drive is in concieving, designing, and improving
+systems that make Facebook and the wider industry better.
 
 Most of my active work is around operating systems, like
 [cgroups](https://www.youtube.com/watch?v=ikZ8_mRotT4),
@@ -136,5 +137,5 @@ list, I'm probably not actively developing or maintaining them.
 <meta itemprop="image" content="https://chrisdown.name/images/headshot.jpg">
 <meta itemprop="worksFor" content="Facebook">
 <meta itemprop="name" content="Chris Down">
-<meta itemprop="description" content="Chris Down is a software developer and system administrator, currently working as a Production Engineer/SRE at Facebook. He works as part of the Web Foundation team, responsible for the overall performance and reliability of Facebook’s user-facing products.">
+<meta itemprop="description" content="Chris Down is a software developer and system administrator, currently working as a Production Engineer/SRE at Facebook. He works as part of the Linux Kernel team, responsible for kernel-related developments that improve the overall scalability, performance, and reliability of Facebook’s user-facing products.">
 </div>
