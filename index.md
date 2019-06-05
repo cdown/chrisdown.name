@@ -33,7 +33,7 @@ More posts are available on the [archive page](/archive.html).
 
 ## Software
 
-I am a contributor and/or maintainer to a number of projects, including:
+I am a contributor to and maintainer of a number of projects, including:
 
 - [aurweb](https://github.com/lfos/aurweb) — the website powering the Arch User Repository
 - [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) — modern resource control and accounting
