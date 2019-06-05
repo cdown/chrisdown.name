@@ -7,7 +7,7 @@ description:
 ---
 
 
-Hey there! I'm a SRE, software developer, and system administrator, currently
+Hey there! I'm an SRE, software developer, and system administrator, currently
 working as a [Production Engineer][]/SRE at [Facebook][]. I work as part of the
 Linux Kernel team, responsible for kernel-related developments that improve the
 overall scalability, performance, and reliability of Facebook's user-facing
