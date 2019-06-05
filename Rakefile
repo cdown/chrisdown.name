@@ -3,7 +3,9 @@ task :default => [:deploy]
 expiration_secs = 86400
 cc_hdr = "Cache-Control: max-age=#{expiration_secs}, public"
 
-task :deploy => :build do
+task :deploy => [:_deploy, :update_cache_control]
+
+task :_deploy => :build do
   sh "s3cmd sync --no-mime-magic --no-preserve --cf-invalidate --delete-removed --verbose --add-header='#{cc_hdr}' _deploy/ s3://chrisdown.name"
 end
 
