@@ -93,8 +93,6 @@ list, I'm probably not actively developing or maintaining them.
 - [last.fm][]
 - [LinkedIn](https://www.linkedin.com/in/chrisldown)
 - [Reddit][]
-- [suckless.org](http://suckless.org/people/cdown)
-  (my [dwm](http://dwm.suckless.org/) patches are here)
 - [Twitter][]
 - [Unix and Linux Stack Exchange]({{ site.links.ulse }})
 
@@ -119,7 +117,6 @@ list, I'm probably not actively developing or maintaining them.
   Kuala Lumpur
 
 [SRT files]: https://en.wikipedia.org/wiki/SubRip#SubRip_text_file_format
-[dmenu]: http://tools.suckless.org/dmenu/
 [mpd]: http://mpd.wikia.com/
 [Hanyu Pinyin]: https://en.wikipedia.org/wiki/Pinyin
 [Arch User Repository]: https://aur.archlinux.org/
