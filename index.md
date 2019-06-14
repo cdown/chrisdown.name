@@ -51,7 +51,7 @@ I also maintain the following personal projects:
 - [aur](https://github.com/cdown/aur) — interface to the
   [Arch User Repository][]
 - [clipmenu](https://github.com/cdown/clipmenu) — a clipboard manager with a
-  [dmenu][] frontend
+  dmenu frontend
 - [gh-mirror](https://github.com/cdown/gh-mirror) — mirror all public
   repositories for a user to your local machine
 - [mac-cel](https://github.com/cdown/mac-cel) — remove mouse acceleration on
@@ -59,7 +59,7 @@ I also maintain the following personal projects:
 - [nota](https://github.com/cdown/nota) — super simple daily logs with
   your $EDITOR + git
 - [mack](https://github.com/cdown/mack) — an opinionated, fast music organiser
-- [mpdmenu](https://github.com/cdown/mpdmenu) — control [mpd][] from [dmenu][]
+- [mpdmenu](https://github.com/cdown/mpdmenu) — control [mpd][] from dmenu
 - [pinyin](https://github.com/cdown/pinyin) — manipulate [Hanyu Pinyin][]
 - [srt](https://github.com/cdown/srt) — a library to deal with [SRT files][]
 - [travis-automerge](https://github.com/cdown/travis-automerge) — automatically
