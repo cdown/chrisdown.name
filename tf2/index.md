@@ -19,17 +19,6 @@ There are a lot of thanks to be given to Arie for letting me host these at
 [FakkelBrigade][] back in the day; without being able to host there in the
 early days, these configs would not have been so widely disseminated.
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-fb+5w+4e-db+86"
-     data-ad-client="ca-pub-7307799128182684"
-     data-ad-slot="2159534995"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 ## Download
 
 - [ZIP archive of the final release][zip]
