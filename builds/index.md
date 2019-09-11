@@ -90,6 +90,7 @@ configs", since it's simple and exercises all integrations.
 
 - Integrations
     - Travis
+        - Enable daily runs of tests on develop/master
     - Coveralls
     - Appveyor
     - LGTM
