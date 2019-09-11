@@ -99,7 +99,7 @@ configs", since it's simple and exercises all integrations.
     - Disable wiki
     - Disable projects
 - Tests
-    - All supported Python versions (currently 2.7, 3.5, and 3.6)
+    - All supported Python versions (currently 2.7, 3.5, 3.6, and 3.7)
     - Tox
     - Tools
         - Bandit
