@@ -77,6 +77,7 @@ list, I'm probably not actively developing or maintaining them.
 ## Things on this site
 
 - [Assorted technology-related notes](/archive.html)
+- [Project quality dashboard](/builds)
 - [Sim racing data/notes](/racing.html)
 - [My PGP public key](https://keybase.io/cdown/key.asc)
 - [My SSH public key](/ssh)
