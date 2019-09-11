@@ -95,7 +95,6 @@ configs", since it's simple and exercises all integrations.
     - LGTM
     - Libraries.io
 - GitHub
-    - Branch protections on master/develop
     - Disable wiki
     - Disable projects
 - Tests
