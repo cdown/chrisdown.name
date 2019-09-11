@@ -17,8 +17,9 @@ builds:
   <thead>
     <tr>
       <th>Repository</th>
-      <th>Linux &amp; Mac builds</th>
+      <th>Linux/Mac builds</th>
       <th>Windows build</th>
+      <th>Code quality</th>
       <th>Coverage</th>
       <th>Dependencies</th>
     </tr>
@@ -42,6 +43,15 @@ builds:
         {% else %}
         <a href="https://ci.appveyor.com/project/cdown/{{ repo.name }}">
           <img class="nonstandard" src="https://img.shields.io/appveyor/ci/cdown/{{ repo.name }}/develop.svg?label=is" alt="Mac build status for {{ repo.name }}" />
+        </a>
+        {% endif %}
+      </td>
+      <td class="status-image">
+        {% if repo.disable contains 'lgtm' %}
+        N/A
+        {% else %}
+        <a href="https://lgtm.com/projects/g/cdown/{{ repo.name }}/history/">
+          <img class="nonstandard" src="https://img.shields.io/lgtm/grade/python/github/cdown/{{ repo.name }}.svg?label=is" alt="Code quality for {{ repo.name }}" />
         </a>
         {% endif %}
       </td>
