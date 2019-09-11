@@ -15,7 +15,7 @@ builds:
   - name: yturl
 ---
 
-<h1>Build status dashboard</h1>
+# Build status dashboard
 
 <table>
   <thead>
@@ -81,3 +81,31 @@ builds:
     {% endfor %}
   </tbody>
 </table>
+
+---
+
+Here is my current informal "new project checklist". The [srt
+repo](https://github.com/cdown/srt) is the source of truth for "good starter
+configs", since it's simple and exercises all integrations.
+
+- Integrations
+    - Travis
+    - Coveralls
+    - Appveyor
+    - LGTM
+    - Libraries.io
+- GitHub
+    - Branch protections on master/develop
+    - Disable wiki
+- Tests
+    - All supported Python versions (currently 2.7, 3.5, and 3.6)
+    - Tox
+    - Tools
+        - Bandit
+        - Black
+        - pylint
+        - pytype
+- Code
+    - Public domain
+    - Add badges/links to readme
+    - Check setup.py trove entries
