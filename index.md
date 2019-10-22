@@ -21,6 +21,9 @@ Most of my active work is around operating systems, like
 kernel](https://lore.kernel.org/patchwork/project/lkml/list/?submitter=25468&state=%2A&archive=both), containerisation, and a bunch
 of Facebook-internal technologies.
 
+Outside of that, I dabble in [photography](/photography) and [sim
+racing](/racing.html).
+
 [Facebook]: https://www.facebook.com
 [Production Engineer]: https://www.quora.com/What-is-it-like-to-be-a-Production-Engineer-at-Facebook/answer/Larry-Schrof
 
