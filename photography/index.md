@@ -14,3 +14,7 @@ You can find more on my [Flickr](https://www.flickr.com/photos/chrisdown/).
 ---
 
 <a data-flickr-embed="true" href="https://www.flickr.com/photos/chrisdown/48941416457/" title="Defender at Red Bull Soapbox Race 2019"><img src="https://live.staticflickr.com/65535/48941416457_ebb1ad04a3_k.jpg" width="2048" height="1365" alt="Defender at Red Bull Soapbox Race 2019"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+
+---
+
+<a data-flickr-embed="true" href="https://www.flickr.com/photos/chrisdown/48948797926/in/dateposted/" title="A foggy day at Ambleside pier"><img src="https://live.staticflickr.com/65535/48948797926_3a0a640458_h.jpg" width="1600" height="1062" alt="A foggy day at Ambleside pier"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
