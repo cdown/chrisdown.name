@@ -3,7 +3,7 @@ layout: default
 title: "Sim racing"
 ---
 
-{% youtube mXwyOMe0-Yg %}
+{% youtube bgg4I15S56Q %}
 
 ## World records
 
