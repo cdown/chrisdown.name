@@ -285,7 +285,7 @@ processes responsible for managing swap, was historically very overeager to
 swap out memory aggressively the more swap you had. In recent times, swapping
 behaviour when a large amount of swap space is available has been significantly
 improved. If you're running kernel 4.0+, having a larger swap on a modern
-kernel size should not result in overzealous swapping. As such, if you have the
+kernel should not result in overzealous swapping. As such, if you have the
 space, having a swap size of a few GB keeps your options open on modern
 kernels.
 
