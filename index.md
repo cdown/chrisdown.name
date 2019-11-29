@@ -14,12 +14,12 @@ overall reliability and performance of Facebook's user-facing products. In
 general, my drive is in concieving, designing, and improving systems that make
 Facebook and the wider industry better.
 
-Most of my active work is around operating systems, like
+Most of my active work revolves around making operating systems more efficient
+at scale, developing things like [the Linux kernel's memory
+subsystem](https://lore.kernel.org/patchwork/project/lkml/list/?submitter=25468&state=%2A&archive=both),
 [cgroups](https://www.youtube.com/watch?v=ikZ8_mRotT4),
-[systemd](https://github.com/systemd/systemd),
-[eBPF](https://www.iovisor.org/technology/ebpf), [the Linux
-kernel](https://lore.kernel.org/patchwork/project/lkml/list/?submitter=25468&state=%2A&archive=both), containerisation, and a bunch
-of Facebook-internal technologies.
+[systemd](https://github.com/systemd/systemd), and a number of other emerging
+technologies.
 
 Outside of that, I dabble in
 [photography](https://www.flickr.com/photos/chrisdown/albums/72157711447135721)
