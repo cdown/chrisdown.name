@@ -128,6 +128,8 @@ find many people talking about it as if it is merely an extension of the
 physical RAM for use in emergencies. For example, here is a random post I got
 as one of the top results from typing "what is swap" in Google:
 
+<!--googleoff: snippet-->
+
 > Swap is essentially emergency memory; a space set aside for times when your
 > system temporarily needs more physical memory than you have available in RAM.
 > It's considered "bad" in the sense that it's slow and inefficient, and if
@@ -135,6 +137,8 @@ as one of the top results from typing "what is swap" in Google:
 > enough memory. [...] If you have enough RAM to handle all of your needs, and
 > don't expect to ever max it out, then you should be perfectly safe running
 > without a swap space.
+
+<!--googleon: snippet-->
 
 To be clear, I don't blame the poster of this comment at all for the content of
 their post -- this is accepted as "common knowledge" by a lot of Linux
