@@ -16,7 +16,7 @@ Facebook and the wider industry better.
 
 Most of my active work revolves around making operating systems more efficient
 at scale, developing things like [the Linux kernel's memory
-subsystem](https://lore.kernel.org/patchwork/project/lkml/list/?submitter=25468&state=%2A&archive=both),
+subsystem](https://lore.kernel.org/patchwork/project/lkml/list/?series=&submitter=25468&state=*&q=&archive=&delegate=),
 [cgroups](https://www.youtube.com/watch?v=ikZ8_mRotT4),
 [systemd](https://github.com/systemd/systemd), and a number of other emerging
 technologies.
@@ -41,7 +41,7 @@ I am a contributor to and maintainer of a number of projects, including:
 
 - [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) — modern resource control and accounting
 - [hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced Quickcheck style testing library for Python
-- [Linux](https://lore.kernel.org/patchwork/project/lkml/list/?submitter=25468&state=%2A&archive=both) — a free and open-source OS kernel
+- [Linux](https://lore.kernel.org/patchwork/project/lkml/list/?series=&submitter=25468&state=*&q=&archive=&delegate=) — a free and open-source OS kernel
 - [mpv](https://github.com/mpv-player/mpv) — videos on the command line
 - [oomd](https://github.com/facebookincubator/oomd) — next-generation OOM killer
 - [osquery](https://github.com/facebook/osquery) — an OS instrumentation, monitoring, and analysis framework
