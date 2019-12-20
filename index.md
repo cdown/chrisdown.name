@@ -15,8 +15,7 @@ general, my drive is in concieving, designing, and improving systems that make
 Facebook and the wider industry better.
 
 Most of my active work revolves around making operating systems more efficient
-at scale, developing things like [the Linux kernel's memory
-subsystem](https://lore.kernel.org/patchwork/project/lkml/list/?series=&submitter=25468&state=*&q=&archive=&delegate=),
+at scale, developing things like [the Linux kernel](https://lore.kernel.org/patchwork/project/lkml/list/?series=&submitter=25468&state=*&q=&archive=&delegate=),
 [cgroups](https://www.youtube.com/watch?v=ikZ8_mRotT4),
 [systemd](https://github.com/systemd/systemd), and a number of other emerging
 technologies.
