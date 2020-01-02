@@ -33,7 +33,7 @@ tl;dr:
 
 ---
 
-As part of my work improving and using [cgroup
+As part of my work improving kernel memory management and [cgroup
 v2](https://www.youtube.com/watch?v=ikZ8_mRotT4), I've been talking to a lot of
 engineers about attitudes towards memory management, especially around
 application behaviour under pressure and operating system heuristics used under
