@@ -385,6 +385,14 @@ detection](https://youtu.be/ikZ8_mRotT4?t=2145) in the kernel, you'll also be
 able to determine this somewhat workload-agnostically by looking at cgroup v2's
 page refaulting metrics.
 
+### Update as of 2019-07: memory pressure metrics in kernel 4.20+
+
+The refault metrics mentioned as in development earlier are now in the kernel
+from 4.20 onwards and can be enabled with `CONFIG_PSI=y`. See my talk at SREcon
+at around the 25:05 mark:
+
+{% youtube beefUhRH5lU %}
+
 ## In conclusion
 
 - Swap is a useful tool to allow equality of reclamation of memory pages, but
