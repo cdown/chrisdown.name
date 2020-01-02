@@ -23,8 +23,8 @@ builds:
   <thead>
     <tr>
       <th>Repository</th>
-      <th>Linux/Mac builds</th>
-      <th>Windows build</th>
+      <th>Travis</th>
+      <th>Appveyor</th>
       <th>Code quality</th>
       <th>Coverage</th>
       <th>Dependencies</th>
