@@ -9,6 +9,8 @@ builds:
       - lgtm
       - coveralls
   - name: srt
+    disable:
+      - appveyor
   - name: tzupdate
     disable:
       - appveyor
