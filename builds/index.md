@@ -5,15 +5,10 @@ title: Build status dashboard
 builds:
   - name: clipmenu
     disable:
-      - appveyor
       - lgtm
       - coveralls
   - name: srt
-    disable:
-      - appveyor
   - name: tzupdate
-    disable:
-      - appveyor
   - name: yturl
 ---
 
@@ -24,7 +19,6 @@ builds:
     <tr>
       <th>Repository</th>
       <th>Travis</th>
-      <th>Appveyor</th>
       <th>Code quality</th>
       <th>Coverage</th>
       <th>Dependencies</th>
@@ -40,15 +34,6 @@ builds:
         {% else %}
         <a href="https://travis-ci.org/cdown/{{ repo.name }}">
           <img class="nonstandard" src="https://img.shields.io/travis/cdown/{{ repo.name }}/develop.svg?label=are" alt="Linux build status for {{ repo.name }}" />
-        </a>
-        {% endif %}
-      </td>
-      <td class="status-image">
-        {% if repo.disable contains 'appveyor' %}
-        N/A
-        {% else %}
-        <a href="https://ci.appveyor.com/project/cdown/{{ repo.name }}">
-          <img class="nonstandard" src="https://img.shields.io/appveyor/ci/cdown/{{ repo.name }}/develop.svg?label=is" alt="Mac build status for {{ repo.name }}" />
         </a>
         {% endif %}
       </td>
