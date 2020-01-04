@@ -18,7 +18,7 @@ builds:
   <thead>
     <tr>
       <th>Repository</th>
-      <th>Travis</th>
+      <th>Tests</th>
       <th>Code quality</th>
       <th>Coverage</th>
       <th>Dependencies</th>
