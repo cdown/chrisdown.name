@@ -44,7 +44,8 @@ static inline u32 svc_sock_reclen(struct svc_sock *svsk)
 
 `ntohl` converts a uint from network byte ordering to the host's byte ordering.
 The bitwise `AND` with `RPC_FRAGMENT_SIZE_MASK` results in only some of the
-data being retained, and looking definition show us how many bits that is:
+data being retained, and looking at the definition show us how many bits that
+is:
 
 {% highlight c %}
 #define RPC_LAST_STREAM_FRAGMENT (1U << 31)
