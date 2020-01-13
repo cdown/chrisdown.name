@@ -1,6 +1,8 @@
 ---
 layout: post
 title: '"1195725856" and other mysterious numbers'
+redirect_from:
+  - 2020/01/13/1195725856-other-mysterious-numbers.html
 ---
 
 Last week was the final week for this half's performance review at Facebook,

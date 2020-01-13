@@ -48,3 +48,6 @@ header:
     - icon: twitter
       url: https://twitter.com/unixchris
       title: My Twitter profile
+
+plugins:
+  - jekyll-redirect-from
