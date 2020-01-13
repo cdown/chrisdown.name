@@ -71,29 +71,5 @@ builds:
 
 ---
 
-Here is my current informal "new project checklist". The [srt
-repo](https://github.com/cdown/srt) is the source of truth for "good starter
-configs", since it's simple and exercises all integrations.
-
-- Integrations
-    - Travis
-        - Enable daily runs of tests on develop/master
-    - Coveralls
-    - Appveyor
-    - LGTM
-    - Libraries.io
-- GitHub
-    - Disable wiki
-    - Disable projects
-- Tests
-    - All supported Python versions (currently 2.7, 3.5, 3.6, and 3.7)
-    - Tox
-    - Tools
-        - Bandit
-        - Black
-        - pylint
-        - pytype
-- Code
-    - Public domain
-    - Add badges/links to readme
-    - Check setup.py trove entries
+The [srt repo](https://github.com/cdown/srt) is where new changes to general
+testing strategy go first.
