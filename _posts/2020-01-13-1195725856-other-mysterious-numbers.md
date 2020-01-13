@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'On "1195725856" and other mysterious numbers'
+title: '"1195725856" and other mysterious numbers'
 ---
 
 Last week was the final week for this half's performance review at Facebook,
