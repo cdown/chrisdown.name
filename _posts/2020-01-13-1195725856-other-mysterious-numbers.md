@@ -17,7 +17,7 @@ like this, spamming from some production hosts serving NFS traffic:
 
 Let's take a look at the kernel code responsible for generating this warning --
 grepping for "fragment too large" show it comes from [`svc_tcp_recv_record` in
-`net/sunrpc/svcsock.c`](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/net/sunrpc/svcsock.c?h=v5.4#n943):
+net/sunrpc/svcsock.c](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/net/sunrpc/svcsock.c?h=v5.4#n943):
 
 {% highlight c %}
 if (svc_sock_reclen(svsk) + svsk->sk_datalen >
