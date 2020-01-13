@@ -154,7 +154,7 @@ And the results:
 |PATCH           |4            |1129595216   |1346458691|
 |PATCH           |2            |16720        |20545     |
 
-As expected, if you Google for any of these numbers, you can find an endless
+As expected, if you Google for most of these numbers, you can find an endless
 supply of questions mentioning them in error messages. Hopefully this post will
 help some people find their *real* problem -- using the wrong protocol -- more
 quickly in future. :-)
