@@ -78,8 +78,8 @@ are `char` sized, here's a guess about what might be encoded in them...
 {% endhighlight %}
 
 Oh dear. Somebody is sending HTTP requests to NFS RPC, but at least we are
-outright rejecting the fragments outright instead of actually
-allocating/dirtying a gigabyte of memory.
+outright rejecting the fragments instead of actually allocating/dirtying a
+gigabyte of memory.
 
 Next up was finding out who's actually sending these requests. `rpcinfo -p`
 shows NFS is listening on the default port, 2049, so we can set up a trap with
@@ -126,7 +126,7 @@ def interpret_as(fmt, verb):
 print("verb,bytes,little-endian,big-endian")
 for verb in ["GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS",
              "TRACE", "PATCH"]:
-    # Since none of these use the high bits, signed/unsigned
+    # Since none of these use the high bit, signed/unsigned
     # results are the same, so only need to check one
     assert ord(verb[0]) & 1 << 7 == 0
     print(interpret_as("I", verb))  # u32
