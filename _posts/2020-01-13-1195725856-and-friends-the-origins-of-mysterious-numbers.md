@@ -10,9 +10,10 @@ where we write summaries of work and impact we and our peers had over the last
 half year. Naturally, that can only mean one thing: the entire company trends
 towards peak levels of procrastination, doing literally anything and everything
 to avoid the unspeakable horror of having to write a few paragraphs of text.
+;-)
 
-My distraction of choice a few days before the deadline was looking at lines
-like this, spamming from some production hosts serving NFS traffic:
+My personal distraction of choice a few days before the deadline was looking at
+lines like this, spamming from some hosts serving NFS traffic:
 
     RPC: fragment too large: 1195725856
     RPC: fragment too large: 1212498244
@@ -71,7 +72,7 @@ Looking at the numbers in hex shows something interesting:
 
 These are all really tightly clustered, generally from 0x40 to 0x50, which
 implies there might actually be some semantic meaning per-byte. And since these
-are `char` sized, here's a guess about what might be encoded in them...
+are `char`-sized, here's a guess about what might be encoded in them...
 
 {% highlight python %}
 >>> '\x47\x45\x54\x20'
@@ -119,7 +120,6 @@ def interpret_as(fmt, verb):
     nr_bytes = struct.calcsize(fmt)
     verb_fmt = "{:%(b)d.%(b)d}" % {"b": nr_bytes}
     padded_verb = verb_fmt.format(verb).encode("ascii")
-
     return "{},{},{},{}".format(
         verb, nr_bytes,
         struct.unpack("<" + fmt, padded_verb)[0],
