@@ -10,7 +10,6 @@ where we write summaries of work and impact we and our peers had over the last
 half year. Naturally, that can only mean one thing: the entire company trends
 towards peak levels of procrastination, doing literally anything and everything
 to avoid the unspeakable horror of having to write a few paragraphs of text.
-;-)
 
 My personal distraction of choice a few days before the deadline was looking at
 lines like this, spamming from some hosts serving NFS traffic:
@@ -132,30 +131,35 @@ for verb in ["GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS",
     # Since none of these use the high bit, signed/unsigned
     # results are the same, so only need to check one
     assert ord(verb[0]) & 1 << 7 == 0
+
+    if len(verb) >= 7:  # Known: verb + " "
+        print(interpret_as("Q", verb))  # u64
+
     print(interpret_as("I", verb))  # u32
     print(interpret_as("H", verb))  # u16
 {% endhighlight %}
 
 And the results:
 
-|verb            |bytes        |little-endian|big-endian|
-|----------------|-------------|-------------|----------|
-|GET             |4            |542393671    |1195725856|
-|GET             |2            |17735        |18245     |
-|HEAD            |4            |1145128264   |1212498244|
-|HEAD            |2            |17736        |18501     |
-|POST            |4            |1414745936   |1347375956|
-|POST            |2            |20304        |20559     |
-|PUT             |4            |542397776    |1347769376|
-|PUT             |2            |21840        |20565     |
-|DELETE          |4            |1162626372   |1145392197|
-|DELETE          |2            |17732        |17477     |
-|OPTIONS         |4            |1230262351   |1330664521|
-|OPTIONS         |2            |20559        |20304     |
-|TRACE           |4            |1128354388   |1414676803|
-|TRACE           |2            |21076        |21586     |
-|PATCH           |4            |1129595216   |1346458691|
-|PATCH           |2            |16720        |20545     |
+| verb    | bytes | little-endian       | big-endian          |
+|---------|-------|---------------------|---------------------|
+| GET     | 4     | 542393671           | 1195725856          |
+| GET     | 2     | 17735               | 18245               |
+| HEAD    | 4     | 1145128264          | 1212498244          |
+| HEAD    | 2     | 17736               | 18501               |
+| POST    | 4     | 1414745936          | 1347375956          |
+| POST    | 2     | 20304               | 20559               |
+| PUT     | 4     | 542397776           | 1347769376          |
+| PUT     | 2     | 21840               | 20565               |
+| DELETE  | 4     | 1162626372          | 1145392197          |
+| DELETE  | 2     | 17732               | 17477               |
+| OPTIONS | 8     | 2329291534720323663 | 5715160600973038368 |
+| OPTIONS | 4     | 1230262351          | 1330664521          |
+| OPTIONS | 2     | 20559               | 20304               |
+| TRACE   | 4     | 1128354388          | 1414676803          |
+| TRACE   | 2     | 21076               | 21586               |
+| PATCH   | 4     | 1129595216          | 1346458691          |
+| PATCH   | 2     | 16720               | 20545               |
 
 As expected, if you Google for most of these numbers, you can find an endless
 supply of questions mentioning them in error messages. Hopefully this post will
