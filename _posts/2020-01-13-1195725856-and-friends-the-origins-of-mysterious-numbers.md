@@ -166,6 +166,13 @@ And the results:
 | PATCH   | 2     | 16720               | 20545               |
 
 As expected, if you Google for most of these numbers, you can find an endless
-supply of questions mentioning them in error messages. Hopefully this post will
-help some people find their *real* problem -- using the wrong protocol -- more
-quickly in future. :-)
+supply of questions mentioning them in error messages (some previously
+unidentified examples which I replied to:
+[1](https://github.com/inconshreveable/ngrok/issues/545),
+[2](https://stackoverflow.com/questions/49370959/getting-org-apache-kafka-common-network-invalidreceiveexception-invalid-receiv),
+[3](https://github.com/ehang-io/nps/issues/315)).
+
+Hopefully this post will help people find their *real* problem -- using the
+wrong protocol -- more quickly in future. In particular, if your affected
+application crashed due to ENOMEM/"Out of memory", please especially consider
+submitting a patch to clamp the size to some reasonable maximum :-)
