@@ -58,7 +58,7 @@ bitwise `NOT`.
 That means that these numbers come from the first four bytes of the fragment,
 omitting the final highest bit, which is reserved to record whether the
 fragment is the last one for this record (see
-[`svc_sock_final_rec`](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/linux/sunrpc/svcsock.h#n47)).
+[`svc_sock_final_rec`](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/linux/sunrpc/svcsock.h?h=v5.4#n47)).
 The fact that the error happens so early in fragment parsing in particular got
 me thinking that the fragment may not be protocol-confirming in the first
 place, since it's not like we got very far in processing at all, not even past
