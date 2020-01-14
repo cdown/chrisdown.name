@@ -51,3 +51,7 @@ header:
 
 plugins:
   - jekyll-redirect-from
+
+# Disable smart quotes
+kramdown:
+  smart_quotes: ["apos", "apos", "quot", "quot"]
