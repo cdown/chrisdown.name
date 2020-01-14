@@ -1,6 +1,7 @@
 ---
 layout: post
 title: How to remove a custom video mode in VirtualBox
+hidden: true
 ---
 
 There are quite a few posts around about how to set a custom video mode in

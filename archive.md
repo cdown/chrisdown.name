@@ -6,7 +6,11 @@ description: Recent blog posts by Chris Down.
 
 # Assorted notes
 
-{% for post in site.posts %}
+{% assign posts = site.posts %}
+
+<!-- TODO: make post.hidden and forloop.{first,last} play nice -->
+{% for post in posts %}
+{% unless post.hidden %}
 {% assign currentdate = post.date | date: "%Y" %}
 {% if currentdate != date %}
 {% unless forloop.first %}</ul>{% endunless %}
@@ -16,4 +20,5 @@ description: Recent blog posts by Chris Down.
 {% endif %}
 <li><a href="{{ post.url }}">{{ post.title }}</a></li>
 {% if forloop.last %}</ul>{% endif %}
+{% endunless %}
 {% endfor %}

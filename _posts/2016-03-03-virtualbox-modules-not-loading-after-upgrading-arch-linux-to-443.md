@@ -1,6 +1,7 @@
 ---
 layout: post
 title: VirtualBox modules not loading in Arch Linux after upgrade to Linux 4.4.3
+hidden: true
 ---
 
 **UPDATE:** Due to this debacle, Arch has actually now totally removed the
