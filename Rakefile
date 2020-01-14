@@ -24,7 +24,7 @@ enoent_cc = cc_hdr % (2 * 60)
 generic_excludes += " --exclude 404.html "
 
 task :deploy => :build do
-  sh "s3cmd sync --no-mime-magic --no-preserve --cf-invalidate --delete-removed --verbose --add-header='#{cc_hdr}' _deploy/ s3://chrisdown.name"
+  sh "s3cmd sync --no-mime-magic --no-preserve --cf-invalidate --delete-removed --verbose --add-header='#{generic_cc}' _deploy/ s3://chrisdown.name"
 end
 
 task :update_cache_control do
