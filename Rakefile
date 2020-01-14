@@ -1,6 +1,6 @@
 task :default => [:deploy]
 
-expiration_secs = 86400
+expiration_secs = 3600
 cc_hdr = "Cache-Control: max-age=#{expiration_secs}, public"
 
 task :deploy => :build do
