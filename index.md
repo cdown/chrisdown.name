@@ -104,8 +104,8 @@ list, I'm probably not actively developing or maintaining them.
 ## Talks
 
 - [Memory Management at
-  Scale](https://www.usenix.org/conference/srecon19asia/presentation/down) —
-  SREcon
+  Scale](/2019/07/18/linux-memory-management-at-scale.html) —
+  [SREcon](https://www.usenix.org/conference/srecon19asia/presentation/down)
 - [cgroupv2: Linux's new unified resource
   hierarchy](https://www.youtube.com/watch?v=ikZ8_mRotT4) —
   [FOSDEM](https://archive.fosdem.org/2017/schedule/event/cgroupv2/)/DevOpsDays/[ASG](https://cfp.all-systems-go.io/en/ASG2017/public/events/96)
