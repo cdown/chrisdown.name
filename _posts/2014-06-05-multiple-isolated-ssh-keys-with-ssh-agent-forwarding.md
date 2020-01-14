@@ -52,6 +52,6 @@ Obviously, you still need to be mindful of who has root access to the servers
 you're forwarding to, but now the agent's ability to access other services is
 limited to what they would already have been able to access anyway.
 
-[before-changes]: https://github.com/cdown/dotfiles/blob/b2520a7eb20b2a3465b290c42e165b36839633ba/.config/shell/profile/ssh_agent
-[loop-over-keys]: https://github.com/cdown/dotfiles/commit/07358716eed2f0508a30ca36d7ff4d32ba17aa51
-[context-commit]: https://github.com/cdown/dotfiles/commit/373dacad229d9efc72853a55548e7f97391e6ece
+[before-changes]: https://github.com/cdown/dotfiles/blob/c400e90387c4ae6e5a1a5a56e2288dba27268bdd/.config/shell/profile/ssh_agent
+[loop-over-keys]: https://github.com/cdown/dotfiles/commit/4583fbb5bf4176c0cbfb4a25ff8bcf2653de85ed
+[context-commit]: https://github.com/cdown/dotfiles/commit/1a17fdd435cf0f8a68a8ae4c58643d4005489e7f

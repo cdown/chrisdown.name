@@ -114,11 +114,12 @@ looks:
 
 ### Youdao
 
-[Youdao][] (有道) is a Chinese dictionary, mostly aimed at Chinese speakers.  The
-[Android app][Youdao Android app] is pretty awesome, although the interface is
-all in Chinese, which might be intimidating if you can't read many characters
-yet. If MDBG doesn't understand your phrase and only gives the meaning of
-individual characters, there's still a good chance Youdao will.
+[Youdao][] (有道) is a Chinese dictionary, mostly aimed at Chinese speakers.
+The [Android app][Youdao Android app] (sadly as of 2020 removed from the Google
+Play store) is pretty awesome, although the interface is all in Chinese, which
+might be intimidating if you can't read many characters yet. If MDBG doesn't
+understand your phrase and only gives the meaning of individual characters,
+there's still a good chance Youdao will.
 
 ### Zdic
 
@@ -193,7 +194,7 @@ the subtleties of Chinese tonality.
 [Iciba]: http://www.iciba.com
 [Tatoeba]: http://tatoeba.org
 [Youdao]: http://www.youdao.com
-[Youdao Android app]: https://play.google.com/store/apps/details?id=com.youdao.dict
+[Youdao Android app]: http://m.youdao.com
 [Zdic]: http://www.zdic.net
 [Zhongwen]: https://chrome.google.com/webstore/detail/zhongwen-a-chinese-englis/kkmlkkjojmombglmlpbpapmhcaljjkde
 [Carlos]: http://carloslima.name

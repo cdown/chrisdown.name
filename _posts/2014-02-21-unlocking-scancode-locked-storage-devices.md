@@ -35,4 +35,4 @@ hdparm's `--security-unlock` or similar.
 
 [patent]: http://www.google.com/patents/US7619544
 [usb]: http://www.win.tue.nl/~aeb/linux/kbd/scancodes-14.html
-[scancodes]: http://www.barcodeman.com/altek/mule/scandoc.php
+[scancodes]: https://web.archive.org/web/20180526012114/http://www.barcodeman.com/altek/mule/scandoc.php
