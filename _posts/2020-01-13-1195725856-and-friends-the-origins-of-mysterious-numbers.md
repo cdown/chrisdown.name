@@ -119,28 +119,29 @@ that might be of interest:
 
 import struct
 
-def interpret_as(fmt, verb):
+def interpret_as(fmt, data):
     nr_bytes = struct.calcsize(fmt)
-    verb_fmt = "{:%(b)d.%(b)d}" % {"b": nr_bytes}
-    padded_verb = verb_fmt.format(verb).encode("ascii")
+    data_fmt = "{:%(b)d.%(b)d}" % {"b": nr_bytes}
+    padded_data = data_fmt.format(data).encode("ascii")
     return "{},{},{},{}".format(
-        verb, nr_bytes,
-        struct.unpack("<" + fmt, padded_verb)[0],
-        struct.unpack(">" + fmt, padded_verb)[0],
+        data, nr_bytes,
+        struct.unpack("<" + fmt, padded_data)[0],
+        struct.unpack(">" + fmt, padded_data)[0],
     )
 
-print("verb,bytes,little-endian,big-endian")
-for verb in ["GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS",
-             "TRACE", "PATCH"]:
+print("data,bytes,little-endian,big-endian")
+
+for method in ["GET", "HEAD", "POST", "PUT", "DELETE",
+               "OPTIONS", "TRACE", "PATCH"]:
     # Since none of these use the high bit, signed/unsigned
     # results are the same, so only need to check one
-    assert ord(verb[0]) & 1 << 7 == 0
+    assert ord(method[0]) & 1 << 7 == 0
 
-    if len(verb) >= 7:  # Known: verb + " "
-        print(interpret_as("Q", verb))  # u64
+    if len(method) >= 7:  # Known: method + " "
+        print(interpret_as("Q", method))  # u64
 
-    print(interpret_as("I", verb))  # u32
-    print(interpret_as("H", verb))  # u16
+    print(interpret_as("I", method))  # u32
+    print(interpret_as("H", method))  # u16
 {% endhighlight %}
 
 And the results:
