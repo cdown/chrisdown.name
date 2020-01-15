@@ -315,7 +315,7 @@ figure {
 table {
     width: 100%;
     border-collapse: collapse;
-    word-break: break-word;
+    overflow: auto;
 }
 
 th {
