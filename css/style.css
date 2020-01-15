@@ -312,11 +312,10 @@ figure {
   display: block;
 }
 
-/* Builds page */
-
 table {
     width: 100%;
     border-collapse: collapse;
+    word-break: break-word;
 }
 
 th {

@@ -146,7 +146,7 @@ for method in ["GET", "HEAD", "POST", "PUT", "DELETE",
 
 And the results:
 
-| verb    | bytes | little-endian       | big-endian          |
+| data    | bytes | little-endian       | big-endian          |
 |---------|-------|---------------------|---------------------|
 | GET     | 4     | 542393671           | 1195725856          |
 | GET     | 2     | 17735               | 18245               |
