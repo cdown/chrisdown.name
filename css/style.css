@@ -32,35 +32,30 @@
   font-family: 'Droid Sans Mono';
   font-style: normal;
   font-weight: 400;
-  font-display: swap;
   src: local('Droid Sans Mono'), local('DroidSansMono'), url(/fonts/droid-sans-mono.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
-  font-display: swap;
   src: local('Open Sans'), local('OpenSans'), url(/fonts/open-sans.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 700;
-  font-display: swap;
   src: local('Open Sans Bold'), local('OpenSans-Bold'), url(/fonts/open-sans-bold.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 400;
-  font-display: swap;
   src: local('Open Sans Italic'), local('OpenSans-Italic'), url(/fonts/open-sans-italic.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 700;
-  font-display: swap;
   src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url(/fonts/open-sans-bold-italic.ttf) format('truetype');
 }
 
