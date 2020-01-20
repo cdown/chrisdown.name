@@ -7,6 +7,11 @@ Want to use this theme? Feel free, but remember to respect the license :-)
 https://github.com/cdown/chrisdown.name/blob/master/LICENSE
 -->
 
+{% if page.description %}
+  {% assign og_desc = page.description %}
+{% else %} {% comment %} Surely there's a better way than this newline_to_br -> replace business {% endcomment %}
+  {% assign og_desc = page.excerpt | markdownify | strip_html | newline_to_br | strip_newlines | replace: '<br />', ' ' | truncate: 160 | escape_once %}
+{% endif %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -29,11 +34,13 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
     <meta property="article:author" content="https://www.facebook.com/christopherdown" />
 
     <meta property="og:title" content="{{ page.title }}" />
+    <meta property="og:description" content="{{ og_desc }}" />
     <meta property="og:type" content="article" />
     <meta property="og:image" content="{{ site.url }}/images/hnr.jpg" />
 
     <meta property="twitter:title" content="{{ page.title }}" />
     <meta property="twitter:text:title" content="{{ page.title }}" />
+    <meta property="twitter:description" content="{{ og_desc }}" />
     <meta property="twitter:image" content="{{ site.url }}/images/hnr.jpg" />
     <meta property="twitter:creator" content="@unixchris" />
     <meta property="twitter:site" content="@unixchris" />
