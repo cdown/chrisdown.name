@@ -170,7 +170,7 @@ As expected, if you Google for most of these numbers, you can find an endless
 supply of questions mentioning them in error messages (some previously
 unidentified examples which I replied to:
 [1](https://github.com/inconshreveable/ngrok/issues/545),
-[2](https://stackoverflow.com/questions/49370959/getting-org-apache-kafka-common-network-invalidreceiveexception-invalid-receiv),
+[2](https://stackoverflow.com/a/59730358/945780),
 [3](https://github.com/ehang-io/nps/issues/315)).
 
 Hopefully this post will help people find their *real* problem -- using the
