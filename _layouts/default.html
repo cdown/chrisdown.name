@@ -119,10 +119,6 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
           return;
         }
 
-        if (img.src.indexOf("live.staticflickr.com") >= 0) {
-          return;
-        }
-
         var a = document.createElement('a');
         a.href = img.src;
         img.parentNode.replaceChild(a, img);
