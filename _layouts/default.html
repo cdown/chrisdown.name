@@ -17,7 +17,7 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
     <meta charset="utf-8">
     <title>{{ page.title }}</title>
     {% if page.description %}
-    <meta name="description" content="{{ page.description }}">
+    <meta name="description" content="{{ page.description | escape_once }}">
     {% endif %}
     <meta name="viewport" content="width=device-width">
     <link rel="preload" crossorigin as="font" href="/fonts/fontawesome-stripped.woff">
@@ -33,13 +33,13 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
     <meta property="article:publisher" content="https://www.facebook.com/christopherdown" />
     <meta property="article:author" content="https://www.facebook.com/christopherdown" />
 
-    <meta property="og:title" content="{{ page.title }}" />
+    <meta property="og:title" content="{{ page.title | escape_once }}" />
     <meta property="og:description" content="{{ og_desc }}" />
     <meta property="og:type" content="article" />
     <meta property="og:image" content="{{ site.url }}/images/hnr.jpg" />
 
-    <meta property="twitter:title" content="{{ page.title }}" />
-    <meta property="twitter:text:title" content="{{ page.title }}" />
+    <meta property="twitter:title" content="{{ page.title | escape_once }}" />
+    <meta property="twitter:text:title" content="{{ page.title | escape_once }}" />
     <meta property="twitter:description" content="{{ og_desc }}" />
     <meta property="twitter:image" content="{{ site.url }}/images/hnr.jpg" />
     <meta property="twitter:creator" content="@unixchris" />
