@@ -116,7 +116,7 @@ Once again, you need to have a fresh load to register the change. Sigh...
 
 ## Useful resources
 
-- [Load order advice](http://wiki.tesnexus.com/index.php/Load_order_recommendations)
+- [Load order advice](https://wiki.nexusmods.com/index.php/Load_order_recommendations)
 - [Mod install ordering](https://web.archive.org/web/20190113233526/http://wiki.theassimilationlab.com/tescosi/A_General_Order_for_Installing_Mods_(Oblivion))
 - [OBMM](https://www.nexusmods.com/oblivion/mods/2097) ("full manual")
 - [OBSE](https://obse.silverlock.org/)
