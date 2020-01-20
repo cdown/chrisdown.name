@@ -18,6 +18,10 @@ this_week_post_includes = ""
   generic_excludes += " --exclude '#{date_glob}' "
 end
 
+# HACK: s3cmd modify returns 1 if there was nothing matched, what? This will
+# get overwritten by the next step, but ugh...
+this_week_post_includes += " --include 404.html "
+
 # Cache 404s for 2 minutes, since if something is broken we want to fix it
 # fast, but a mass storm to S3 backend should still be avoided
 enoent_cc = cc_hdr % (2 * 60)
