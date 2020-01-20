@@ -139,7 +139,7 @@ list, I'm probably not actively developing or maintaining them.
 <meta itemprop="jobTitle" content="Production Engineer at Facebook">
 <meta itemprop="email" content="chris@chrisdown.name">
 <meta itemprop="url" content="https://chrisdown.name">
-<meta itemprop="image" content="https://chrisdown.name/images/headshot.jpg">
+<meta itemprop="image" content="https://chrisdown.name/images/hnr.jpg">
 <meta itemprop="worksFor" content="Facebook">
 <meta itemprop="name" content="Chris Down">
 <meta itemprop="description" content="Chris Down is a software developer and system administrator, currently working as a Production Engineer/SRE at Facebook. He works as part of the Linux Kernel team, responsible for kernel-related developments that improve the overall scalability, performance, and reliability of Facebook’s user-facing products.">
