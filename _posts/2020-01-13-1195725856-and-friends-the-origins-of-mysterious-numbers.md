@@ -132,7 +132,7 @@ def interpret_as(fmt, data):
 print("data,bytes,little-endian,big-endian")
 
 for method in ["GET", "HEAD", "POST", "PUT", "DELETE",
-               "OPTIONS", "TRACE", "PATCH"]:
+               "OPTIONS", "TRACE", "PATCH", "CONNECT"]:
     # Since none of these use the high bit, signed/unsigned
     # results are the same, so only need to check one
     assert ord(method[0]) & 1 << 7 == 0
@@ -165,6 +165,9 @@ And the results:
 | TRACE   | 2     | 21076               | 21586               |
 | PATCH   | 4     | 1129595216          | 1346458691          |
 | PATCH   | 2     | 16720               | 20545               |
+| CONNECT | 8     | 2329560872202948419 | 4850181421777769504 |
+| CONNECT | 4     | 1313754947          | 1129270862          |
+| CONNECT | 2     | 20291               | 17231               |
 
 As expected, if you Google for most of these numbers, you can find an endless
 supply of questions mentioning them in error messages (some previously
