@@ -103,7 +103,7 @@ list, I'm probably not actively developing or maintaining them.
 
 ## Talks
 
-- [Memory Management at
+- [Linux Memory Management at
   Scale](/2019/07/18/linux-memory-management-at-scale.html) —
   [SREcon](https://www.usenix.org/conference/srecon19asia/presentation/down)
 - [cgroupv2: Linux's new unified resource
