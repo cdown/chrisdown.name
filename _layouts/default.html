@@ -111,6 +111,25 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
     });
     </script>
     <script data-no-instant>
+    // Do not wrap single-word code blocks, no matter what
+    // https://github.com/cdown/chrisdown.name/issues/1
+    InstantClick.on('change', function() {
+      var code = document.getElementsByTagName('code');
+      var code_list = Array.prototype.slice.call(code);
+      code_list.forEach(function(c, _, _) {
+        if (c.className) {  // don't restyle highlight blocks
+          return;
+        }
+
+        if (c.innerText.indexOf(' ') >= 0) {
+          return;
+        }
+
+        c.className = "nowrap";
+      });
+    });
+    </script>
+    <script data-no-instant>
     InstantClick.on('change', function() {
       var images = document.getElementsByTagName('img');
       var image_list = Array.prototype.slice.call(images);

@@ -297,6 +297,12 @@ img:not(.nonstandard), video:not(.nonstandard) {
   box-shadow: 0 0 2em 0 rgba(0,0,0,0.35);
 }
 
+/* To avoid wrapping dashes for arguments in <code>, see
+ * https://github.com/cdown/chrisdown.name/issues/1 */
+.nowrap {
+  white-space: nowrap;
+}
+
 /* Damn son, Chrome's default margins for figure are crazy */
 figure {
   margin: 0;
