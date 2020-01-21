@@ -2,7 +2,7 @@ require 'date'
 
 task :default => [:deploy]
 
-cc_hdr = "Cache-Control: public, max-age=%d, must-revalidate"
+cc_hdr = "Cache-Control: public, max-age=%d"
 
 # 1 hour for anything unspecified
 generic_cc = cc_hdr % (60 * 60)
