@@ -44,7 +44,6 @@ I am a contributor to and maintainer of a number of projects, including:
 - [mpv](https://github.com/mpv-player/mpv) — videos on the command line
 - [oomd](https://github.com/facebookincubator/oomd) — next-generation OOM killer
 - [osquery](https://github.com/facebook/osquery) — an OS instrumentation, monitoring, and analysis framework
-- [pacaur](https://github.com/rmarquis/pacaur) — an AUR helper that minimises user interaction
 - [pass](https://www.passwordstore.org/) — the standard Unix password manager
 - [systemd](https://github.com/systemd/systemd) — a system and service manager for Linux
 - [taglib-rust](https://github.com/ebassi/taglib-rust) — Rust FFI bindings for taglib
@@ -52,8 +51,6 @@ I am a contributor to and maintainer of a number of projects, including:
 
 I also maintain the following personal projects:
 
-- [aur](https://github.com/cdown/aur) — interface to the
-  [Arch User Repository][]
 - [clipmenu](https://github.com/cdown/clipmenu) — a clipboard manager with a
   dmenu frontend
 - [gh-mirror](https://github.com/cdown/gh-mirror) — mirror all public
