@@ -20,10 +20,11 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
     <meta name="description" content="{{ page.description | escape_once }}">
     {% endif %}
     <meta name="viewport" content="width=device-width">
-    <link rel="preload" crossorigin as="font" href="/fonts/fontawesome-stripped.woff">
-    <link rel="preload" crossorigin as="font" href="/fonts/open-sans-bold-italic.ttf">
+    {% comment %}
+    Don't preload everything, just the core ones likely to be visible first.
+    Also, don't preload fontawesome since it's not critical for the user.
+    {% endcomment %}
     <link rel="preload" crossorigin as="font" href="/fonts/open-sans-bold.ttf">
-    <link rel="preload" crossorigin as="font" href="/fonts/open-sans-italic.ttf">
     <link rel="preload" crossorigin as="font" href="/fonts/open-sans.ttf">
 
     <link rel="stylesheet" href="/css/style.css">
