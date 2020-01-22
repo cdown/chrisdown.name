@@ -24,9 +24,7 @@ These are stripped using [Fontello][] to only the icons used to minimise
 transmission and load time.
 
 I also use two other fonts from [Google Fonts][]: [Open Sans][] and [Droid Sans
-Mono][]. These are currently loaded from Google's CDN by the client, and are
-not stored in the repository. I eventually plan to strip these to a subset of
-their total characters, too.
+Mono][]. These are stored locally.
 
 [Font Awesome]: http://fortawesome.github.io/Font-Awesome/
 [Fontello]: http://fontello.com
@@ -37,10 +35,6 @@ their total characters, too.
 ## Testing
 
 [![Build status][travis-image]][travis-builds]
-
-Right now, testing just includes looking for broken links (external or
-internal) on the site. In future I'd like to also perform some usability tests,
-especially for screen readers.
 
 [travis-builds]: https://travis-ci.org/cdown/chrisdown.name
 [travis-image]: https://travis-ci.org/cdown/chrisdown.name.png?branch=master
