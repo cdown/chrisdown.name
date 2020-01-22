@@ -116,7 +116,7 @@ header nav ul.extra {
 header nav ul.home li a {
     color: #FFF;
     background-color: #CC333F;
-    font-style: italic;
+    font-weight: bold;
     border-radius: 2px;
     transition: all 75ms ease-in;
 }
