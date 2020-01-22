@@ -8,6 +8,14 @@ cc_hdr = "Cache-Control: public, max-age=%d"
 generic_cc = cc_hdr % (60 * 60)
 generic_excludes = ""
 
+# 24 hours for static content
+static_cc = cc_hdr % (24 * 60 * 60)
+static_includes = ""
+["css/*", "images/*", "fonts/*", "photos/*", "talks/*"].each do |path|
+  static_includes += " --include '#{path}' "
+  generic_excludes += " --exclude '#{path}' "
+end
+
 # 5 minutes for posts written in the last 7 days, as updates may be more
 # frequent
 this_week_post_cc = cc_hdr % (5 * 60)
@@ -34,6 +42,7 @@ end
 task :deploy => :sync do
   sh "s3cmd modify --recursive #{generic_excludes} --add-header='#{generic_cc}' s3://chrisdown.name"
   sh "s3cmd modify --recursive --exclude '*' #{this_week_post_includes} --add-header='#{this_week_post_cc}' s3://chrisdown.name"
+  sh "s3cmd modify --recursive --exclude '*' #{static_includes} --add-header='#{static_cc}' s3://chrisdown.name"
   sh "s3cmd modify --add-header='#{enoent_cc}' s3://chrisdown.name/404.html"
 end
 
