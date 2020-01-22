@@ -7,7 +7,7 @@ sudo: required
 dist: trusty
 
 rvm:
-  - ruby-2.1.2
+  - 2.6
 
 before_install:
     - sudo add-apt-repository ppa:techzilla/misc -y
