@@ -24,7 +24,7 @@ These are stripped using [Fontello][] to only the icons used to minimise
 transmission and load time.
 
 I also use two other fonts from [Google Fonts][]: [Open Sans][] and [Droid Sans
-Mono][]. These are stored locally.
+Mono][]. These are stored locally in WOFF2.
 
 [Font Awesome]: http://fortawesome.github.io/Font-Awesome/
 [Fontello]: http://fontello.com
