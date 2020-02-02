@@ -173,7 +173,7 @@ uncommon scenarios:
    initialise.
 2. During the program's normal operation, we may allocate memory which is only
    used rarely. It may make more sense for overall system performance to
-   required a [major fault](https://en.wikipedia.org/wiki/Page_fault#Types) to
+   require a [major fault](https://en.wikipedia.org/wiki/Page_fault#Types) to
    page these in from disk on demand, instead using the memory for
    something else that's more important.
 
@@ -196,7 +196,7 @@ v2](https://www.youtube.com/watch?v=ikZ8_mRotT4).
 ### Under moderate/high memory contention
 
 - **With swap:** All memory types have an equal possibility of being reclaimed.
-  This means we have more chance of being able to reclaim pages successfully --
+  This means we have more chances of being able to reclaim pages successfully --
   that is, we can reclaim pages that are not quickly faulted back in again
   (thrashing).
 - **Without swap:** Anonymous pages are locked into memory as they have nowhere
