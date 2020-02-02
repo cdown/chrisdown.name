@@ -173,7 +173,7 @@ uncommon scenarios:
    initialise.
 2. During the program's normal operation, we may allocate memory which is only
    used rarely. It may make more sense for overall system performance to
-   required a [major fault](https://en.wikipedia.org/wiki/Page_fault#Types) to
+   require a [major fault](https://en.wikipedia.org/wiki/Page_fault#Types) to
    page these in from disk on demand, instead using the memory for
    something else that's more important.
 
