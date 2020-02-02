@@ -11,7 +11,7 @@ Hey there! I'm an SRE, software developer, and system administrator, currently
 working as a [Production Engineer][]/SRE at [Facebook][]. I work as part of the
 Linux Kernel team, responsible for kernel-related developments that improve the
 overall reliability and performance of Facebook's user-facing products. In
-general, my drive is in concieving, designing, and improving systems that make
+general, my drive is in conceiving, designing, and improving systems that make
 Facebook and the wider industry better.
 
 Most of my active work revolves around making operating systems more efficient
