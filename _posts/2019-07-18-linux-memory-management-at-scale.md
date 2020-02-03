@@ -3,7 +3,7 @@ layout: post
 title: "Linux memory management at scale"
 ---
 
-As part of the my work on the
+As part of my work on the
 [cgroup2](https://facebookmicrosites.github.io/cgroup2/) project, I spend a lot
 of time talking with engineers about controlling resources across Linux
 systems. One thing that has become clearer and clearer to me through these
