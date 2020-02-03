@@ -224,7 +224,7 @@ v2](https://www.youtube.com/watch?v=ikZ8_mRotT4).
   behaviour would be better replaced with more opportunistic killing of
   processes as memory contention is reached in the first place.
 
-### Ok, so I want system swap, but how can I tune it for individual applications?
+### Okay, so I want system swap, but how can I tune it for individual applications?
 
 You didn't think you'd get through this entire post without me plugging cgroup
 v2, did you? ;-)
