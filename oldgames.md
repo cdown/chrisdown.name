@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Old game miscellania"
+title: "Old game miscellanea"
 ---
 
 I play a lot of "old" games that need some poking to get them to work properly.

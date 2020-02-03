@@ -84,7 +84,7 @@ list, I'm probably not actively developing or maintaining them.
 - [My SSH public key](/ssh)
 - [My old TF2 configs](/tf2)
 - [RYM profile export](/rym.html)
-- [Old game miscellania](/oldgames.html)
+- [Old game miscellanea](/oldgames.html)
 
 ## Profiles elsewhere
 
