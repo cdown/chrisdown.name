@@ -39,6 +39,7 @@ More posts are available on the [archive page](/archive.html).
 I am a contributor to and maintainer of a number of projects, including:
 
 - [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) — modern resource control and accounting
+- [GNU bash](https://www.gnu.org/software/bash/) — the GNU project's shell
 - [hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced Quickcheck style testing library for Python
 - [Linux](https://lore.kernel.org/patchwork/project/lkml/list/?series=&submitter=25468&state=*&q=&archive=&delegate=) — a free and open-source OS kernel
 - [mpv](https://github.com/mpv-player/mpv) — videos on the command line
@@ -48,6 +49,7 @@ I am a contributor to and maintainer of a number of projects, including:
 - [systemd](https://github.com/systemd/systemd) — a system and service manager for Linux
 - [taglib-rust](https://github.com/ebassi/taglib-rust) — Rust FFI bindings for taglib
 - [the Pro Git book](https://git-scm.com/book/en/v2) — a guide to Git and its internals
+- [zsh](https://www.zsh.org/) — a highly feature-rich shell
 
 I also maintain the following personal projects:
 
