@@ -12,7 +12,7 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
 {% else %} {% comment %} Surely there's a better way than this newline_to_br -> replace business {% endcomment %}
   {% assign og_desc = page.excerpt | markdownify | strip_html | newline_to_br | strip_newlines | replace: '<br />', ' ' | truncate: 160 | escape_once %}
 {% endif %}
-<html lang="en">
+<html lang="{{ page.lang | default: "en" }}">
   <head>
     <meta charset="utf-8">
     <title>{{ page.title }}</title>
@@ -24,6 +24,10 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
     <link rel="stylesheet" href="/css/style.css">
     <link rel="alternate" type="application/atom+xml" title="Recent blog posts" href="/feed.xml">
     <link rel="icon" href="/favicon.ico">
+
+    {% for item in page.translations %}
+      <link rel="alternate" hreflang="{{ item.lang }}" href="{{ item.url | absolute_url }}" />
+    {% endfor %}
 
     <meta property="article:publisher" content="https://www.facebook.com/christopherdown" />
     <meta property="article:author" content="https://www.facebook.com/christopherdown" />

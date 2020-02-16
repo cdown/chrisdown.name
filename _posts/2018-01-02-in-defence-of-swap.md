@@ -1,7 +1,13 @@
 ---
 layout: post
 title: "In defence of swap: common misconceptions"
+translations:
+    - lang: ja
+      url: /ja/2018/01/02/in-defence-of-swap.html
 ---
+
+[(This post is also available in
+Japanese.)](/ja/2018/01/02/in-defence-of-swap.html)
 
 tl;dr:
 

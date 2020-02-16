@@ -1,7 +1,13 @@
 ---
 layout: post
 title: "Linux memory management at scale"
+translations:
+    - lang: ja
+      url: /ja/2019/07/18/linux-memory-management-at-scale.html
 ---
+
+[(This post is also available in
+Japanese.)](/ja/2019/07/18/linux-memory-management-at-scale.html)
 
 As part of my work on the
 [cgroup2](https://facebookmicrosites.github.io/cgroup2/) project, I spend a lot
