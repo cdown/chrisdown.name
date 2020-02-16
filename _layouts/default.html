@@ -54,7 +54,13 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
     <header>
       <nav>
         <ul class="home">
-          <li><a href="/">{{ site.personal.name }}</a></li>
+          <li><a href="/">
+          {% if page.lang == "ja" %}
+            クリス・ダウン
+          {% else %}
+            {{ site.personal.name }}
+          {% endif %}
+          </a></li>
         </ul>
         <ul class="extra">
           {% for link in site.header.links %}
