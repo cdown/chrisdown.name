@@ -34,8 +34,8 @@ If you have another format, like [SSA][], for example, you'll probably find
 that [ffmpeg][] does a pretty good job converting it with `ffmpeg -i foo.ssa
 foo.srt`.
 
-[The SRT format]: http://matroska.org/technical/specs/subtitles/srt.html
-[SSA]: http://matroska.org/technical/specs/subtitles/ssa.html
+[The SRT format]: https://www.matroska.org/technical/specs/subtitles/srt.html
+[SSA]: https://www.matroska.org/technical/specs/subtitles/ssa.html
 
 ## Acquiring subtitles
 
