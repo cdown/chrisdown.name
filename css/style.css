@@ -81,7 +81,7 @@ html, body {
 a {
     color: #CC333F;
     text-decoration: none;
-    transition: all 40ms ease-in;
+    transition: all 75ms ease-in;
     display: inline;
 }
 
@@ -129,7 +129,6 @@ header nav ul.home li a {
     background-color: #CC333F;
     font-weight: bold;
     border-radius: 2px;
-    transition: all 75ms ease-in;
 }
 
 header nav ul.home li a:hover {
