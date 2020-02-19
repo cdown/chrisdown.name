@@ -327,7 +327,20 @@ figure {
 table {
     width: 100%;
     border-collapse: collapse;
-    overflow: auto;
+}
+
+/* If the screen is too small to show the whole width, assume
+ * we're going to have to scroll tables.
+ *
+ * Not always applied because this causes tables to not fill the full width of
+ * the body.
+ */
+@media only screen and (max-width: 720px) {
+    table {
+        display: block;
+        overflow-x: auto;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
 }
 
 th {
