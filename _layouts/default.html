@@ -108,10 +108,11 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
     n=d.scripts[0];w.src='//www.google-analytics.com/analytics.js';
     n.parentNode.insertBefore(w,n)}(window,document,'ga');
 
+    ga('create', 'UA-58706842-1', 'auto');
+    ga('set', 'forceSSL', true);
+    ga('set', 'anonymizeIp', true);
+
     InstantClick.on('change', function() {
-        ga('create', 'UA-58706842-1', 'auto');
-        ga('require', 'displayfeatures');
-        ga('set', 'anonymizeIp', true);
         ga('send', 'pageview', location.pathname + location.search);
     });
     </script>
