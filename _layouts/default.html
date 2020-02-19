@@ -133,7 +133,7 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
           return;
         }
 
-        if (c.innerText.indexOf(' ') >= 0) {
+        if (c.innerText.includes(' ')) {
           return;
         }
 
@@ -146,7 +146,7 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
       var images = document.getElementsByTagName('img');
       var image_list = Array.prototype.slice.call(images);
       image_list.forEach(function(img, _, _) {
-        if (img.className.indexOf('nonstandard') >= 0) {
+        if (img.className.includes('nonstandard')) {
           return;
         }
 
