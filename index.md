@@ -91,8 +91,8 @@ list, I'm probably not actively developing or maintaining them.
 ## Profiles elsewhere
 
 - [Facebook][]
+- [Flickr](https://www.flickr.com/photos/chrisdown/albums/72157711447135721)
 - [GitHub][]
-- [Instagram](https://instagram.com/_u/chrisldown)
 - [Keybase](https://keybase.io/cdown)
 - [last.fm][]
 - [LinkedIn](https://www.linkedin.com/in/chrisldown)
