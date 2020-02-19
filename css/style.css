@@ -65,6 +65,11 @@
   font-display: fallback;
 }
 
+html {
+    /* always show scrollbar to prevent jumping */
+    overflow-y: scroll;
+}
+
 html, body {
     max-width: 720px;
     margin: 1em auto;
