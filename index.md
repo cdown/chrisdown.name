@@ -93,7 +93,7 @@ list, I'm probably not actively developing or maintaining them.
 - [Twitter][]
 - [Unix and Linux Stack Exchange]({{ site.links.ulse }})
 
-## Talks
+## Selected talks
 
 - [Linux Memory Management at
   Scale](/2019/07/18/linux-memory-management-at-scale.html) —
