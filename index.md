@@ -55,18 +55,11 @@ I also maintain the following personal projects:
 
 - [clipmenu](https://github.com/cdown/clipmenu) — a clipboard manager with a
   dmenu frontend
-- [gh-mirror](https://github.com/cdown/gh-mirror) — mirror all public
-  repositories for a user to your local machine
-- [mac-cel](https://github.com/cdown/mac-cel) — remove mouse acceleration on
-  OSX
 - [nota](https://github.com/cdown/nota) — super simple daily logs with
   your $EDITOR + git
 - [mack](https://github.com/cdown/mack) — an opinionated, fast music organiser
 - [mpdmenu](https://github.com/cdown/mpdmenu) — control [mpd][] from dmenu
-- [pinyin](https://github.com/cdown/pinyin) — manipulate [Hanyu Pinyin][]
 - [srt](https://github.com/cdown/srt) — a library to deal with [SRT files][]
-- [travis-automerge](https://github.com/cdown/travis-automerge) — automatically
-  merge successful builds from [Travis CI][]
 - [tzupdate](https://github.com/cdown/tzupdate) — update /etc/localtime
   automatically using geolocation
 - [xinput-toggle](https://github.com/cdown/xinput-toggle) — tool to manipulate
