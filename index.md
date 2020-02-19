@@ -70,13 +70,31 @@ I also maintain the following personal projects:
 You can find other projects on my [GitHub][], although if they're not on this
 list, I'm probably not actively developing or maintaining them.
 
-## Things on this site
+## Selected talks
+
+- [Linux Memory Management at
+  Scale](/2019/07/18/linux-memory-management-at-scale.html) —
+  [SREcon](https://www.usenix.org/conference/srecon19asia/presentation/down)/[FOSDEM](https://fosdem.org/2020/schedule/event/containers_memory_management/)
+- [cgroupv2: Linux's new unified resource
+  hierarchy](https://www.youtube.com/watch?v=ikZ8_mRotT4) —
+  [FOSDEM](https://archive.fosdem.org/2017/schedule/event/cgroupv2/)/DevOpsDays/[ASG](https://cfp.all-systems-go.io/en/ASG2017/public/events/96)
+- [Lessons learned running SSL at
+  scale](https://www.youtube.com/watch?v=9Ya8H-9Hrp4) —
+  [FOSDEM](https://archive.fosdem.org/2016/schedule/event/sslmanagement/)
+- The Web Foundation model — [University College
+  London](https://www.ucl.ac.uk/) lecture
+- [Shell pitfalls and code
+  smells](http://slides.com/chrisdown/avoiding-bash-pitfalls-and-code-smells/fullscreen)
+  — LVL.UP Kuala Lumpur
+- [Pragmatic minimalism as a software design
+  tool](http://slides.com/chrisdown/pragmaticminimalism/fullscreen) — LVL.UP
+  Kuala Lumpur
+
+## Other content on this domain
 
 - [Assorted technology-related notes](/archive.html)
 - [Project quality dashboard](/builds)
 - [Sim racing data/notes](/racing.html)
-- [My PGP public key](https://keybase.io/cdown/key.asc)
-- [My SSH public key](/ssh)
 - [My old TF2 configs](/tf2)
 - [RYM profile export](/rym.html)
 - [Old game miscellany](/oldgames.html)
@@ -93,25 +111,6 @@ list, I'm probably not actively developing or maintaining them.
 - [Twitter][]
 - [Unix and Linux Stack Exchange]({{ site.links.ulse }})
 
-## Selected talks
-
-- [Linux Memory Management at
-  Scale](/2019/07/18/linux-memory-management-at-scale.html) —
-  [SREcon](https://www.usenix.org/conference/srecon19asia/presentation/down)/[FOSDEM](https://fosdem.org/2020/schedule/event/containers_memory_management/)
-- [cgroupv2: Linux's new unified resource
-  hierarchy](https://www.youtube.com/watch?v=ikZ8_mRotT4) —
-  [FOSDEM](https://archive.fosdem.org/2017/schedule/event/cgroupv2/)/DevOpsDays/[ASG](https://cfp.all-systems-go.io/en/ASG2017/public/events/96)
-- [Lessons learned running SSL at
-  scale](https://www.youtube.com/watch?v=9Ya8H-9Hrp4) —
-  [FOSDEM](https://archive.fosdem.org/2016/schedule/event/sslmanagement/)
-- The Web Foundation model — [University College
-  London](https://www.ucl.ac.uk/) lecture
-- [Bash pitfalls and code
-  smells](http://slides.com/chrisdown/avoiding-bash-pitfalls-and-code-smells/fullscreen)
-  — LVL.UP Kuala Lumpur
-- [Pragmatic minimalism as a software design
-  tool](http://slides.com/chrisdown/pragmaticminimalism/fullscreen) — LVL.UP
-  Kuala Lumpur
 
 [SRT files]: https://en.wikipedia.org/wiki/SubRip#SubRip_text_file_format
 [mpd]: http://mpd.wikia.com/
