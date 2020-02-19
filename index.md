@@ -98,6 +98,7 @@ list, I'm probably not actively developing or maintaining them.
 - [My old TF2 configs](/tf2)
 - [RYM profile export](/rym.html)
 - [Old game miscellany](/oldgames.html)
+- [Privacy policy](/privacy.html)
 
 ## Profiles elsewhere
 
