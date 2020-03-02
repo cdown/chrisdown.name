@@ -83,3 +83,10 @@ also has an option to use high priority when recording in the settings menu.
   that off, since otherwise it overrides your in-game settings. This confused
   me a lot when it was turned on in an update. You might just want to avoid
   installing GeForce Experience at all.
+- Disable Game Bar and Game DVR in Control Panel. This actually does seem to
+  make some kind of difference in performance, presumably because it has to
+  process and ringbuffer some video all the time.
+- Disable audio/video recording in "Captures" settings
+- [Autoruns](https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns)
+  is very useful for an occasional check to make sure stuff isn't starting up
+  on boot unnecessarily.
