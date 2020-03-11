@@ -27,6 +27,36 @@ don't use it, so:
     sc stop "WSearch"
     sc config "WSearch" start= disabled
 
+Even with this the SearchUI process keeps going and causes huge offcpu spikes
+for games. :-(
+
+To stop that you really have to engage in some terrible racy hackery which will
+probably get reverted by updates:
+
+    cd %windir%\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy
+
+    takeown /f SearchUI.exe
+    icacls SearchUI.exe /grant administrators:F
+
+    taskkill /f /im SearchUI.exe
+    rename SearchUI.exe SearchUI.exe.001
+
+    taskkill /f /im SearchUI.exe
+    rename SearchUI.exe SearchUI.exe.001
+
+    taskkill /f /im SearchUI.exe
+    rename SearchUI.exe SearchUI.exe.001
+
+    taskkill /f /im SearchUI.exe
+    rename SearchUI.exe SearchUI.exe.001
+
+## Caps to ctrl
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Keyboard Layout]
+    "Scancode Map"=hex:00,00,00,00,00,00,00,00,02,00,00,00,1d,00,3a,00,00,00,00,00
+
 ## Only page on non-rotational disks
 
 I noticed that, by default, it's possible that paging files are also enabled on
