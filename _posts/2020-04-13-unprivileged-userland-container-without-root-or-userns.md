@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Unprivileged Arch Linux userland container without root or userns'
+title: 'Unprivileged userland containers without root or userns'
 ---
 
 (This post goes into some details about Arch Linux, but the general principles
