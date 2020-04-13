@@ -239,7 +239,7 @@ _virt_prompt() {
         _VIRT=junest
     else
         _VIRT=$(systemd-detect-virt 2>/dev/null)
-        if [[ $_VIRT == none ]]; then
+        if [ "$_VIRT" = none ]; then
             unset _VIRT
         fi
     fi
