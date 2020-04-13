@@ -168,13 +168,13 @@ remote. But if you just plug in the following, which ostensibly seems like it
 might work, it just hangs:
 
 {% highlight bash %}
-laptop % mosh --server '.local/share/junest/bin/junest proot -- mosh-server' remote.server
+laptop % mosh --server '~/.local/share/junest/bin/junest proot -- mosh-server' remote.server
 {% endhighlight %}
 
 The reason for this is because, while `mosh-client` *does* successfully get the
-MOSH_KEY, it also waits for `mosh-server` to detach. However, this never
-happens since the proot session is being held open by that detached
-`mosh-server`.
+MOSH_KEY, it also waits for `mosh-server` to detach, and thus the child process
+to exit. However, the child process launched by `--server` never detaches,
+since the proot session is being held open by that detached `mosh-server`.
 
 To solve this, I wrote a simple shell script which forks `mosh-server` into the
 background, reads its output and prints it to stdout, and exits when the
