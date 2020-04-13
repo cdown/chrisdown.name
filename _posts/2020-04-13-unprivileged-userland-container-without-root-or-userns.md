@@ -45,7 +45,7 @@ the following:
 - [mosh](https://mosh.org/), for reliable shell access while roaming
 - rsync
 - zsh
-- [asp](https://wiki.archlinux.org/index.php/Arch_Build_System)
+- [asp](https://github.com/archlinux/asp)
 - git
 - vim
 
