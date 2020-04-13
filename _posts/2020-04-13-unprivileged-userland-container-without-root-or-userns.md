@@ -10,9 +10,11 @@ My old workhorse server that I've used for various tasks over the years is
 slowly starting to become a bit of a bottleneck. I bought it just after I left
 high school, so I had no money, and it really shows:
 
-    % grep -m2 -e 'model name' -e 'bugs' /proc/cpuinfo
-    model name      : Intel(R) Atom(TM) CPU N2800   @ 1.86GHz
-    bugs            :
+{% highlight bash %}
+% grep -m2 -e 'model name' -e 'bugs' /proc/cpuinfo
+model name      : Intel(R) Atom(TM) CPU N2800   @ 1.86GHz
+bugs            :
+{% endhighlight %}
 
 You can't have any fancy CPU bugs if you didn't have any fancy features in the
 first place! Maybe if Intel has enough CPU bugs in their CPU optimisations this
@@ -29,8 +31,10 @@ be cost-effective.
 
 Probably overkill, and definitely an upgrade from the Atom ;-)
 
-    % grep -m1 -e 'model name' /proc/cpuinfo
-    model name      : AMD EPYC 7571 32-Core Processor
+{% highlight bash %}
+% grep -m1 -e 'model name' /proc/cpuinfo
+model name      : AMD EPYC 7571 32-Core Processor
+{% endhighlight %}
 
 Only one problem: on shared servers, you obviously don't get root access. I'm
 pretty opinionated about my environment, and at a bare minimum I'd like to use
@@ -50,8 +54,8 @@ Debian 8, and even those are really, really old, which is a problem for me
 since I often use bleeding-edge features. Just as a basic example, take this 7
 year old version of vim, which is missing features I use regularly:
 
-    server % vim --version
-    VIM - Vi IMproved 7.4 (2013 Aug 10, compiled Aug  2 2019 22:46:19)
+      server % vim --version
+      VIM - Vi IMproved 7.4 (2013 Aug 10, compiled Aug  2 2019 22:46:19)
 
 If it was just one or two applications that were missing, I'd probably just try
 to compile a more recent version from source and update it occasionally.
@@ -63,8 +67,10 @@ I thought I'd just install an Arch Linux container using
 [bubblewrap](https://github.com/containers/bubblewrap) and get around this that
 way, but here's what I found:
 
-    server % sysctl -n kernel.unprivileged_userns_clone
-    0
+{% highlight bash %}
+server % sysctl -n kernel.unprivileged_userns_clone
+0
+{% endhighlight %}
 
 Oh dear. No unprivileged user namespaces means bubblewrap is a no-go, and
 renders pretty much any standard containerisation out of luck.
@@ -83,8 +89,10 @@ without root access". Sounds like exactly what I need.
 Setting up junest is easy (if you don't even have git to start out with,
 extract one of the release tar.gzs):
 
-    server % git clone git://github.com/fsquillace/junest ~/.local/share/junest
-    server % ~/.local/share/bin/junest setup
+{% highlight bash %}
+server % git clone git://github.com/fsquillace/junest ~/.local/share/junest
+server % ~/.local/share/bin/junest setup
+{% endhighlight %}
 
 (You can add ~/.local/share/junest/bin to your `$PATH`, but I don't intend to
 invoke junest manually much, instead doing it through mosh, so I leave it alone
@@ -94,11 +102,13 @@ This will download the base image and dependencies. After that, we can start
 up and get a shell and upgrade the packages (you can also directly `fakeroot`
 in with `proot -f`):
 
-    server % ~/.local/share/bin/junest proot
-    proot % fakeroot
-    proot # pacman -Syu
-    :: Synchronizing package databases...
-    [...]
+      server % ~/.local/share/bin/junest proot
+      proot % fakeroot
+      proot # pacman -Syu
+      :: Synchronizing package databases...
+      [...]
+
+### proot internals
 
 I was kind of impressed this Just Worked™ out of the box without user, mount,
 or any other kind of namespaces in play. Looking a bit at how proot works,
@@ -148,7 +158,7 @@ or anything to start, you can run `mosh-server` manually:
 
 Now, on your local machine, you can run the following using that information:
 
-    local % MOSH_KEY=[key] mosh-client [ip] [port]
+    laptop % MOSH_KEY=[key] mosh-client [ip] [port]
     proot %
 
 Success! We now have a mosh instance inside the proot. But how do we script
@@ -157,7 +167,9 @@ able to help us here, `--server`, which specifies the mosh server path on the
 remote. But if you just plug in the following, which ostensibly seems like it
 might work, it just hangs:
 
-    local % mosh --server '.local/share/junest/bin/junest proot -- mosh-server' remote.server
+{% highlight bash %}
+laptop % mosh --server '.local/share/junest/bin/junest proot -- mosh-server' remote.server
+{% endhighlight %}
 
 The reason for this is because, while `mosh-client` *does* successfully get the
 MOSH_KEY, it also waits for `mosh-server` to detach. However, this never
@@ -190,7 +202,7 @@ background.
 If we name this script `mosh-server-junest` in the user's home directory, we
 can now execute mosh like this (assuming you use `zsh`).
 
-    local % mosh --server './mosh-server-junest' remote.server -- zsh -l
+    laptop % mosh --server './mosh-server-junest' remote.server -- zsh -l
     proot %
 
 Nice! You can now add an alias or a function in your shell to make this easier to
@@ -207,7 +219,7 @@ operations which can't be done inside, I'd like the environment I'm in to be
 clear when at a prompt.
 
 Above I disambiguated the different shells running by prepending things like
-"local", "server", or "proot" to the prompt, but in reality the "server" and
+"laptop", "server", or "proot" to the prompt, but in reality the "server" and
 "proot" prompts probably look exactly the same by default.
 
 One way to fix this is to change how your prompt looks depending on whether you
@@ -242,7 +254,7 @@ _virt_prompt() {
 Now everything should be really transparent if you call your shell alias for
 the `mosh` command above:
 
-    cdown@local % msh
+    cdown@laptop % msh
     cdown@server junest %
 
 At this point, I'm pretty happy with this as an environment. It's fast, doesn't
