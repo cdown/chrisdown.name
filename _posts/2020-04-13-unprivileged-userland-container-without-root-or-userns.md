@@ -91,7 +91,7 @@ extract one of the release tar.gzs):
 
 {% highlight bash %}
 server % git clone git://github.com/fsquillace/junest ~/.local/share/junest
-server % ~/.local/share/bin/junest setup
+server % ~/.local/share/junest/bin/junest setup
 {% endhighlight %}
 
 (You can add ~/.local/share/junest/bin to your `$PATH`, but I don't intend to
@@ -102,7 +102,7 @@ This will download the base image and dependencies. After that, we can start
 up and get a shell and upgrade the packages (you can also directly `fakeroot`
 in with `proot -f`):
 
-      server % ~/.local/share/bin/junest proot
+      server % ~/.local/share/junest/bin/junest proot
       proot % fakeroot
       proot # pacman -Syu
       :: Synchronizing package databases...
