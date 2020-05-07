@@ -39,6 +39,7 @@ More posts are available on the [archive page](/archive.html).
 I am a contributor to and maintainer of a number of projects, including:
 
 - [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) — modern resource control and accounting
+- [clipmenu](https://github.com/cdown/clipmenu) — a clipboard manager with a dmenu frontend
 - [GNU bash](https://www.gnu.org/software/bash/) — the GNU project's shell
 - [hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced Quickcheck style testing library for Python
 - [Linux](https://lore.kernel.org/patchwork/project/lkml/list/?series=&submitter=25468&state=*&q=&archive=&delegate=) — a free and open-source OS kernel
@@ -46,6 +47,8 @@ I am a contributor to and maintainer of a number of projects, including:
 - [oomd](https://github.com/facebookincubator/oomd) — next-generation OOM killer
 - [osquery](https://github.com/facebook/osquery) — an OS instrumentation, monitoring, and analysis framework
 - [pass](https://www.passwordstore.org/) — the standard Unix password manager
+- [psi-notify](https://github.com/cdown/psi-notify) — proactively detect machine oversaturation
+- [srt](https://github.com/cdown/srt) — a Python library to deal with [SRT files][]
 - [systemd](https://github.com/systemd/systemd) — a system and service manager for Linux
 - [taglib-rust](https://github.com/ebassi/taglib-rust) — Rust FFI bindings for taglib
 - [the Pro Git book](https://git-scm.com/book/en/v2) — a guide to Git and its internals
@@ -53,13 +56,10 @@ I am a contributor to and maintainer of a number of projects, including:
 
 I also maintain the following personal projects:
 
-- [clipmenu](https://github.com/cdown/clipmenu) — a clipboard manager with a
-  dmenu frontend
 - [nota](https://github.com/cdown/nota) — super simple daily logs with
   your $EDITOR + git
 - [mack](https://github.com/cdown/mack) — an opinionated, fast music organiser
 - [mpdmenu](https://github.com/cdown/mpdmenu) — control [mpd][] from dmenu
-- [srt](https://github.com/cdown/srt) — a library to deal with [SRT files][]
 - [tzupdate](https://github.com/cdown/tzupdate) — update /etc/localtime
   automatically using geolocation
 - [xinput-toggle](https://github.com/cdown/xinput-toggle) — tool to manipulate
