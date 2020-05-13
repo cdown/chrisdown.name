@@ -54,8 +54,8 @@ Debian 8, and even those are really, really old, which is a problem for me
 since I often use bleeding-edge features. Just as a basic example, take this 7
 year old version of vim, which is missing features I use regularly:
 
-      server % vim --version
-      VIM - Vi IMproved 7.4 (2013 Aug 10, compiled Aug  2 2019 22:46:19)
+    server % vim --version
+    VIM - Vi IMproved 7.4 (2013 Aug 10, compiled Aug  2 2019 22:46:19)
 
 If it was just one or two applications that were missing, I'd probably just try
 to compile a more recent version from source and update it occasionally.
@@ -102,11 +102,11 @@ This will download the base image and dependencies. After that, we can start
 up and get a shell and upgrade the packages (you can also directly `fakeroot`
 in with `proot -f`):
 
-      server % ~/.local/share/junest/bin/junest proot
-      proot % fakeroot
-      proot # pacman -Syu
-      :: Synchronizing package databases...
-      [...]
+    server % ~/.local/share/junest/bin/junest proot
+    proot % fakeroot
+    proot # pacman -Syu
+    :: Synchronizing package databases...
+    [...]
 
 ### proot internals
 
