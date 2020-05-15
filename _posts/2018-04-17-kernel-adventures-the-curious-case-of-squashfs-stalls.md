@@ -18,10 +18,11 @@ changes inside the kernel will also see changes from Facebook, Google, and many
 other industry names, as it also serves a purpose serving production traffic at
 scale.
 
-One thing we use squashfs for is transporting large amounts of static data that
-compress well: bytecode, certain types of static resources, etc. We then
-transfer these squashfs images over the network to the servers providing
-compute power for the service, mount the squashfs mounts, and away we go.
+One thing we use squashfs for at Facebook is transporting large amounts of
+static data that compress well: bytecode, certain types of static resources,
+etc. We then transfer these squashfs images over the network to the servers
+providing compute power for the service, mount the squashfs mounts, and away we
+go.
 
 Visualise such a situation: we've just finished transporting the squashfs
 images and are getting ready to use the files inside in the program. We go to
