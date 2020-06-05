@@ -9,6 +9,13 @@ This is a place to record what's needed.
 Most of these are either with my 750M (gaming laptop) or GTX 1070 (gaming
 desktop).
 
+# Deus Ex
+
+[GMDX](https://www.moddb.com/mods/gmdx), although vanilla is also fine if you
+manually install [Kentie's launcher](https://kentie.net/article/dxguide/) which
+otherwise comes bundled. There's also
+[Han's](https://coding.hanfling.de/launch/), but I've never tried it.
+
 # Splinter Cell
 
 ## Dynamic lighting method autodetection bug
