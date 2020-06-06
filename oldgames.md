@@ -16,6 +16,14 @@ manually install [Kentie's launcher](https://kentie.net/article/dxguide/) which
 otherwise comes bundled. There's also
 [Han's](https://coding.hanfling.de/launch/), but I've never tried it.
 
+To track Steam time:
+
+1. In the Deus Ex install folder, open the System directory and rename
+   DeusEx.exe to DeusEx.exe.orig (or whatever)
+2. Copy GMDX to DeusEx.exe
+3. Add the launch arguments from the GMDX shortcut to Steam. For example:
+   `INI="E:\Steam\steamapps\common\Deus Ex\GMDXv9\System\gmdx.ini" USERINI="E:\Steam\steamapps\common\Deus Ex\GMDXv9\System\GMDXUser.ini"`
+
 # Splinter Cell
 
 ## Dynamic lighting method autodetection bug
