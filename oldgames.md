@@ -16,13 +16,12 @@ manually install [Kentie's launcher](https://kentie.net/article/dxguide/) which
 otherwise comes bundled. There's also
 [Han's](https://coding.hanfling.de/launch/), but I've never tried it.
 
-To track Steam time:
+To launch directly on Steam and track time played:
 
 1. In the Deus Ex install folder, open the System directory and rename
    DeusEx.exe to DeusEx.exe.orig (or whatever)
-2. Copy GMDX to DeusEx.exe
-3. Add the launch arguments from the GMDX shortcut to Steam. For example:
-   `INI="E:\Steam\steamapps\common\Deus Ex\GMDXv9\System\gmdx.ini" USERINI="E:\Steam\steamapps\common\Deus Ex\GMDXv9\System\GMDXUser.ini"`
+2. Copy GMDXv10.exe to DeusEx.exe
+3. Add the following launch options: `INI="GMDXv10.ini" USERINI="GMDXv10User.ini"`
 
 # Splinter Cell
 
