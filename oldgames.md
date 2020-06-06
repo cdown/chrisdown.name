@@ -11,7 +11,7 @@ desktop).
 
 # Deus Ex
 
-[GMDX](https://www.moddb.com/mods/gmdx), although vanilla is also fine if you
+[GMDX v10](https://www.moddb.com/mods/gmdx-v10-community-update), although vanilla is also fine if you
 manually install [Kentie's launcher](https://kentie.net/article/dxguide/) which
 otherwise comes bundled. There's also
 [Han's](https://coding.hanfling.de/launch/), but I've never tried it.
