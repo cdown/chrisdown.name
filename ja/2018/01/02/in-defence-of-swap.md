@@ -5,6 +5,9 @@ lang: ja
 translations:
     - lang: en
       url: /2018/01/02/in-defence-of-swap.html
+
+# Otherwise the english is the desc
+description: "長文を読みたくない方への要約：スワップを持つことは正しく機能するシステムのかなり重要なポイントです。スワップが無ければ、まともなメモリ管理を実現することは難しくなります。"
 ---
 
 [(This post is also available in English.)](/2018/01/02/in-defence-of-swap.html)
