@@ -13,7 +13,7 @@ description: "これらの会話を通じてどんどん明らかになってき
 [(This post is also available in
 English.)](/2019/07/18/linux-memory-management-at-scale.html)
 
-この記事は [Linux memory management at scale](https://chrisdown.name/2019/07/18/linux-memory-management-at-scale.html) を [著者の Chris Down さんの許可](https://twitter.com/unixchris/status/1224285773660377089) を得て [Hiroaki Nakamura](https://github.com/hnakamur/) が日本語に翻訳したものです。 [原文のライセンス](https://github.com/cdown/chrisdown.name/blob/master/LICENSE) は [CC-BY 4.0](http://creativecommons.org/licenses/by/4.0/) であり、翻訳のライセンスも同じく CC-BY 4.0 とします。
+この記事は [Linux memory management at scale](https://chrisdown.name/2019/07/18/linux-memory-management-at-scale.html) を [著者の Chris Down さんの許可](https://twitter.com/unixchris/status/1224285773660377089) を得て [Hiroaki Nakamura](https://github.com/hnakamur/) が日本語に翻訳したものです。 [原文のライセンス](https://github.com/cdown/chrisdown.name/blob/master/LICENSE) は [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/) であり、翻訳のライセンスも同じく CC BY 4.0 とします。
 
 ---
 
