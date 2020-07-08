@@ -9,8 +9,9 @@ translations:
 description: "tl;dr: Having swap is a reasonably important part of a well functioning system. Without it, sane memory management becomes harder to achieve."
 ---
 
-[(This post is also available in
-Japanese.)](/ja/2018/01/02/in-defence-of-swap.html)
+This post is also available in
+[Japanese](/ja/2018/01/02/in-defence-of-swap.html) and
+[Russian](https://softdroid.net/v-zashchitu-svopa-rasprostranennye-zabluzhdeniya).
 
 tl;dr:
 
