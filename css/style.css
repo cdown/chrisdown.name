@@ -29,6 +29,7 @@
 .font-awesome-github:before { content: '\f113'; } /* '' */
 .font-awesome-stackoverflow:before { content: '\f16c'; } /* '' */
 
+/* If the font is used everywhere, we inline. If not, it's external. */
 @font-face {
   font-family: 'Droid Sans Mono';
   font-style: normal;
