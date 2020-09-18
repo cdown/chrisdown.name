@@ -32,11 +32,11 @@ it doesn't exist:
 
 There are some previous posts asking about how to achieve this in mutt, but as
 far as I can see, all have gone
-[unanswered](http://www.yqcomputer.com/446_1965_1.htm), so I set to Google's
-documentation to work out how to handle this. There are also some unofficial
-patches which artificially replicate the mute functionality, but I'd rather use
-it directly (and I'm not really interested in maintaining my own quilt of
-patches on top of mutt HEAD).
+[unanswered](https://groups.google.com/g/comp.mail.mutt/c/xmDG9w2rJsU), so I
+set to Google's documentation to work out how to handle this. There are also
+some unofficial patches which artificially replicate the mute functionality,
+but I'd rather use it directly (and I'm not really interested in maintaining my
+own quilt of patches on top of mutt HEAD).
 
 Looking for information on label modification via IMAP brings us to [this
 article](https://developers.google.com/gmail/imap/imap-extensions#access_to_gmail_labels_x-gm-labels),

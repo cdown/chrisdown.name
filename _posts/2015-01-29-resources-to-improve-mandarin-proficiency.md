@@ -197,7 +197,7 @@ the subtleties of Chinese tonality.
 [Youdao Android app]: http://m.youdao.com
 [Zdic]: http://www.zdic.net
 [Zhongwen]: https://chrome.google.com/webstore/detail/zhongwen-a-chinese-englis/kkmlkkjojmombglmlpbpapmhcaljjkde
-[Carlos]: http://carloslima.name
+[Carlos]: https://blog.carloslima.name
 [CC-CEDICT]: http://cc-cedict.org
 [Ichacha]: http://www.ichacha.net
 [The dictionary provided by LINE]: http://linedictionary.naver.com/dict.html

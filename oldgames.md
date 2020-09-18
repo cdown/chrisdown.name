@@ -102,8 +102,9 @@ EffectsQuality=3
 
 ## Shadow/reflection fix
 
-[This page](http://www.jiri-dvorak.cz/scellpt/) contains a fix for the vertex
-shader garbage.
+[This
+page](https://web.archive.org/web/20200314075505/http://www.jiri-dvorak.cz/scellpt/)
+contains a fix for the vertex shader garbage.
 
 ## Mouse acceleration
 
