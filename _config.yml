@@ -14,7 +14,6 @@ personal:
     url: https://facebook.com
   email:
     account: chris
-    scrim: chrisdown
 
 exclude:
   - Gemfile
