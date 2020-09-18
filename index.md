@@ -3,7 +3,7 @@ layout: default
 title: "Chris Down"
 description:
     "Linux sysadmin, SRE, and developer living in London, England, currently
-    helping Facebook scale to more than 2 billion users."
+    helping Facebook scale to almost 3 billion users."
 ---
 
 
