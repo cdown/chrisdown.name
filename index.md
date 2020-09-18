@@ -41,7 +41,7 @@ I am a contributor to and maintainer of a number of projects, including:
 - [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) — modern resource control and accounting
 - [clipmenu](https://github.com/cdown/clipmenu) — a clipboard manager with a dmenu frontend
 - [GNU bash](https://www.gnu.org/software/bash/) — the GNU project's shell
-- [hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced Quickcheck style testing library for Python
+- [hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced QuickCheck style testing library for Python
 - [Linux](https://lore.kernel.org/patchwork/project/lkml/list/?series=&submitter=25468&state=*&q=&archive=&delegate=) — a free and open-source OS kernel
 - [mpv](https://github.com/mpv-player/mpv) — videos on the command line
 - [oomd](https://github.com/facebookincubator/oomd) — next-generation OOM killer
