@@ -13,12 +13,10 @@
   font-family: fontawesome-stripped;
   font-weight: normal;
   font-style: normal;
-  text-decoration: inherit;
   -webkit-font-smoothing: antialiased;
 }
 [class^="font-awesome-"]:before,
 [class*=" font-awesome-"]:before {
-  text-decoration: inherit;
   display: inline-block;
   speak: none;
 }
@@ -320,7 +318,6 @@ figure {
   padding: 0;
   border: 0;
   font-size: 100%;
-  font: inherit;
   display: block;
 }
 
@@ -341,10 +338,6 @@ table {
         overflow-x: auto;
         -ms-overflow-style: -ms-autohiding-scrollbar;
     }
-}
-
-th {
-    font-weight: inherit;
 }
 
 th, td {
