@@ -57,13 +57,26 @@ probably get reverted by updates:
     [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Keyboard Layout]
     "Scancode Map"=hex:00,00,00,00,00,00,00,00,02,00,00,00,1d,00,3a,00,00,00,00,00
 
+## Disable mitigations
+
+I only use Windows for games, so the tradeoff is reasonable here.
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management]
+    ; Bitmask with two bits:
+    ; 1<<0: Disable Spectre mitigation
+    ; 1<<1: Disable Meltdown mitigation
+    "FeatureSettingsOverride"=dword:00000003
+    "FeatureSettingsOverrideMask"=dword:00000003
+
 ## Only page on non-rotational disks
 
 I noticed that, by default, it's possible that paging files are also enabled on
 slow disks. I have no idea whether Windows understands it should probably
 prioritise paging files on non-rotational disks, so I just went into
-Performance, Advanced, Virtual Memory, "Change", and set a 4GB paging file on
-non-rotational disks and nothing on rotational ones.
+Performance, Advanced, Virtual Memory, "Change", and set a system-managed
+paging file on non-rotational disks and nothing on rotational ones.
 
 ## Defragment/TRIM
 
