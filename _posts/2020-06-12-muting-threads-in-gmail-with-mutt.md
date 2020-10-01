@@ -9,7 +9,7 @@ tl;dr:
 1. `pip install gmute` ([repo](https://github.com/cdown/gmute))
 2. Configure `~/.config/gmute` as per [the
    documentation](https://github.com/cdown/gmute/blob/master/README.rst)
-3. Add `macro index M '<pipe-message>gmute<enter><sync-mailbox>'` to your mutt
+3. Add `macro index M '<enter-command>set pipe_sep="\n_PIPE_SEP_\n"<enter><pipe-message>gmute<enter><sync-mailbox>'` to your mutt
    configuration.
 4. Press M on a message in a thread you want to mute, and enjoy!
 
