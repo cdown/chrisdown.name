@@ -36,14 +36,17 @@ More posts are available on the [archive page](/archive.html).
 
 ## Software
 
-I am a contributor to and maintainer of a number of projects, including:
+I am a creator, contributor, or maintainer of a number of projects, including:
 
 - [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) — modern resource control and accounting
 - [clipmenu](https://github.com/cdown/clipmenu) — a clipboard manager with a dmenu frontend
 - [GNU bash](https://www.gnu.org/software/bash/) — the GNU project's shell
 - [hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced QuickCheck style testing library for Python
 - [Linux](https://lore.kernel.org/patchwork/project/lkml/list/?series=&submitter=25468&state=*&q=&archive=&delegate=) — a free and open-source OS kernel
+- [mack](https://github.com/cdown/mack) — an opinionated, fast music organiser
+- [mpdmenu](https://github.com/cdown/mpdmenu) — control [mpd][] from dmenu
 - [mpv](https://github.com/mpv-player/mpv) — videos on the command line
+- [nota](https://github.com/cdown/nota) — super simple daily logs with your $EDITOR + git
 - [oomd](https://github.com/facebookincubator/oomd) — next-generation OOM killer
 - [osquery](https://github.com/facebook/osquery) — an OS instrumentation, monitoring, and analysis framework
 - [pass](https://www.passwordstore.org/) — the standard Unix password manager
@@ -52,20 +55,9 @@ I am a contributor to and maintainer of a number of projects, including:
 - [systemd](https://github.com/systemd/systemd) — a system and service manager for Linux
 - [taglib-rust](https://github.com/ebassi/taglib-rust) — Rust FFI bindings for taglib
 - [the Pro Git book](https://git-scm.com/book/en/v2) — a guide to Git and its internals
+- [tzupdate](https://github.com/cdown/tzupdate) — update /etc/localtime automatically using geolocation
+- [xinput-toggle](https://github.com/cdown/xinput-toggle) — tool to manipulate arbitrary xinput devices
 - [zsh](https://www.zsh.org/) — a highly feature-rich shell
-
-I also maintain the following personal projects:
-
-- [nota](https://github.com/cdown/nota) — super simple daily logs with
-  your $EDITOR + git
-- [mack](https://github.com/cdown/mack) — an opinionated, fast music organiser
-- [mpdmenu](https://github.com/cdown/mpdmenu) — control [mpd][] from dmenu
-- [tzupdate](https://github.com/cdown/tzupdate) — update /etc/localtime
-  automatically using geolocation
-- [xinput-toggle](https://github.com/cdown/xinput-toggle) — tool to manipulate
-  arbitrary xinput devices
-- [yturl](https://github.com/cdown/yturl) — watch YouTube videos on the command
-  line
 
 You can find other projects on my [GitHub][], although if they're not on this
 list, I'm probably not actively developing or maintaining them.
