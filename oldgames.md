@@ -185,3 +185,10 @@ Don't use the Oblivion launcher "data files" section to enable stuff any more, s
 ## Reordering
 
 Use BOSS.
+
+# GTA IV
+
+See
+[here](https://web.archive.org/web/20201109125821/https://steamcommunity.com/sharedfiles/filedetails/?id=1371539795).
+Also, reducing vehicle density/view distance/detail distance reduces
+stuttering.
