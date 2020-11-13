@@ -50,6 +50,13 @@ I only use Windows for games, so the tradeoff is reasonable here.
     "FeatureSettingsOverride"=dword:00000003
     "FeatureSettingsOverrideMask"=dword:00000003
 
+## Disable SmartScreen
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]
+    "EnableSmartScreen"=dword:00000000
+
 ## Only page on non-rotational disks
 
 I noticed that, by default, it's possible that paging files are also enabled on
