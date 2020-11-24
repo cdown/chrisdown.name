@@ -86,7 +86,7 @@ list, I'm probably not actively developing or maintaining them.
 
 ## Other content on this domain
 
-- [Assorted technology-related notes](/archive.html)
+- [Assorted technology-related articles](/archive.html)
 - [Project quality dashboard](/builds)
 - [Sim racing data/notes](/racing.html)
 - [My old TF2 configs](/tf2)

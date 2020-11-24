@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Assorted notes
-description: Recent blog posts by Chris Down.
+title: Articles
+description: Recent articles by Chris Down on Linux and other technologies.
 ---
 
-# Assorted notes
+# Articles
 
 {% assign posts = site.posts %}
 
