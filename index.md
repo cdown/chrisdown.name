@@ -27,10 +27,12 @@ and [sim racing](/racing.html).
 [Facebook]: https://www.facebook.com
 [Production Engineer]: https://www.quora.com/What-is-it-like-to-be-a-Production-Engineer-at-Facebook/answer/Larry-Schrof
 
-## Recent blog posts
+## Popular articles
 
-{% for post in site.posts limit:5 %}- [{{ post.title }}]({{ post.url }})
-{% endfor %}
+- [In defence of swap: common misconceptions](/2018/01/02/in-defence-of-swap.html)
+- ["1195725856" and other mysterious numbers](/2020/01/13/1195725856-and-friends-the-origins-of-mysterious-numbers.html)
+- [The curious case of stalled squashfs reads](/2018/04/17/kernel-adventures-the-curious-case-of-squashfs-stalls.html)
+- [Linux memory management at scale](/2019/07/18/linux-memory-management-at-scale.html)
 
 More posts are available on the [archive page](/archive.html).
 
