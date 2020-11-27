@@ -143,7 +143,7 @@ until it crashes. Then dial it back 15mhz to the last value.
 Now go run some games, I used Assassin's Creed Syndicate and Watch Dogs 2.
 You'll probably have to lower it some more for real-world scenarios. In the
 3080's case, I could get about +100 in Heaven, but in real world I can only do
-+70.
++60.
 
 You probably want to set up the RivaTuner OSD to see what's going on. Possible
 limits:
@@ -177,7 +177,7 @@ results to find the optimal value.
 
 ### Results for 3080
 
-+70mhz core, +850mhz memory
++60mhz core, +850mhz memory
 
 ## Memory
 
