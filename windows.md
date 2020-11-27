@@ -297,6 +297,17 @@ In my case, I was able to get to 5.1ghz all-core @ 1.4v with LLC6. In
 Cinebench and Prime95 it easily reaches 100C and downclocks, but in the real
 world, it works.
 
+## Nvidia CP
+
+You probably want to set these to Maximum Performance in Nvidia CP, just to
+avoid the ramp up after no load throttling.
+
+I also set texture filtering quality to high performance globally -- I've never
+seen a difference anywhere but in FPS.
+
+You can also disable Ansel with Nvidia Inspector, if it's causing issues.
+Currently it's in the "Common" section.
+
 ## Post-validation
 
 I'd keep hwinfo64 running in the background in sensors mode on startup, just to
