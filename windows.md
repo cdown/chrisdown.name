@@ -126,6 +126,14 @@ also has an option to use high priority when recording in the settings menu.
 Not Windows-specific, of course, but worth having some place to record these.
 Generally worth doing these in order of most benefit for gaming:
 
+## Generic validation
+
+Some generic validation utilities to check improvements:
+
+- [UserBenchmark](https://www.userbenchmark.com/)
+- [3DMark](https://benchmarks.ul.com/3dmark)
+- [PerformanceTest](https://www.passmark.com/products/performancetest/) (deeper memory test than UserBenchmark)
+
 ## GPU
 
 Core clock is a lot more important than memory clock, in general, although
@@ -209,9 +217,10 @@ latency like this:
     Out[6]: 9.178743961352657
 
 For overclocking, I'd keep the frequency set at what's in your XMP profile, and
-start tuning down tCL until you cannot boot. Then go back up one and run OCCT
-memtest for 10 minutes. If it passes, start bumping down tRCD and tRP by 1,
-until you can't boot. Now do the same with OCCT, and run for 1h to verify
+start tuning down tCL until you cannot boot. Then go back up one and run
+[TestMem5](https://drive.google.com/file/d/175jXRSu6iVZYoXq6OaRrlcwUGP9KcbOW/view?usp=sharing)
+and OCCT memtest for 10 minutes. If it passes, start bumping down tRCD and tRP
+by 1, until you can't boot. Now do the same with OCCT, and run for 1h to verify
 stability.
 
 tRAS I'd leave alone -- if you set the value wrongly here, the IC is going to
@@ -226,7 +235,7 @@ frequency-bound game ([see
 here](https://www.dsogaming.com/pc-performance-analyses/watch-dogs-legion-can-finally-run-with-constant-60fps-on-high-end-cpus/)),
 the benchmark is pretty clear: a very small (1fps) boost in average FPS, but a
 large increase in stability with default XMP values of 4140 19-23-23-45, which
-in my case can be reduced further to 17-17-17-45.
+in my case can be reduced further to 18-18-18-45.
 
 ## CPU
 
