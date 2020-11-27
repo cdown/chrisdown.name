@@ -133,6 +133,9 @@ Some generic validation utilities to check improvements:
 - [UserBenchmark](https://www.userbenchmark.com/)
 - [3DMark](https://benchmarks.ul.com/3dmark)
 - [PerformanceTest](https://www.passmark.com/products/performancetest/) (deeper memory test than UserBenchmark)
+- [hwinfo64](https://www.hwinfo.com/download/)
+
+Also, a good overview [here](https://www.tomshardware.com/reviews/stress-test-cpu-pc-guide,5461.html).
 
 ## GPU
 
@@ -283,7 +286,8 @@ There are a couple of things I'd suggest running:
 - Cinebench multi-core, to validate things are faster, although if you're
   getting thermal throttling it might show it's slower when it wouldn't be in the
   real world.
-- Prime95 blend for 20-30 mins or so.
+- Prime95 in-place large FFTs for 20-30 mins or so. Small FFTs produces voltage
+  overshoots which are not really real-world, so you might get hangs there.
 
 Throughout these, I'd suggest monitoring the voltage under load and idle, and
 also checking if there were corrected L0 WHEA errors. You can see this at the
