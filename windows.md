@@ -221,6 +221,12 @@ do stupid things (see
 In my case, I was able to get down to 4000 16-16-16-39 @ 1.4v. Don't worry too
 much about RAM voltage, up to 1.4-1.5v it's quite tolerant.
 
+However, in Watch Dogs: Legion, which is (as of writing this) a very RAM
+frequency-bound game ([see
+here](https://www.dsogaming.com/pc-performance-analyses/watch-dogs-legion-can-finally-run-with-constant-60fps-on-high-end-cpus/)),
+the benchmark is pretty clear: a very small (1fps) boost in average FPS, but a
+large increase in stability with default XMP values of 4140 19-23-23-45.
+
 ## CPU
 
 Modern CPUs have a few complications when it comes to overclocking:
