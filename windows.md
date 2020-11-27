@@ -296,3 +296,10 @@ very bottom in "sensors" in hwinfo64. Any errors mean the OC is not stable.
 In my case, I was able to get to 5.1ghz all-core @ 1.4v with LLC6. In
 Cinebench and Prime95 it easily reaches 100C and downclocks, but in the real
 world, it works.
+
+## Post-validation
+
+I'd keep hwinfo64 running in the background in sensors mode on startup, just to
+double check there are no WHEA errors over time.
+
+Also the MSI RivaTuner overlay is quite useful in-game.
