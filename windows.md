@@ -238,7 +238,7 @@ frequency-bound game ([see
 here](https://www.dsogaming.com/pc-performance-analyses/watch-dogs-legion-can-finally-run-with-constant-60fps-on-high-end-cpus/)),
 the benchmark is pretty clear: a very small (1fps) boost in average FPS, but a
 large increase in stability with default XMP values of 4140 19-23-23-45, which
-in my case can be reduced further to 18-18-18-45.
+in my case can be reduced further to 18-20-20-45.
 
 ## CPU
 
