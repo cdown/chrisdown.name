@@ -45,9 +45,9 @@ tl;dr:
 
 As part of my work improving kernel memory management and [cgroup
 v2](https://www.youtube.com/watch?v=ikZ8_mRotT4), I've been talking to a lot of
-engineers about attitudes towards memory management, especially around
-application behaviour under pressure and operating system heuristics used under
-the hood for memory management.
+engineers about attitudes towards memory, especially around application
+behaviour under pressure and operating system heuristics used under the hood
+for memory management.
 
 A repeated topic in these discussions has been swap. Swap is a hotly contested
 and poorly understood topic, even by those who have been working with Linux for
