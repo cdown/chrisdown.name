@@ -186,6 +186,11 @@ Since there's error correction, this might still not have good performance,
 though. Try lowering the memory clock 50mhz at a time and recording benchmark
 results to find the optimal value.
 
+### OCCT validation
+
+OCCT also quite reliably finds errors using the "3D" test type, but double
+check it doesn't throttle down for the card.
+
 ### Results for 3080
 
 +60mhz core, +850mhz memory
