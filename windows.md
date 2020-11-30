@@ -186,14 +186,21 @@ Since there's error correction, this might still not have good performance,
 though. Try lowering the memory clock 50mhz at a time and recording benchmark
 results to find the optimal value.
 
-### OCCT validation
+### Validation
 
-OCCT also quite reliably finds errors using the "3D" test type, but double
-check it doesn't throttle down for the card.
+I run the following benchmarks in sequence to get a good overview of different
+game types, since they demand different clocks/limits:
+
+- Old games: Sky Diver stress test
+- Modern-ish games at low res: Fire Strike stress test
+- Modern high-res: Time Spy extreme stress test
+
+OCCT 3D test is less useful since the card throttles down hard due to
+power/thermal limits.
 
 ### Results for 3080
 
-+60mhz core, +850mhz memory
++70mhz core, +850mhz memory
 
 ## Memory
 
