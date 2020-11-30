@@ -142,6 +142,10 @@ Also, a good overview [here](https://www.tomshardware.com/reviews/stress-test-cp
 Core clock is a lot more important than memory clock, in general, although
 memory clock may be able to boost to huge values (+1000 from stock).
 
+Memory clock and core clock also affect each other: for example, I can run
+stable at 0/+850 in Watch Dogs 2, or +70/0 but not +70/+850, even before
+reaching thermal limits. In general, prioritise core over memory.
+
 Use MSI Afterburner, and bump core voltage (if available, not on this 1080),
 power, and temp limits to max.
 
