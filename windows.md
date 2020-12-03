@@ -204,7 +204,7 @@ power/thermal limits.
 
 ### Results for 3080
 
-+70mhz core, +850mhz memory
++40mhz core, +750mhz memory
 
 ## Memory
 
@@ -330,3 +330,9 @@ I'd keep hwinfo64 running in the background in sensors mode on startup, just to
 double check there are no WHEA errors over time.
 
 Also the MSI RivaTuner overlay is quite useful in-game.
+
+## Final overclocks for 2020 build
+
+- 5.1ghz all-core @ 1.4v with LLC6
+- 4140 18-20-20-45 @ 1.4v
+- GPU: +40 core/+750 mem
