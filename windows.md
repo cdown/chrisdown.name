@@ -78,6 +78,20 @@ on reads:
 
     fsutil behavior set disablelastaccess 1
 
+## Disable FTH
+
+Fault Tolerant Heap is enabled on repeated crashes, but having it enabled in
+games will just reduce performance. You can clear the cache with:
+
+    Rundll32.exe fthsvc.dll,FthSysprepSpecialize
+
+And disable it entirely with:
+
+    Windows Registry Editor Version 5.00
+    
+    [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\FTH]
+    "Enabled"=dword:00000000
+
 ## OBS settings
 
 I record quite a few videos with OBS. At least in Assetto Corsa, I often
