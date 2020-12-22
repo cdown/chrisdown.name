@@ -21,7 +21,7 @@ at scale, developing things like [the Linux kernel](https://lore.kernel.org/patc
 technologies.
 
 Outside of that, I dabble in
-[photography](https://www.flickr.com/photos/chrisdown/albums/72157711447135721)
+[photography](https://www.flickr.com/photos/chrisdown/albums/72157711447135721?layout=justified)
 and [sim racing](/racing.html).
 
 [Facebook]: https://www.facebook.com
