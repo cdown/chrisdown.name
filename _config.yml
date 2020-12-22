@@ -35,6 +35,9 @@ header:
     - icon: book
       url: /archive.html
       title: Blog archive
+    - icon: camera
+      url: https://www.flickr.com/photos/chrisdown/albums/72157711447135721
+      title: My photos on Flickr
     - icon: linkedin
       url: https://www.linkedin.com/in/chrisldown
       title: My LinkedIn profile
