@@ -339,6 +339,10 @@ table {
         overflow-x: auto;
         -ms-overflow-style: -ms-autohiding-scrollbar;
     }
+
+    .hide-if-small {
+        display: none;
+    }
 }
 
 th, td {

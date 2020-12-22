@@ -65,8 +65,8 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
         </ul>
         <ul class="extra">
           {% for link in site.header.links %}
-          <li title="{{ link.title | xml_escape }}">
-            <a href="{{ link.url }}">
+          <li title="{{ link.title | xml_escape }}" {% if link.hide_if_small %}class="hide-if-small"{% endif %}>
+            <a href="{{ link.url }}" {% if link.hide_if_small %}class="hide-if-small"{% endif %}>
               <span aria-hidden="true" class="font-awesome-{{ link.icon }}"></span>
               <span class="screen-reader-text">{{ link.title | xml_escape }}</span>
             </a>
