@@ -1,8 +1,8 @@
 ---
 layout: default
-title: "Chris Down"
+title: "Chris Down, Linux SRE"
 description:
-    "Linux sysadmin, SRE, and developer living in London, England, currently
+    "Linux SRE and developer living in London, England, currently
     helping Facebook scale to almost 3 billion users."
 ---
 
