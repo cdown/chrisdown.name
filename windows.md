@@ -30,6 +30,27 @@ don't use it, so:
 Even with this the SearchUI process keeps going and causes huge offcpu spikes
 for games, but sadly Windows updates bring back the executable, so eh...
 
+## Disable fullscreen optimisations
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_CURRENT_USER\System\GameConfigStore]
+    "GameDVR_FSEBehaviorMode"=dword:00000002
+    "GameDVR_HonorUserFSEBehaviorMode"=dword:00000001
+    "GameDVR_FSEBehavior"=dword:00000002
+    "GameDVR_DXGIHonorFSEWindowsCompatible"=dword:00000001
+
+## Enable Hardware Accelerated GPU Scheduling
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers]
+    "HwSchMode"=dword:00000002
+
+## Enable Variable Refresh Rate.
+
+Display, Graphics settings, enable VRR.
+
 ## Caps to ctrl
 
     Windows Registry Editor Version 5.00
