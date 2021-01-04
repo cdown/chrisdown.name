@@ -51,6 +51,10 @@ for games, but sadly Windows updates bring back the executable, so eh...
 
 Display, Graphics settings, enable VRR.
 
+## Turn on Developer Mode
+
+This allows `mklink` and other things without an admin prompt.
+
 ## Caps to ctrl
 
     Windows Registry Editor Version 5.00
