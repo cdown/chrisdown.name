@@ -21,6 +21,10 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
     {% endif %}
     <meta name="viewport" content="width=device-width">
 
+    {% if page.id %}{% comment %} This is a post, which is likely to use mono {% endcomment %}
+    <link rel="preload" crossorigin as="font" href="/fonts/droid-sans-mono.woff2">
+    {% endif %}
+
     <link rel="stylesheet" href="/css/style.css">
     <link rel="alternate" type="application/atom+xml" title="Recent articles" href="/feed.xml">
     <link rel="icon" href="/favicon.ico">
