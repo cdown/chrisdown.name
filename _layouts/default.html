@@ -21,9 +21,8 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
     {% endif %}
     <meta name="viewport" content="width=device-width">
 
-    {% if page.id %}{% comment %} This is a post, which is likely to use mono, and only those can use highlighting, which is deferred {% endcomment %}
+    {% if page.id %}{% comment %} This is a post, which is likely to use mono {% endcomment %}
     <link rel="preload" crossorigin as="font" href="/fonts/droid-sans-mono.woff2">
-    <link rel="preload" href="/css/syntax.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     {% endif %}
 
     <link rel="stylesheet" href="/css/style.css">
