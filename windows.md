@@ -295,6 +295,10 @@ the benchmark is pretty clear: a very small (1fps) boost in average FPS, but a
 large increase in stability with default XMP values of 4140 19-23-23-45, which
 in my case can be reduced further to 18-20-20-45.
 
+After more testing with Karhu, though, I needed to not only go back to XMP 4140
+19-23-23-45, but also up the voltage to 1.45v to pass 10h/10000% coverage with
+CPU cache default.
+
 ## CPU
 
 Modern CPUs have a few complications when it comes to overclocking:
@@ -372,6 +376,6 @@ Also the MSI RivaTuner overlay is quite useful in-game.
 
 ## Final overclocks for 2020 build
 
-- 5.1ghz all-core @ 1.4v with LLC6
-- 4140 18-20-20-45 @ 1.4v
+- CPU: 5.1ghz all-core @ 1.4v with LLC6
+- RAM: 4140 19-23-23-45 @ 1.45v
 - GPU: +40 core/+750 mem
