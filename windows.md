@@ -173,6 +173,7 @@ Some generic validation utilities to check improvements:
 - [3DMark](https://benchmarks.ul.com/3dmark)
 - [PerformanceTest](https://www.passmark.com/products/performancetest/) (deeper memory test than UserBenchmark)
 - [hwinfo64](https://www.hwinfo.com/download/)
+  - Disable nvidia monitoring due to [this](https://www.hwinfo.com/forum/threads/hwinfo64-v6-40-4330-is-leaking-handles.6970/)
 
 Also, a good overview [here](https://www.tomshardware.com/reviews/stress-test-cpu-pc-guide,5461.html).
 
