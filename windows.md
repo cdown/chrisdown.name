@@ -359,11 +359,8 @@ world, it works.
 
 ## Nvidia CP
 
-You probably want to set these to Maximum Performance in Nvidia CP, just to
-avoid the ramp up after no load throttling.
-
-I also set texture filtering quality to high performance globally -- I've never
-seen a difference anywhere but in FPS.
+I set texture filtering quality to high performance globally -- I've never seen
+a difference anywhere but in FPS.
 
 You can also disable Ansel with Nvidia Inspector, if it's causing issues.
 Currently it's in the "Common" section.
