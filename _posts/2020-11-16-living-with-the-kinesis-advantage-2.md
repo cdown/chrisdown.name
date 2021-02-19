@@ -2,6 +2,7 @@
 layout: post
 title: "Programming/gaming with the Kinesis Advantage 2"
 description: "Advice on programming, gaming, and more with the Advantage 2"
+hidden: true
 ---
 
 Top among the things I'm most glad that I rescued from the office before access was barred for COVID has to be my Advantage 2.
