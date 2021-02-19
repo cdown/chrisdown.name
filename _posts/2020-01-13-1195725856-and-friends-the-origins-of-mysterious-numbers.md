@@ -52,8 +52,8 @@ is:
 #define RPC_FRAGMENT_SIZE_MASK   (~RPC_LAST_STREAM_FRAGMENT)
 {% endhighlight %}
 
-Okay, so we will only keep the first 31 bits and zero out the rest, since `~`
-is bitwise `NOT`.
+Okay, so we will only keep the first 31 bits and zero out the high bit, since
+`~` is bitwise `NOT`.
 
 That means that these numbers come from the first four bytes of the fragment,
 omitting the final highest bit, which is reserved to record whether the
