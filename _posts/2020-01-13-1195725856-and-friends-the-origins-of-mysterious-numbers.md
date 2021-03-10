@@ -111,37 +111,46 @@ much more quickly. Maybe I'll send a patch upstream to do that in
 `svc_tcp_recv_record` and a few other places in the kernel that directly parse
 the first few data bytes from packets as an integer, let's see.
 
-Here's a trivial script that can generate a bunch of other integers for HTTP
+Here's a trivial program that can generate a bunch of other integers for HTTP
 that might be of interest:
 
-{% highlight python %}
-#!/usr/bin/env python
+{% highlight c %}
+#include <assert.h>
+#include <byteswap.h>
+#include <inttypes.h>
+#include <stdio.h>
+#include <string.h>
 
-import struct
+#define print_conversion(type, fmt, s_func, method) \
+    do {                                            \
+        type *_t;                                   \
+        if (strlen(method) >= sizeof(type)) {       \
+            _t = (type *)method;                    \
+            printf("%.*s,%zu,%" fmt ",%" fmt "\n",  \
+                   (int)strlen(method) - 1, method, \
+                   sizeof(type), *_t, s_func(*_t)); \
+        }                                           \
+    } while (0)
 
-def interpret_as(fmt, data):
-    nr_bytes = struct.calcsize(fmt)
-    data_fmt = "{:%(b)d.%(b)d}" % {"b": nr_bytes}
-    padded_data = data_fmt.format(data).encode("ascii")
-    return "{},{},{},{}".format(
-        data, nr_bytes,
-        struct.unpack("<" + fmt, padded_data)[0],
-        struct.unpack(">" + fmt, padded_data)[0],
-    )
+int main(void) {
+    const char *methods[] = {"GET ",   "HEAD ",   "POST ",
+                             "PUT ",   "DELETE ", "OPTIONS ",
+                             "TRACE ", "PATCH ",  "CONNECT "};
+    size_t i;
 
-print("data,bytes,little-endian,big-endian")
+    printf("data,bytes,little-endian,big-endian\n");
 
-for method in ["GET", "HEAD", "POST", "PUT", "DELETE",
-               "OPTIONS", "TRACE", "PATCH", "CONNECT"]:
-    # Since none of these use the high bit, signed/unsigned
-    # results are the same, so only need to check one
-    assert ord(method[0]) & 1 << 7 == 0
+    for (i = 0; i < sizeof(methods) / sizeof(methods[0]); i++) {
+        const char *method = methods[i];
 
-    if len(method) >= 7:  # Known: method + " "
-        print(interpret_as("Q", method))  # u64
+        /* No high bit, so no need to check signed integers */
+        assert((method[0] & (1 << 7)) == 0);
 
-    print(interpret_as("I", method))  # u32
-    print(interpret_as("H", method))  # u16
+        print_conversion(uint64_t, PRIu64, bswap_64, method);
+        print_conversion(uint32_t, PRIu32, bswap_32, method);
+        print_conversion(uint16_t, PRIu16, bswap_16, method);
+    }
+}
 {% endhighlight %}
 
 And the results:
