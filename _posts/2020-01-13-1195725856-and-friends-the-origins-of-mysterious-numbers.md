@@ -141,14 +141,13 @@ int main(void) {
     printf("data,bytes,little-endian,big-endian\n");
 
     for (i = 0; i < sizeof(methods) / sizeof(methods[0]); i++) {
-        const char *method = methods[i];
-
         /* No high bit, so no need to check signed integers */
-        assert((method[0] & (1 << 7)) == 0);
+        const unsigned char first = methods[i][0];
+        assert((first & (1 << 7)) == 0);
 
-        print_conversion(uint64_t, PRIu64, bswap_64, method);
-        print_conversion(uint32_t, PRIu32, bswap_32, method);
-        print_conversion(uint16_t, PRIu16, bswap_16, method);
+        print_conversion(uint64_t, PRIu64, bswap_64, methods[i]);
+        print_conversion(uint32_t, PRIu32, bswap_32, methods[i]);
+        print_conversion(uint16_t, PRIu16, bswap_16, methods[i]);
     }
 }
 {% endhighlight %}
