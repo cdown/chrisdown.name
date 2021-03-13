@@ -118,36 +118,45 @@ that might be of interest:
 #include <assert.h>
 #include <byteswap.h>
 #include <inttypes.h>
+#include <limits.h>
 #include <stdio.h>
 #include <string.h>
 
-#define print_conversion(type, fmt, s_func, method) \
-    do {                                            \
-        type *_t;                                   \
-        if (strlen(method) >= sizeof(type)) {       \
-            _t = (type *)method;                    \
-            printf("%.*s,%zu,%" fmt ",%" fmt "\n",  \
-                   (int)strlen(method) - 1, method, \
-                   sizeof(type), *_t, s_func(*_t)); \
-        }                                           \
+#define _print_conversion(type, fmt, bs_func, hdr)              \
+    do {                                                        \
+        if (strlen(hdr) >= sizeof(type)) {                      \
+            type *_t = (type *)hdr;                             \
+            printf("%.*s,%zu,%" fmt ",%" fmt "\n",              \
+                   (int)strlen(hdr) - 2, hdr, sizeof(type),     \
+                   *_t, bs_func(*_t));                          \
+        }                                                       \
     } while (0)
 
+#define print_conversion(bits, hdr)                             \
+    _print_conversion(uint##bits##_t, PRIu##bits, bswap_##bits, \
+                      hdr)
+
 int main(void) {
-    const char *methods[] = {"GET ",   "HEAD ",   "POST ",
-                             "PUT ",   "DELETE ", "OPTIONS ",
-                             "TRACE ", "PATCH ",  "CONNECT "};
+    const char *methods[] = {"GET",   "HEAD",   "POST",
+                             "PUT",   "DELETE", "OPTIONS",
+                             "TRACE", "PATCH",  "CONNECT"};
     size_t i;
 
     printf("data,bytes,little-endian,big-endian\n");
 
     for (i = 0; i < sizeof(methods) / sizeof(methods[0]); i++) {
-        /* No high bit, so no need to check signed integers */
-        const unsigned char first = methods[i][0];
-        assert((first & (1 << 7)) == 0);
+        int ret;
+        char hdr[16];
 
-        print_conversion(uint64_t, PRIu64, bswap_64, methods[i]);
-        print_conversion(uint32_t, PRIu32, bswap_32, methods[i]);
-        print_conversion(uint16_t, PRIu16, bswap_16, methods[i]);
+        /* No high bit, so no need to check signed integers */
+        assert(!(methods[i][0] & (1U << (CHAR_BIT - 1))));
+
+        ret = snprintf(hdr, sizeof(hdr), "%s /", methods[i]);
+        assert(ret > 0 && ret < (int)sizeof(hdr));
+
+        print_conversion(64, hdr);
+        print_conversion(32, hdr);
+        print_conversion(16, hdr);
     }
 }
 {% endhighlight %}
@@ -164,6 +173,7 @@ And the results:
 | POST    | 2     | 20304               | 20559               |
 | PUT     | 4     | 542397776           | 1347769376          |
 | PUT     | 2     | 21840               | 20565               |
+| DELETE  | 8     | 3395790347279549764 | 4919422028622405679 |
 | DELETE  | 4     | 1162626372          | 1145392197          |
 | DELETE  | 2     | 17732               | 17477               |
 | OPTIONS | 8     | 2329291534720323663 | 5715160600973038368 |
