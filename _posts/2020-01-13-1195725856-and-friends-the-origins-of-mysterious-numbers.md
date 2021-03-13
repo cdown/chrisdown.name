@@ -125,10 +125,10 @@ that might be of interest:
 #define _print_conversion(type, fmt, bs_func, hdr)              \
     do {                                                        \
         if (strlen(hdr) >= sizeof(type)) {                      \
-            type *_t = (type *)hdr;                             \
+            type *_hdr_conv = (type *)hdr;                      \
             printf("%.*s,%zu,%" fmt ",%" fmt "\n",              \
                    (int)strlen(hdr) - 2, hdr, sizeof(type),     \
-                   *_t, bs_func(*_t));                          \
+                   *_hdr_conv, bs_func(*_hdr_conv));            \
         }                                                       \
     } while (0)
 
