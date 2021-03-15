@@ -122,19 +122,32 @@ that might be of interest:
 #include <stdio.h>
 #include <string.h>
 
-#define _print_conversion(type, fmt, bs_func, hdr)              \
+#define _print_reinterpreted(type, fmt, bs_func, hdr)           \
     do {                                                        \
         if (strlen(hdr) >= sizeof(type)) {                      \
             type *_hdr_conv = (type *)hdr;                      \
+            type _le, _be;                                      \
+            if (system_is_little_endian()) {                    \
+                _le = *_hdr_conv;                               \
+                _be = bs_func(*_hdr_conv);                      \
+            } else {                                            \
+                _le = bs_func(*_hdr_conv);                      \
+                _be = *_hdr_conv;                               \
+            }                                                   \
             printf("%.*s,%zu,%" fmt ",%" fmt "\n",              \
                    (int)strlen(hdr) - 2, hdr, sizeof(type),     \
-                   *_hdr_conv, bs_func(*_hdr_conv));            \
+                   _le, _be);                                   \
         }                                                       \
     } while (0)
 
-#define print_conversion(bits, hdr)                             \
-    _print_conversion(uint##bits##_t, PRIu##bits, bswap_##bits, \
-                      hdr)
+#define print_reinterpreted(bits, hdr)                          \
+    _print_reinterpreted(uint##bits##_t, PRIu##bits,            \
+                         bswap_##bits, hdr)
+
+static int system_is_little_endian(void) {
+    static const int tmp = 1;
+    return *(char *)&tmp == 1;
+}
 
 int main(void) {
     const char *methods[] = {"GET",   "HEAD",   "POST",
@@ -154,9 +167,9 @@ int main(void) {
         ret = snprintf(hdr, sizeof(hdr), "%s /", methods[i]);
         assert(ret > 0 && ret < (int)sizeof(hdr));
 
-        print_conversion(64, hdr);
-        print_conversion(32, hdr);
-        print_conversion(16, hdr);
+        print_reinterpreted(64, hdr);
+        print_reinterpreted(32, hdr);
+        print_reinterpreted(16, hdr);
     }
 }
 {% endhighlight %}
