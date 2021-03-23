@@ -67,7 +67,9 @@ After doing that, you'll probably notice that there is now an annoying clicking 
 
 ## Scroll lock shutdown
 
-For reasons I don't quite understand, Scroll Lock on my model sends an `XF86PowerOff` keysym, which is hilarious when I press Scroll Lock by accident and my computer turns off. If this happens to you as well -- please tell me about it, because nobody else seems to have this issue and I think I'm going insane -- and then you can rebind Scroll Lock by doing Program + F12, press Scroll Lock, press Scroll Lock again, and then pressing Program to rebind the key. Now Scroll Lock should actually operate... Scroll Lock. Go figure.
+For reasons I don't quite understand<sup>†</sup>, Scroll Lock on my model sends an `XF86PowerOff` keysym, which is hilarious when I press Scroll Lock by accident and my computer turns off. If this happens to you as well -- please tell me about it, because nobody else seems to have this issue and I think I'm going insane -- and then you can rebind Scroll Lock by doing Program + F12, press Scroll Lock, press Scroll Lock again, and then pressing Program to rebind the key. Now Scroll Lock should actually operate... Scroll Lock. Go figure.
+
+<small><sup>†</sup> [Dan Kessler](http://www.dankessler.me/) sent me an e-mail (thanks!) noting this is documented [on Kinesis' website](https://kinesis-ergo.com/support/advantage2/) (but apparently not in the actual manual...): "The keypad = key becomes a Mac keypad = key and Scroll lock initiates the shutdowndialogue (sic) (caution: on a PC this leads to an immediate shutdown!)" </small>
 
 ## For tiling window manager users: Mac mode
 
