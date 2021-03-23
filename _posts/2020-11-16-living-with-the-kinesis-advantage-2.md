@@ -47,7 +47,7 @@ You can see here that the device is a 4MB one, so download the 4MB update, not t
 
 You can now press Program + F1 to unmount the virtual drive again, followed by Program + Shift + U to do the update. Don't touch anything for 60 seconds, just to be safe, then press the "keypad" key and check if the LED comes on to check if the keyboard is back in operation.
 
-All going well, you should not we able to press Program + Esc again in your dumping ground of choice, and see that everything was upgraded:
+All going well, you should now be able to press Program + Esc again in your dumping ground of choice, and see that everything was upgraded:
 
     % cat >/dev/null
     Model> Advantage2
