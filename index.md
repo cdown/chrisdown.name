@@ -42,6 +42,7 @@ I am a creator, contributor, or maintainer of a number of projects, including:
 
 - [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) — modern resource control and accounting
 - [clipmenu](https://github.com/cdown/clipmenu) — a clipboard manager with a dmenu frontend
+- [dwm](https://dwm.suckless.org/) — dynamic window manager for X
 - [GNU bash](https://www.gnu.org/software/bash/) — the GNU project's shell
 - [hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced QuickCheck style testing library for Python
 - [Linux](https://lore.kernel.org/patchwork/project/lkml/list/?series=&submitter=25468&state=*&q=&archive=&delegate=) — a free and open-source OS kernel
