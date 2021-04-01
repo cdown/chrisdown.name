@@ -18,7 +18,7 @@
 [class^="font-awesome-"]:before,
 [class*=" font-awesome-"]:before {
   display: inline-block;
-  speak: none;
+  speak: never;
 }
 
 .font-awesome-book:before { content: '\e800'; } /* '' */
