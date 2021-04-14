@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Moving to TeamCity from Jenkins
+hidden: true
 ---
 
 At work, we're slowly migrating from [Jenkins][] to [TeamCity][] in the hope of

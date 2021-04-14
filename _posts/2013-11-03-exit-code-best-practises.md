@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Best practices when designating exit codes in command line programs
+hidden: true
 ---
 
 There is one thing which I frequently see in command line applications,
