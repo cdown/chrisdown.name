@@ -15,7 +15,8 @@ conceiving, designing, and improving systems that make Facebook and the wider
 industry better.
 
 Most of my active work revolves around making operating systems more efficient
-at scale, developing things like [the Linux kernel](https://lore.kernel.org/patchwork/project/lkml/list/?series=&submitter=25468&state=*&q=&archive=&delegate=),
+at scale, developing things like [the Linux
+kernel](https://lore.kernel.org/patchwork/project/lkml/list/?submitter=25468&state=%2A&series=&q=&delegate=&archive=both),
 [cgroups](https://www.youtube.com/watch?v=ikZ8_mRotT4),
 [systemd](https://github.com/systemd/systemd), and a number of other emerging
 technologies.
@@ -44,7 +45,7 @@ I am a creator, contributor, or maintainer of a number of projects, including:
 - [dwm](https://dwm.suckless.org/) — dynamic window manager for X
 - [GNU bash](https://www.gnu.org/software/bash/) — the GNU project's shell
 - [hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced QuickCheck style testing library for Python
-- [Linux](https://lore.kernel.org/patchwork/project/lkml/list/?series=&submitter=25468&state=*&q=&archive=&delegate=) — a free and open-source OS kernel
+- [Linux](https://lore.kernel.org/patchwork/project/lkml/list/?submitter=25468&state=%2A&series=&q=&delegate=&archive=both) — a free and open-source OS kernel
 - [mack](https://github.com/cdown/mack) — an opinionated, fast music organiser
 - [mpdmenu](https://github.com/cdown/mpdmenu) — control [mpd][] from dmenu
 - [mpv](https://github.com/mpv-player/mpv) — videos on the command line
