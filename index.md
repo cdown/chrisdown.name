@@ -109,7 +109,7 @@ list, I'm probably not actively developing or maintaining them.
 
 
 [SRT files]: https://en.wikipedia.org/wiki/SubRip#SubRip_text_file_format
-[mpd]: http://mpd.wikia.com/
+[mpd]: https://musicpd.org/
 [Hanyu Pinyin]: https://en.wikipedia.org/wiki/Pinyin
 [Arch User Repository]: https://aur.archlinux.org/
 [GitHub]: https://github.com/cdown
