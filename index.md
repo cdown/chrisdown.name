@@ -7,12 +7,12 @@ description:
 ---
 
 
-Hey there! I'm an SRE and software developer, currently working at
-[Facebook][]. I work as part of the Linux Kernel team, responsible for
-kernel-related developments that improve the overall reliability and
-performance of Facebook's user-facing products. In general, my drive is in
-conceiving, designing, and improving systems that make Facebook and the wider
-industry better.
+Hey there! I'm a kernel developer and SRE, primarily working on Linux kernel
+memory management. I work at [Facebook](https://facebook.com) as part of the
+Linux Kernel team, and am responsible for kernel-related developments that
+improve the overall reliability and performance of Facebook's user-facing
+products. In general, my drive is in conceiving, designing, and improving
+systems that make Facebook and the wider industry better.
 
 Most of my active work revolves around making operating systems more efficient
 at scale, developing things like [the Linux
