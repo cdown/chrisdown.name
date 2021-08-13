@@ -67,6 +67,9 @@ list, I'm probably not actively developing or maintaining them.
 
 ## Selected talks
 
+- [The future of Linux resource
+  control](https://www.youtube.com/watch?v=kPMZYoRxtmg) —
+  [LISA](https://www.usenix.org/conference/lisa21)
 - [Linux Memory Management at
   Scale](/2019/07/18/linux-memory-management-at-scale.html) —
   [SREcon](https://www.usenix.org/conference/srecon19asia/presentation/down)/[FOSDEM](https://fosdem.org/2020/schedule/event/containers_memory_management/)
