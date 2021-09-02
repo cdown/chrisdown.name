@@ -14,7 +14,7 @@ As part of this lifecycle, this service stores a mapping from each file's inode
 number to its own metadata relevant to the data retrieved. Simple enough, and
 on the face of it this seems fine: generally the contract the kernel provides
 is that as long as the device, inode number, and generation are the same, this
-is guaranteed to point to the same data during one period of uptime.
+is guaranteed to point to the same data during the lifetime of the kernel.
 
 This is made even simpler by the fact that tmpfs doesn't support inode
 generations -- `ioctl(FS_IOC_GETVERSION)` returns `ENOTTY`:
@@ -64,31 +64,31 @@ So far, everything sounds good, but it was not so in production. On machines
 with high uptimes, the team responsible for this service was seeing
 intermittent failures that appeared to be caused by inode number collisions:
 
-{% highlight bash %}
-[root@service ~]# stat /dev/shm/service/ApplyTuple.h
-  File: '/dev/shm/service/ApplyTuple.h'
-  Size: 7270            Blocks: 16         IO Block: 4096   regular file
-Device: 14h/20d Inode: 3924537249  Links: 5
-Access: (0555/-r-xr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
-Access: 2020-12-19 09:30:01.378353516 -0800
-Modify: 2020-12-19 09:30:01.378353516 -0800
-Change: 2020-12-19 09:30:01.378353516 -0800
- Birth: -
-[root@service ~]# stat /dev/shm/service/PriorityUnboundedQueueSet.h
-  File: '/dev/shm/service/PriorityUnboundedQueueSet.h'
-  Size: 3302            Blocks: 8          IO Block: 4096   regular file
-Device: 14h/20d Inode: 3924537249  Links: 3
-Access: (0555/-r-xr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
-Access: 2020-12-19 09:29:53.007252542 -0800
-Modify: 2020-12-19 09:27:23.370451978 -0800
-Change: 2020-12-19 09:27:29.575526501 -0800
- Birth: -
-[root@service ~]# cksum /dev/shm/service/ApplyTuple.h /dev/shm/service/PriorityUnboundedQueueSet.h
-2624198482 7631 /dev/shm/service/ApplyTuple.h
-3677425165 5658 /dev/shm/service/PriorityUnboundedQueueSet.h
-{% endhighlight %}
+    [root@service ~]# cd /dev/shm/svc
+    [root@service svc]# stat ApplyTuple.h
+      File: 'ApplyTuple.h'
+      Size: 7270            Blocks: 16         IO Block: 4096
+    Device: 14h/20d Inode: 3924537249  Links: 5
+    Access: (0555/-r-xr-xr-x)  Uid: (    0/    root)
+    Access: 2020-12-19 09:30:01.378353516 -0800
+    Modify: 2020-12-19 09:30:01.378353516 -0800
+    Change: 2020-12-19 09:30:01.378353516 -0800
+    Birth: -
+    [root@service svc]# stat PriorityUnboundedQueueSet.h
+      File: 'PriorityUnboundedQueueSet.h'
+      Size: 3302            Blocks: 8          IO Block: 4096
+    Device: 14h/20d Inode: 3924537249  Links: 3
+    Access: (0555/-r-xr-xr-x)  Uid: (    0/    root)
+    Access: 2020-12-19 09:29:53.007252542 -0800
+    Modify: 2020-12-19 09:27:23.370451978 -0800
+    Change: 2020-12-19 09:27:29.575526501 -0800
+    Birth: -
+    [root@service svc]# cksum ApplyTuple.h PriorityUnboundedQueueSet.h
+    2624198482 7631 ApplyTuple.h
+    3677425165 5658 PriorityUnboundedQueueSet.h
 
-Well, this is not good. We not only have two clearly distinct inodes -- for
+Well, this is not good. Notice that the reported inode number for both of these
+files is 3924537249, but we not only have two clearly distinct inodes -- for
 example, inodes store the modification times, and those don't line up -- but
 also completely different data entirely. Clearly something has gone quite
 wrong.
@@ -113,29 +113,30 @@ static DEFINE_PER_CPU(unsigned int, last_ino);
 
 unsigned int get_next_ino(void)
 {
-	unsigned int *p = &get_cpu_var(last_ino);
-	unsigned int res = *p;
+        unsigned int *p = &get_cpu_var(last_ino);
+        unsigned int res = *p;
 
 #ifdef CONFIG_SMP
-	if (unlikely((res & (LAST_INO_BATCH-1)) == 0)) {
-		static atomic_t shared_last_ino;
-		int next = atomic_add_return(LAST_INO_BATCH, &shared_last_ino);
+        if (unlikely((res & (LAST_INO_BATCH-1)) == 0)) {
+                static atomic_t shared_last_ino;
+                int next = atomic_add_return(LAST_INO_BATCH,
+					     &shared_last_ino);
 
-		res = next - LAST_INO_BATCH;
-	}
+                res = next - LAST_INO_BATCH;
+        }
 #endif
 
-	res++;
-	/* get_next_ino should not provide a 0 inode number */
-	if (unlikely(!res))
-		res++;
-	*p = res;
-	put_cpu_var(last_ino);
-	return res;
+        res++;
+        /* get_next_ino should not provide a 0 inode number */
+        if (unlikely(!res))
+                res++;
+        *p = res;
+        put_cpu_var(last_ino);
+        return res;
 }
 {% endhighlight %}
 
-For those not well versed in kernel code, what this says is essentially this:
+What this says is essentially this:
 
 1. Each CPU has its own `last_ino` variable, with its own distinct value.
 2. Get the value of this CPU's `last_ino` variable.
@@ -161,8 +162,9 @@ which gave some pause:
 
 {% highlight c %}
 /*
- * On a 32bit, non LFS stat() call, glibc will generate an EOVERFLOW
- * error if st_ino won't fit in target struct field.
+ * On a 32bit, non LFS stat() call, glibc will generate
+ * an EOVERFLOW error if st_ino won't fit in target struct
+ * field.
  */
 {% endhighlight %}
 
@@ -193,13 +195,13 @@ socket:
 
 {% highlight c %}
 int inet_diag_msg_attrs_fill(struct sock *sk, struct sk_buff *skb,
-			     struct inet_diag_msg *r, int ext,
-			     struct user_namespace *user_ns,
-			     bool net_admin)
+                             struct inet_diag_msg *r, int ext,
+                             struct user_namespace *user_ns,
+                             bool net_admin)
 {
-	/* ... */
-	r->idiag_inode = sock_i_ino(sk);
-	/* ... */
+        /* ... */
+        r->idiag_inode = sock_i_ino(sk);
+        /* ... */
 }
 {% endhighlight %}
 
@@ -208,18 +210,18 @@ the type of `idiag_inode` in `struct inet_diag_msg`?
 
 {% highlight c %}
 struct inet_diag_msg {
-	__u8	idiag_family;
-	__u8	idiag_state;
-	__u8	idiag_timer;
-	__u8	idiag_retrans;
+        __u8        idiag_family;
+        __u8        idiag_state;
+        __u8        idiag_timer;
+        __u8        idiag_retrans;
 
-	struct inet_diag_sockid id;
+        struct inet_diag_sockid id;
 
-	__u32	idiag_expires;
-	__u32	idiag_rqueue;
-	__u32	idiag_wqueue;
-	__u32	idiag_uid;
-	__u32	idiag_inode;  /* uh oh */
+        __u32        idiag_expires;
+        __u32        idiag_rqueue;
+        __u32        idiag_wqueue;
+        __u32        idiag_uid;
+        __u32        idiag_inode;  /* uh oh */
 };
 {% endhighlight %}
 
@@ -231,7 +233,9 @@ longer works because stat() (using `ino_t`) and netlink (using `__u32`) no
 longer agree about the socket's inode number:
 
 {% highlight bash %}
-# netlink says 3293907245 due to overflow, but proc says 16178809133
+# netlink says 3293907245 due to overflow,
+# but proc says 16178809133
+ 
 % ls -l /proc/996/fd
 total 0
 lrwx------ 1 root root 64 Feb 19 03:19 0 -> /dev/null
@@ -247,7 +251,7 @@ and get it away from `get_next_ino()` entirely.
 
 ## Resolution
 
-After quite a bit of back and forth on the patches, ["tmpfs: per-superblock
+After quite a bit of back and forth, my patches in ["tmpfs: per-superblock
 i_ino
 support"](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/patch/?id=e809d5f0b5c912fe981dce738f3283b2010665f0)
 and ["tmpfs: support 64-bit inums
