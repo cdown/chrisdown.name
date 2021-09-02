@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "tmpfs and inode collisions"
+title: "tmpfs inode corruption and the birth of inode64"
 ---
 
 A few months ago I got a report from a service owner that their service was
@@ -265,6 +265,11 @@ We now use `ino_t` everywhere, and for legacy users we simply emulate the old
 behaviour by doing manual wraparounds when we reach UINT_MAX. This also allows
 us to catch these cases when they happen and print a warning for the system
 administrator to act on, suggesting to move to inode64.
+
+Arch Linux also [moved to enable this by
+default](https://twitter.com/unixchris/status/1374081759181205506) from kernel
+5.9-ARCH onwards, which means this feature has been tested widely on real
+workloads. Thanks, Arch folks!
 
 In conclusion:
 
