@@ -260,7 +260,7 @@ were merged into kernel 5.9.
 
 In essence, the patches move tmpfs' inode allocation away from the get_next_ino
 shared pool, in favour of our own
-[superblock](https://www.kernel.org/doc/html/latest/filesystems/ext4/globals.html#super-block)-based
+[superblock](http://www.linfo.org/superblock)-based
 system, and add support for 64-bit inodes using the `inode64` tmpfs mount
 option (or allow having it on by default by enabling `CONFIG_TMPFS_INODE64`
 when compiling the kernel).
