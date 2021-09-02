@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "tmpfs inode corruption and the birth of inode64"
+title: "tmpfs inode corruption: introducing inode64"
 ---
 
 A few months ago I got a report from a service owner that their service was
