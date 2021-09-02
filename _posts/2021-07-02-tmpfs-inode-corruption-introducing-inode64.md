@@ -186,7 +186,7 @@ predict.
 For example, we have code in prod that tries produce a mapping of sockets to a
 list of pids which use them. In order to do this, we use the netlink interface
 to query for sockets in a particular state we care about (say, `LISTEN`), and
-then iterate /prod/pid/fd to find the process or processes which have this
+then iterate /proc/pid/fd to find the process or processes which have this
 socket open.
 
 The net subsystem stores some of its information in its own structs for
