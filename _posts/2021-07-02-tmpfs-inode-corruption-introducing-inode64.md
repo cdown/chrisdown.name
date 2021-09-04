@@ -48,11 +48,9 @@ int main(int argc, char* argv[])
 }
 {% endhighlight %}
 
-{% highlight bash %}
-% : > /dev/shm/test
-% ./generation /dev/shm/test
-ioctl: Inappropriate ioctl for device
-{% endhighlight %}
+    % : > /dev/shm/test
+    % ./generation /dev/shm/test
+    ioctl: Inappropriate ioctl for device
 
 As such, that just leaves device and inode number to distinguish identity, and
 since we're always using /dev/shm as the base with no descendant mountpoints,
