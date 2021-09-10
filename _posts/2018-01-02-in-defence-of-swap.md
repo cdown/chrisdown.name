@@ -282,7 +282,7 @@ are merely tangential -- memory usage, page scans, etc -- and from these
 metrics alone it's very hard to tell an efficient memory configuration from one
 that's trending towards memory contention. There is a group of us at Facebook,
 spearheaded by
-[Johannes](https://patchwork.kernel.org/project/LKML/list/?submitter=45),
+[Johannes](https://github.com/torvalds/linux/commits?author=hnaz),
 working on developing new metrics that expose memory pressure more easily that
 should help with this in future. If you're interested in hearing more about
 this, [I go into detail about one metric being considered in my talk on cgroup
@@ -438,5 +438,5 @@ at around the 25:05 mark:
 
 Many thanks to [Rahul](https://github.com/rahulg),
 [Tejun](https://github.com/htejun), and
-[Johannes](https://patchwork.kernel.org/project/LKML/list/?submitter=45) for
+[Johannes](https://github.com/torvalds/linux/commits?author=hnaz) for
 their extensive suggestions and feedback on this post.

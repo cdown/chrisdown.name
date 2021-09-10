@@ -448,7 +448,7 @@ thinking about the OOM killer.
 しかし、従来の Linux のメモリカウンタを使ってメモリ逼迫が起こっているを判断することはやや難しいです。
 メモリ消費量、ページスキャン、などある程度関係する何かはありますが、なんとか関係している程度でしかありません。
 そしてこれらのメトリックだけから効率的なメモリ配置からメモリ争奪への切り替わり傾向が起きていることを判断するのは非常に難しいです。
-Facebook では [Johannes](https://patchwork.kernel.org/project/LKML/list/?submitter=45) が先陣を切る私たちのグループがあり、メモリ逼迫をもっと容易に明らかにする新しいメトリクスの開発に取り組んでいますので、将来にはこれが役立つでしょう。
+Facebook では [Johannes](https://github.com/torvalds/linux/commits?author=hnaz) が先陣を切る私たちのグループがあり、メモリ逼迫をもっと容易に明らかにする新しいメトリクスの開発に取り組んでいますので、将来にはこれが役立つでしょう。
 これについてもっと聞くことに興味があれば [cgroup v2 についての私の講演で検討中の 1 つのメトリックについて詳細に触れています](https://youtu.be/ikZ8_mRotT4?t=2145) 。
 <!--
 Determination of memory pressure is somewhat difficult using traditional Linux
@@ -700,7 +700,7 @@ at around the 25:05 mark:
 
 ---
 
-この記事への幅広い提案とフィードバックに関して [Rahul](https://github.com/rahulg), [Tejun](https://github.com/htejun), そして [Johannes](https://patchwork.kernel.org/project/LKML/list/?submitter=45) に多大なる感謝を。
+この記事への幅広い提案とフィードバックに関して [Rahul](https://github.com/rahulg), [Tejun](https://github.com/htejun), そして [Johannes](https://github.com/torvalds/linux/commits?author=hnaz) に多大なる感謝を。
 <!--
 Many thanks to [Rahul](https://github.com/rahulg),
 [Tejun](https://github.com/htejun), and
