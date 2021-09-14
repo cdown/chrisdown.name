@@ -3,31 +3,56 @@ layout: default
 title: "Sim racing"
 ---
 
-{% youtube NdexCelrS28 %}
+{% youtube OCHb7Nw7VlA %}
+
+## Selected achievements
+
+I don't do many esports events due to time commitment from work, but here are results from a few I competed in in recent years.
+
+- 1st, [Arcis 24h Le Mans 2021](https://www.youtube.com/watch?v=GIfrPH3HJ8w)
+- 2nd, [RaceDepartment GT Championship S10](https://www.youtube.com/watch?v=OCHb7Nw7VlA)
+- Most race wins: RaceDepartment AC GT3 2019
+- Most race wins: RaceDepartment AC GT3 2020
 
 ## World records
 
+- [Abarth 595 SS Step 2 @ Highlands Short](https://www.youtube.com/watch?v=UkemHIRJ5Zs), Assetto Corsa
+- [BMW M235i Racing @ Kyalami](https://www.youtube.com/watch?v=qQpFRt2IUmc), Assetto Corsa
 - [Ferrari 488 GT3 @ Watkins Glen Boot Classic](https://www.youtube.com/watch?v=Ki6F-1ancYY), Assetto Corsa
+- [Ford Transit @ Nürburgring GT](https://www.youtube.com/watch?v=sTAPmTWPBfI), Assetto Corsa
 - [Ginetta G55 GT4 @ Donington GP](https://www.youtube.com/watch?v=qm2MzFcdw4U), Assetto Corsa
-- [Ginetta G55 GT4 @ Road America](https://www.youtube.com/watch?v=2h_T5sxGBIc), Assetto Corsa
+- [Ginetta G55 GT4 @ Road America (old version)](https://www.youtube.com/watch?v=2h_T5sxGBIc), Assetto Corsa
+- [Ginetta G55 GT4 @ Road America](https://www.youtube.com/watch?v=Gos9e-PsD_U), Assetto Corsa
 - [Maserati GranTurismo GT4 @ NJMP](https://www.youtube.com/watch?v=-Dc0mfbhX8E), Assetto Corsa
 - [Mazda MX-5 @ Goodwood](https://www.youtube.com/watch?v=tClhKWA0X-A), Assetto Corsa
-- [McLaren 650S GT3 @ Bathurst](https://www.youtube.com/watch?v=RX7rvl1Qtmg), Assetto Corsa
+- [McLaren 650S GT3 @ Assen](https://www.youtube.com/watch?v=jtX4LIrrrlo), Assetto Corsa
+- [McLaren 650S GT3 @ Bahrain](https://www.youtube.com/watch?v=dfnRsaFo_XI), Assetto Corsa
+- [McLaren 650S GT3 @ Barbagallo](https://www.youtube.com/watch?v=0ewcatwddpE), Assetto Corsa
+- [McLaren 650S GT3 @ Bathurst](https://www.youtube.com/watch?v=bbDjsyak6zc), Assetto Corsa
+- [McLaren 650S GT3 @ Brands Hatch GP](https://www.youtube.com/watch?v=nky4zb6ojKM), Assetto Corsa
 - [McLaren 650S GT3 @ Bridgehampton](https://www.youtube.com/watch?v=LvUUHBSTIbw), Assetto Corsa
 - [McLaren 650S GT3 @ Cadwell Park](https://www.youtube.com/watch?v=GBqIdZ0rghw), Assetto Corsa
+- [McLaren 650S GT3 @ Chang](https://www.youtube.com/watch?v=WuKa4VXzTo8), Assetto Corsa
+- [McLaren 650S GT3 @ Croft](https://www.youtube.com/watch?v=3SGHcaFs0Z4), Assetto Corsa
 - [McLaren 650S GT3 @ Donington GP](https://www.youtube.com/watch?v=6AUg5jqUoes), Assetto Corsa
+- [McLaren 650S GT3 @ Kyalami](https://www.youtube.com/watch?v=HlK6OaALTy8), Assetto Corsa
 - [McLaren 650S GT3 @ Kyalami](https://www.youtube.com/watch?v=r0UeL8MoZpc), Assetto Corsa
-- [McLaren 650S GT3 @ Le Mans](https://www.youtube.com/watch?v=-_zZXx1DiZY&t=90s), Assetto Corsa
+- [McLaren 650S GT3 @ Le Mans](https://www.youtube.com/watch?v=HdueqMLagAc), Assetto Corsa
+- [McLaren 650S GT3 @ Okayama](https://www.youtube.com/watch?v=EJHXOtWAq78), Assetto Corsa
 - [McLaren 650S GT3 @ Oschersleben](https://www.youtube.com/watch?v=lOwN-pcgMe4), Assetto Corsa
-- [McLaren 650S GT3 @ Portimão](https://www.youtube.com/watch?v=8adD9P4gM7A), Assetto Corsa
+- [McLaren 650S GT3 @ Portimão](https://www.youtube.com/watch?v=LWExOUqj8T8), Assetto Corsa
 - [McLaren 650S GT3 @ Riverside](https://www.youtube.com/watch?v=tbeb8gpFbNw), Assetto Corsa
-- [McLaren 650S GT3 @ Road America](https://www.youtube.com/watch?v=nyVzzfOlQfQ), Assetto Corsa
+- [McLaren 650S GT3 @ Road America](https://www.youtube.com/watch?v=o8mC_oBLRJ4), Assetto Corsa
 - [McLaren 650S GT3 @ Road Atlanta](https://www.youtube.com/watch?v=Q-Ho6vwZ3uA), Assetto Corsa
-- [McLaren 650S GT3 @ Virginia International Raceway](https://www.youtube.com/watch?v=bww-jsXmmU0), Assetto Corsa
+- [McLaren 650S GT3 @ Virginia International Raceway](https://www.youtube.com/watch?v=N2IMQmhFVxk), Assetto Corsa
+- [McLaren 650S GT3 @ Watkins Glen Boot](https://www.youtube.com/watch?v=cQYSbHUpiUc), Assetto Corsa
+- [McLaren 650S GT3 @ Zandvoort](https://www.youtube.com/watch?v=QurUKida4Qs), Assetto Corsa
 - [Porsche 911 RSR @ Daytona Road](https://www.youtube.com/watch?v=TgLVdISlVi4), Assetto Corsa
 - [Porsche 911 RSR @ Watkins Glen Classic](https://www.youtube.com/watch?v=IFnur0YskNo), Assetto Corsa
+- [Porsche 962C ST @ Bridgehampton](https://www.youtube.com/watch?v=4NCjoT9b-84), Assetto Corsa
 - [SP300R @ Brands Hatch Indy](https://www.youtube.com/watch?v=qvyPT3P8aHw), Project CARS
 - [Seat Leon TCR @ Donington GP](https://www.youtube.com/watch?v=CgQbzRjC8ZA), Assetto Corsa
+
 
 ## Other PBs
 
@@ -39,8 +64,7 @@ title: "Sim racing"
 - [Ferrari 488 GT3 @ Monza](https://www.youtube.com/watch?v=6YpVCDh2HfQ), Assetto Corsa, 2nd fastest all time
 - [Ferrari 488 GT3 @ Spa](https://www.youtube.com/watch?v=JpFILXyPTnU), Assetto Corsa, 5th fastest all time
 - [Lotus Evora GTC @ Laguna Seca](https://www.youtube.com/watch?v=tDTUPHYuV20), Assetto Corsa, 6th fastest all time
-- [Mazda MX-5 @ Nurburgring Sprint](https://www.youtube.com/watch?v=wojQuKeo47c), Assetto Corsa, 2nd fastest all time
-- [McLaren 650S GT3 @ Brands Hatch GP](https://www.youtube.com/watch?v=LCtUKypKsp4), Assetto Corsa, 2nd fastest all time
+- [Mazda MX-5 @ Nürburgring Sprint](https://www.youtube.com/watch?v=wojQuKeo47c), Assetto Corsa, 2nd fastest all time
 - [McLaren 650S GT3 @ Chang (Buriram) International](https://www.youtube.com/watch?v=9xpdLmuXRYs), Assetto Corsa, 2nd fastest all time
 - [McLaren 650S GT3 @ Monza](https://www.youtube.com/watch?v=I7hCIJnNMPs), Assetto Corsa, 9th fastest all time
 - [McLaren 650S GT3 @ Mugello](https://www.youtube.com/watch?v=5eB-nOquCqI), Assetto Corsa, 3rd fastest all time
