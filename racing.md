@@ -35,7 +35,6 @@ I don't do many esports events due to time commitment from work, but here are re
 - [McLaren 650S GT3 @ Chang](https://www.youtube.com/watch?v=WuKa4VXzTo8), Assetto Corsa
 - [McLaren 650S GT3 @ Croft](https://www.youtube.com/watch?v=3SGHcaFs0Z4), Assetto Corsa
 - [McLaren 650S GT3 @ Donington GP](https://www.youtube.com/watch?v=6AUg5jqUoes), Assetto Corsa
-- [McLaren 650S GT3 @ Kyalami](https://www.youtube.com/watch?v=HlK6OaALTy8), Assetto Corsa
 - [McLaren 650S GT3 @ Kyalami](https://www.youtube.com/watch?v=r0UeL8MoZpc), Assetto Corsa
 - [McLaren 650S GT3 @ Le Mans](https://www.youtube.com/watch?v=HdueqMLagAc), Assetto Corsa
 - [McLaren 650S GT3 @ Okayama](https://www.youtube.com/watch?v=EJHXOtWAq78), Assetto Corsa
