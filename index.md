@@ -75,7 +75,7 @@ list, I'm probably not actively developing or maintaining them.
   [SREcon](https://www.usenix.org/conference/srecon19asia/presentation/down)/[FOSDEM](https://fosdem.org/2020/schedule/event/containers_memory_management/)
 - [cgroupv2: Linux's new unified resource
   hierarchy](https://www.youtube.com/watch?v=ikZ8_mRotT4) —
-  [FOSDEM](https://archive.fosdem.org/2017/schedule/event/cgroupv2/)/DevOpsDays/[ASG](https://cfp.all-systems-go.io/en/ASG2017/public/events/96)
+  [FOSDEM](https://archive.fosdem.org/2017/schedule/event/cgroupv2/)/DevOpsDays/[ASG](https://twitter.com/ASGConf/status/922010850218725376)
 - [Lessons learned running SSL at
   scale](https://www.youtube.com/watch?v=9Ya8H-9Hrp4) —
   [FOSDEM](https://archive.fosdem.org/2016/schedule/event/sslmanagement/)

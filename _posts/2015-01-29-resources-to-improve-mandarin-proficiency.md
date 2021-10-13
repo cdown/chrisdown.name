@@ -163,15 +163,11 @@ repository of (human translated) example sentences. I have no idea where it
 gets them from, but the examples are numerous, and almost always excellent
 idiomatic representations of their English counterparts.
 
-### Iciba
+### Jukuu
 
-[Iciba][] (爱词霸) is another awesome source of example sentences that is pitched as a
-joint dictionary, translation tool, and source of example sentences. The
-subdomain you actually want is [dj.iciba.com](http://dj.iciba.com), which
-contains a detailed database of example sentences.
-
-This is pretty much the same deal as Ichacha, just with a different set of
-example sentences and a better interface.
+[Jukuu][] (句酷) is another awesome source of example sentences. This is pretty
+much the same deal as Ichacha, just with a different set of example sentences
+and a better interface.
 
 ### Tatoeba
 
@@ -191,7 +187,7 @@ the subtleties of Chinese tonality.
 [Pimsleur]: http://www.pimsleur.com/Learn-Chinese-Mandarin
 [Quizlet]: http://quizlet.com
 [MDBG]: http://www.mdbg.net
-[Iciba]: http://www.iciba.com
+[Jukuu]: http://www.jukuu.com/
 [Tatoeba]: http://tatoeba.org
 [Youdao]: http://www.youdao.com
 [Youdao Android app]: http://m.youdao.com
