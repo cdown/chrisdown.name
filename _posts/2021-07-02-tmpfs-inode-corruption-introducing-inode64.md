@@ -271,7 +271,9 @@ administrator to act on, suggesting to move to inode64.
 Arch Linux also [moved to enable this by
 default](https://twitter.com/unixchris/status/1374081759181205506) from kernel
 5.9-ARCH onwards, which means this feature has been tested widely on real
-workloads. Thanks, Arch folks!
+workloads. Debian [has also followed suit for
+5.14+](https://salsa.debian.org/kernel-team/linux/-/merge_requests/389).
+Thanks, Arch and Debian folks!
 
 In conclusion:
 
