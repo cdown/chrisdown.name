@@ -16,6 +16,9 @@ manually install [Kentie's launcher](https://kentie.net/article/dxguide/) which
 otherwise comes bundled. There's also
 [Han's](https://coding.hanfling.de/launch/), but I've never tried it.
 
+Also get the [D3D10 renderer](https://kentie.net/article/d3d10drv/) if you're
+going to use Kentie's launcher.
+
 To launch directly on Steam and track time played:
 
 1. In the Deus Ex install folder, open the System directory and rename
