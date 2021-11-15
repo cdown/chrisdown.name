@@ -143,7 +143,6 @@ header nav ul.extra li:last-child a {
 header nav ul.extra li a {
     margin: 0 0.4em;
     color: #aaa;
-    text-transform: lowercase;
 }
 
 header nav ul.extra li a:hover {
