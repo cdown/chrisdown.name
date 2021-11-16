@@ -3,16 +3,16 @@ layout: default
 title: "Chris Down, Linux SRE"
 description:
     "Linux SRE and developer living in London, England, currently
-    helping Facebook scale to over 3 billion users."
+    helping Meta scale to over 3 billion users."
 ---
 
 
 Hey there! I'm a kernel developer and SRE, primarily working on Linux kernel
-memory management. I work at [Facebook](https://facebook.com) as part of the
-Linux Kernel team, and am responsible for kernel-related developments that
-improve the overall reliability and performance of Facebook's user-facing
-products. In general, my drive is in conceiving, designing, and improving
-systems that make Facebook and the wider industry better.
+memory management. I work at [Meta] as part of the Linux Kernel team, and am
+responsible for kernel-related developments that improve the overall
+reliability and performance of Meta's user-facing products. In general, my
+drive is in conceiving, designing, and improving systems that make Meta and the
+wider industry better.
 
 Most of my active work revolves around making operating systems more efficient
 at scale, developing things like [the Linux
@@ -24,8 +24,6 @@ technologies.
 Outside of that, I dabble in
 [photography](https://www.flickr.com/photos/chrisdown/albums/72157711447135721?layout=justified)
 and [sim racing](/racing.html).
-
-[Facebook]: https://www.facebook.com
 
 ## Popular articles
 
@@ -126,11 +124,11 @@ list, I'm probably not actively developing or maintaining them.
 
 <div itemscope="" itemtype="http://schema.org/Person">
 <meta itemprop="gender" content="Male">
-<meta itemprop="jobTitle" content="Production Engineer at Facebook">
+<meta itemprop="jobTitle" content="Production Engineer at Meta">
 <meta itemprop="email" content="chris@chrisdown.name">
 <meta itemprop="url" content="https://chrisdown.name">
 <meta itemprop="image" content="https://chrisdown.name/images/hnr.jpg">
-<meta itemprop="worksFor" content="Facebook">
+<meta itemprop="worksFor" content="Meta">
 <meta itemprop="name" content="Chris Down">
-<meta itemprop="description" content="Chris Down is a software developer, currently working as a Production Engineer/SRE at Facebook. He works as part of the Linux Kernel team, responsible for kernel-related developments that improve the overall scalability, performance, and reliability of Facebook’s user-facing products.">
+<meta itemprop="description" content="Chris Down is a software developer, currently working as a Production Engineer/SRE at Meta. He works as part of the Linux Kernel team, responsible for kernel-related developments that improve the overall scalability, performance, and reliability of Meta’s user-facing products.">
 </div>
