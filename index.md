@@ -8,9 +8,9 @@ description:
 
 
 Hey there! I'm a kernel developer and SRE, primarily working on Linux kernel
-memory management. I work at [Meta] as part of the Linux Kernel team, and am
-responsible for kernel-related developments that improve the overall
-reliability and performance of Meta's user-facing products. In general, my
+memory management. I work at [Meta](https://meta.com) as part of the Linux
+Kernel team, and am responsible for kernel-related developments that improve
+the overall reliability and performance of user-facing products. In general, my
 drive is in conceiving, designing, and improving systems that make Meta and the
 wider industry better.
 
