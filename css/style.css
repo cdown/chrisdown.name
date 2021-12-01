@@ -369,7 +369,6 @@ td.status-image a:hover {
 
 /* Syntax highlighting */
 
-.highlight  { background: #ffffff; }
 .highlight .c { color: #999988; font-style: italic } /* Comment */
 .highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
 .highlight .k { font-weight: bold } /* Keyword */

@@ -22,7 +22,7 @@ exclude:
 
 destination: _deploy
 
-highlighter: pygments
+highlighter: rouge
 
 # TODO: inherit some of these from site.links
 
