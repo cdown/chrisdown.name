@@ -3,7 +3,7 @@ layout: post
 title: "The curious case of stalled squashfs reads"
 ---
 
-Here's an interesting issue I and [Tejun](https://github.com/htejun) looked at
+Here's an interesting issue I and [Tejun](https://github.com/torvalds/linux/commits?author=htejun) looked at
 a few days ago that I thought might be interesting to share with a wider
 audience. I hope it can serve as an example that kernel internals aren't just a
 black box when it comes to debugging, and it's possible to work these things

@@ -437,6 +437,6 @@ at around the 25:05 mark:
 ---
 
 Many thanks to [Rahul](https://github.com/rahulg),
-[Tejun](https://github.com/htejun), and
+[Tejun](https://github.com/torvalds/linux/commits?author=htejun), and
 [Johannes](https://github.com/torvalds/linux/commits?author=hnaz) for
 their extensive suggestions and feedback on this post.

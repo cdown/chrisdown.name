@@ -700,10 +700,10 @@ at around the 25:05 mark:
 
 ---
 
-この記事への幅広い提案とフィードバックに関して [Rahul](https://github.com/rahulg), [Tejun](https://github.com/htejun), そして [Johannes](https://github.com/torvalds/linux/commits?author=hnaz) に多大なる感謝を。
+この記事への幅広い提案とフィードバックに関して [Rahul](https://github.com/rahulg), [Tejun](https://github.com/torvalds/linux/commits?author=htejun), そして [Johannes](https://github.com/torvalds/linux/commits?author=hnaz) に多大なる感謝を。
 <!--
 Many thanks to [Rahul](https://github.com/rahulg),
-[Tejun](https://github.com/htejun), and
+[Tejun](https://github.com/torvalds/linux/commits?author=htejun), and
 [Johannes](https://patchwork.kernel.org/project/LKML/list/?submitter=45) for
 their extensive suggestions and feedback on this post.
 -->
