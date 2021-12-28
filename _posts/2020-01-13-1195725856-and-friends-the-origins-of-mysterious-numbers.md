@@ -122,7 +122,7 @@ that might be of interest:
 #include <stdio.h>
 #include <string.h>
 
-#define _print_reinterpreted(type, fmt, bs_func, hdr)           \
+#define print_reinterpreted_inner(type, fmt, bs_func, hdr)      \
     do {                                                        \
         if (strlen(hdr) >= sizeof(type)) {                      \
             type *_hdr_conv = (type *)hdr;                      \
@@ -141,12 +141,12 @@ that might be of interest:
     } while (0)
 
 #define print_reinterpreted(bits, hdr)                          \
-    _print_reinterpreted(uint##bits##_t, PRIu##bits,            \
-                         bswap_##bits, hdr)
+    print_reinterpreted_inner(uint##bits##_t, PRIu##bits,       \
+                              bswap_##bits, hdr)
 
 static int system_is_little_endian(void) {
     static const int tmp = 1;
-    return *(char *)&tmp == 1;
+    return *(const char *)&tmp == 1;
 }
 
 int main(void) {
@@ -160,9 +160,11 @@ int main(void) {
     for (i = 0; i < sizeof(methods) / sizeof(methods[0]); i++) {
         int ret;
         char hdr[16];
+        unsigned const char *check =
+            (unsigned const char *)methods[i];
 
         /* No high bit, so no need to check signed integers */
-        assert(!(methods[i][0] & (1U << (CHAR_BIT - 1))));
+        assert(!(check[0] & (1U << (CHAR_BIT - 1))));
 
         ret = snprintf(hdr, sizeof(hdr), "%s /", methods[i]);
         assert(ret > 0 && ret < (int)sizeof(hdr));
