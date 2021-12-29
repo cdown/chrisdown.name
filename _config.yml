@@ -51,6 +51,7 @@ header:
 plugins:
   - jekyll-redirect-from
   - jekyll-sitemap
+  - jekyll-minifier
 
 # Disable smart quotes
 kramdown:

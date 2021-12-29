@@ -47,5 +47,5 @@ task :deploy => :sync do
 end
 
 task :build do
-  sh "jekyll build"
+  sh "JEKYLL_ENV=production jekyll build"
 end
