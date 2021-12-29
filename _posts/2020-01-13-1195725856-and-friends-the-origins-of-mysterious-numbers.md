@@ -122,6 +122,11 @@ that might be of interest:
 #include <stdio.h>
 #include <string.h>
 
+static int system_is_little_endian(void) {
+    static const int tmp = 1;
+    return *(const char *)&tmp == 1;
+}
+
 #define print_reinterpreted_inner(type, fmt, bs_func, hdr)      \
     do {                                                        \
         if (strlen(hdr) >= sizeof(type)) {                      \
@@ -143,11 +148,6 @@ that might be of interest:
 #define print_reinterpreted(bits, hdr)                          \
     print_reinterpreted_inner(uint##bits##_t, PRIu##bits,       \
                               bswap_##bits, hdr)
-
-static int system_is_little_endian(void) {
-    static const int tmp = 1;
-    return *(const char *)&tmp == 1;
-}
 
 int main(void) {
     const char *methods[] = {"GET",   "HEAD",   "POST",
