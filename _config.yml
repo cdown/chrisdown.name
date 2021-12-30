@@ -19,6 +19,10 @@ exclude:
   - Rakefile
   - env
   - _posts_todo
+  - redirects.json
+
+redirect_from:
+  json: false
 
 destination: _deploy
 
