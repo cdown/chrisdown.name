@@ -20,6 +20,7 @@ exclude:
   - env
   - _posts_todo
   - redirects.json
+  - requirements.txt
 
 redirect_from:
   json: false
