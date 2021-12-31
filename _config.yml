@@ -21,6 +21,9 @@ exclude:
   - _posts_todo
   - redirects.json
   - requirements.txt
+  - purgecss.config.js
+  - package.json
+  - package-lock.json
 
 redirect_from:
   json: false
@@ -61,6 +64,7 @@ plugins:
   - jekyll-redirect-from
   - jekyll-sitemap
   - jekyll-minifier
+  - jekyll-purgecss
 
 # Disable smart quotes
 kramdown:

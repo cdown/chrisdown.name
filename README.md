@@ -6,9 +6,10 @@ This is the source code for the website that is displayed at
 
 ## Installing dependencies
 
-There are both Python and Ruby dependencies. Using [bundler][]'s `bundle
+There are Python, Ruby, and Node dependencies. Using [bundler][]'s `bundle
 install` should give you everything you need on the Ruby side, whereas `pip
 install -r requirements.txt` should give you all of the Python dependencies.
+For node, `npm install purgecss`.
 
 [bundler]: http://bundler.io/
 

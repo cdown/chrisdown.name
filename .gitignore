@@ -1,2 +1,5 @@
 /_deploy
 .jekyll-cache/
+package-lock.json
+package.json
+Gemfile.lock
