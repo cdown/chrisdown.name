@@ -25,6 +25,10 @@ exclude:
 redirect_from:
   json: false
 
+jekyll-minifier:
+  uglifier_args:
+    harmony: true
+
 destination: _deploy
 
 highlighter: rouge
