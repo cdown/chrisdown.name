@@ -93,7 +93,7 @@ a:hover {
 /* We have a single navigation element, in a different colour, that links back
    to the home page. The rest have the normal link styling. */
 header {
-    margin-bottom: 1.5em;
+    margin-bottom: 1em;
     font-size: 1.2em;
 }
 
@@ -159,7 +159,7 @@ header nav ul.home li a {
 
 h1 {
     font-size: 1.6em;
-    margin: 1em 0;
+    margin: 0.6em 0;
 }
 
 h2 {
@@ -206,6 +206,7 @@ footer div p {
 }
 
 article p {
+    margin: 1em 0;
     text-align: justify;
 }
 
