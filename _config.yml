@@ -31,6 +31,7 @@ redirect_from:
 jekyll-minifier:
   uglifier_args:
     harmony: true
+  exclude: 'css/lite-yt-embed.css'  # https://github.com/digitalsparky/jekyll-minifier/issues/50
 
 destination: _deploy
 
