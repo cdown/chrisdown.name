@@ -10,9 +10,8 @@ title: "Sim racing"
 I don't do many esports events due to time commitment from work, but here are results from a few I competed in in recent years.
 
 - 1st, [Arcis 24h Le Mans 2021](https://www.youtube.com/watch?v=GIfrPH3HJ8w)
+- 1st, [RaceDepartment European GT Championship S1](https://www.youtube.com/watch?v=RJ4nk8QuzSQ)
 - 2nd, [RaceDepartment GT Championship S10](https://www.youtube.com/watch?v=OCHb7Nw7VlA)
-- Most race wins: RaceDepartment AC GT3 2019
-- Most race wins: RaceDepartment AC GT3 2020
 
 ## World records
 
