@@ -1,8 +1,6 @@
 ---
 layout: post
 title: Lessons learned running SSL/TLS at scale
-redirect_from:
-  - /ssl/
 ---
 
 A couple of weeks ago I talked at [FOSDEM][] about the TLS systems that I'm

@@ -1,8 +1,6 @@
 ---
 layout: post
 title: "tmpfs inode corruption: introducing inode64"
-redirect_from:
-  - /tmpfs/
 ---
 
 A few months ago I got a report from a service owner that their service was

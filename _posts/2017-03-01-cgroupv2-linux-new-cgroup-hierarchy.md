@@ -1,9 +1,6 @@
 ---
 layout: post
 title: "cgroupv2: Linux's new unified control group hierarchy"
-redirect_from:
-  - /cgroupv2/
-
 ---
 
 This year I was back again at [FOSDEM][] and elsewhere, this time talking about

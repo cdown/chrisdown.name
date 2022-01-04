@@ -1,8 +1,6 @@
 ---
 layout: post
 title: Cleaning, muxing, and extracting subtitles using ffmpeg and the Python srt library
-redirect_from:
-  - /srt/
 ---
 
 I became a huge subtitle user when I met my wife. We both like to watch a lot

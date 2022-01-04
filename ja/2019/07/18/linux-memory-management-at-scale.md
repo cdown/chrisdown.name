@@ -5,8 +5,6 @@ lang: ja
 translations:
     - lang: en
       url: /2019/07/18/linux-memory-management-at-scale.html
-redirect_from:
-    - /swap-ja/
 
 # Otherwise the english is the desc
 description: "これらの会話を通じてどんどん明らかになってきた 1 つの事実は多くのエンジニアは、シニア SRE たちでさえも、 Linux のメモリ管理についていくつかのよくある誤解を持っていて、そしてそれが彼らがサポートするサービスやシステムが本来確実に稼働したり効率的に稼働したりできていたはずのところをそうできていない原因になっているということです。"
