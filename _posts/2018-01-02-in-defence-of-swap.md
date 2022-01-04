@@ -2,14 +2,14 @@
 layout: post
 title: "In defence of swap: common misconceptions"
 translations:
-    - lang: ja
-      url: /ja/2018/01/02/in-defence-of-swap.html
-    - lang: zh
-      url: https://farseerfc.me/in-defence-of-swap.html
-    - lang: ru
-      url: https://web.archive.org/web/20200924111107/https://softdroid.net/v-zashchitu-svopa-rasprostranennye-zabluzhdeniya
+  - lang: ja
+    url: /ja/2018/01/02/in-defence-of-swap.html
+  - lang: zh
+    url: https://farseerfc.me/in-defence-of-swap.html
+  - lang: ru
+    url: https://web.archive.org/web/20200924111107/https://softdroid.net/v-zashchitu-svopa-rasprostranennye-zabluzhdeniya
 redirect_from:
-    - /swap/
+  - /swap/
 
 # Otherwise the japanese is the desc
 description: "tl;dr: Having swap is a reasonably important part of a well functioning system. Without it, sane memory management becomes harder to achieve."

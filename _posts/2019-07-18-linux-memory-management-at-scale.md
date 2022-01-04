@@ -4,6 +4,8 @@ title: "Linux memory management at scale"
 translations:
     - lang: ja
       url: /ja/2019/07/18/linux-memory-management-at-scale.html
+redirect_from:
+    - /lmmas/
 
 # Otherwise the japanese is used as the desc
 description: 'One thing that has become clearer and clearer to me through these conversations is that many engineers -- and even senior SREs -- have a number of common misconceptions about Linux memory management, and this may be causing the services and systems they support to not be able to run as reliably or efficiently as they could be.'

@@ -1,6 +1,8 @@
 ---
 layout: post
 title: "The curious case of stalled squashfs reads"
+redirect_from:
+  - /squashfs/
 ---
 
 Here's an interesting issue I and [Tejun](https://github.com/torvalds/linux/commits?author=htejun) looked at
