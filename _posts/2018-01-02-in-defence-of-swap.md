@@ -8,6 +8,8 @@ translations:
       url: https://farseerfc.me/in-defence-of-swap.html
     - lang: ru
       url: https://web.archive.org/web/20200924111107/https://softdroid.net/v-zashchitu-svopa-rasprostranennye-zabluzhdeniya
+redirect_from:
+    - swap
 
 # Otherwise the japanese is the desc
 description: "tl;dr: Having swap is a reasonably important part of a well functioning system. Without it, sane memory management becomes harder to achieve."
