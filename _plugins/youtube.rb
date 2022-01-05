@@ -14,11 +14,15 @@ class YouTube < Liquid::Tag
   def render(context)
     %Q{
 <script type="text/javascript">
-var link = document.createElement("link");
-link.href = "/css/lite-yt-embed.css";
-link.type = "text/css";
-link.rel = "stylesheet";
-document.getElementsByTagName("head")[0].appendChild(link);
+var ytcss_id = "ytcss";
+if (!document.getElementById(ytcss_id)) {
+  var link = document.createElement("link");
+  link.href = "/css/lite-yt-embed.css";
+  link.id = ytcss_id;
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  document.getElementsByTagName("head")[0].appendChild(link);
+}
 </script>
 <script src="/js/lite-yt-embed.js"></script>
 <lite-youtube videoid="#{@id}" playlabel="Play"></lite-youtube>
