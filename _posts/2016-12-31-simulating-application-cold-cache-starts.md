@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Simulating service cold cache starts with eBPF/strace + oflag=nocache
+hidden: true
 ---
 
 Occasionally I run into problems with cold cache startups for services.
