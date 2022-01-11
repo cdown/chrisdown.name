@@ -61,7 +61,7 @@ redirects = {
 task :create_local_redirects => :build do
   redirects.each do |from, to|
     loc = "_deploy/" + from
-    if File.file?(loc)
+    if File.exists?(loc)
       raise "Redirect stub would overwrite #{loc}"
     end
 
@@ -69,7 +69,8 @@ task :create_local_redirects => :build do
       raise "Missing redirect target to #{to}"
     end
 
-    File.open(loc, "w") {}
+    Dir.mkdir(loc)
+    File.open(loc + "/index.html", "w") {}
   end
 end
 
@@ -90,7 +91,7 @@ end
 
 task :setup_redirects do
   redirects.each do |from, to|
-    sh "s3cmd modify s3://chrisdown.name/#{from} --add-header='x-amz-website-redirect-location:#{to}'"
+    sh "s3cmd modify s3://chrisdown.name/#{from}/index.html --add-header='x-amz-website-redirect-location:#{to}'"
   end
 end
 
