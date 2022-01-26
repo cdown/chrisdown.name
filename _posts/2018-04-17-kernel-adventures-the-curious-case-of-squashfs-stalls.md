@@ -172,11 +172,11 @@ stack is hardcoded to be
  * read/decompress code.
  */
 struct squashfs_cache_entry *squashfs_get_datablock(struct super_block *sb,
-				u64 start_block, int length)
+                                u64 start_block, int length)
 {
-	struct squashfs_sb_info *msblk = sb->s_fs_info;
+        struct squashfs_sb_info *msblk = sb->s_fs_info;
 
-	return squashfs_cache_get(sb, msblk->read_page, start_block, length);
+        return squashfs_cache_get(sb, msblk->read_page, start_block, length);
 }
 {% endhighlight %}
 

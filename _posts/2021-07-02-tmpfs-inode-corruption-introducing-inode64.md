@@ -118,7 +118,7 @@ unsigned int get_next_ino(void)
         if (unlikely((res & (LAST_INO_BATCH-1)) == 0)) {
                 static atomic_t shared_last_ino;
                 int next = atomic_add_return(LAST_INO_BATCH,
-					     &shared_last_ino);
+                                             &shared_last_ino);
 
                 res = next - LAST_INO_BATCH;
         }
