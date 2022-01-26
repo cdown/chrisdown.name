@@ -25,9 +25,6 @@ exclude:
   - package.json
   - package-lock.json
 
-redirect_from:
-  json: false
-
 jekyll-minifier:
   uglifier_args:
     harmony: true
@@ -62,7 +59,6 @@ header:
       title: My Twitter profile
 
 plugins:
-  - jekyll-redirect-from
   - jekyll-sitemap
   - jekyll-purgecss
   - jekyll-minifier

@@ -1,4 +1,5 @@
 require 'date'
+require 'fileutils'
 
 task :default => [:deploy]
 
@@ -56,6 +57,7 @@ redirects = {
   "numbers" => "/2020/01/13/1195725856-and-friends-the-origins-of-mysterious-numbers.html",
   "1195725856" => "/2020/01/13/1195725856-and-friends-the-origins-of-mysterious-numbers.html",
   "tmpfs" => "/2021/07/02/tmpfs-inode-corruption-introducing-inode64.html",
+  "2020/01/13/1195725856-other-mysterious-numbers.html" => "/2020/01/13/1195725856-and-friends-the-origins-of-mysterious-numbers.html",
 }
 
 task :create_local_redirects => :build do
@@ -69,8 +71,14 @@ task :create_local_redirects => :build do
       raise "Missing redirect target to #{to}"
     end
 
-    Dir.mkdir(loc)
-    File.open(loc + "/index.html", "w") {}
+    if loc.end_with?(".html")
+      # Old redirects that used to be handled by jekyll-redirect-from
+      FileUtils.mkdir_p(File.dirname(loc))
+      File.open(loc, "w") {}
+    else
+      Dir.mkdir(loc)
+      File.open(loc + "/index.html", "w") {}
+    end
   end
 end
 
@@ -91,7 +99,10 @@ end
 
 task :setup_redirects do
   redirects.each do |from, to|
-    sh "s3cmd modify s3://chrisdown.name/#{from}/index.html --add-header='x-amz-website-redirect-location:#{to}'"
+    unless from.end_with?(".html")
+      from = "#{from}/index.html"
+    end
+    sh "s3cmd modify s3://chrisdown.name/#{from} --add-header='x-amz-website-redirect-location:#{to}'"
   end
 end
 
