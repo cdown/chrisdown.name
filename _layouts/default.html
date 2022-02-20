@@ -26,6 +26,9 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
     {% endif %}
 
     <link rel="stylesheet" href="/css/style.css">
+    {% if page.flags_css %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flagpack@1.0.5/dist/flagpack.css">
+    {% endif %}
     <link rel="alternate" type="application/atom+xml" title="Recent articles" href="/feed.xml">
     <link rel="icon" href="/favicon.ico">
 
