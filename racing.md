@@ -16,6 +16,10 @@ Drivers:
   - <span class="fp gb"></span> Chris Down
   - <span class="fp us"></span> Dmitry Oss
   - <span class="fp us"></span> Robert Walia
+- 1st, [Arcis AMEC](https://www.youtube.com/watch?v=aKsQZ82Q7Fo)\
+Drivers:
+  - <span class="fp gb"></span> Chris Down
+  - <span class="fp us"></span> Robert Walia
 - 1st, [RaceDepartment European GT Championship S1](https://www.youtube.com/watch?v=RJ4nk8QuzSQ)
 - 2nd, [RaceDepartment GT Championship S10](https://www.youtube.com/watch?v=OCHb7Nw7VlA)
 
