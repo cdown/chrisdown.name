@@ -116,7 +116,7 @@ header nav ul li {
     list-style-type: none;
 }
 
-header nav ul.home {
+header nav span.home {
     float: left;
 }
 
@@ -124,14 +124,14 @@ header nav ul.extra {
     float: right;
 }
 
-header nav ul.home li a {
+header nav span.home a {
     color: #FFF;
     background-color: #CC333F;
     font-weight: bold;
     border-radius: 2px;
 }
 
-header nav ul.home li a:hover {
+header nav span.home a:hover {
     color: #CC333F;
     background-color: rgba(204, 51, 63, 0.1);
 }
@@ -150,7 +150,7 @@ header nav ul.extra li a:hover {
     background-color: transparent;
 }
 
-header nav ul.home li a {
+header nav span.home a {
     margin-left: 0; /* Since this navigation element is always the leftmost, we
                        override it to not have any left margin (whereas the
                        other links in the nav area do. ) */

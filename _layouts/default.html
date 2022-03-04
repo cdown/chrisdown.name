@@ -61,15 +61,15 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
   <body>
     <header>
       <nav>
-        <ul class="home">
-          <li><a href="/">
+        <span class="home">
+          <a href="/">
           {% if page.lang == "ja" %}
             クリス・ダウン
           {% else %}
             {{ site.personal.name }}
           {% endif %}
-          </a></li>
-        </ul>
+          </a>
+        </span>
         <ul class="extra">
           {% for link in site.header.links %}
           <li title="{{ link.title | xml_escape }}" {% if link.hide_if_small %}class="hide-if-small"{% endif %}>
