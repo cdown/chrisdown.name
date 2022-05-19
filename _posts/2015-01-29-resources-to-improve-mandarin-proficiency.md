@@ -41,7 +41,7 @@ find somewhere to put them down for study.
 
 ### Quizlet
 
-[Quizlet][] is also an awesome resource to help you in your learning. I write
+[Quizlet][] is a great resource to help you in your learning. I write
 down all new phrases that I learn as I hear them, in all configurations, and
 then put them in a Quizlet set. I usually practise them with the flashcards on
 my commute. It also understands Chinese, and can do text-to-speech on the
@@ -65,10 +65,11 @@ achievements.
 
 ### Hanping
 
-[Hanping][] is an awesome dictionary using [CC-CEDICT][] (you can also purchase
-the [ABC][] dictionary for use in the app), an open source Chinese to English
-dictionary. I used to almost exclusively use MDBG, which we will go into later,
-but this has taken over as my favourite app for a few reasons.
+[Hanping][] is a fairly comprehensive dictionary using [CC-CEDICT][] (you can
+also purchase the [ABC][] dictionary for use in the app), an open source
+Chinese to English dictionary. I used to almost exclusively use MDBG, which we
+will go into later, but this has taken over as my favourite app for a few
+reasons.
 
 Some of those reasons include:
 
@@ -116,14 +117,14 @@ looks:
 
 [Youdao][] (有道) is a Chinese dictionary, mostly aimed at Chinese speakers.
 The [Android app][Youdao Android app] (sadly as of 2020 removed from the Google
-Play store) is pretty awesome, although the interface is all in Chinese, which
+Play store) is very useful, although the interface is all in Chinese, which
 might be intimidating if you can't read many characters yet. If MDBG doesn't
 understand your phrase and only gives the meaning of individual characters,
 there's still a good chance Youdao will.
 
 ### Zdic
 
-[Zdic][] is awesome for getting very detailed descriptions of Chinese
+[Zdic][] is very useful for getting very detailed descriptions of Chinese
 characters. It contains extreme detail on calligraphy, radicals, subcomponents,
 variant forms, encoding data, input sequences, and detailed histories and
 etymologies that are very difficult to find elsewhere.
@@ -165,9 +166,9 @@ idiomatic representations of their English counterparts.
 
 ### Jukuu
 
-[Jukuu][] (句酷) is another awesome source of example sentences. This is pretty
-much the same deal as Ichacha, just with a different set of example sentences
-and a better interface.
+[Jukuu][] (句酷) is another highly comprehensive source of example sentences.
+This is pretty much the same deal as Ichacha, just with a different set of
+example sentences and a better interface.
 
 ### Tatoeba
 
