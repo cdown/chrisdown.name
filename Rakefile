@@ -6,6 +6,10 @@ task :default => [:deploy]
 gzip_hdr = "Content-Encoding: gzip"
 cc_hdr = "Cache-Control: public, max-age=%d"
 
+# With charset
+html_hdr = "Content-Type: text/html; charset=utf-8"
+css_hdr = "Content-Type: text/css; charset=utf-8"
+
 # 1 hour for anything unspecified
 generic_cc = cc_hdr % (60 * 60)
 generic_excludes = ""
@@ -100,6 +104,9 @@ task :set_headers => :sync do
   sh "s3cmd modify --recursive --exclude '*' #{this_week_post_includes} --add-header='#{this_week_post_cc}' s3://chrisdown.name"
   sh "s3cmd modify --recursive --exclude '*' #{static_includes} --add-header='#{static_cc}' s3://chrisdown.name"
   sh "s3cmd modify --add-header='#{enoent_cc}' s3://chrisdown.name/404.html"
+
+  sh "s3cmd modify --recursive --exclude '*' --include '*.html' --add-header='#{html_hdr}' s3://chrisdown.name"
+  sh "s3cmd modify --recursive --exclude '*' --include '*.css' --add-header='#{css_hdr}' s3://chrisdown.name"
 end
 
 task :setup_redirects do
