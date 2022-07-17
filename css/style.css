@@ -79,7 +79,7 @@ html, body {
 }
 
 a {
-    color: #CC333F;
+    color: #B6000F;
     text-decoration: none;
     transition: all 75ms ease-in;
     display: inline;
@@ -87,7 +87,7 @@ a {
 
 a:hover {
     color: #FFF;
-    background-color: #CC333F;
+    background-color: #B6000F;
 }
 
 /* We have a single navigation element, in a different colour, that links back
@@ -126,13 +126,13 @@ header nav ul.extra {
 
 header nav span.home a {
     color: #FFF;
-    background-color: #CC333F;
+    background-color: #B6000F;
     font-weight: bold;
     border-radius: 2px;
 }
 
 header nav span.home a:hover {
-    color: #CC333F;
+    color: #B6000F;
     background-color: rgba(204, 51, 63, 0.1);
 }
 
