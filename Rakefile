@@ -58,6 +58,11 @@ redirects = {
   "1195725856" => "/2020/01/13/1195725856-and-friends-the-origins-of-mysterious-numbers.html",
   "tmpfs" => "/2021/07/02/tmpfs-inode-corruption-introducing-inode64.html",
   "2020/01/13/1195725856-other-mysterious-numbers.html" => "/2020/01/13/1195725856-and-friends-the-origins-of-mysterious-numbers.html",
+
+  # Frequent 404s
+  "feed" => "/feed.xml",
+  "rss" => "/feed.xml",
+  "feeds" => "/feed.xml",
 }
 
 task :create_local_redirects => :build do
