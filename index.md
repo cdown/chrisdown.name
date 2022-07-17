@@ -6,7 +6,6 @@ description:
     helping Meta scale to over 3 billion users."
 ---
 
-
 Hey there! I'm a kernel developer and SRE, primarily working on Linux memory
 management. I work at [Meta](https://meta.com) as part of the Linux Kernel
 team, and am responsible for improving the overall reliability and performance

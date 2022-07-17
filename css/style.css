@@ -157,7 +157,12 @@ header nav span.home a {
     padding: 0 0.4em;
 }
 
-h1 {
+header nav span.home h1 {
+    display: inline;
+    font-size: 1em;
+}
+
+:not(header) h1 {
     font-size: 1.6em;
     margin: 0.6em 0;
 }
