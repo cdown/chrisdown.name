@@ -81,7 +81,6 @@ html, body {
 a {
     color: #B6000F;
     text-decoration: none;
-    transition: all 75ms ease-in;
     display: inline;
 }
 
