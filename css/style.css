@@ -138,6 +138,7 @@ header nav span.home a {
     background-color: #B6000F;
     font-weight: bold;
     border-radius: 2px;
+    transition: all 100ms ease-in;
 }
 
 header nav span.home a:hover {
