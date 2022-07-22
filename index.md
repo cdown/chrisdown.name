@@ -79,10 +79,10 @@ list, I'm probably not actively developing or maintaining them.
 - The Web Foundation model — [University College
   London](https://www.ucl.ac.uk/) lecture
 - [Shell pitfalls and code
-  smells](http://slides.com/chrisdown/avoiding-bash-pitfalls-and-code-smells/fullscreen)
+  smells](https://slides.com/chrisdown/avoiding-bash-pitfalls-and-code-smells/fullscreen)
   — LVL.UP Kuala Lumpur
 - [Pragmatic minimalism as a software design
-  tool](http://slides.com/chrisdown/pragmaticminimalism/fullscreen) — LVL.UP
+  tool](https://slides.com/chrisdown/pragmaticminimalism/fullscreen) — LVL.UP
   Kuala Lumpur
 
 ## Other content on this domain
@@ -118,7 +118,7 @@ list, I'm probably not actively developing or maintaining them.
 [Travis CI]: https://travis-ci.org
 [Facebook]: https://facebook.com/christopherdown
 [Twitter]: https://twitter.com/unixchris
-[last.fm]: http://last.fm/user/unixchris
+[last.fm]: https://last.fm/user/unixchris
 [Reddit]: https://www.reddit.com/user/chrisdown/
 
 <!-- Structured data for Google -->
