@@ -87,6 +87,7 @@ list, I'm probably not actively developing or maintaining them.
 
 ## Other content on this domain
 
+{: .twocol }
 - [Assorted technology-related articles](/archive.html)
 - [Project quality dashboard](/builds)
 - [Sim racing data/notes](/racing.html)
@@ -97,6 +98,7 @@ list, I'm probably not actively developing or maintaining them.
 
 ## Profiles elsewhere
 
+{: .twocol }
 - [Facebook][]
 - [Flickr](https://www.flickr.com/photos/chrisdown/albums/72157711447135721)
 - [GitHub][]

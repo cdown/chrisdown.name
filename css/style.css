@@ -105,6 +105,16 @@ header:after {
     visibility: hidden;
 }
 
+ul.twocol {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+
+    -webkit-column-gap: 2em;
+    -moz-column-gap: 2em;
+    column-gap: 2em;
+}
+
 header nav ul {
     margin: 0;
     padding: 0;
@@ -339,6 +349,12 @@ table {
 
     .hide-if-small {
         display: none;
+    }
+
+    ul.twocol {
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
     }
 }
 
