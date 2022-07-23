@@ -38,26 +38,27 @@ More posts are available on the [archive page](/archive.html).
 I am a creator, contributor, or maintainer of a number of projects, including:
 
 - [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) — modern resource control and accounting
-- [clipmenu](https://github.com/cdown/clipmenu) — a clipboard manager with a dmenu frontend
+- [clipmenu](https://github.com/cdown/clipmenu) — clipboard manager with a dmenu frontend
 - [dwm](https://dwm.suckless.org/) — dynamic window manager for X
 - [GNU bash](https://www.gnu.org/software/bash/) — the GNU project's shell
-- [hypothesis](https://github.com/DRMacIver/hypothesis) — an advanced QuickCheck style testing library for Python
-- [Linux](https://github.com/torvalds/linux/commits?author=cdown) — a free and open-source OS kernel
-- [mack](https://github.com/cdown/mack) — an opinionated, fast music organiser
+- [hypothesis](https://github.com/DRMacIver/hypothesis) — advanced QuickCheck style testing for Python
+- [Linux](https://github.com/torvalds/linux/commits?author=cdown) — free and open-source OS kernel
+- [mack](https://github.com/cdown/mack) — opinionated, fast music organiser
 - [mpdmenu](https://github.com/cdown/mpdmenu) — control [mpd][] from dmenu
 - [mpv](https://github.com/mpv-player/mpv) — videos on the command line
 - [nota](https://github.com/cdown/nota) — super simple daily logs with your $EDITOR + git
 - [oomd](https://github.com/facebookincubator/oomd) — next-generation OOM killer
-- [osquery](https://github.com/facebook/osquery) — an OS instrumentation, monitoring, and analysis framework
+- [osquery](https://github.com/facebook/osquery) — OS instrumentation, monitoring, and analysis framework
 - [pass](https://www.passwordstore.org/) — the standard Unix password manager
 - [psi-notify](https://github.com/cdown/psi-notify) — proactively detect machine oversaturation
-- [srt](https://github.com/cdown/srt) — a Python library to deal with [SRT files][]
-- [systemd](https://github.com/systemd/systemd) — a system and service manager for Linux
+- [srt](https://github.com/cdown/srt) — tools and library to handle [SRT subtitles][]
+- [systemd](https://github.com/systemd/systemd) — system and service manager for Linux
 - [taglib-rust](https://github.com/ebassi/taglib-rust) — Rust FFI bindings for taglib
-- [the Pro Git book](https://git-scm.com/book/en/v2) — a guide to Git and its internals
+- [the Pro Git book](https://git-scm.com/book/en/v2) — guide to Git and its internals
 - [tzupdate](https://github.com/cdown/tzupdate) — update /etc/localtime automatically using geolocation
 - [xinput-toggle](https://github.com/cdown/xinput-toggle) — tool to manipulate arbitrary xinput devices
-- [zsh](https://www.zsh.org/) — a highly feature-rich shell
+- [zcfan](https://github.com/cdown/zcfan) — zero-configuration fan control for ThinkPad
+- [zsh](https://www.zsh.org/) — modern Bourne-like shell
 
 You can find other projects on my [GitHub][], although if they're not on this
 list, I'm probably not actively developing or maintaining them.
