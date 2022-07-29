@@ -24,6 +24,7 @@ exclude:
   - purgecss.config.js
   - package.json
   - package-lock.json
+  - _checks
 
 jekyll-minifier:
   uglifier_args:

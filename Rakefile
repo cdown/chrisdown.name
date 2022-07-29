@@ -120,7 +120,11 @@ end
 
 task :deploy => [:create_local_redirects, :sync, :set_headers, :setup_redirects]
 
-task :build => [:build_raw, :gzip]
+task :build => [:build_raw, :check, :gzip]
+
+task :check => :build_raw do
+  sh "_checks/tidy"
+end
 
 task :gzip => :build_raw do
   sh "find _deploy/ -type f #{find_names}" + ' -exec gzip -n -9 {} \; -exec mv {}.gz {} \;'
