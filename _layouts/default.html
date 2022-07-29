@@ -63,7 +63,7 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
   <body>
     <header>
       <nav>
-        <span class="home">
+        <div class="home">
           <h1>
           <a href="/">
           {% if page.lang == "ja" %}
@@ -73,7 +73,7 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
           {% endif %}
           </a>
           </h1>
-        </span>
+        </div>
         <ul class="extra">
           {% for link in site.header.links %}
           <li title="{{ link.title | xml_escape }}" {% if link.hide_if_small %}class="hide-if-small"{% endif %}>
