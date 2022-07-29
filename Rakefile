@@ -124,6 +124,14 @@ task :build => [:build_raw, :check, :gzip]
 
 task :check => :build_raw do
   sh "_checks/tidy"
+  # If you don't specify the link for an anchor, Jekyll is a bit funny and
+  # lets it go through without fatalling (and sets the link to nothing). We
+  # manually check for these to avoid that.
+  sh "! grep -R 'href=\"\"' _deploy"
+  # Newer versions of the markdown interpreter just put the raw anchor text
+  # if you failed to give it a link reference, so we should look for those
+  # too.
+  sh "! grep -IFR '][]' _deploy/"
 end
 
 task :gzip => :build_raw do
