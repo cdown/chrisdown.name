@@ -125,7 +125,7 @@ header nav ul li {
     list-style-type: none;
 }
 
-header nav div.home {
+header nav span.home {
     float: left;
 }
 
@@ -133,7 +133,7 @@ header nav ul.extra {
     float: right;
 }
 
-header nav div.home a {
+header nav span.home a {
     color: #FFF;
     background-color: #B6000F;
     font-weight: bold;
@@ -141,7 +141,7 @@ header nav div.home a {
     transition: all 100ms ease-in;
 }
 
-header nav div.home a:hover {
+header nav span.home a:hover {
     color: #B6000F;
     background-color: rgba(204, 51, 63, 0.1);
 }
@@ -160,14 +160,14 @@ header nav ul.extra li a:hover {
     background-color: transparent;
 }
 
-header nav div.home a {
+header nav span.home a {
     margin-left: 0; /* Since this navigation element is always the leftmost, we
                        override it to not have any left margin (whereas the
                        other links in the nav area do. ) */
     padding: 0 0.4em;
 }
 
-header nav div.home h1 {
+header nav span.home h1 {
     display: inline;
     font-size: 1em;
 }
