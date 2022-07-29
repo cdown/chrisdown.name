@@ -111,7 +111,7 @@ list, I'm probably not actively developing or maintaining them.
 - [Unix and Linux Stack Exchange]({{ site.links.ulse }})
 
 
-[SRT files]: https://en.wikipedia.org/wiki/SubRip#SubRip_text_file_format
+[SRT subtitles]: https://en.wikipedia.org/wiki/SubRip#SubRip_text_file_format
 [mpd]: https://musicpd.org/
 [Hanyu Pinyin]: https://en.wikipedia.org/wiki/Pinyin
 [Arch User Repository]: https://aur.archlinux.org/
