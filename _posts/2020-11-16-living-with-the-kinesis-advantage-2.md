@@ -83,7 +83,7 @@ The Advantage 2 has a few quick rebindings which can be useful. The bindings are
 
 Mac mode, despite its name, is what I found most useful for my tiling window manager setup with dwm. Most programs do not bind anything with the Super key, so that's a good one to use for window management. As such I have dwm configured to use Super as the modifier for most commands related to window and launcher management: moving, closing, launching applications, etc.
 
-I also use Alt as the modifier in individual applications where there are separate tabs. For example, in Irssi, I use Alt + <Letter> to navigate by named channels -- Alt + v to navigate to #vim on Libera Chat for example.
+I also use Alt as the modifier in individual applications where there are separate tabs. For example, in Irssi, I use Alt + Letter to navigate by named channels -- Alt + v to navigate to #vim on Libera Chat for example.
 
 Mac mode sets these up reasonably by default, in a similar way to how you'd use them on a regular keyboard. I found it the most intuitive if you have to switch back and forth between "normal" layout keyboards and the Advantage 2, since you'd usually access those keys with your left thumb anyway.
 
