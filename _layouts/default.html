@@ -25,7 +25,7 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
     <link rel="preload" crossorigin as="font" href="/fonts/droid-sans-mono.woff2">
     {% endif %}
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css?{{ "now" | date: "%s" }}">
     {% if page.flags_css %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flagpack@1.0.5/dist/flagpack.css">
     {% endif %}
