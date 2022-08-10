@@ -40,8 +40,6 @@ I am a creator, contributor, or maintainer of a number of projects, including:
 - [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) — modern resource control and accounting
 - [clipmenu](https://github.com/cdown/clipmenu) — clipboard manager with a dmenu frontend
 - [dwm](https://dwm.suckless.org/) — dynamic window manager for X
-- [GNU bash](https://www.gnu.org/software/bash/) — the GNU project's shell
-- [hypothesis](https://github.com/DRMacIver/hypothesis) — advanced QuickCheck style testing for Python
 - [Linux](https://github.com/torvalds/linux/commits?author=cdown) — free and open-source OS kernel
 - [mack](https://github.com/cdown/mack) — opinionated, fast music organiser
 - [mpdmenu](https://github.com/cdown/mpdmenu) — control [mpd][] from dmenu
@@ -53,7 +51,6 @@ I am a creator, contributor, or maintainer of a number of projects, including:
 - [psi-notify](https://github.com/cdown/psi-notify) — proactively detect machine oversaturation
 - [srt](https://github.com/cdown/srt) — tools and library to handle [SRT subtitles][]
 - [systemd](https://github.com/systemd/systemd) — system and service manager for Linux
-- [taglib-rust](https://github.com/ebassi/taglib-rust) — Rust FFI bindings for taglib
 - [the Pro Git book](https://git-scm.com/book/en/v2) — guide to Git and its internals
 - [tzupdate](https://github.com/cdown/tzupdate) — update /etc/localtime automatically using geolocation
 - [xinput-toggle](https://github.com/cdown/xinput-toggle) — tool to manipulate arbitrary xinput devices
