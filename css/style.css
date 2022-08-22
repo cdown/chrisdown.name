@@ -335,6 +335,19 @@ table {
     border-collapse: collapse;
 }
 
+details {
+  border: 1px solid #eee;
+  padding: 0.6em;
+}
+
+summary {
+  cursor: pointer;
+}
+
+summary > * {
+  display: inline;
+}
+
 /* If the screen is too small to show the whole width, assume
  * we're going to have to scroll tables.
  *
