@@ -344,6 +344,10 @@ details {
   padding: 0.6em;
 }
 
+summary:after {
+    content: "Click to expand";
+}
+
 summary {
   font-weight: bold;
   cursor: pointer;

@@ -204,7 +204,7 @@ And the results:
 Here's an expandable complete list with all methods [known to
 IANA](https://www.iana.org/assignments/http-methods/http-methods.xhtml):
 
-{% details Complete list %}
+{% hidden %}
 | data              | bytes | little-endian       | big-endian          |
 |-------------------|-------|---------------------|---------------------|
 | ACL               | 4     | 541868865           | 1094929440          |
@@ -308,7 +308,7 @@ IANA](https://www.iana.org/assignments/http-methods/http-methods.xhtml):
 | VERSION-CONTROL   | 8     | 3264633956239295830 | 6216465378320535085 |
 | VERSION-CONTROL   | 4     | 1397900630          | 1447383635          |
 | VERSION-CONTROL   | 2     | 17750               | 22085               |
-{% enddetails %}
+{% endhidden %}
 
 As expected, if you Google for most of these numbers, you can find an endless
 supply of questions mentioning them in error messages (some previously
