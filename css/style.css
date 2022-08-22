@@ -84,9 +84,13 @@ a {
     display: inline;
 }
 
-a:hover {
+a:hover, summary:hover {
     color: #FFF;
     background-color: #B6000F;
+}
+
+summary {
+    color: #B6000F;
 }
 
 /* We have a single navigation element, in a different colour, that links back
@@ -341,6 +345,7 @@ details {
 }
 
 summary {
+  font-weight: bold;
   cursor: pointer;
 }
 
