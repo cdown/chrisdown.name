@@ -91,6 +91,8 @@ a:hover, summary:hover {
 
 summary {
     color: #B6000F;
+    background-color: #ffe6e8;
+    padding: 0 0.6em;
 }
 
 /* We have a single navigation element, in a different colour, that links back
@@ -340,8 +342,7 @@ table {
 }
 
 details {
-  border: 1px solid #eee;
-  padding: 0.6em;
+  padding: 0.6em 0;
 }
 
 summary:after {
