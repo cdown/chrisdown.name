@@ -71,7 +71,7 @@ We can now reload and apply udev's new config:
 
     # udevadm control --reload-rules
 
-We can now test it out by unplugging the power and setting what happens:
+We can now test it out by unplugging the power and seeing what happens:
 
     % sudo systemctl status battery.target
     ● battery.target - On battery power
