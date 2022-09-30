@@ -37,7 +37,7 @@ about what to do in these scenarios, so these notifications allow you to avoid
 that problem entirely.
 
 To that extent, psi-notify will warn you using whatever desktop notifier you
-have running (eg. GNOME notifications, dunst, xfce4-notifyd) when resources are
+have running (e.g. GNOME notifications, dunst, xfce4-notifyd) when resources are
 starting to become contended, so that you can do something about that. A
 facetious demo is shown below:
 

@@ -31,7 +31,7 @@ To launch directly on Steam and track time played:
 ## Dynamic lighting method autodetection bug
 
 Splinter Cell autodetects that the 750M supports projected textures for dynamic
-lighting (eg. spotlights/flashlights), but this is an old Radeon-only
+lighting (e.g. spotlights/flashlights), but this is an old Radeon-only
 technology, the autodetection is just naive. This results in dynamic
 shadows/lights not being rendered at all. The fix is to explicitly tell SC to
 use shadow buffers instead, which is supported on Nvidia cards. Set this in the
@@ -54,7 +54,7 @@ warned: they are unpolished and not very interesting.
 ## FOV changes
 
 I don't recommend doing any changes to DesiredFOV/DefaultFOV (and thus default
-4:3 res), as it causes overlaid interactions to become misaligned (eg.
+4:3 res), as it causes overlaid interactions to become misaligned (e.g.
 keypads).
 
 ## Graphics tweaks

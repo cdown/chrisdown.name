@@ -5,10 +5,10 @@ title: "tmpfs inode corruption: introducing inode64"
 
 A few months ago I got a report from a service owner that their service was
 crashing when trying to access certain files stored in tmpfs. This service
-provides a way to do things like builds on niche architectures/platforms, and
-as part of that retrieves and stores a large cache of required files for the
-requisite job in `/dev/shm`, preventing needing them to fetch for other jobs
-with the same dependencies.
+provides a way to do things like builds on niche architectures and platforms,
+and as part of that it retrieves and stores a large cache of required files for
+the requisite job in `/dev/shm`, preventing the need to then later fetch the
+same files for other jobs with the same dependencies.
 
 As part of this lifecycle, this service stores a mapping from each file's inode
 number to its own metadata relevant to the data retrieved. Simple enough, and
@@ -94,7 +94,7 @@ wrong.
 ## Volatile inode numbers
 
 On non-volatile filesystems, inode numbers are typically finite and often have
-some kind of implementation-defined semantic meaning (eg. implying where the
+some kind of implementation-defined semantic meaning (e.g. implying where the
 inode is disk). Take for example ext4's bytes-per-inode ratio, which is
 configurable with `mkfs.ext4 -i`. This behaviour means that it's typically very
 hard to get inode number collisions without significant filesystem corruption.
@@ -144,7 +144,7 @@ What this says is essentially this:
    to get another 1024, and so on.
 
 Looks pretty simple, right? Unfortunately, there's something awry that you
-might miss if you just skim over the code, and don't look closely at the
+might miss if you just skim over the code and don't look closely at the
 function and variable types: they're all `unsigned int`. On an x86_64 machine,
 an `unsigned int` is 32 bits wide, and it's pretty trivial to exceed 2^32
 incrementations of the get_next_ino() counter if you're creating a lot of
@@ -153,8 +153,8 @@ come back to that a little later).
 
 If you're a kernel developer, you probably already know that the kernel
 actually has a special type for inode numbers, `ino_t`, and on x86_64 machines,
-it's 64 bits wide. As such a trivial fix might simply be to change
-`get_next_ino` and `last_ino` to be of type `ino_t`. When I tested this, this
+it's 64 bits wide. As such, a trivial fix might simply be to change
+`get_next_ino` and `last_ino` to be of type `ino_t`. When I tested this, it
 appeared to work with no obvious ramifications, but there was a comment above
 which gave some pause:
 
@@ -169,7 +169,7 @@ which gave some pause:
 So the problem is that if you have a 32-bit executable compiled without
 `_FILE_OFFSET_BITS=64` on a system with a 64-bit wide `ino_t`, glibc's `stat()`
 will simply fail with EOVERFLOW for inode numbers greater than 2^32. As such,
-we need a support option for those who need to preserve this legacy behaviour,
+we need a support option for those who need to preserve this legacy behaviour
 while still allowing more modern systems to avoid this issue.
 
 ## Intermediate storage issues
@@ -178,14 +178,14 @@ There is also one more problem: I mentioned earlier that `get_next_ino()` is a
 _global_ pool -- we also use it for things like sockets, pipes, and other
 things that are disconnected from physical storage on the backing filesystem.
 While the original issue was largely isolated to tmpfs, changing
-`get_next_ino()` as a whole meant that some ramifications are harder to
+`get_next_ino()` as a whole meant that some ramifications would be harder to
 predict.
 
-For example, we have code in prod that tries produce a mapping of sockets to a
-list of pids which use them. In order to do this, we use the netlink interface
-to query for sockets in a particular state we care about (say, `LISTEN`), and
-then iterate /proc/pid/fd to find the process or processes which have this
-socket open.
+For example, we have code in prod that tries to produce a mapping of sockets to
+a list of pids which use them. In order to do this, we use the netlink
+interface to query for sockets in a particular state we care about (say,
+`LISTEN`), and then iterate /proc/pid/fd to find the process or processes which
+have this socket open.
 
 The net subsystem stores some of its information in its own structs for
 reference later. One of the things which it stores is the inode number for the
@@ -203,8 +203,8 @@ int inet_diag_msg_attrs_fill(struct sock *sk, struct sk_buff *skb,
 }
 {% endhighlight %}
 
-If you just skim this, this looks fine. But what about if we actually look at
-the type of `idiag_inode` in `struct inet_diag_msg`?
+If you just skim this, it looks fine. But what about if we actually look at the
+type of `idiag_inode` in `struct inet_diag_msg`?
 
 {% highlight c %}
 struct inet_diag_msg {
@@ -224,10 +224,10 @@ struct inet_diag_msg {
 {% endhighlight %}
 
 ...oh dear. `struct inet_diag_msg` explicitly stores the inode number as a
-32-bit wide unsigned integer, and we end up with a similar issue as described
-earlier with a 32-bit userland, just with no nice error handling this time.
-Instead, we simply overflow entirely. This means that this code strategy no
-longer works because stat() (using `ino_t`) and netlink (using `__u32`) no
+32-bit wide unsigned integer, resulting in a similar problem to the one
+described earlier with a 32-bit userland, but with no nice error handling this
+time. Instead, we simply overflow entirely. This means that this code strategy
+no longer works because stat() (using `ino_t`) and netlink (using `__u32`) no
 longer agree about the socket's inode number:
 
 {% highlight bash %}
@@ -240,8 +240,8 @@ lrwx------ 1 root root 64 Feb 19 03:19 0 -> /dev/null
 lrwx------ 1 root root 64 Feb 19 03:19 1 -> socket:[16178809133]
 {% endhighlight %}
 
-At this point it became pretty clear that changing `get_next_ino` itself was
-not going to work -- there are too many callsites already depending on its
+At this point, it became pretty clear that changing `get_next_ino` itself was
+not going to work -- there were too many callsites already depending on its
 behaviour, and there are even callsites like the example here that transcend
 into userspace. No, if this was to be fixed in a way that could be accepted
 upstream, one would have to change how tmpfs handles inode numbering itself,
@@ -278,7 +278,7 @@ Thanks, Arch and Debian folks!
 In conclusion:
 
 - This issue has likely been the root cause of a non-trivial number of
-  unreproducible or transient failures in systems which are dependent on inode
+  unreproducible or transient failures in systems that are dependent on inode
   numbering. Reproducing this issue is heavily dependent on the system state,
   requires a workload which practises heavy file creation in tmpfs, and is
   typically likely to manifest as transient errors which go away when retried.

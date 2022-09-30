@@ -63,7 +63,7 @@ we used `X-GM-LABELS` before.
 
 Clearly this is a lot more complex than it seemed at first :-) For that reason
 I made [gmute](https://github.com/cdown/gmute) which is mail client agnostic --
-you just provide it a mail (eg. from mutt's `pipe-message` command), and it
+you just provide it a mail (e.g. from mutt's `pipe-message` command), and it
 does the rest.
 
 I know that I'm not the only one who wanted the mute feature in mutt, so

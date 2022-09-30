@@ -9,7 +9,7 @@ Link: [Meta developer blog](https://developers.facebook.com/blog/post/2022/09/27
 
 As part of my work improving our production stability at
 [Meta](https://meta.com), one of the areas that I am frequently involved in is
-in improving how operating system concepts and primitives are being used (or
+improving how operating system concepts and primitives are being used (or
 indeed misused).
 
 Most of the blog posts that I write on this personal website have to be
