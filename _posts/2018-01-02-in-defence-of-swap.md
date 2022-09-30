@@ -26,25 +26,25 @@ tl;dr:
    memory reclamation egalitarian and efficient. In fact, using it as
    "emergency memory" is generally actively harmful.
 3. Disabling swap does not prevent disk I/O from becoming a problem under
-   memory contention, it simply shifts the disk I/O thrashing from anonymous
+   memory contention. Instead, it simply shifts the disk I/O thrashing from anonymous
    pages to file pages. Not only may this be less efficient, as we have a
    smaller pool of pages to select from for reclaim, but it may also contribute
    to getting into this high contention state in the first place.
 4. The swapper on kernels before 4.0 has a lot of pitfalls, and has contributed
-   to a lot of people's negative perceptions about swap due to its
+   to a lot of people's negative perceptions of swap due to its
    overeagerness to swap out pages. On kernels >4.0, the situation is
    significantly better.
 5. On SSDs, swapping out anonymous pages and reclaiming file pages are
-   essentially equivalent in terms of performance/latency. On older spinning
+   essentially equivalent in terms of performance and latency. On older spinning
    disks, swap reads are slower due to random reads, so a lower `vm.swappiness`
    setting makes sense there (read on for more about `vm.swappiness`).
 6. Disabling swap doesn't prevent pathological behaviour at near-OOM, although
-   it's true that having swap may prolong it. Whether the system global OOM
+   it's true that having swap may prolong it. Whether the global OOM
    killer is invoked with or without swap, or was invoked sooner or later, the
    result is the same: you are left with a system in an unpredictable state.
    Having no swap doesn't avoid this.
 7. You can achieve better swap behaviour under memory pressure and prevent
-   thrashing using `memory.low` and friends in cgroup v2.
+   thrashing by utilising `memory.low` and friends in cgroup v2.
 
 ---
 
@@ -78,7 +78,7 @@ in heuristics and arcana rather than something that can be explained by simple
 analogy, and requires somewhat more understanding of memory management to
 reason about.
 
-This post is mostly aimed at those who administrate Linux systems and are
+This post is mostly aimed at those who administer Linux systems and are
 interested in hearing the counterpoints to running with undersized/no swap or
 running with `vm.swappiness` set to 0.
 
@@ -211,7 +211,7 @@ v2](https://www.youtube.com/watch?v=ikZ8_mRotT4).
 ### Under moderate/high memory contention
 
 - **With swap:** All memory types have an equal possibility of being reclaimed.
-  This means we have more chance of being able to reclaim pages successfully --
+  This means we have a better chance to be able to reclaim pages successfully --
   that is, we can reclaim pages that are not quickly faulted back in again
   (thrashing).
 - **Without swap:** Anonymous pages are locked into memory as they have nowhere
@@ -365,7 +365,7 @@ calculation either more towards swapping or more towards dropping filesystem
 caches when it could go either way. On SSDs these are basically as expensive as
 each other, so setting `vm.swappiness = 100` (full equality) may work well. On
 spinning disks, swapping may be significantly more expensive since swapping in
-generally requires random reads, so you may want to bias more towards a lower
+general requires random reads, so you may want to bias more towards a lower
 value.
 
 The reality is that most people don't really have a feeling about which their
