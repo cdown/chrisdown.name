@@ -94,7 +94,7 @@ end
 task :sync => :build do
   # First pass for gzipped content only, second will leave them alone
   sh "s3cmd sync --no-mime-magic --no-preserve --verbose --add-header='#{gzip_hdr}' --exclude '*' #{gzip_includes} _deploy/ s3://chrisdown.name"
-  sh "s3cmd sync --no-mime-magic --no-preserve --cf-invalidate --delete-removed --verbose --add-header='#{generic_cc}' _deploy/ s3://chrisdown.name"
+  sh "s3cmd sync --no-mime-magic --no-preserve --delete-removed --verbose --add-header='#{generic_cc}' _deploy/ s3://chrisdown.name"
 end
 
 task :set_headers => :sync do
