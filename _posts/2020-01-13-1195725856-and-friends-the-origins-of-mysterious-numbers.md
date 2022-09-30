@@ -42,7 +42,7 @@ static inline u32 svc_sock_reclen(struct svc_sock *svsk)
 
 `ntohl` converts a uint from network byte ordering to the host's byte ordering.
 The bitwise `AND` with `RPC_FRAGMENT_SIZE_MASK` results in only some of the
-data being retained, and looking at the definition show us how many bits that
+data being retained, and looking at the definition shows us how many bits that
 is:
 
 {% highlight c %}
@@ -83,7 +83,7 @@ are `char`-sized, here's a guess about what might be encoded in them...
 {% endhighlight %}
 
 Oh dear. Somebody is sending HTTP requests to NFS RPC, but at least we are
-outright rejecting the fragments instead of actually allocating/dirtying a
+outright rejecting the fragments instead of actually allocating and dirtying a
 gigabyte of memory.
 
 Next up was finding out who's actually sending these requests. `rpcinfo -p`
@@ -104,7 +104,7 @@ otherwise not interact with, which is always cool. :-)
 Funnily enough, if you Google for these numbers you can find tons of threads
 with people encountering them in the wild. Maybe we should start printing ASCII
 in future in some of the error paths hit when all character values are between
-0x0 and 0x7F, I'm sure it would help a lot of people realise what's going on
+0x0 and 0x7F. I'm sure it would help a lot of people realise what's going on
 much more quickly. Maybe I'll send a patch upstream to do that in
 `svc_tcp_recv_record` and a few other places in the kernel that directly parse
 the first few data bytes from packets as an integer, let's see.
