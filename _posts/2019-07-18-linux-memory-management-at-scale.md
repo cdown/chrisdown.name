@@ -21,14 +21,14 @@ of common misconceptions about Linux memory management, and this may be causing
 the services and systems they support to not be able to run as reliably or
 efficiently as they could be.
 
-As such, I wrote a talk which goes into some of these misconceptions, going
-into why things are more nuanced than they might seem when it comes to memory.
-I also go over how to compose more reliable and scalable systems using this new
-knowledge, talking about how we are managing systems within Facebook, and how
-you can apply this knowledge to improve your own systems.
+As such, I wrote a talk which goes into some of these misconceptions,
+explaining why things are more nuanced than they might seem when it comes to
+memory. I also go over how to compose more reliable and scalable systems using
+this new knowledge, talking about how we are managing systems within Facebook,
+and how you can apply this knowledge to improve your own systems.
 
-I had the privilege to present this talk at SREcon, and hope you'll find it
-useful. Please feel free to e-mail me with any questions or comments.
+I had the privilege of presenting this talk at SREcon, and I hope you'll find
+it useful. Please feel free to e-mail me with any questions or comments.
 
 {% youtube beefUhRH5lU %}
 
