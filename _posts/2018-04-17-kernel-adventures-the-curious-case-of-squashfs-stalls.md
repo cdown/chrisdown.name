@@ -11,12 +11,12 @@ out with a little patience and a careful eye.
 
 squashfs lives an incredibly versatile life. Many Linux users know it as the
 read-only filesystem that has powered almost the entire history of Linux Live
-CDs (excluding early efforts such as Yggdrasil and DemoLinux). Many Linux
-programmers also know it as a versatile filesystem for embedded use due to its
-support for transparent compression. Those looking at the history of squashfs
-changes inside the kernel will also see changes from Facebook, Google, and many
-other industry names, as it also serves a purpose serving production traffic at
-scale.
+CDs (excluding early efforts such as Yggdrasil and DemoLinux). Because of its
+support for transparent compression, it is also well-known among Linux
+programmers as a versatile filesystem for embedded use. Those looking at the
+history of squashfs changes inside the kernel will also see changes from
+Facebook, Google, and many other industry names, as it also serves a purpose
+serving production traffic at scale.
 
 One thing we use squashfs for at Facebook is transporting large amounts of
 static data that compress well: bytecode, certain types of static resources,
@@ -79,7 +79,7 @@ different:
 In the first stack, we're trying to read in data as part of a [major
 fault](https://en.wikipedia.org/wiki/Page_fault#Major). Essentially, this means
 that we want to read some particular memory which is backed by persistent
-storage, but don't have it loaded in to memory. As such, we have to actually
+storage, but don't have it loaded into memory. As such, we have to actually
 perform I/O to service the request for data by loading it into main memory, and
 in this case the file is on a squashfs mount, so we need to call
 squashfs-specific functions (like `squashfs_readpage`) to access it.
@@ -115,7 +115,7 @@ basically just `schedule()` with more checks up front). If this note was
 confusing, don't worry, you don't need it to understand the rest of the post
 :-)</small>
 
-Disk or network I/O are major reasons that an application may voluntarily signal
+Disk or network I/O is a major reason that an application may voluntarily signal
 the scheduler to choose another process, and that's certainly what we see in
 the first stack -- `io_schedule()` is a wrapper around `schedule()` that also
 does some statistical accounting for things like
@@ -126,7 +126,7 @@ The second stack gets more interesting when you look at it in comparison with
 the first one, and when you consider that many threads are blocked in it. We've
 called `schedule()`, as before, but this time it's not because of I/O. Instead,
 the reason we schedule is because of something related to getting data from the
-squashfs block cache as indicated by `squashfs_cache_get` being the frame
+squashfs block cache, as indicated by `squashfs_cache_get` being the frame
 above the call to `schedule()`.
 
 Looking at `fs/squashfs/cache.c`, which is where `squashfs_cache_get` is
@@ -155,12 +155,12 @@ if (cache->unused == 0) {
 
 `wait_event` here is what we're really looking for -- it's where we start
 waiting for a cache entry to become available so that we can use it. If no
-cache entry is available we simply wait and then notify the CPU scheduler
+cache entry is available, we simply wait and then notify the CPU scheduler
 (through the aforementioned `schedule()`) that it should do something else
 until we're ready. This brings up two related questions: how big is the cache?
 How many blocks can we read simultaneously before we end up waiting here?
 
-Looking at the the next frame up, `squashfs_get_datablock()` that calls
+Looking at the next frame up, `squashfs_get_datablock()` that calls
 `squashfs_cache_get()`, [we can see that the cache being used in the blocking
 stack is hardcoded to be
 `msblk->read_page`](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/fs/squashfs/cache.c?h=v4.16#n404):
@@ -211,7 +211,7 @@ files:
   may come online (for example, via hotplug);
 - In fs/squashfs/decompressor_single.c, it's just hardcoded to `return 1`.
 
-Usually when there are multiple definitions of a single function in the kernel,
+Usually, when there are multiple definitions of a single function in the kernel,
 it means that there is a config option which decides which is eventually passed
 to the compiler. This case is no exception, and [we can see the following in
 fs/squashfs/Makefile](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/fs/squashfs/Makefile/?h=v4.16):
@@ -220,10 +220,10 @@ fs/squashfs/Makefile](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/l
     squashfs-$(CONFIG_SQUASHFS_DECOMP_MULTI) += decompressor_multi.o
     squashfs-$(CONFIG_SQUASHFS_DECOMP_MULTI_PERCPU) += decompressor_multi_percpu.o
 
-Ok, so which of these is the one enabled on the machine having the issue? One
+Okay, so which of these is the one enabled on the machine having the issue? One
 useful config option which most people have enabled is `CONFIG_IKCONFIG_PROC`,
 which emits the config for the currently running kernel at `/proc/config.gz`.
-Using that we can now tell which of these config options we have enabled, and
+Using that, we can now tell which of these config options we have enabled, and
 thus which file we actually considered during compilation:
 
     $ zgrep CONFIG_SQUASHFS_DECOMP_ /proc/config.gz
@@ -236,9 +236,9 @@ squashfs decompressor, and now we know that the number of decompressors is
 directly used as the number of cache entries, we also now know that this means
 that we can only do one major fault or read at a time within a block as any
 further reads occurring at the same time will become blocked in the
-`wait_event()` code mentioned earlier. This clearly shows as being the reason
-why we get descheduled from the CPU, and thus the reason why overall forward
-progress of our program stalls.
+`wait_event()` code mentioned earlier. As such, this is clearly shown to be the
+reason why we get descheduled from the CPU, and therefore the reason why
+overall forward progress of our program stalls.
 
 ![Priority inversions? In *my* Linux? It's more likely than you think.](/images/blog/squashfs/archer.png)
 
