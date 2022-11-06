@@ -26,10 +26,6 @@ exclude:
   - package-lock.json
   - _checks
 
-jekyll-minifier:
-  uglifier_args:
-    harmony: true
-
 destination: _deploy
 
 highlighter: rouge
@@ -66,3 +62,12 @@ plugins:
 # Disable smart quotes
 kramdown:
   smart_quotes: ["apos", "apos", "quot", "quot"]
+
+jekyll-minifier:
+  remove_intertag_spaces: true
+  remove_quotes: true
+  simple_doctype: true
+  simple_boolean_attributes: true
+  compress_js_templates: true
+  uglifier_args:
+    harmony: true
