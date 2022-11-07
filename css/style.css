@@ -382,21 +382,40 @@ summary > * {
     }
 }
 
-th, td {
+table:not(.articles) th, table:not(.articles) td {
     padding: 0.3em;
     border: 1px solid #ccc;
 }
 
-thead th {
+table thead th {
     background-color: #f8f8f8;
+}
+
+table:not(.articles) tr:nth-child(even) {
+    background-color: #f8f8f8;
+}
+
+/* No header, so use odd */
+table.articles tr:nth-child(odd) {
+    background-color: #f8f8f8;
+}
+
+table.articles th, table.articles td {
+    padding: 0.2em 0.5em;
+}
+
+table.articles td {
+    vertical-align: top;
+}
+
+table.articles td.date {
+    padding-left: 0.5em;
+    text-align: right;
+    color: #888;
 }
 
 tbody th {
     text-align: left;
-}
-
-tr:nth-child(even) {
-    background-color:#f8f8f8;
 }
 
 td.status-image {
