@@ -412,12 +412,7 @@ table thead th {
     background-color: #f8f8f8;
 }
 
-table:not(.nohead) tr:nth-child(even) {
-    background-color: #f8f8f8;
-}
-
-/* No header, so use odd */
-table.nohead tr:nth-child(odd) {
+table tr:nth-child(even) {
     background-color: #f8f8f8;
 }
 
