@@ -341,6 +341,12 @@ table {
     border-collapse: collapse;
 }
 
+table.light {
+    max-width: 670px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 details {
   padding: 0.6em 0;
 }
@@ -382,36 +388,45 @@ summary > * {
     }
 }
 
-table:not(.articles) th, table:not(.articles) td {
+table:not(.light) th, table:not(.light) td {
     padding: 0.3em;
     border: 1px solid #ccc;
+}
+
+table.light th, table.light td {
+    border: 1px solid #ccc;
+    border-width: 1px 0;
+}
+
+table.tworight td:nth-child(2) {
+    padding-left: 0.5em;
+    text-align: right;
+    opacity: 50%;
+}
+
+table.twowrap td:nth-child(1) {
+    white-space: nowrap;
 }
 
 table thead th {
     background-color: #f8f8f8;
 }
 
-table:not(.articles) tr:nth-child(even) {
+table:not(.nohead) tr:nth-child(even) {
     background-color: #f8f8f8;
 }
 
 /* No header, so use odd */
-table.articles tr:nth-child(odd) {
+table.nohead tr:nth-child(odd) {
     background-color: #f8f8f8;
 }
 
-table.articles th, table.articles td {
+table.light th, table.light td {
     padding: 0.2em 0.5em;
 }
 
-table.articles td {
+table.light td {
     vertical-align: top;
-}
-
-table.articles td.date {
-    padding-left: 0.5em;
-    text-align: right;
-    color: #888;
 }
 
 tbody th {

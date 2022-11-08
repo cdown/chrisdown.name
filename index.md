@@ -37,51 +37,41 @@ More posts are available on the [archive page](/archive.html).
 
 I am a creator, contributor, or maintainer of a number of projects, including:
 
-- [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) — modern resource control and accounting
-- [clipmenu](https://github.com/cdown/clipmenu) — clipboard manager with a dmenu frontend
-- [dwm](https://dwm.suckless.org/) — dynamic window manager for X
-- [Linux](https://github.com/torvalds/linux/commits?author=cdown) — free and open-source OS kernel
-- [mack](https://github.com/cdown/mack) — opinionated, fast music organiser
-- [mpdmenu](https://github.com/cdown/mpdmenu) — control [mpd][] from dmenu
-- [mpv](https://github.com/mpv-player/mpv) — videos on the command line
-- [nota](https://github.com/cdown/nota) — super simple daily logs with your $EDITOR + git
-- [oomd](https://github.com/facebookincubator/oomd) — next-generation OOM killer
-- [osquery](https://github.com/facebook/osquery) — OS instrumentation, monitoring, and analysis framework
-- [pass](https://www.passwordstore.org/) — the standard Unix password manager
-- [psi-notify](https://github.com/cdown/psi-notify) — proactively detect machine oversaturation
-- [srt](https://github.com/cdown/srt) — tools and library to handle [SRT subtitles][]
-- [systemd](https://github.com/systemd/systemd) — system and service manager for Linux
-- [the Pro Git book](https://git-scm.com/book/en/v2) — guide to Git and its internals
-- [tzupdate](https://github.com/cdown/tzupdate) — update /etc/localtime automatically using geolocation
-- [xinput-toggle](https://github.com/cdown/xinput-toggle) — tool to manipulate arbitrary xinput devices
-- [zcfan](https://github.com/cdown/zcfan) — zero-configuration fan control for ThinkPad
-- [zsh](https://www.zsh.org/) — modern Bourne-like shell
+{: .light .nohead .tworight .twowrap }
+
+| [cgroup v2](https://www.youtube.com/watch?v=ikZ8_mRotT4) | modern resource control and accounting |
+| [clipmenu](https://github.com/cdown/clipmenu) | clipboard manager with a dmenu frontend |
+| [dwm](https://dwm.suckless.org/) | dynamic window manager for X |
+| [Linux](https://github.com/torvalds/linux/commits?author=cdown) | free and open-source OS kernel |
+| [mack](https://github.com/cdown/mack) | opinionated, fast music organiser |
+| [mpdmenu](https://github.com/cdown/mpdmenu) | control [mpd][] from dmenu |
+| [mpv](https://github.com/mpv-player/mpv) | videos on the command line |
+| [nota](https://github.com/cdown/nota) | super simple daily logs with your $EDITOR + git |
+| [oomd](https://github.com/facebookincubator/oomd) | next-generation OOM killer |
+| [osquery](https://github.com/facebook/osquery) | OS instrumentation, monitoring, and analysis framework |
+| [pass](https://www.passwordstore.org/) | the standard Unix password manager |
+| [psi-notify](https://github.com/cdown/psi-notify) | proactively detect machine oversaturation |
+| [srt](https://github.com/cdown/srt) | tools and library to handle [SRT subtitles][] |
+| [systemd](https://github.com/systemd/systemd) | system and service manager for Linux |
+| [the Pro Git book](https://git-scm.com/book/en/v2) | guide to Git and its internals |
+| [tzupdate](https://github.com/cdown/tzupdate) | update /etc/localtime automatically using geolocation |
+| [xinput-toggle](https://github.com/cdown/xinput-toggle) | tool to manipulate arbitrary xinput devices |
+| [zcfan](https://github.com/cdown/zcfan) | zero-configuration fan control for ThinkPad |
+| [zsh](https://www.zsh.org/) | modern Bourne-like shell |
 
 You can find other projects on my [GitHub][], although if they're not on this
 list, I'm probably not actively developing or maintaining them.
 
 ## Selected talks
 
-- [The future of Linux resource
-  control](https://www.youtube.com/watch?v=kPMZYoRxtmg) —
-  [LISA](https://www.usenix.org/conference/lisa21)
-- [Linux memory management at
-  scale](/2019/07/18/linux-memory-management-at-scale.html) —
-  [SREcon](https://www.usenix.org/conference/srecon19asia/presentation/down)/[FOSDEM](https://fosdem.org/2020/schedule/event/containers_memory_management/)
-- [cgroupv2: Linux's new unified resource
-  hierarchy](https://www.youtube.com/watch?v=ikZ8_mRotT4) —
-  [FOSDEM](https://archive.fosdem.org/2017/schedule/event/cgroupv2/)/DevOpsDays/[ASG](https://twitter.com/ASGConf/status/922010850218725376)
-- [Lessons learned running SSL at
-  scale](https://www.youtube.com/watch?v=9Ya8H-9Hrp4) —
-  [FOSDEM](https://archive.fosdem.org/2016/schedule/event/sslmanagement/)
-- The Web Foundation model — [University College
-  London](https://www.ucl.ac.uk/) lecture
-- [Shell pitfalls and code
-  smells](https://slides.com/chrisdown/avoiding-bash-pitfalls-and-code-smells/fullscreen)
-  — LVL.UP Kuala Lumpur
-- [Pragmatic minimalism as a software design
-  tool](https://slides.com/chrisdown/pragmaticminimalism/fullscreen) — LVL.UP
-  Kuala Lumpur
+{: .nohead .light .tworight }
+| [The future of Linux resource control](https://www.youtube.com/watch?v=kPMZYoRxtmg) | at [LISA](https://www.usenix.org/conference/lisa21) |
+| [Linux memory management at scale](/2019/07/18/linux-memory-management-at-scale.html) | at [SREcon](https://www.usenix.org/conference/srecon19asia/presentation/down)/[FOSDEM](https://fosdem.org/2020/schedule/event/containers_memory_management/) |
+| [cgroupv2: Linux's new unified resource hierarchy](https://www.youtube.com/watch?v=ikZ8_mRotT4) | at [FOSDEM](https://archive.fosdem.org/2017/schedule/event/cgroupv2/)/[ASG](https://twitter.com/ASGConf/status/922010850218725376) |
+| [Lessons learned running SSL at scale](https://www.youtube.com/watch?v=9Ya8H-9Hrp4) | at [FOSDEM](https://archive.fosdem.org/2016/schedule/event/sslmanagement/) |
+| The Web Foundation model | lecture at [UCL](https://www.ucl.ac.uk/) |
+| [Shell pitfalls and code smells](https://slides.com/chrisdown/avoiding-bash-pitfalls-and-code-smells/fullscreen) | at LVL.UP Kuala Lumpur |
+| [Pragmatic minimalism as a software design tool](https://slides.com/chrisdown/pragmaticminimalism/fullscreen) | at LVL.UP Kuala Lumpur |
 
 ## Other content on this domain
 
