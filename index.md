@@ -93,6 +93,7 @@ list, I'm probably not actively developing or maintaining them.
 - [Keybase](https://keybase.io/cdown)
 - [last.fm][]
 - [LinkedIn](https://www.linkedin.com/in/chrisldown)
+- <a rel="me" href="https://fosstodon.org/@cdown">Mastodon</a>
 - [Reddit][]
 - [Twitter][]
 - [Unix and Linux Stack Exchange]({{ site.links.ulse }})
