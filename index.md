@@ -35,7 +35,8 @@ More posts are available on the [archive page](/archive.html).
 
 ## Software
 
-I am a creator, contributor, or maintainer of a number of projects, including:
+I am a creator, contributor to, or maintainer of a number of projects,
+including:
 
 {: .light .tworight .twowrap }
 
