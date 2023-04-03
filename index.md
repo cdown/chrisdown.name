@@ -44,6 +44,7 @@ including:
 | [clipmenu](https://github.com/cdown/clipmenu) | clipboard manager with a dmenu frontend |
 | [dwm](https://dwm.suckless.org/) | dynamic window manager for X |
 | [exifrename](https://github.com/cdown/exifrename) | fast renames based on EXIF data |
+| [funcfmt](https://github.com/cdown/funcfmt) | function trait based formatting |
 | [Linux](https://github.com/torvalds/linux/commits?author=cdown) | free and open-source OS kernel |
 | [mack](https://github.com/cdown/mack) | opinionated, fast music organiser |
 | [mpdmenu](https://github.com/cdown/mpdmenu) | control [mpd][] from dmenu |
