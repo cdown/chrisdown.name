@@ -12,6 +12,7 @@ builds:
   - name: icopng
   - name: mack
   - name: srt
+  - name: zcfan
 ---
 
 # Build status dashboard
