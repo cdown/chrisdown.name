@@ -4,6 +4,7 @@ title: Build status dashboard
 
 builds:
   - name: cargo-which-nightly
+  - name: dotfiles
   - name: exifrename
   - name: filestruct
   - name: funcfmt
