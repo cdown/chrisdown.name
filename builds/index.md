@@ -13,6 +13,7 @@ builds:
   - name: icopng
   - name: mack
   - name: srt
+  - name: tzupdate
   - name: zcfan
 ---
 
