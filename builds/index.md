@@ -14,6 +14,7 @@ builds:
   - name: mack
   - name: srt
   - name: tzupdate
+  - name: tzserver
   - name: zcfan
 ---
 
