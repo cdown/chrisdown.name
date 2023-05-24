@@ -10,11 +10,11 @@ builds:
   - name: funcfmt
     extra:
       - miri
+  - name: geoip-http
   - name: icopng
   - name: mack
   - name: srt
   - name: tzupdate
-  - name: tzserver
   - name: zcfan
 ---
 
