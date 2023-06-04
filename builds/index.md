@@ -13,6 +13,7 @@ builds:
   - name: geoip-http
   - name: icopng
   - name: mack
+  - name: pamultisink
   - name: srt
   - name: tzupdate
   - name: zcfan
