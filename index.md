@@ -49,7 +49,7 @@ including:
 | [mack](https://github.com/cdown/mack) | opinionated, fast music organiser |
 | [mpdmenu](https://github.com/cdown/mpdmenu) | control [mpd][] from dmenu |
 | [mpv](https://github.com/mpv-player/mpv) | videos on the command line |
-| [nota](https://github.com/cdown/nota) | super simple daily logs with your $EDITOR + git |
+| [nota](https://github.com/cdown/nota) | simple daily logs with your $EDITOR + git |
 | [oomd](https://github.com/facebookincubator/oomd) | next-generation OOM killer |
 | [osquery](https://github.com/facebook/osquery) | OS instrumentation, monitoring, and analysis framework |
 | [pass](https://www.passwordstore.org/) | the standard Unix password manager |
