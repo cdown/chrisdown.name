@@ -13,7 +13,7 @@ still be a niche request, there's clearly a noticeable void in readily
 accessible knowledge on the subject. Hopefully this article can improve that
 somewhat :-)
 
-# D and Z states
+## D and Z states
 
 The D (uninterruptible sleep) state is a process state where a process is
 sleeping and cannot be interrupted or killed directly by signals<sup>* see
@@ -40,3 +40,16 @@ status, leaving the child's record dangling in the process table.
 These states can become a problem for things like init systems or
 containerisation platforms where the unwavering persistence of such processes
 must be planned for and have strategies in place to not block forward progress.
+
+## Reliably creating D states on demand
+
+While D states might immediately bring to mind disk activity, we actually use
+them for all sorts of things in the kernel. For example, we also use them to
+block processes where we cannot safely make progress for other reasons.
+
+Enter `vfork`. `vfork` is a specialized system call primarily designed for
+creating new processes. Unlike the more commonly used `fork` (which is really
+`clone` nowadays), which typically uses copy-on-write and thus must at the very
+least create new virtual mappings to the physical pages in question, `vfork`
+allows the child process to directly share the parent's virtual address space
+temporarily.
