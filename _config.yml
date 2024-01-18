@@ -26,6 +26,9 @@ exclude:
   - package-lock.json
   - _checks
 
+include:
+  - .well-known
+
 destination: _deploy
 
 highlighter: rouge
