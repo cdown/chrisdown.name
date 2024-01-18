@@ -73,7 +73,7 @@ redirects = {
 task :create_local_redirects => :build do
   redirects.each do |from, to|
     loc = "_deploy/" + from
-    if File.exists?(loc)
+    if File.exist?(loc)
       raise "Redirect stub would overwrite #{loc}"
     end
 
