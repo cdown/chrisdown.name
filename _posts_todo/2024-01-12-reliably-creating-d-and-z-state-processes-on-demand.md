@@ -48,8 +48,53 @@ them for all sorts of things in the kernel. For example, we also use them to
 block processes where we cannot safely make progress for other reasons.
 
 Enter `vfork`. `vfork` is a specialized system call primarily designed for
-creating new processes. Unlike the more commonly used `fork` (which is really
-`clone` nowadays), which typically uses copy-on-write and thus must at the very
-least create new virtual mappings to the physical pages in question, `vfork`
-allows the child process to directly share the parent's virtual address space
-temporarily.
+creating new processes. Unlike the more widely known `fork`, which typically
+uses copy-on-write and thus must at the very least create new virtual mappings
+to the physical pages in question, `vfork` allows the child process to directly
+share the parent's virtual address space temporarily.
+
+Both are more typically supplanted by `clone()` with the appropriate flags
+nowadays, which has more sensible semantics and is much more configurable. That
+allow for (for example) having both the calling process and the child running
+simultaneously in same virtual memory space if you pass `CLONE_VM` but not
+`CLONE_VFORK`. For this case, though, we want `vfork`'s behaviour, which is to
+suspend the parent application in D state.
+
+Here is how we can reliably create a D state process with `vfork`:
+
+{% highlight c %}
+#include <unistd.h>
+
+int main(void)
+{
+    pid_t pid = vfork();
+    if (pid == 0) {
+        pause(); /* or some other exit logic for the child */
+    } else if (pid < 0) {
+        return 1;
+    }
+    return 0;
+}
+{% endhighlight %}
+
+This will then reliably create a D state process until a signal is sent:
+
+{% highlight bash %}
+scratch % cc -o dstate dstate.c
+scratch % ./dstate & { sleep 0.1; ps -o pid,state,cmd -p "$!"; }
+[1] 780629
+    PID S CMD
+ 780629 D ./dstate
+scratch % kill "$!"
+[1]  + terminated  ./dstate
+{% endhighlight %}
+
+`pause()` can be modified to suit. For example, if your test involves sending
+signals and you want to ignore those, you can wait for the text "EXIT" on
+stdin:
+
+[...]
+
+The simplicity and flexibility of the vfork approach make it ideal for most use
+cases. It doesn’t require complex setup and can be easily integrated into
+different testing scenarios.
