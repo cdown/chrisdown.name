@@ -57,19 +57,27 @@ Both are more typically supplanted by `clone()` with the appropriate flags
 nowadays, which has more sensible semantics and is much more configurable. That
 allow for (for example) having both the calling process and the child running
 simultaneously in same virtual memory space if you pass `CLONE_VM` but not
-`CLONE_VFORK`. For this case, though, we want `vfork`'s behaviour, which is to
-suspend the parent application in D state.
+`CLONE_VFORK`. Goodness gracious!
 
-Here is how we can reliably create a D state process with `vfork`:
+For this case, though, we want `vfork`'s behaviour, which is to suspend the
+parent application in D state. Here is how we can reliably create a D state
+process with `vfork`:
 
 {% highlight c %}
 #include <unistd.h>
 
-int main(void)
+int exit_logic(void) {
+
+int main(void) {
 {
     pid_t pid = vfork();
     if (pid == 0) {
         pause(); /* or some other exit logic for the child */
+
+        /* It's not safe to continue after child stack modifications, so make
+         * sure we don't execute any more userspace instructions for the whole
+         * process group. */
+        kill(0, SIGKILL);
     } else if (pid < 0) {
         return 1;
     }
@@ -90,11 +98,69 @@ scratch % kill "$!"
 {% endhighlight %}
 
 `pause()` can be modified to suit. For example, if your test involves sending
-signals and you want to ignore those, you can wait for the text "EXIT" on
-stdin:
+signals and so you want to ignore those, you can instead wait for the text
+"EXIT" on stdin:
 
-[...]
+{% highlight c %}
+#include <signal.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+
+#define EXIT_STRING "EXIT\n"
+
+void run_child(void) {
+    char input[sizeof(EXIT_STRING)];
+
+    while (1) {
+        if (fgets(input, sizeof(input), stdin) == NULL) {
+            break;
+        }
+        if (strcmp(input, EXIT_STRING) == 0) {
+            break;
+        }
+    }
+}
+
+int main(void)
+{
+    pid_t pid;
+    sigset_t set;
+
+    sigfillset(&set);
+    sigprocmask(SIG_BLOCK, &set, NULL);
+
+    pid = vfork();
+
+    if (pid == 0) {
+        run_child();
+        sigprocmask(SIG_UNBLOCK, &set, NULL);
+        kill(0, SIGKILL);
+    } else if (pid < 0) {
+        return 1;
+    }
+    return 0;
+}
+{% endhighlight %}
+
+But why is it that we need `kill(0, SIGKILL)`, anyway? Well, stack modification
+(and thus doing basically anything other than `exec` or `_exit`) is not legal
+in the child forked by vfork, because the parent cannot reasonably have the
+stack mutated under it without its knowledge. Aside from simply being undefined
+behaviour<sup>* see note</sup>, it's also very easy to end up with problems
+unwinding the stack, local variable or return address corruption, or a now
+invalid frame pointer. For this reason we must makes sure that the parent never
+sees these modifications.
+
+While the parent cannot handle the signal right now, it will be queued in the
+kernel's signal queue. This ensures that no more userspace instructions for
+this now highly fragile process will be executed, and the kernel will simply
+tear down the process entirely.
 
 The simplicity and flexibility of the vfork approach make it ideal for most use
-cases. It doesn’t require complex setup and can be easily integrated into
-different testing scenarios.
+cases. It doesn’t require complex setup, can easily be modified to be suitable
+for different test sceharios, and it's generally fairly self contained.
+
+<small><sup>*</sup> Ok, so even just doing it even if the parent never sees it
+is undefined behaviour, but it's "consistently defined undefined behaviour"
+;-)</small>
