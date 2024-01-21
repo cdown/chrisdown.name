@@ -78,9 +78,8 @@ int main(void) {
     if (pid == 0) {
         pause(); /* or some other exit logic for the child */
 
-        /* It's not safe to continue after child stack modifications, so make
-         * sure we don't execute any more userspace instructions for the whole
-         * process group. */
+        /* It's not safe to continue in the parent, so make sure we don't
+         * execute any more userspace instructions for the whole pgroup. */
         kill(0, SIGKILL);
     } else if (pid < 0) {
         return 1;
@@ -166,10 +165,13 @@ pushes are going to end up in the unallocated portion of the stack. The paused
 parent's stack pointer register is still independent, even with `vfork`, so
 things just continue about their merry way regardless of any POSIX ire.</small>
 
-While the parent cannot handle the signal right now, it will be queued in the
-kernel's signal queue. This ensures that no more userspace instructions for
-this now highly fragile process will be executed, and the kernel will simply
-tear down the process entirely.
+Setting `0` as the PID to send the signal to kills the entire process group
+that the current process is in, which includes both it and its parent. While,
+of course, the parent cannot handle the signal right now, it will be queued in
+the kernel's signal queue. This ensures that no more userspace instructions for
+this fragile process will be executed, and the kernel will simply tear down the
+process entirely at the next available opportunity, which is when it goes back
+to sleeping state after the `vfork`ed child has finished.
 
 The simplicity and flexibility of the vfork approach make it ideal for most use
 cases. It doesn’t require complex setup, can easily be modified to be suitable
