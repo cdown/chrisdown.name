@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Creating D and Z state processes on demand"
+title: "Creating D state (uninterruptible sleep) processes on demand"
 ---
 
 At [work](https://meta.com) several years ago I received what at the time I
@@ -13,13 +13,14 @@ still be a niche request, there's clearly a noticeable void in readily
 accessible knowledge on the subject. Hopefully this article can improve that
 somewhat :-)
 
-## D and Z states
+## Why would anyone want to test this?
 
 The D (uninterruptible sleep) state is a process state where a process is
 sleeping and cannot be interrupted or killed directly by signals<sup>* see
-note</sup>. This can become a problem for things like init systems or
-containerisation platforms where the unwavering persistence of such processes
-must be planned for and have strategies in place to not block forward progress.
+`TASK_KILLABLE` note</sup>. This can become a problem for things like init
+systems or containerisation platforms where the unwavering persistence of such
+processes must be planned for and have strategies in place to not block forward
+progress.
 
 <small><sup>*</sup> This is true in the majority of cases, but we do also have
 `TASK_KILLABLE` where fatal signals (i.e. signals with terminal state and no
@@ -33,15 +34,11 @@ volumes of data. Programs generally must not be interrupted in the midst of
 such operations because DMA transfers are not typically designed to accommodate
 or recover from partial or interrupted reads or writes.
 
-A similar case is handling Z (zombie) state processes, which are formed when a
-child process terminates but its parent process doesn't reap the child's exit
-status, leaving the child's record dangling in the process table.
-
 These states can become a problem for things like init systems or
 containerisation platforms where the unwavering persistence of such processes
 must be planned for and have strategies in place to not block forward progress.
 
-## Reliably creating D states on demand
+## D states outside of I/O context
 
 While D states might immediately bring to mind disk activity, we actually use
 them for all sorts of things in the kernel. For example, we also use them to
@@ -146,10 +143,11 @@ int main(void)
 But why is it that we need `kill(0, SIGKILL)`, anyway? Well, stack modification
 (and thus doing basically anything other than `exec` or `_exit`) is not
 POSIX-legal in the child forked by vfork, because the parent cannot reasonably
-have the stack mutated under it without its knowledge.<sup>* see note</sup>
+have the stack mutated under it without its knowledge.<sup>* see CPython
+note</sup>
 
 <small><sup>*</sup>  Well, that's what POSIX says, at least. In reality on
-Linux with any real libc, things are not that dire. Python, for example, uses
+Linux with any real libc, things are not that dire. CPython, for example, uses
 it as part of a vastly more complex process of forking children which is
 guaranteed to push to stack by calling child functions and the world hasn't
 collapsed yet (see
@@ -168,4 +166,6 @@ tear down the process entirely.
 
 The simplicity and flexibility of the vfork approach make it ideal for most use
 cases. It doesn’t require complex setup, can easily be modified to be suitable
-for different test sceharios, and it's generally fairly self contained.
+for different testing conditions, and it's generally fairly self contained.
+
+## D states in I/O context
