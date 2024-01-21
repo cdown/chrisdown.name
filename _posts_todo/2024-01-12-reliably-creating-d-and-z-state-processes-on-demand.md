@@ -144,13 +144,22 @@ int main(void)
 {% endhighlight %}
 
 But why is it that we need `kill(0, SIGKILL)`, anyway? Well, stack modification
-(and thus doing basically anything other than `exec` or `_exit`) is not legal
-in the child forked by vfork, because the parent cannot reasonably have the
-stack mutated under it without its knowledge. Aside from simply being undefined
-behaviour<sup>* see note</sup>, it's also very easy to end up with problems
-unwinding the stack, local variable or return address corruption, or a now
-invalid frame pointer. For this reason we must makes sure that the parent never
-sees these modifications.
+(and thus doing basically anything other than `exec` or `_exit`) is not
+POSIX-legal in the child forked by vfork, because the parent cannot reasonably
+have the stack mutated under it without its knowledge.<sup>* see note</sup>
+
+<small><sup>*</sup>  Well, that's what POSIX says, at least. In reality on
+Linux with any real libc, things are not that dire. Python, for example, uses
+it as part of a vastly more complex process of forking children which is
+guaranteed to push to stack by calling child functions and the world hasn't
+collapsed yet (see
+[here](https://github.com/python/cpython/blob/v3.12.1/Modules/_posixsubprocess.c#L812-L823)
+and
+[here](https://github.com/python/cpython/blob/v3.12.1/Modules/_posixsubprocess.c#L553-L571)).
+In reality, when the parent process continues its operation, additional stack
+pushes are going to end up in the unallocated portion of the stack. The paused
+parent's stack pointer register is still independent, even with `vfork`, so
+things just continue about their merry way regardless of any POSIX ire.</small>
 
 While the parent cannot handle the signal right now, it will be queued in the
 kernel's signal queue. This ensures that no more userspace instructions for
@@ -160,7 +169,3 @@ tear down the process entirely.
 The simplicity and flexibility of the vfork approach make it ideal for most use
 cases. It doesn’t require complex setup, can easily be modified to be suitable
 for different test sceharios, and it's generally fairly self contained.
-
-<small><sup>*</sup> Ok, so even just doing it even if the parent never sees it
-is undefined behaviour, but it's "consistently defined undefined behaviour"
-;-)</small>
