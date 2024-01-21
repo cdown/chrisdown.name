@@ -25,17 +25,11 @@ article can improve that somewhat :-)
 
 ## Why would anyone want to test this?
 
-The D (uninterruptible sleep) state is a process state where a process is
-sleeping and cannot be interrupted or killed directly by signals<sup>* see
-`TASK_KILLABLE` note</sup>. This can become a problem for things like init
-systems or containerisation platforms where the unwavering persistence of such
-processes must be planned for and have strategies in place to not block forward
-progress.
-
-<small><sup>*</sup> This is true in the majority of cases, but we do also have
-`TASK_KILLABLE` where fatal signals (i.e. signals with terminal state and no
-userspace signal handler) can still terminate the application in this
-state.</small>
+The D (typically written out as "uninterruptible sleep") state is a process
+state where a process is sleeping and cannot be woken up in userspace. This can
+become a problem for things like init systems or containerisation platforms
+where the unwavering persistence of such processes must be planned for and have
+strategies in place to not block forward progress.
 
 One example of where this is used is in DMA transfers and the like. DMA allows
 hardware subsystems to access the main system memory for reading/writing
@@ -61,19 +55,15 @@ to the physical pages in question, `vfork` allows the child process to directly
 share the parent's virtual address space temporarily.
 
 Both are more typically supplanted by `clone()` with the appropriate flags
-nowadays, which has more sensible semantics and is much more configurable. That
-allow for (for example) having both the calling process and the child running
-simultaneously in same virtual memory space if you pass `CLONE_VM` but not
-`CLONE_VFORK`. Goodness gracious!
-
-For this case, though, we want `vfork`'s behaviour, which is to suspend the
-parent application in D state. Here is how we can reliably create a D state
-process with `vfork`:
+nowadays, which has more sensible semantics and is much more configurable. For
+this case, though, we only need `vfork`'s behaviour, which is to suspend the
+parent application in D state. Here is an example of how one might reliably
+create a D state process with `vfork`:
 
 {% highlight c %}
 #include <unistd.h>
 
-int main(void) {
+int main(void)
 {
     pid_t pid = vfork();
     if (pid == 0) {
@@ -161,10 +151,115 @@ EXIT
 %
 {% endhighlight %}
 
+## Killable D state processes
+
+In the example above one might typically visualise things as doing things in
+the child in order to unblock the parent. However, you may also notice that in
+this code example, signals are blocked not only in the parent, but also the
+child. But surely that's not necessary since the parent is in D state anyway,
+right? Well, let's try it without the signals blocked in the parent:
+
+{% highlight bash %}
+% ./dstate & { sleep 0.1; ps -o pid,state,cmd -p "$!"; kill "$!"; }
+[1] 866239
+    PID S CMD
+ 866239 D ./dstate
+[1]  + terminated  ./dstate
+{% endhighlight %}
+
+Wait, what? How come we were able to terminate a D state process?
+
+My experience is that most system administrators and Linux users are not aware
+of the fact that a D state process doesn't actually have to be uninterruptible.
+All a D state process is is a process which cannot execute any more userspace
+instructions, but blocking all signals is only one interpretation of how to
+achieve that, and it's not necessary in all circumstances.
+
+To see what I mean, let's look at the kernel source to see how `vfork` is
+implemented. Depending on your libc and version, the `vfork` that you call from
+your application is likely either a thin wrapper around the `clone` or `vfork`
+syscalls. They do the same thing behind the scenes -- `vfork` calls into the
+`clone` code path `kernel_clone`:
+
+{% highlight c %}
+SYSCALL_DEFINE0(vfork)
+{
+    struct kernel_clone_args args = {
+        .flags       = CLONE_VFORK | CLONE_VM,
+        .exit_signal = SIGCHLD,
+    };
+
+    return kernel_clone(&args);
+}
+{% endhighlight %}
+
+As mentioned earlier, `CLONE_VFORK` is the clone flag that specifies to suspend
+the parent process until the child has completed. In `kernel_clone`, we see the
+following code:
+
+{% highlight c %}
+if (clone_flags & CLONE_VFORK) {
+    if (!wait_for_vfork_done(p, &vfork))
+        ptrace_event_pid(PTRACE_EVENT_VFORK_DONE, pid);
+}
+{% endhighlight %}
+
+Okay, so what does `wait_for_vfork_done` do?
+
+{% highlight c %}
+static int wait_for_vfork_done(struct task_struct *child,
+                               struct completion *vfork)
+{
+    unsigned int state = TASK_UNINTERRUPTIBLE|TASK_KILLABLE|TASK_FREEZABLE;
+    int killed;
+
+    cgroup_enter_frozen();
+    killed = wait_for_completion_state(vfork, state);
+    cgroup_leave_frozen(false);
+
+    if (killed) {
+        task_lock(child);
+        child->vfork_done = NULL;
+        task_unlock(child);
+    }
+
+    put_task_struct(child);
+    return killed;
+}
+{% endhighlight c %}
+
+`TASK_KILLABLE` is a state that
+[Willy](https://kernelnewbies.org/MatthewWilcox) introduced in 2.6.25. It was
+created because, while in some cases we do actually need to shield the process
+from any signal interaction at all, in some cases it's fine as long as we know
+the process will terminate with no more userspace instructions executed. For
+example, in this vfork case, we have to block to avoid both tasks accessing the
+same address space, but there's no reason for us to continue to wait if the
+next thing we're going to do is simply terminate -- it's a waste of time and of
+a process.
+
+`TASK_KILLABLE` was introduced to solve these kinds of cases. Instead of being
+fully uninterruptible, when we recieve a signal we check if the signal is fatal
+(that is, it's either a non-trappable fatal signal, or the program has no
+userspace handler for it), and if it is, we terminate the process without
+allowing it to execute any more userspace instructions.
+
+We use this pretty widely in the kernel nowadays where possible:
+
+{% highlight bash %}
+% git grep -hc TASK_KILLABLE | paste -sd+ | bc
+78
+{% endlighlight %}
+
+As such, you may well find that some of the D states that processes enter on
+your system actually are terminable after all.
+
 # Wait, that's illegal
 
-Here's what POSIX [has to say about
-vfork](https://pubs.opengroup.org/onlinepubs/009696799/functions/vfork.html).
+I'm sure that some people reading the code I provided above are wondering
+whether it's legal or not, given the fact that we are sharing the parent's
+memory space. Here's what POSIX [has to say about
+vfork](https://pubs.opengroup.org/onlinepubs/009696799/functions/vfork.html):
 
 > The vfork() function shall be equivalent to fork(), except that the behavior
 > is undefined if the process created by vfork() either modifies any data other
@@ -177,25 +272,28 @@ It makes sense that access to the parent's memory (and thus doing basically
 anything other than `exec` (which replaces the process entirely) or `_exit`
 (which is really just a plain syscall) is not POSIX-legal in the child forked
 by vfork because the parent cannot reasonably have the stack mutated under it
-without its knowledge. But wait, didn't we just call a function?
+without its knowledge. But wait, didn't we just call a function? That's
+certainly going to make use of the stack, right?
 
 The good news it that in reality (or at least for some version of reality on
-Linux with any real libc), things are not that dire. CPython, for example,
-which is used and tested for with more diversity than the vast majority of
-software in use today, uses it in much the same way. In their case, it's used
-as part of a vastly more complex process of forking children which is
-also _guaranteed_ to push to stack by calling child functions (see
+Linux with any real libc), things are not that dire. Just as one example,
+CPython -- which is used and tested for with more diversity than the vast
+majority of software in use today -- uses it in much the same way. In their
+case, it's used as part of a vastly more complex process of forking children
+which is also _guaranteed_ to push to stack by calling child functions (see
 [here](https://github.com/python/cpython/blob/v3.12.1/Modules/_posixsubprocess.c#L812-L823)
 and
 [here](https://github.com/python/cpython/blob/v3.12.1/Modules/_posixsubprocess.c#L553-L571)).
 I think it would be safe to say that, despite some POSIX book banging and
-semantics discussion, the world has not collapsed yet as a result.
+semantics discussion, the world has not collapsed into a fiery pit yet as a
+result.
 
-So why is this okay in reality? Well, when the parent process continues its
-operation, additional stack data is simply going to end up in the unallocated
-portion of the stack. The paused parent's stack pointer register is still
-independent, even with `vfork`, so things just continue about their merry way
-regardless of standards ire.
+So why is this okay enough to make it into codebases like CPython's? Well, when
+the parent process continues its operation, additional stack data is simply
+going to end up in the unallocated portion of the stack. The paused parent's
+stack pointer register is still independent, even with `vfork`, so things just
+continue about their merry way. All in all, despite standards ire, the whole
+thing is relatively safe (if a little unpleasant).
 
 ## Other approaches
 
