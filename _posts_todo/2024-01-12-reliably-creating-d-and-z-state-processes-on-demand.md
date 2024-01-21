@@ -6,12 +6,19 @@ title: "Creating D state (uninterruptible sleep) processes on demand"
 At [work](https://meta.com) several years ago I received what at the time I
 thought was a pretty niche request. A team in the containers space was testing
 container teardown, and wanted to make sure that their software was robust to D
-state processes. I gave them some ideas, they implemented it, and that was
-that. Fast forward to today, and I think I must have seen this request at least
-four or five time in my time at the company, which suggests that while this may
-still be a niche request, there's clearly a noticeable void in readily
-accessible knowledge on the subject. Hopefully this article can improve that
-somewhat :-)
+state processes holding things up. I gave them some ideas, they implemented it,
+and that was that.
+
+Fast forward to today, and I think I must have seen this request at least four
+or five times in the years since. Just as three examples that I can share:
+
+1. The aforementioned container teardown case;
+2. Integration testing for system monitoring tooling;
+3. The kernel team's diagnostics tool, which gathers stacks of D state tasks.
+
+This strongly suggests that while this may still be a highly specialised
+request, there's clearly a noticeable void in readily accessible knowledge on
+the subject. Hopefully this article can improve that somewhat :-)
 
 ## Why would anyone want to test this?
 
@@ -167,5 +174,3 @@ tear down the process entirely.
 The simplicity and flexibility of the vfork approach make it ideal for most use
 cases. It doesn’t require complex setup, can easily be modified to be suitable
 for different testing conditions, and it's generally fairly self contained.
-
-## D states in I/O context
