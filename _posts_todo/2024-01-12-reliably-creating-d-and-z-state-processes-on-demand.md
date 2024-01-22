@@ -76,7 +76,7 @@ int main(void)
 }
 {% endhighlight %}
 
-This will then reliably enter D state until a signal is sent:
+This will then reliably enter D state until a terminal signal is sent:
 
 {% highlight bash %}
 % cc -o dstate dstate.c
@@ -249,12 +249,12 @@ We use this pretty widely in the kernel nowadays where possible:
 {% highlight bash %}
 % git grep -hc TASK_KILLABLE | paste -sd+ | bc
 78
-{% endlighlight %}
+{% endhighlight %}
 
 As such, you may well find that some of the D states that processes enter on
 your system actually are terminable after all.
 
-# Wait, that's illegal
+## Wait, that's illegal
 
 I'm sure that some people reading the code I provided above are wondering
 whether it's legal or not, given the fact that we are sharing the parent's
