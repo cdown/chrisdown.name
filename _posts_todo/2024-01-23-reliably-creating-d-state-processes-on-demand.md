@@ -115,7 +115,8 @@ void __attribute__((noinline)) run_child(void)
             input[strlen(input) - 1] != '\n') {
             /* Partial line read, clear it */
             int c;
-            while ((c = getchar()) != '\n' && c != EOF);
+            while ((c = getchar()) != '\n' && c != EOF)
+                ;
         }
     }
 
@@ -289,7 +290,6 @@ majority of software in use today -- uses it in much the same way:
 {% highlight c %}
 Py_NO_INLINE static pid_t do_fork_exec(/* ... */)
 {
-
     pid_t pid;
     PyThreadState *vfork_tstate_save;
 
@@ -319,14 +319,7 @@ Py_NO_INLINE static pid_t do_fork_exec(/* ... */)
         PyOS_AfterFork_Child();
     }
 
-    child_exec(exec_array, argv, envp, cwd,
-               p2cread, p2cwrite, c2pread, c2pwrite,
-               errread, errwrite, errpipe_read, errpipe_write,
-               close_fds, restore_signals, call_setsid, pgid_to_set,
-               gid, extra_group_size, extra_groups,
-               uid, child_umask, child_sigmask,
-               fds_to_keep, fds_to_keep_len,
-               preexec_fn, preexec_fn_args_tuple);
+    child_exec(exec_array, argv, envp, cwd, /* ... */);
     _exit(255);
     return 0;
 }
