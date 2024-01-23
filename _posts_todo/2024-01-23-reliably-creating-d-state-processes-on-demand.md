@@ -284,9 +284,57 @@ make use of the stack, right?
 The good news it that in reality (or at least for some version of reality on
 Linux with any real libc), things are not that dire. Just as one example,
 CPython -- which is used and tested for with more diversity than the vast
-majority of software in use today -- uses it in much the same way. In their
-case, it's used as part of a vastly more complex process of forking children
-which is also _guaranteed_ to push to stack by calling child functions (see
+majority of software in use today -- uses it in much the same way:
+
+{% highlight c %}
+Py_NO_INLINE static pid_t do_fork_exec(/* ... */)
+{
+
+    pid_t pid;
+    PyThreadState *vfork_tstate_save;
+
+    /* ... */
+
+    vfork_tstate_save = PyEval_SaveThread();
+    pid = vfork();
+    if (pid != 0) {
+        // Not in the child process, reacquire the GIL.
+        PyEval_RestoreThread(vfork_tstate_save);
+    }
+
+    /* ... */
+
+    if (pid != 0) {
+        // Parent process.
+        return pid;
+    }
+
+    /* Child process. */
+
+    if (preexec_fn != Py_None) {
+        /* We'll be calling back into Python later so we need to do this.
+         * This call may not be async-signal-safe but neither is calling
+         * back into Python.  The user asked us to use hope as a strategy
+         * to avoid deadlock... */
+        PyOS_AfterFork_Child();
+    }
+
+    child_exec(exec_array, argv, envp, cwd,
+               p2cread, p2cwrite, c2pread, c2pwrite,
+               errread, errwrite, errpipe_read, errpipe_write,
+               close_fds, restore_signals, call_setsid, pgid_to_set,
+               gid, extra_group_size, extra_groups,
+               uid, child_umask, child_sigmask,
+               fds_to_keep, fds_to_keep_len,
+               preexec_fn, preexec_fn_args_tuple);
+    _exit(255);
+    return 0;
+}
+{% endhighlight %}
+
+As you can see, in their case, it's used as part of a vastly more complex
+process of forking children which is also _guaranteed_ to push to stack by
+calling child functions (see
 [here](https://github.com/python/cpython/blob/v3.12.1/Modules/_posixsubprocess.c#L812-L823)
 and
 [here](https://github.com/python/cpython/blob/v3.12.1/Modules/_posixsubprocess.c#L553-L571)).
