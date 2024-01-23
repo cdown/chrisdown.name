@@ -261,12 +261,12 @@ whether it's legal or not, given the fact that we are sharing the parent's
 memory space. Here's what POSIX [has to say about
 vfork](https://pubs.opengroup.org/onlinepubs/009696799/functions/vfork.html):
 
-> The vfork() function shall be equivalent to fork(), except that the behavior
-> is undefined if the process created by vfork() either modifies any data other
-> than a variable of type pid_t used to store the return value from vfork(), or
-> returns from the function in which vfork() was called, or calls any other
-> function before successfully calling _exit() or one of the exec family of
-> functions.
+> The `vfork()` function shall be equivalent to `fork()`, except that the
+> behavior is undefined if the process created by `vfork()` either modifies any
+> data other than a variable of type `pid_t` used to store the return value
+> from `vfork()`, or returns from the function in which `vfork()` was called,
+> or calls any other function before successfully calling `_exit()` or one of
+> the `exec` family of functions.
 
 It makes sense that access to the parent's memory (and thus doing basically
 anything other than `exec` (which replaces the process entirely) or `_exit`
