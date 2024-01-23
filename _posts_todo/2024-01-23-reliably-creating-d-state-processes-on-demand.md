@@ -247,8 +247,8 @@ allowing it to execute any more userspace instructions.
 We use this pretty widely in the kernel nowadays where possible:
 
 {% highlight bash %}
-% git grep -hc TASK_KILLABLE | paste -sd+ | bc
-78
+% git grep -ihc _killable | paste -sd+ | bc
+539
 {% endhighlight %}
 
 As such, you may well find that some of the D states that processes enter on
