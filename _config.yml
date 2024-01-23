@@ -25,6 +25,7 @@ exclude:
   - package.json
   - package-lock.json
   - _checks
+  - .clang-format
 
 include:
   - .well-known
