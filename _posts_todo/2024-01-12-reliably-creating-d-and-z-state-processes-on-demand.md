@@ -155,8 +155,8 @@ EXIT
 
 In the example above one might typically visualise things as doing things in
 the child in order to unblock the parent. However, you may also notice that in
-this code example, signals are blocked not only in the parent, but also the
-child. But surely that's not necessary since the parent is in D state anyway,
+this code example, signals are blocked not only in the child, but also the
+parent. But surely that's not necessary since the parent is in D state anyway,
 right? Well, let's try it without the signals blocked in the parent:
 
 {% highlight bash %}
