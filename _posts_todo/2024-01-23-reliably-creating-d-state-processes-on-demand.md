@@ -229,7 +229,7 @@ static int wait_for_vfork_done(struct task_struct *child,
 {% endhighlight c %}
 
 `TASK_KILLABLE` is a state that
-[Willy](https://kernelnewbies.org/MatthewWilcox) introduced in 2.6.25. It was
+[Matthew][] introduced in 2.6.25. It was
 created because, while in some cases we do actually need to shield the process
 from any signal interaction at all, in some cases it's fine as long as we know
 the process will terminate with no more userspace instructions executed. For
@@ -324,3 +324,8 @@ All in all, the simplicity and flexibility of the vfork approach make it ideal
 for most use cases. It doesn't require complex setup, is easily controllable
 and reliable, can easily be modified to be suitable for different testing
 conditions, and it's generally fairly self contained.
+
+Many thanks to [Johannes](https://github.com/hnaz) and [Matthew][] for
+reviewing this post.
+
+[Matthew]: https://kernelnewbies.org/MatthewWilcox
