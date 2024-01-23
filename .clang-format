@@ -7,6 +7,10 @@
 # - *IndentWidth: 4
 # - ColumnLimit: 60
 #
+# Then in vim:
+#
+# !clang-format --assume-filename=e.c -style=file
+#
 # ---
 #
 # clang-format configuration file. Intended for clang-format >= 11.
