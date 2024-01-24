@@ -29,7 +29,7 @@ The D (typically written out as "uninterruptible sleep") state is a process
 state where a process is sleeping and cannot be woken up in userspace. This can
 become a problem for things like init systems or containerisation platforms
 where the unwavering persistence of such processes must be planned for and have
-strategies in place to not block forward progress.
+strategies in place in order to avoid them blocking forward progress.
 
 One example of where this is used is in DMA transfers and the like. DMA allows
 hardware subsystems to access the main system memory for reading/writing
