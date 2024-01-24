@@ -153,7 +153,8 @@ the stack space used in the child is separate from the stack space used by the
 parent, avoiding the compiler potentially doing optimisations that might result
 in stack interleaving.
 
-Here's an example of its use:
+Here's an example of its use, showing that it can't simply be terminated by
+Ctrl-C:
 
 {% highlight bash %}
 % ./dstate
