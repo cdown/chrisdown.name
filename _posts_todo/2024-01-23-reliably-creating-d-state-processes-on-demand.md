@@ -163,7 +163,7 @@ EXIT
 %
 {% endhighlight %}
 
-## Killable D state processes
+## Why do we block signals in both the parent and child?
 
 In the example above one might typically visualise things as doing things in
 the child in order to unblock the parent. However, you may also notice that in
