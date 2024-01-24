@@ -206,9 +206,9 @@ SYSCALL_DEFINE0(vfork)
 }
 {% endhighlight %}
 
-As mentioned earlier, `CLONE_VFORK` is the clone flag that specifies to suspend
-the parent process until the child has completed. In `kernel_clone`, we see the
-following code:
+`CLONE_VFORK` is the `clone()` flag that specifies to suspend the parent
+process until the child has completed. In `kernel_clone`, we see the following
+code:
 
 {% highlight c %}
 if (clone_flags & CLONE_VFORK) {
