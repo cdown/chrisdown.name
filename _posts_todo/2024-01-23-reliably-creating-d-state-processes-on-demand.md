@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Creating D state (uninterruptible sleep) processes on demand"
+title: "Creating controllable D state (uninterruptible sleep) processes on demand"
 ---
 
 At [work](https://meta.com) several years ago I received what at the time I
