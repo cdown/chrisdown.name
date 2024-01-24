@@ -143,10 +143,10 @@ int main(void)
 }
 {% endhighlight %}
 
-`__attribute__((noinline))` is needed in order to make sure that the stack
-space used in the child is separate from the stack space used by the parent,
-avoiding the compiler potentially doing optimisations that might result in
-stack interleaving.
+`__attribute__((noinline))` is generally a good idea in order to make sure that
+the stack space used in the child is separate from the stack space used by the
+parent, avoiding the compiler potentially doing optimisations that might result
+in stack interleaving.
 
 Here's an example of its use:
 
