@@ -5,7 +5,7 @@
 #
 # - UseTab: Never
 # - *IndentWidth: 4
-# - ColumnLimit: 60
+# - ColumnLimit: 50
 #
 # Then in vim:
 #
@@ -65,7 +65,7 @@ BreakConstructorInitializersBeforeComma: false
 BreakConstructorInitializers: BeforeComma
 BreakAfterJavaFieldAnnotations: false
 BreakStringLiterals: false
-ColumnLimit: 60
+ColumnLimit: 50
 CommentPragmas: '^ IWYU pragma:'
 CompactNamespaces: false
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
