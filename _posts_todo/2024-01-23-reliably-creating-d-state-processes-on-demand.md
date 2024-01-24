@@ -105,7 +105,8 @@ void __attribute__((noinline)) run_child(void)
     char input[sizeof(EXIT_STRING)];
 
     while (1) {
-        if (fgets(input, sizeof(input), stdin) == NULL) {
+        if (fgets(input, sizeof(input), stdin) ==
+            NULL) {
             break;
         }
         if (strcmp(input, EXIT_STRING) == 0) {
@@ -115,7 +116,8 @@ void __attribute__((noinline)) run_child(void)
             input[strlen(input) - 1] != '\n') {
             /* Partial line read, clear it */
             int c;
-            while ((c = getchar()) != '\n' && c != EOF)
+            while ((c = getchar()) != '\n' &&
+                   c != EOF)
                 ;
         }
     }
@@ -191,7 +193,7 @@ syscalls. They do the same thing behind the scenes -- `vfork` calls into the
 SYSCALL_DEFINE0(vfork)
 {
     struct kernel_clone_args args = {
-        .flags       = CLONE_VFORK | CLONE_VM,
+        .flags = CLONE_VFORK | CLONE_VM,
         .exit_signal = SIGCHLD,
     };
 
@@ -213,14 +215,18 @@ if (clone_flags & CLONE_VFORK) {
 Okay, so what does `wait_for_vfork_done` do?
 
 {% highlight c %}
-static int wait_for_vfork_done(struct task_struct *child,
-                               struct completion *vfork)
+static int
+wait_for_vfork_done(struct task_struct *child,
+                    struct completion *vfork)
 {
-    unsigned int state = TASK_UNINTERRUPTIBLE|TASK_KILLABLE|TASK_FREEZABLE;
+    unsigned int state = TASK_UNINTERRUPTIBLE |
+                         TASK_KILLABLE |
+                         TASK_FREEZABLE;
     int killed;
 
     cgroup_enter_frozen();
-    killed = wait_for_completion_state(vfork, state);
+    killed =
+        wait_for_completion_state(vfork, state);
     cgroup_leave_frozen(false);
 
     if (killed) {
@@ -311,14 +317,11 @@ Py_NO_INLINE static pid_t do_fork_exec(/* ... */)
     /* Child process. */
 
     if (preexec_fn != Py_None) {
-        /* We'll be calling back into Python later so we need to do this.
-         * This call may not be async-signal-safe but neither is calling
-         * back into Python.  The user asked us to use hope as a strategy
-         * to avoid deadlock... */
         PyOS_AfterFork_Child();
     }
 
-    child_exec(exec_array, argv, envp, cwd, /* ... */);
+    child_exec(exec_array, argv, envp, cwd,
+               /* ... */);
     _exit(255);
     return 0;
 }
