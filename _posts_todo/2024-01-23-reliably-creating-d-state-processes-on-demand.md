@@ -20,8 +20,11 @@ straightforward enough, I can think of:
    functions gathers kernel stacks of D state tasks.
 
 So while this may still be a highly specialised request, there's clearly a
-noticeable void in readily accessible knowledge on the subject. Hopefully this
-article can improve that somewhat :-)
+noticeable void in readily accessible knowledge on the subject.
+
+For those who are interested, we will also discuss some interesting Linux
+arcana, some of the dangers of sharing virtual memory space, and some things
+you may well not know about D state process internals. :-)
 
 ## Why would anyone want to test this?
 
