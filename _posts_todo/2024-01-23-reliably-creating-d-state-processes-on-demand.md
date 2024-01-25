@@ -9,9 +9,17 @@ space was testing container teardown robustness, and wanted to make sure that
 their software was robust to D state processes holding things up. I gave them
 some ideas, they implemented it, and that was that.
 
+The D (typically written out as "uninterruptible sleep") state is a process
+state where a process is sleeping and cannot be woken up in userspace. This can
+become a problem for things like init systems or containerisation platforms
+where the unwavering persistence of such processes must be planned for and have
+strategies in place in order to avoid them blocking forward progress. These
+processes are typically thought about as being the equivalent of an immovable
+object: a process where no signal and no input is likely to result in any
+forward progress, at least for the timebeing.
+
 Fast forward to today, and I think I must have seen this request at least four
-or five times in the years since. Just as three examples that are
-straightforward enough, I can think of:
+or five times in the years since. As three examples from the top of my head:
 
 1. The aforementioned container teardown case;
 2. A team building system monitoring tooling that wanted D state processes for
@@ -28,12 +36,6 @@ you may well not know about D state process internals. :-)
 
 ## Why would anyone want to test this?
 
-The D (typically written out as "uninterruptible sleep") state is a process
-state where a process is sleeping and cannot be woken up in userspace. This can
-become a problem for things like init systems or containerisation platforms
-where the unwavering persistence of such processes must be planned for and have
-strategies in place in order to avoid them blocking forward progress.
-
 One example of where this is used is in DMA transfers and the like. DMA allows
 hardware subsystems to access the main system memory for reading/writing
 independently of the CPU, which is essential for efficient handling of large
@@ -42,8 +44,9 @@ such operations because DMA transfers are not typically designed to accommodate
 or recover from partial or interrupted reads or writes.
 
 These states can become a problem for things like init systems or
-containerisation platforms where the unwavering persistence of such processes
-must be planned for and have strategies in place to not block forward progress.
+containerisation platforms where these stubborn processes may block things like
+tearing down a container, a user session, or the entire system on shutdown, and
+as such all systems like this must implement measures to deal with them.
 
 ## D states outside of I/O context
 
@@ -166,11 +169,12 @@ EXIT
 
 ## Why do we block signals in both the parent and child?
 
-In the example above one might typically visualise things as doing things in
-the child in order to unblock the parent. However, you may also notice that in
-this code example, signals are blocked not only in the child, but also the
-parent. But surely that's not necessary since the parent is in D state anyway,
-right? Well, let's try it without the signals blocked in the parent:
+In the example above one might typically visualise our intention as being to
+satisfy some condition in the child in order to unblock the parent. However,
+you may also notice that in this code example, signals are blocked not only in
+the child, but also the parent. But surely that's not necessary since the
+parent is in D state anyway, right? Well, let's try it without the signals
+blocked in the parent:
 
 {% highlight bash %}
 % ./dstate & { sleep 0.1; ps -o pid,state,cmd -p "$!"; kill "$!"; }
@@ -184,9 +188,9 @@ Wait, what? How come we were able to terminate a D state process?
 
 My experience is that most system administrators and Linux users are not aware
 of the fact that a D state process doesn't actually have to be uninterruptible.
-All a D state process is is a process which cannot execute any more userspace
-instructions, but blocking all signals is only one interpretation of how to
-achieve that, and it's not necessary in all circumstances.
+All a D state process represents is a process which cannot execute any more
+userspace instructions, but blocking all signals is only one interpretation of
+how to achieve that, and it's not necessary in all circumstances.
 
 To see what I mean, let's look at the kernel source to see how `vfork` is
 implemented. Depending on your libc and version, the `vfork` that you call from
@@ -379,7 +383,8 @@ for most use cases. It doesn't require complex setup, is easily controllable
 and reliable, can easily be modified to be suitable for different testing
 conditions, and it's generally fairly self contained.
 
-Many thanks to [Johannes](https://github.com/hnaz) and [Matthew][] for
+Many thanks to [Johannes](https://github.com/hnaz), [Matthew][],
+[Javier](https://hondu.co/) for
 reviewing this post.
 
 [Matthew]: https://kernelnewbies.org/MatthewWilcox
