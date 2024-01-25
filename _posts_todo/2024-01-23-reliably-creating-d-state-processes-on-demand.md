@@ -384,7 +384,7 @@ and reliable, can easily be modified to be suitable for different testing
 conditions, and it's generally fairly self contained.
 
 Many thanks to [Johannes](https://github.com/hnaz), [Matthew][],
-[Javier](https://hondu.co/) for
-reviewing this post.
+[Sam](https://samwho.dev/), and [Javier](https://hondu.co/) for reviewing this
+post.
 
 [Matthew]: https://kernelnewbies.org/MatthewWilcox
