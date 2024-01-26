@@ -437,7 +437,7 @@ frozen filesystem:
     [<0>] entry_SYSCALL_64_after_hwframe+0x6e/0x76
 
 No amount of killing will unblock this -- the filesystem must be unfrozen to
-make forward progress. As you can see, it still exists:
+make forward progress. As you can see, it still exists even after a `kill -9`:
 
     % kill -9 21135
     % cat /proc/21135/comm
