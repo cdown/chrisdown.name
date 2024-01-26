@@ -499,8 +499,8 @@ the years with some assessments:
    normal operation ;-) The basic premise involves running an NFS client and
    server on a single host, and then using iptables or BPF to drop packets on
    demand. However, this requires quite a bit of setup, and it's not very
-   reliable since it depends a lot on client and server configuration what will
-   really happen and for how long.
+   reliable since what exactly will happen and for how long depends a lot on
+   client and server configuration, and some amount of blind luck.
 2. **set_current_state(TASK_UNINTERRUPTIBLE)**: Of course, one can also just
    write a kernel module to do whatever one wants. This is easily the most
    complicated option to maintain long term, especially in a testing pipeline.
