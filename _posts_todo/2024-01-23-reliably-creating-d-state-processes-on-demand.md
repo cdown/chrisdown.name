@@ -406,8 +406,8 @@ discussion, they introduced the ability to do disk snapshotting, where you take
 a snapshot of a filesystem at a particular moment in time.
 
 There are also other mechanisms which make use of some of the LVM
-infrastructure in order to do things like snapshots outside of that context,
-and we can leverage that for our purposes here.
+infrastructure in order to do things like snapshots in an external context. One
+of those mechanisms that we can leverage here is `fsfreeze`.
 
 From `man 8 fsfreeze`:
 
