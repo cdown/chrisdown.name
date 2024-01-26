@@ -527,7 +527,7 @@ Run this script as root, and you should get a process which is now in D state,
 with the PID for that process in the output. Press Enter to tear down the
 filesystem and take the process out of D state.
 
-    % sudo /tmp/e
+    % sudo ./dstate-fsfreeze
     PID 33088 is now in D state. Press <Enter> to unfreeze and clean up.
 
 While slightly less self-contained than the `vfork` method, since it requires
