@@ -527,8 +527,8 @@ the years with some assessments:
 
 All in all, the simplicity and flexibility of the `vfork` and `fsfreeze`
 approaches make them ideal for most use cases. They don't require complex
-setup, are easily controllable and reliable, can easily be modified to be
-suitable for different testing conditions.
+setup, are controllable and reliable, and can easily be modified to be suitable
+for different testing conditions.
 
 Many thanks to [Johannes](https://github.com/hnaz), [Matthew][],
 [Sam](https://samwho.dev/), and [Javier](https://hondu.co/) for reviewing this
