@@ -458,18 +458,21 @@ fsfreeze -f -- "$dest"
 mkdir "$dest"/dir &
 d_pid=$!
 
-while sleep 1; do
+i=0
+while true; do
     read -r _ _ state _ < /proc/"$d_pid"/stat
     if [[ $state == D ]]; then
         break
     fi
-    printf 'Waiting for %d to enter D state...\n' \
-        "$d_pid" >&2
+    if (( ++i % 1000 == 0 )); then
+        printf 'Waiting for %d to enter D state...\n' \
+            "$d_pid" >&2
+    fi
 done
 
 
 printf 'PID %d is now in D state. ' "$d_pid"
-printf 'Press <Enter> to come out of D state.\n'
+printf 'Press <Enter> to come out of D state.'
 read
 
 fsfreeze -u -- "$dest"
