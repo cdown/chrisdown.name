@@ -383,8 +383,8 @@ superblock contains much of the high level, mission critical information for
 the filesystem, and taking exclusive write access over it is tantamount to
 denying any modification to the filesystem.
 
-Importantly, this is implemented in `sb_wait_write`, which is implemented via a
-per-CPU read-write semaphore:
+Importantly, this is implemented in `sb_wait_write`, which is implemented via
+an array of per-CPU read-write semaphores:
 
 {% highlight c %}
 static void sb_wait_write(struct super_block *sb, int level)
@@ -403,11 +403,11 @@ int freeze_super(struct super_block *sb,
 }
 {% endhighlight %}
 
-Importantly, we need to acquire the writer side of this lock when modifying
-files or directories in order to safely queue changes to the superblock. For
-our needs, per-CPU read-write locks in the kernel have a useful property: when
-the lock takes the slow path (i.e. the lock is held in such a way that we
-cannot acquire it right now), it puts the process requesting it in
+Importantly, we need to acquire the writer side of one of these semaphores when
+modifying files or directories in order to safely queue changes to the
+superblock. For our needs, per-CPU read-write locks in the kernel have a useful
+property: when the lock takes the slow path (i.e. the lock is held in such a
+way that we cannot acquire it right now), it puts the process requesting it in
 `TASK_UNINTERRUPTIBLE` without `TASK_KILLABLE`. This means that our process
 will survive a `SIGKILL`, and the only way out is to unfreeze the filesystem.
 
