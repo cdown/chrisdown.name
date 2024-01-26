@@ -3,6 +3,18 @@ layout: post
 title: "Creating controllable D state (uninterruptible sleep) processes on demand"
 ---
 
+tl;dr:
+
+- Use `vfork` for a D state that can be controlled via signals.
+- Use `fsfreeze` for a D state which cannot be controlled via signals.
+
+But wait, how can any D state process be controlled by signals anyway? Isn't
+the whole point that they are uninterruptible? If you are wondering this, read
+on and you will likely find out some new things about how Linux works
+internally :-)
+
+---
+
 At [work](https://meta.com) several years ago I received what at the time I
 thought was a pretty niche and one-off request. A team in the containerisation
 space was testing container teardown robustness, and wanted to make sure that
