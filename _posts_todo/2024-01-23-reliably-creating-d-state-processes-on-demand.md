@@ -63,6 +63,28 @@ as such all systems like this must implement measures to deal with them.
 Here's a tangible example of how that might manifest in a production
 environment with a container engine.
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.7.0/dist/mermaid.min.js"></script>
+<div class="mermaid">
+sequenceDiagram
+    participant CE as Container Engine
+    participant P as Process
+    participant K as Kernel
+
+    P->>K: DMA request
+    K->>P: Put into D state
+
+    Note over CE,K: In this hypothetical scenario the hardware takes a long<br>time to finish, so we are stuck in D state indefinitely, and<br>cannot be signalled to terminate. Meanwhile...
+
+    Note over CE: The container engine is<br>told to shut down the container.
+    CE->>P: Send SIGTERM
+    P--xCE: No response (uninterruptible)
+
+    CE->>P: Send SIGKILL
+    P--xCE: No response (uninterruptible)
+
+    Note over CE: The container engine is now<br>blocked on shutdown, waiting<br>for processes to terminate.
+</div>
+
 There is a job in production that interfaces with hardware. This hardware may
 -- legitimately or less legitimately -- take a long time to do DMA transfers.
 Once a DMA transfer has started, it can't be stopped until the hardware says
