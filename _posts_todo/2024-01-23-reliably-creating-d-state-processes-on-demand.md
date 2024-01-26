@@ -559,7 +559,7 @@ setup, are controllable and reliable, and can easily be modified to be suitable
 for different testing conditions.
 
 Many thanks to [Johannes](https://github.com/hnaz), [Matthew][],
-[Sam](https://samwho.dev/), and [Javier](https://hondu.co/) for reviewing this
-post.
+[Sam](https://samwho.dev/), [Tejun](https://github.com/htejun), and
+[Javier](https://hondu.co/) for reviewing this post.
 
 [Matthew]: https://kernelnewbies.org/MatthewWilcox
