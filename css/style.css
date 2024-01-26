@@ -479,7 +479,6 @@ td.status-image a:hover {
 .highlight .ne { color: #B6000F; font-weight: bold } /* Name.Exception */
 .highlight .nf { color: #B6000F; font-weight: bold } /* Name.Function */
 .highlight .nn { color: #555555 } /* Name.Namespace */
-.highlight .nt { color: #000080 } /* Name.Tag */
 .highlight .nv { color: #008080 } /* Name.Variable */
 .highlight .ow { font-weight: bold } /* Operator.Word */
 .highlight .w { color: #bbbbbb } /* Text.Whitespace */
