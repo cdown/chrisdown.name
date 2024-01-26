@@ -416,15 +416,15 @@ From `man 8 fsfreeze`:
 > intended to be used with hardware RAID devices that support the creation of
 > snapshots.
 
-Importantly, this freeze is implemented by (among other things) indefinitely
-taking exclusive write access over the filesystem's
+This freeze is implemented by (among other things) indefinitely taking
+exclusive write access over the filesystem's
 [superblock](https://unix.stackexchange.com/a/4403/10762). The filesystem
 superblock contains much of the high level, mission critical information for
 the filesystem, and taking exclusive write access over it is tantamount to
 denying any modification to the filesystem.
 
-Importantly, this is implemented in `sb_wait_write`, which is implemented via
-an array of per-CPU read-write semaphores:
+This is implemented in `sb_wait_write`, which is implemented via an array of
+per-CPU read-write semaphores:
 
 {% highlight c %}
 static void sb_wait_write(struct super_block *sb, int level)
