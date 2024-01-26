@@ -347,7 +347,7 @@ stack pointer register is still independent, even with `vfork`, so things just
 continue about their merry way. All in all, despite standards ire, the whole
 thing is relatively safe (if a little unpleasant).
 
-## How can I survive SIGKILL?
+## How can I survive SIGKILL, then?
 
 While the above approach is nice and self contained and serves most use cases
 for testing, its major downside is that it doesn't survive a SIGKILL, as
