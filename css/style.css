@@ -72,7 +72,7 @@ html {
 }
 
 html, body {
-    max-width: 720px;
+    max-width: 900px;
     margin: 1em auto;
     padding: 0 0.7em;
     font-family: "Open Sans", sans-serif;
@@ -343,7 +343,7 @@ table {
 }
 
 table.light {
-    max-width: 670px;
+    max-width: 860px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -371,7 +371,7 @@ summary > * {
  * Not always applied because this causes tables to not fill the full width of
  * the body.
  */
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 900px) {
     table {
         display: block;
         overflow-x: auto;
