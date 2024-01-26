@@ -453,7 +453,15 @@ fallocate -l 8M -- "$src"
 mkfs.ext4 -q -- "$src"
 
 mount -o loop -- "$src" "$dest"
+
 fsfreeze -f -- "$dest"
+
+unfreeze() {
+    fsfreeze -u -- "$dest"
+    umount -- "$dest"
+    rm "$src"
+}
+trap unfreeze EXIT
 
 mkdir "$dest"/dir &
 d_pid=$!
@@ -470,14 +478,9 @@ while true; do
     fi
 done
 
-
 printf 'PID %d is now in D state. ' "$d_pid"
-printf 'Press <Enter> to come out of D state.'
+printf 'Press <Enter> to unfreeze and clean up.'
 read
-
-fsfreeze -u -- "$dest"
-umount -- "$dest"
-rm "$src"
 {% endhighlight %}
 
 Run this script as root, and you should get a process which is now in D state,
@@ -485,7 +488,7 @@ with the PID for that process in the output. Press Enter to tear down the
 filesystem and take the process out of D state.
 
     % sudo /tmp/e
-    PID 33088 is now in D state. Press <Enter> to come out of D state.
+    PID 33088 is now in D state. Press <Enter> to unfreeze and clean up.
 
 While slightly less self-contained than the `vfork` method, since it requires
 creating a filesystem and having elevated privileges, this method is the way
