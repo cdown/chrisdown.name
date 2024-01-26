@@ -355,13 +355,6 @@ SIGKILL is always a deadly signal, and cannot be caught in userspace. In order
 to survive that, we need to find a callsite which sets `TASK_UNINTERRUPTIBLE`
 without `TASK_KILLABLE`.
 
-One place where we often set `TASK_UNINTERRUPTIBLE` without `TASK_KILLABLE` is
-in filesystem operation. We do this for a few reasons, but the fundamental
-thing to know is that there are some states which are extremely error prone to
-extricate a task from without waiting for it to proceed a little further in
-kernel space. Being able to set a task as uninterruptible means we simplify
-some of the most complicated parts of filesystem code.
-
 Those of you who have worked in the storage space may also know about disk and
 filesystem snapshots. Linux has, over time, added support for these kinds of
 things through
@@ -383,53 +376,95 @@ From `man 8 fsfreeze`:
 > intended to be used with hardware RAID devices that support the creation of
 > snapshots.
 
-And how does freezing work? Well, let's look at the `fsfreeze` source code to
-work out how it works. `fsfreeze` comes from util-linux, which Karel [maintains
-on GitHub](https://github.com/util-linux/util-linux). We can find `fsfreeze`
-[at
-`sys-utils/fsfreeze.c`](https://github.com/util-linux/util-linux/blob/27eec306df02e2235788833423f6dd994a96f76c/sys-utils/fsfreeze.c).
-If we look at the code, we can see that it calls the `FIFREEZE` ioctl in order
-to freeze the filesystem:
+Importantly, this freeze is implemented by (among other things) indefinitely
+taking exclusive write access over the
+[superblock](https://unix.stackexchange.com/a/4403/10762). This exclusive
+access is granted by a per-CPU read-write semaphore (the superblock's
+[`s_writers.rw_sem`](https://github.com/torvalds/linux/blob/ecb1b8288dc7ccbdcb3b9df005fa1c0e0c0388a7/include/linux/fs.h#L1637-L1640),
+which ensures that when a filesystem is frozen, no other process can
+simultaneously modify the superblock.
 
-{% highlight c %}
-int main(int argc, char **argv)
-{
-    while ((c = getopt_long(/* ... */)) != -1) {
-        switch (c) {
-            case 'f':
-                action = FREEZE;
-                break;
-        }
-    }
+Importantly, we need to acquire the writer side of this lock when modifying
+files or directories in order to safely queue changes to the superblock. For
+our needs, per-CPU read-write locks in the kernel have a useful property: when
+the lock takes the slow path (i.e. the lock is held in such a way that we
+cannot acquire it right now), it puts the process requesting it in
+`TASK_UNINTERRUPTIBLE` without `TASK_KILLABLE`. This means that our process
+will survive a `SIGKILL`, and the only way out is to unfreeze the filesystem.
 
-    /* ... */
+For example, here is the kernel stack we get trapped in when trying to do a
+`mkdir` on a frozen filesystem:
 
-    switch (action) {
-        case FREEZE:
-            if (ioctl(fd, FIFREEZE, 0)) {
-                warn(_("%s: freeze failed"), path);
-                goto done;
-            }
-            break;
-    }
-}
+    % cat /proc/21135/stack
+    [<0>] percpu_rwsem_wait+0x116/0x140
+    [<0>] mnt_want_write+0x8f/0xc0
+    [<0>] filename_create+0x7c/0x1b0
+    [<0>] do_mkdirat+0x5f/0x180
+    [<0>] __x64_sys_mkdir+0x49/0x70
+    [<0>] do_syscall_64+0x61/0xe0
+    [<0>] entry_SYSCALL_64_after_hwframe+0x6e/0x76
+
+No amount of killing will unblock this -- the filesystem must be unfrozen to
+make forward progress. As you can see, it still exists:
+
+    % kill -9 21135
+    % cat /proc/21135/comm
+    mkdir
+
+Here is an example of how you can implement this:
+
+{% highlight bash %}
+#!/bin/bash -e
+
+src=$(mktemp)
+dest=$(mktemp -d)
+
+if (( EUID != 0 )); then
+    echo 'You need to be root.' >&2
+    exit 1
+fi
+
+# fsfreeze needs a supported filesystem. ext4 is
+# one, but you can use others, see FILESYSTEM
+# SUPPORT in `man 8 fsfreeze'.
+fallocate -l 8M -- "$src"
+mkfs.ext4 -q -- "$src"
+
+mount -o loop -- "$src" "$dest"
+fsfreeze -f -- "$dest"
+
+mkdir "$dest"/dir &
+d_pid=$!
+
+while sleep 1; do
+    read -r _ _ state _ < /proc/"$d_pid"/stat
+    if [[ $state == D ]]; then
+        break
+    fi
+    printf 'Waiting for %d to enter D state...\n' \
+        "$d_pid" >&2
+done
+
+
+printf 'PID %d is now in D state. ' "$d_pid"
+printf 'Press <Enter> to come out of D state.\n'
+read
+
+fsfreeze -u -- "$dest"
+umount -- "$dest"
+rm "$src"
 {% endhighlight %}
 
-If we look for `FIFREEZE` in the kernel, we can see that it calls
-`ioctl_fsfreeze()`:
+If you run the script as root, you should get a process which is now in D
+state. Press Enter to tear down the filesystem and take the process out of D
+state.
 
-{% highlight c %}
-static int do_vfs_ioctl(struct file *filp, unsigned int fd,
-                        unsigned int cmd, unsigned long arg)
-{
-    switch (cmd) {
-        /* ... */
-        case FIFREEZE:
-            return ioctl_fsfreeze(filp);
-        /* ... */
-    }
-}
-{% endhighlight %}
+    % sudo /tmp/e
+    PID 33088 is now in D state. Press <Enter> to come out of D state.
+
+While slightly less self-contained than the `vfork` method, since it requires
+creating a filesystem and having elevated privileges, this method is the way
+you likely want to go if you need a non-`TASK_KILLABLE` D state.
 
 ## Other approaches
 
@@ -437,29 +472,23 @@ There are a few other "controllable" (i.e. you can enter and exit D state on
 demand) ways to do this. Here are some of them I've seen people suggest over
 the years with some assessments:
 
-1. **fsfreeze**: If you really need a process in a disk I/O related D state,
-   this is how I would go about it. In its simplest form, all you need to do is
-   `mkfs` a supported filesystem in a file, mount it to a loop device, call
-   `fsfreeze -f` on the filesystem, and then try to do some I/O. This approach
-   is highly reliable and can be easily activated and deactivated, but the
-   setup involved is significantly more burdensome than the `vfork` option,
-   which is mostly standalone. This also requires elevated privileges, whereas
-   the `vfork` approach does not.
-2. **Dropping NFS traffic**: It seems this is the tool that a lot of people
+1. **Dropping NFS traffic**: It seems this is the tool that a lot of people
    reach for, maybe because it's so reliable at producing D states during
-   normal operation ;-) However, this requires quite a bit of setup, and it's
-   not very reliable since it depends a lot on client and server configuration
-   what will really happen and for how long.
-3. **set_current_state(TASK_UNINTERRUPTIBLE)**: Of course, one can also just
+   normal operation ;-) The basic premise involves running an NFS client and
+   server on a single host, and then using iptables or BPF to drop packets on
+   demand. However, this requires quite a bit of setup, and it's not very
+   reliable since it depends a lot on client and server configuration what will
+   really happen and for how long.
+2. **set_current_state(TASK_UNINTERRUPTIBLE)**: Of course, one can also just
    write a kernel module to do whatever one wants. This is easily the most
    complicated option to maintain long term, especially in a testing pipeline.
    It requires elevated privileges, and you have the extra bonus of potentially
    screwing up scheduling entirely depending on how you go about it.
 
-All in all, the simplicity and flexibility of the vfork approach make it ideal
-for most use cases. It doesn't require complex setup, is easily controllable
-and reliable, can easily be modified to be suitable for different testing
-conditions, and it's generally fairly self contained.
+All in all, the simplicity and flexibility of the `vfork` and `fsfreeze`
+approaches make them ideal for most use cases. They don't require complex
+setup, are easily controllable and reliable, can easily be modified to be
+suitable for different testing conditions.
 
 Many thanks to [Johannes](https://github.com/hnaz), [Matthew][],
 [Sam](https://samwho.dev/), and [Javier](https://hondu.co/) for reviewing this
