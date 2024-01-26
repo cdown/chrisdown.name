@@ -377,12 +377,31 @@ From `man 8 fsfreeze`:
 > snapshots.
 
 Importantly, this freeze is implemented by (among other things) indefinitely
-taking exclusive write access over the
-[superblock](https://unix.stackexchange.com/a/4403/10762). This exclusive
-access is granted by a per-CPU read-write semaphore (the superblock's
-[`s_writers.rw_sem`](https://github.com/torvalds/linux/blob/ecb1b8288dc7ccbdcb3b9df005fa1c0e0c0388a7/include/linux/fs.h#L1637-L1640),
-which ensures that when a filesystem is frozen, no other process can
-simultaneously modify the superblock.
+taking exclusive write access over the filesystem's
+[superblock](https://unix.stackexchange.com/a/4403/10762). The filesystem
+superblock contains much of the high level, mission critical information for
+the filesystem, and taking exclusive write access over it is tantamount to
+denying any modification to the filesystem.
+
+Importantly, this is implemented in `sb_wait_write`, which is implemented via a
+per-CPU read-write semaphore:
+
+{% highlight c %}
+static void sb_wait_write(struct super_block *sb, int level)
+{
+    percpu_down_write(sb->s_writers.rw_sem + level - 1);
+}
+
+int freeze_super(struct super_block *sb,
+                 enum freeze_holder who)
+{
+    /* ... */
+    sb_wait_write(sb, SB_FREEZE_WRITE);
+    sb_wait_write(sb, SB_FREEZE_PAGEFAULT);
+    sb_wait_write(sb, SB_FREEZE_FS);
+    /* ... */
+}
+{% endhighlight %}
 
 Importantly, we need to acquire the writer side of this lock when modifying
 files or directories in order to safely queue changes to the superblock. For
@@ -392,8 +411,9 @@ cannot acquire it right now), it puts the process requesting it in
 `TASK_UNINTERRUPTIBLE` without `TASK_KILLABLE`. This means that our process
 will survive a `SIGKILL`, and the only way out is to unfreeze the filesystem.
 
-For example, here is the kernel stack we get trapped in when trying to do a
-`mkdir` on a frozen filesystem:
+For example, here is the kernel stack we get trapped in trying to acquire the
+previously writer locked read-write semaphore when trying to do a `mkdir` on a
+frozen filesystem:
 
     % cat /proc/21135/stack
     [<0>] percpu_rwsem_wait+0x116/0x140
@@ -411,7 +431,9 @@ make forward progress. As you can see, it still exists:
     % cat /proc/21135/comm
     mkdir
 
-Here is an example of how you can implement this:
+Here's how we can reproduce this reliably as a script. This example is in bash,
+but of course, you can more or less write this in any language that suits your
+needs.
 
 {% highlight bash %}
 #!/bin/bash -e
@@ -455,9 +477,9 @@ umount -- "$dest"
 rm "$src"
 {% endhighlight %}
 
-If you run the script as root, you should get a process which is now in D
-state. Press Enter to tear down the filesystem and take the process out of D
-state.
+Run this script as root, and you should get a process which is now in D state,
+with the PID for that process in the output. Press Enter to tear down the
+filesystem and take the process out of D state.
 
     % sudo /tmp/e
     PID 33088 is now in D state. Press <Enter> to come out of D state.
