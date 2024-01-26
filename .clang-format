@@ -6,6 +6,7 @@
 # - UseTab: Never
 # - *IndentWidth: 4
 # - ColumnLimit: 60
+# - IndentCaseLabels: true
 #
 # Then in vim:
 #
@@ -652,7 +653,7 @@ IncludeCategories:
   - Regex: '.*'
     Priority: 1
 IncludeIsMainRegex: '(Test)?$'
-IndentCaseLabels: false
+IndentCaseLabels: true
 IndentGotoLabels: false
 IndentPPDirectives: None
 IndentWidth: 4

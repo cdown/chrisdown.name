@@ -347,6 +347,90 @@ stack pointer register is still independent, even with `vfork`, so things just
 continue about their merry way. All in all, despite standards ire, the whole
 thing is relatively safe (if a little unpleasant).
 
+## How can I survive SIGKILL?
+
+While the above approach is nice and self contained and serves most use cases
+for testing, its major downside is that it doesn't survive a SIGKILL, as
+SIGKILL is always a deadly signal, and cannot be caught in userspace. In order
+to survive that, we need to find a callsite which sets `TASK_UNINTERRUPTIBLE`
+without `TASK_KILLABLE`.
+
+One place where we often set `TASK_UNINTERRUPTIBLE` without `TASK_KILLABLE` is
+in filesystem operation. We do this for a few reasons, but the fundamental
+thing to know is that there are some states which are extremely error prone to
+extricate a task from without waiting for it to proceed a little further in
+kernel space. Being able to set a task as uninterruptible means we simplify
+some of the most complicated parts of filesystem code.
+
+Those of you who have worked in the storage space may also know about disk and
+filesystem snapshots. Linux has, over time, added support for these kinds of
+things through
+[LVM](https://en.wikipedia.org/wiki/Logical_Volume_Manager_%28Linux%29) and
+other mechanisms. LVM in particular adds more sophisticated management of disk
+space and filesystems on top of existing Unix paradigms, like the capability to
+resize filesystems, manage multiple disks as one, and most importantly for this
+discussion, they introduced the ability to do disk snapshotting, where you take
+a snapshot of a filesystem at a particular moment in time.
+
+There are also other mechanisms which make use of some of the LVM
+infrastructure in order to do things like snapshots outside of that context,
+and we can leverage that for our purposes here.
+
+From `man 8 fsfreeze`:
+
+> `fsfreeze` suspends and resumes access to an filesystem. `fsfreeze` halts new
+> access to the filesystem and creates a stable image on disk. `fsfreeze` is
+> intended to be used with hardware RAID devices that support the creation of
+> snapshots.
+
+And how does freezing work? Well, let's look at the `fsfreeze` source code to
+work out how it works. `fsfreeze` comes from util-linux, which Karel [maintains
+on GitHub](https://github.com/util-linux/util-linux). We can find `fsfreeze`
+[at
+`sys-utils/fsfreeze.c`](https://github.com/util-linux/util-linux/blob/27eec306df02e2235788833423f6dd994a96f76c/sys-utils/fsfreeze.c).
+If we look at the code, we can see that it calls the `FIFREEZE` ioctl in order
+to freeze the filesystem:
+
+{% highlight c %}
+int main(int argc, char **argv)
+{
+    while ((c = getopt_long(/* ... */)) != -1) {
+        switch (c) {
+            case 'f':
+                action = FREEZE;
+                break;
+        }
+    }
+
+    /* ... */
+
+    switch (action) {
+        case FREEZE:
+            if (ioctl(fd, FIFREEZE, 0)) {
+                warn(_("%s: freeze failed"), path);
+                goto done;
+            }
+            break;
+    }
+}
+{% endhighlight %}
+
+If we look for `FIFREEZE` in the kernel, we can see that it calls
+`ioctl_fsfreeze()`:
+
+{% highlight c %}
+static int do_vfs_ioctl(struct file *filp, unsigned int fd,
+                        unsigned int cmd, unsigned long arg)
+{
+    switch (cmd) {
+        /* ... */
+        case FIFREEZE:
+            return ioctl_fsfreeze(filp);
+        /* ... */
+    }
+}
+{% endhighlight %}
+
 ## Other approaches
 
 There are a few other "controllable" (i.e. you can enter and exit D state on
