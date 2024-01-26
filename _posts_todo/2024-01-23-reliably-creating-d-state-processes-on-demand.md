@@ -60,6 +60,34 @@ containerisation platforms where these stubborn processes may block things like
 tearing down a container, a user session, or the entire system on shutdown, and
 as such all systems like this must implement measures to deal with them.
 
+Here's a tangible example of how that might manifest in a production
+environment with a container engine.
+
+There is a job in production that interfaces with hardware. This hardware may
+-- legitimately or less legitimately -- take a long time to do DMA transfers.
+Once a DMA transfer has started, it can't be stopped until the hardware says
+it's done, and in order to ensure that, the process enters D state.
+
+During this whole process, the scheduler that decides which jobs should be on
+which machines (like Kubernetes' scheduler, for example) decides that this
+container should be evicted from this machine. Normally that's pretty
+straightforward: ask the container to shut down itself, and if it takes too
+long, send it SIGKILL. After that we can do some cleanup for any state we might
+have had, and we're more or less done.
+
+D states complicate this. Because D states cannot typically be interrupted in
+order to preserve system integrity, they typically don't even respond to
+`SIGKILL`, the most brutal of signals. This can cause problems: now we still
+have a process running from this container, and we want to tear it down right
+now.
+
+What the right action is here depends on the container engine, but the exact
+choice is not really the point: once you've made your choice on how to handle
+this, the next step is to produce a test to make sure that the behaviour you've
+settled on for this scenario is stable across versions and configurations, and
+that requires being able to create and destroy D state processes for testing on
+demand, which is not something that it's immediately obvious how to do.
+
 ## D states outside of I/O context
 
 While D states might immediately bring to mind disk activity, we actually use
