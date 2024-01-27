@@ -87,8 +87,8 @@ sequenceDiagram
     Note over CE: The container engine is now<br>blocked on shutdown, waiting<br>for processes to terminate.
 </div>
 
-<center><small>(In reality, all signalling passes through the kernel, but
-that's omitted here for brevity.)</small></center>
+<center><small>(In reality, sending signals like SIGTERM and SIGKILL passes
+through the kernel, but that's omitted here for brevity.)</small></center>
 
 To summarise the diagram above as text: there is a job in production that
 interfaces with hardware. This hardware may -- legitimately or less
