@@ -71,7 +71,7 @@ html {
     overflow-y: scroll;
 }
 
-html, body {
+div.body {
     max-width: 800px;
     margin: 1em auto;
     padding: 0 0.7em;
