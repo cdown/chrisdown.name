@@ -174,7 +174,7 @@ signals and so you want to ignore those, you can instead wait for the text
 
 #define EXIT_STRING "EXIT\n"
 
-static void __attribute__((noinline)) run_child(void)
+__attribute__((noinline)) static void run_child(void)
 {
     char input[sizeof(EXIT_STRING)];
 
