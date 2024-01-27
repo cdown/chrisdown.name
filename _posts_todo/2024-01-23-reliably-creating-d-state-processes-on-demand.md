@@ -76,17 +76,19 @@ sequenceDiagram
     Note over CE,K: In this hypothetical scenario the hardware takes a long<br>time to finish, so we are stuck in D state indefinitely, and<br>cannot be signalled to terminate. Meanwhile...
 
     Note over CE: The container engine is<br>told to shut down the container.
-    CE->>P: Send SIGTERM
+    CE->>P: Graceful TERM signal
     P--xCE: No response (uninterruptible)
 
-    CE->>P: Send SIGKILL
+    Note over CE: After a grace period, the container<br>engine notices the process is still running<br>and resorts to more forceful methods.
+
+    CE->>P: Forceful KILL signal
     P--xCE: No response (uninterruptible)
 
     Note over CE: The container engine is now<br>blocked on shutdown, waiting<br>for processes to terminate.
 </div>
 
-<small>(Of course, in reality, all signalling passes through the kernel, but
-that's omitted here for brevity.)</small>
+<center><small>(In reality, all signalling passes through the kernel, but
+that's omitted here for brevity.)</small></center>
 
 To summarise the diagram above as text: there is a job in production that
 interfaces with hardware. This hardware may -- legitimately or less
