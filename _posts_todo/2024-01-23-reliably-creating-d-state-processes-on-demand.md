@@ -138,11 +138,13 @@ them for all sorts of things in the kernel. For example, the kernel also uses D
 states to block processes in situations where it's unsafe to allow the process
 to proceed further for other reasons.
 
-Enter `vfork`. `vfork` is a specialized system call primarily designed for
-creating new processes. Unlike the more widely known `fork`, which typically
-uses copy-on-write and thus must at the very least create new virtual mappings
-to the physical pages in question, `vfork` allows the child process to directly
-share the parent's virtual address space temporarily.
+Enter `vfork`. `vfork` is a specialized system call primarily designed to be
+used as part of the process of creating new processes. Unlike the more widely
+known `fork`, which typically uses copy-on-write and thus must at the very
+least create new virtual mappings to the physical pages in question, `vfork`
+allows the child process to directly share the parent's virtual address space
+temporarily (which is much cheaper if you are just going to `exec()`, as in the
+case of process creation).
 
 Both are more typically supplanted by `clone()` with the appropriate flags
 nowadays, which has more sensible semantics and is much more configurable. For
