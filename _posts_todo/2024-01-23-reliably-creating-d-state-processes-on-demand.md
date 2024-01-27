@@ -85,17 +85,21 @@ sequenceDiagram
     Note over CE: The container engine is now<br>blocked on shutdown, waiting<br>for processes to terminate.
 </div>
 
-There is a job in production that interfaces with hardware. This hardware may
--- legitimately or less legitimately -- take a long time to do DMA transfers.
-Once a DMA transfer has started, it can't be stopped until the hardware says
-it's done, and in order to ensure that, the process enters D state.
+<small>(Of course, in reality, all signalling passes through the kernel, but
+that's omitted here for brevity.)</small>
 
-During this whole process, the scheduler that decides which jobs should be on
-which machines (like Kubernetes' scheduler, for example) decides that this
-container should be evicted from this machine. Normally that's pretty
-straightforward: ask the container to shut down itself, and if it takes too
-long, send it SIGKILL. After that we can do some cleanup for any state we might
-have had, and we're more or less done.
+To summarise the diagram above as text: there is a job in production that
+interfaces with hardware. This hardware may -- legitimately or less
+legitimately -- take an indefinite time to do DMA transfers. Once a DMA
+transfer has started, it can't be stopped until the hardware says it's done,
+and in order to ensure that, the process enters D state.
+
+Imagine that while we are stuck for some indefinite period in D state, the
+scheduler that decides which jobs should be on which machines (like Kubernetes'
+scheduler, for example) decides that this container should be evicted from this
+machine. Normally that's pretty straightforward: ask the container to shut down
+itself, and if it takes too long, send it SIGKILL. After that we can do some
+cleanup for any state we might have had, and we're more or less done.
 
 D states complicate this. Because D states cannot typically be interrupted in
 order to preserve system integrity, they typically don't even respond to
