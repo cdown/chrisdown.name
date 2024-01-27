@@ -322,7 +322,7 @@ next thing we're going to do is simply terminate -- it's a waste of time and of
 a process.
 
 `TASK_KILLABLE` was introduced to solve these kinds of cases. Instead of being
-fully uninterruptible, when we recieve a signal we check if the signal is fatal
+fully uninterruptible, when we receive a signal we check if the signal is fatal
 (that is, it's either a non-trappable fatal signal, or the program has no
 userspace handler for it), and if it is, we terminate the process without
 allowing it to execute any more userspace instructions.
