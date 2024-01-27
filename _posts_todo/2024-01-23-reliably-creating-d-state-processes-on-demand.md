@@ -48,20 +48,20 @@ you may well not know about D state process internals. :-)
 
 ## Why would anyone want to test this?
 
-One example of where this is used is in DMA transfers and the like. DMA allows
-hardware subsystems to access the main system memory for reading/writing
-independently of the CPU, which is essential for efficient handling of large
-volumes of data. Programs generally must not be interrupted in the midst of
-such operations because DMA transfers are not typically designed to accommodate
-or recover from partial or interrupted reads or writes.
+D states are frequently used in DMA transfers and other hardware interactions.
+DMA, for example, allows hardware subsystems to access the main system memory
+for reading/writing independently of the CPU, which is essential for efficient
+handling of large volumes of data. Programs generally must not be interrupted
+in the midst of such operations because DMA transfers are not typically
+designed to accommodate or recover from partial or interrupted reads or writes.
 
 These states can become a problem for things like init systems or
 containerisation platforms where these stubborn processes may block things like
 tearing down a container, a user session, or the entire system on shutdown, and
 as such all systems like this must implement measures to deal with them.
 
-Here's a tangible example of how that might manifest in a production
-environment with a container engine.
+Here's a real example of how that can manifest in a production environment with
+a container engine.
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10.7.0/dist/mermaid.min.js"></script>
 <div class="mermaid">
@@ -73,7 +73,7 @@ sequenceDiagram
     P->>K: DMA request
     K->>P: Put into D state
 
-    Note over CE,K: In this hypothetical scenario the hardware takes a long<br>time to finish, so we are stuck in D state indefinitely, and<br>cannot be signalled to terminate. Meanwhile...
+    Note over CE,K: The hardware takes a long time to finish or has<br>a bug, so we are stuck in D state indefinitely, and<br>cannot be signalled to terminate. Meanwhile...
 
     Note over CE: The container engine is<br>told to shut down the container.
     CE->>P: Graceful TERM signal
@@ -109,12 +109,12 @@ order to preserve system integrity, they typically don't even respond to
 have a process running from this container, and we want to tear it down right
 now.
 
-What the right action is here depends on the container engine, but the exact
-choice is not really the point: once you've made your choice on how to handle
-this, the next step is to produce a test to make sure that the behaviour you've
-settled on for this scenario is stable across versions and configurations, and
-that requires being able to create and destroy D state processes for testing on
-demand, which is not something that it's immediately obvious how to do.
+The right course of action here depends on what's decided by those making the
+container engine, but the exact choice is not really the point: once you've
+made your choice on how to handle this, the next step is to produce a test to
+make sure that the behaviour you've settled on for this scenario remains stable
+across versions and configurations, and that requires being able to create and
+destroy D state processes for testing on demand.
 
 ## D states outside of I/O context
 
