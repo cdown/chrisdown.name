@@ -134,8 +134,9 @@ destroy D state processes for testing on demand.
 ## D states outside of I/O context
 
 While D states might immediately bring to mind disk activity, we actually use
-them for all sorts of things in the kernel. For example, we also use them to
-block processes where we cannot safely make progress for other reasons.
+them for all sorts of things in the kernel. For example, the kernel also uses D
+states to block processes in situations where it's unsafe to allow the process
+to proceed further for other reasons.
 
 Enter `vfork`. `vfork` is a specialized system call primarily designed for
 creating new processes. Unlike the more widely known `fork`, which typically
