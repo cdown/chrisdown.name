@@ -77,12 +77,12 @@ sequenceDiagram
 
     Note over CE: The container engine is<br>told to shut down the container.
     CE->>P: Graceful TERM signal
-    P--xCE: No response (uninterruptible)
+    P--xCE: No reaction (uninterruptible)
 
     Note over CE: After a grace period, the container<br>engine notices the process is still running<br>and resorts to more forceful methods.
 
     CE->>P: Forceful KILL signal
-    P--xCE: No response (uninterruptible)
+    P--xCE: No reaction (uninterruptible)
 
     Note over CE: The container engine is now<br>blocked on shutdown, waiting<br>for processes to terminate.
 </div>
