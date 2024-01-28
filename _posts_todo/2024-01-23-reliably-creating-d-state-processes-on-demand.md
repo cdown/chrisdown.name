@@ -150,7 +150,10 @@ case of process creation).
 
 But how can that be safe? Well, `vfork()` suspends the parent application for
 the period that the child is using its address space, and it suspends it in D
-state. The entire process looks something like this:
+state. As with `fork()`, `vfork()`s return code is 0 when running in the child,
+and the PID of the child when running in the parent. We use this to know which
+we are in and select the relevant code to run. The entire process looks
+something like this:
 
 <div class="sidenote">
 <div class="mermaid">
