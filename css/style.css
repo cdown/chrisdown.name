@@ -79,7 +79,7 @@ div.body {
     background-color: white;
 }
 
-.sidenote-left, .sidenote-right {
+.sidenote {
     position: relative;
     text-align: justify;
 }
@@ -93,21 +93,16 @@ div.body {
         padding: 0.6em;
         overflow: auto;
         font-size: small;
-        border-top: 1px dotted #777;
-        border-bottom: 1px dotted #777;
+        border-left: 1px dotted #777;
         text-align: left;
-    }
-
-    .sidenote-left {
-        float: left;
-        clear: left;
-        margin-left: -580px;
-    }
-
-    .sidenote-right {
         float: right;
         clear: right;
-        margin-right: -580px;
+        margin-right: -560px;
+        margin-left: 1em;
+    }
+
+    .non-sidenote-only {
+        visibility: hidden;
     }
 }
 

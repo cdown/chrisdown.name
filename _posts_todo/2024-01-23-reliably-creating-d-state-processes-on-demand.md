@@ -79,7 +79,7 @@ Here's a real example of how that can manifest in a production environment with
 a container engine.
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10.7.0/dist/mermaid.min.js"></script>
-<div class="sidenote sidenote-left">
+<div class="sidenote">
 <div class="mermaid">
 sequenceDiagram
     participant CE as Container Engine
@@ -154,6 +154,46 @@ this case, though, we only need `vfork`'s behaviour, which is to suspend the
 parent application in D state. Here is an example of how one might reliably
 create a D state process with `vfork`:
 
+<div class="sidenote">
+<div class="mermaid">
+{% raw %}
+graph TD
+    start[Program started] --> vfork
+    subgraph god_loves_ugly[" "]
+        vfork["vfork()"]
+        d_start{{Enter<br>D state}}
+        d_exit{{Exit<br>D state}}
+        return[return 0]
+        vfork --> d_start
+        d_start -.- d_exit
+        d_exit --> return
+    end
+
+    subgraph Child
+        pause["pause()"]
+        signal_recv{{Terminal<br>signal<br>received}}
+        exit["Kernel<br>kills<br>child"]
+        vfork -- Uncopied<br>clone<br>created --> pause
+        pause -.- signal_recv
+        signal_recv --> exit
+        exit --> d_exit
+    end
+
+    send_sig["Signal sent<br>to child"] --> signal_recv
+
+    exit --> clone_exit["vforked child<br>exits without cleanup"]
+    return --> prg_exit["Program exited"]
+{% endraw %}
+</div>
+
+We'll never reach <code>_exit()</code> in the child because the kernel will
+tear down the child the moment it sees that there's no userspace signal handler
+for the terminal signal, but the effects are basically the same.
+
+<span class="non-sidenote-only">And here's what the relevant code looks
+like:</span>
+</div>
+
 {% highlight c %}
 #include <unistd.h>
 
@@ -182,9 +222,11 @@ This will then reliably enter D state until a terminal signal is sent:
 [1]  + terminated  ./dstate
 {% endhighlight %}
 
-`pause()` can be modified to suit. For example, if your test involves sending
-signals and so you want to ignore those, you can instead wait for the text
-"EXIT" on stdin:
+The goal here is to keep the child going for as long as we want to have our
+parent in D state. `pause()` here waits until a terminal signal is sent, and
+can be modified to suit whatever needs you happen to have. For example, if your
+test involves sending signals and so you want to ignore those, you can instead
+wait for the text "EXIT" on stdin:
 
 {% highlight c %}
 #include <signal.h>
