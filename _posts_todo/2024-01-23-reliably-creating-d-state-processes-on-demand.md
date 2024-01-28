@@ -160,7 +160,7 @@ something like this:
 {% raw %}
 graph TD
     start[Program started] --> vfork
-    subgraph god_loves_ugly[" "]
+    subgraph parent[" "]
         vfork["vfork()"]
         d_start{{Enter<br>D state}}
         d_exit{{Exit<br>D state}}
@@ -170,29 +170,27 @@ graph TD
         d_exit --> return
     end
 
-    subgraph Child
-        pause["pause()"]
-        signal_recv{{Terminal<br>signal<br>received}}
+    subgraph child[" "]
+        pause{{"pause()<br>Wait for<br>terminal<br>signal"}}
         exit["Kernel<br>kills<br>child"]
         vfork -- Uncopied<br>clone<br>created --> pause
-        pause -.- signal_recv
-        signal_recv --> exit
+        pause -.- exit
         exit --> d_exit
     end
 
-    send_sig["Signal sent<br>to child"] --> signal_recv
+    send_sig["Signal sent<br>to child"] --> pause
 
     exit --> clone_exit["vforked child<br>exits without cleanup"]
     return --> prg_exit["Program exited"]
 {% endraw %}
 </div>
 
-We'll never reach <code>_exit()</code> in the child because the kernel will
+<p>We'll never reach <code>_exit()</code> in the child because the kernel will
 tear down the child the moment it sees that there's no userspace signal handler
-for the terminal signal, but the effects are basically the same.
+for the terminal signal, but the effects are basically the same.</p><span class="non-sidenote-only">
 
-<span class="non-sidenote-only">And here's what the relevant code looks
-like:</span>
+<p>And here's what the relevant code looks
+like:</p></span>
 </div>
 
 {% highlight c %}

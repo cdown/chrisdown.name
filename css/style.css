@@ -84,25 +84,34 @@ div.body {
     text-align: justify;
 }
 .sidenote-only {
+    display: none;
     visibility: hidden;
+}
+.mermaid {
+    margin: auto;
+    display: inline;
 }
 
 @media (min-width: 1900px) {
     .sidenote {
         width: 530px;
-        padding: 0.6em;
+        padding-left: 0.6em;
         overflow: auto;
         font-size: small;
         border-left: 1px dotted #777;
         text-align: left;
         float: right;
         clear: right;
-        margin-right: -561px;
-        margin-left: 1em;
+        margin-right: -555px;
     }
 
     .non-sidenote-only {
+        display: none;
         visibility: hidden;
+    }
+
+    .sidenote p {
+        margin-bottom: 0;
     }
 }
 
