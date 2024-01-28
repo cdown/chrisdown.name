@@ -148,11 +148,9 @@ allows the child process to directly share the parent's virtual address space
 temporarily (which is much cheaper if you are just going to `exec()`, as in the
 case of process creation).
 
-Both are more typically supplanted by `clone()` with the appropriate flags
-nowadays, which has more sensible semantics and is much more configurable. For
-this case, though, we only need `vfork`'s behaviour, which is to suspend the
-parent application in D state. Here is an example of how one might reliably
-create a D state process with `vfork`:
+But how can that be safe? Well, `vfork()` suspends the parent application for
+the period that the child is using its address space, and it suspends it in D
+state. The entire process looks something like this:
 
 <div class="sidenote">
 <div class="mermaid">
