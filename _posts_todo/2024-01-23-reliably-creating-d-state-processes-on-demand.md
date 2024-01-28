@@ -171,7 +171,7 @@ graph TD
     end
 
     subgraph child[" "]
-        pause{{"pause()<br>Wait for<br>terminal<br>signal"}}
+        pause{{"pause()<br><br>Wait for<br>terminal<br>signal"}}
         exit["Kernel<br>kills<br>child"]
         vfork -- Uncopied<br>clone<br>created --> pause
         pause -.- exit
