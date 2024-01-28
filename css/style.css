@@ -72,11 +72,43 @@ html {
 }
 
 div.body {
-    max-width: 800px;
+    max-width: 720px;
     margin: 1em auto;
     padding: 0 0.7em;
     font-family: "Open Sans", sans-serif;
     background-color: white;
+}
+
+.sidenote-left, .sidenote-right {
+    position: relative;
+    text-align: justify;
+}
+.sidenote-only {
+    visibility: hidden;
+}
+
+@media (min-width: 1900px) {
+    .sidenote {
+        width: 530px;
+        padding: 0.6em;
+        overflow: auto;
+        font-size: small;
+        border-top: 1px dotted #777;
+        border-bottom: 1px dotted #777;
+        text-align: left;
+    }
+
+    .sidenote-left {
+        float: left;
+        clear: left;
+        margin-left: -580px;
+    }
+
+    .sidenote-right {
+        float: right;
+        clear: right;
+        margin-right: -580px;
+    }
 }
 
 a {
@@ -343,7 +375,7 @@ table {
 }
 
 table.light {
-    max-width: 760px;
+    max-width: 680px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -371,7 +403,7 @@ summary > * {
  * Not always applied because this causes tables to not fill the full width of
  * the body.
  */
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 720px) {
     table {
         display: block;
         overflow-x: auto;

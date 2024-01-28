@@ -79,37 +79,39 @@ Here's a real example of how that can manifest in a production environment with
 a container engine.
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10.7.0/dist/mermaid.min.js"></script>
+<div class="sidenote sidenote-left">
 <div class="mermaid">
 sequenceDiagram
     participant CE as Container Engine
     participant P as Process
     participant K as Kernel
 
-    P->>K: DMA request
-    K->>P: Put into D state
+    P->>K: DMA
+    K->>P: D state
 
     Note over CE,K: The hardware takes a long time to finish or has<br>a bug, so we are stuck in D state indefinitely, and<br>cannot be signalled to terminate. Meanwhile...
 
-    Note over CE: The container engine is<br>told to shut down the container.
-    CE->>P: Graceful TERM signal
-    P--xCE: No reaction (uninterruptible)
+    Note over CE: The container<br>engine is<br>told to shut<br>down the container.
+    CE->>P: TERM signal
+    P--xCE: No reaction
 
-    Note over CE: After a grace period, the container<br>engine notices the process is still running<br>and resorts to more forceful methods.
+    Note over CE: After a grace period,<br>the container engine<br>notices the process is<br>still running and uses<br>more forceful methods.
 
-    CE->>P: Forceful KILL signal
-    P--xCE: No reaction (uninterruptible)
+    CE->>P: KILL signal
+    P--xCE: No reaction
 
-    Note over CE: The container engine is now<br>blocked on shutdown, waiting<br>for processes to terminate.
+    Note over CE: The container engine is now<br>blocked shutting down,<br> waiting for processes<br>to terminate.
 </div>
 
-<center><small>(In reality, sending signals like SIGTERM and SIGKILL passes
-through the kernel, but that's omitted here for brevity.)</small></center>
+In reality, sending signals like SIGTERM and SIGKILL goes through the kernel,
+but that's omitted in this diagram for brevity.
+</div>
 
-To summarise the diagram above as text: there is a job in production that
-interfaces with hardware. This hardware may -- legitimately or less
-legitimately -- take an indefinite time to do DMA transfers. Once a DMA
-transfer has started, it can't be stopped until the hardware says it's done,
-and in order to ensure that, the process enters D state.
+There is a job in production that interfaces with hardware. This hardware may
+-- legitimately or less legitimately -- take an indefinite time to do DMA
+transfers. Once a DMA transfer has started, it can't be stopped until the
+hardware says it's done, and in order to ensure that, the process enters D
+state.
 
 Imagine that while we are stuck for some indefinite period in D state, the
 scheduler that decides which jobs should be on which machines (like Kubernetes'
