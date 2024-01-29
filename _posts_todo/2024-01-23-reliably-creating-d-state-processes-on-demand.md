@@ -550,8 +550,9 @@ how to achieve that, and it's not necessary in all circumstances.
 To see what I mean, let's look at the kernel source to see how `vfork` is
 implemented. Depending on your libc and version, the `vfork` that you call from
 your application is likely either a thin wrapper around the `clone` or `vfork`
-syscalls. They do the same thing behind the scenes -- `vfork` calls into the
-`clone` code path `kernel_clone`:
+syscalls. They do the same thing behind the scenes -- [`vfork` calls into the
+`clone` code path
+`kernel_clone`](https://github.com/torvalds/linux/blob/0dd3ee31125508cd67f7e7172247f05b7fd1753a/kernel/fork.c#L3005-L3013):
 
 {% highlight c %}
 SYSCALL_DEFINE0(vfork)
@@ -573,7 +574,8 @@ suspend the parent process until the child has completed. That is, the effects
 of running `vfork()` or `clone(CLONE_VFORK | CLONE_VM)` in a program are
 effectively the same.
 
-In `kernel_clone`, we see the following code:
+In `kernel_clone`, [we see the following
+code](https://github.com/torvalds/linux/blob/0dd3ee31125508cd67f7e7172247f05b7fd1753a/kernel/fork.c#L2944-L2947):
 
 {% highlight c %}
 if (clone_flags & CLONE_VFORK) {
@@ -582,7 +584,8 @@ if (clone_flags & CLONE_VFORK) {
 }
 {% endhighlight %}
 
-Okay, so what does `wait_for_vfork_done` do?
+Okay, so [what does `wait_for_vfork_done`
+do](https://github.com/torvalds/linux/blob/0dd3ee31125508cd67f7e7172247f05b7fd1753a/kernel/fork.c#L1588-L1606)?
 
 {% highlight c %}
 static int wait_for_vfork_done(struct task_struct *child,
@@ -620,7 +623,7 @@ allowing it to execute any more userspace instructions.
 We use this pretty widely in the kernel nowadays where possible:
 
 {% highlight bash %}
-% git grep -ihc _killable | paste -sd+ | bc
+linux % git grep -ihc _killable | paste -sd+ | bc
 539
 {% endhighlight %}
 
@@ -663,8 +666,10 @@ superblock contains much of the high level, mission critical information for
 the filesystem, and taking exclusive write access over it is tantamount to
 denying any modification to the filesystem.
 
-This is implemented in `sb_wait_write`, which is implemented via an array of
-per-CPU read-write semaphores:
+[This is implemented in
+`freeze_super`](https://github.com/torvalds/linux/blob/0dd3ee31125508cd67f7e7172247f05b7fd1753a/fs/super.c#L1961),
+which implements its freezing via an array of per-CPU read-write semaphores
+within the superblock structure:
 
 {% highlight c %}
 static void sb_wait_write(struct super_block *sb, int level)
