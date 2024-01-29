@@ -77,12 +77,35 @@ well not know about D state process internals along the way. :-)
 
 ## Why would anyone want to test this?
 
-D states are frequently used in DMA transfers and other hardware interactions.
-DMA, for example, allows hardware subsystems to access the main system memory
-for reading/writing independently of the CPU, which is essential for efficient
-handling of large volumes of data. Programs generally must not be interrupted
-in the midst of such operations because DMA transfers are not typically
-designed to accommodate or recover from partial or interrupted reads or writes.
+D states are frequently entered while doing DMA transfers and other hardware
+interactions, and while waiting for certain kinds of kernel synchronisation
+primitives. DMA, for example, allows hardware subsystems to access the main
+system memory for reading/writing independently of the CPU, which is essential
+for efficient handling of large volumes of data. Because this access is gated
+as part of the process context itself, programs generally must not be
+interrupted in the midst of such operations because DMA transfers are not
+typically designed to accommodate or recover from partial or interrupted reads
+or writes.
+
+{% comment %}
+TODO: process_mrelease seems relevant, but maybe a bit too deep?
+
+<small>(Well, on modern kernels, such processes can have their memory freed
+from the system perspective using `process_mrelease()` when they are scheduled
+to be killed, but this still doesn't change the fact that that memory can't be
+used until they are fully cleaned up, since the physical pages are still pinned
+by the device.)</small>
+{% endcomment %}
+
+For example, when a program reads or writes from your disk drive, what is
+typically really happening is that the disk drive's hardware is directly
+accessing the system's main memory to transfer data. This is achieved through
+DMA, which bypasses the CPU. Instead of the CPU reading data into memory and
+then writing it to the disk (or vice versa), DMA allows the disk drive to read
+or write directly to or from the memory. This direct pathway is more efficient,
+particularly for large data transfers, as it reduces CPU load and speeds up the
+data transfer process, but it also means that we must guard the process from
+interruption.
 
 These states can become a problem for things like init systems or
 containerisation platforms where these stubborn processes may block things like
@@ -118,14 +141,16 @@ sequenceDiagram
 </div>
 
 In reality, sending signals like SIGTERM and SIGKILL goes through the kernel,
-but that's omitted in this diagram for brevity.
+but that's omitted in this diagram for brevity. <span
+class="non-sidenote-only">Here's a more textual description of the same
+diagram.</span>
 </div>
 
-There is a job in production that interfaces with hardware. This hardware may
--- legitimately or less legitimately -- take an indefinite time to do DMA
-transfers. Once a DMA transfer has started, it can't be stopped until the
-hardware says it's done, and in order to ensure that, the process enters D
-state.
+Let's suppose that there is a job in production that interfaces with hardware.
+This hardware may -- legitimately or less legitimately -- take an indefinite
+time to do DMA transfers. Once a DMA transfer has started, it can't be stopped
+until the hardware says it's done, and in order to ensure that, the process
+enters D state.
 
 Imagine that while we are stuck for some indefinite period in D state, the
 scheduler that decides which jobs should be on which machines (like Kubernetes'
@@ -150,9 +175,9 @@ destroy D state processes for testing on demand.
 ## D states outside of I/O context
 
 While D states might immediately bring to mind disk activity, we actually use
-them for all sorts of things in the kernel. For example, the kernel also uses D
-states to block processes in situations where it's unsafe to allow the process
-to proceed further for other reasons.
+them for all sorts of things in the kernel. As a general rule, the kernel uses
+D states to block processes in any situation where it's unsafe to allow the
+process to proceed further for the time being.
 
 Enter `vfork`. `vfork` is a specialized system call primarily designed to be
 used as part of the process of creating new processes. Unlike the more widely
