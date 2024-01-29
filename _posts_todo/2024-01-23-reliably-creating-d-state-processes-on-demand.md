@@ -470,8 +470,9 @@ the parent, right?
 
 The good news it that in reality (or at least for some version of reality on
 Linux with any real libc), things are not that dire. Just as one example,
-CPython -- which is used and tested for with more diversity than the vast
-majority of software in use today -- uses it in much the same way:
+CPython -- which is used and tested with far more diversity than the vast
+majority of software in use today -- uses it in [much the same
+way](https://github.com/python/cpython/blob/v3.12.1/Modules/_posixsubprocess.c#L773-L782):
 
 {% highlight c %}
 Py_NO_INLINE static pid_t do_fork_exec(/* ... */)
@@ -510,13 +511,9 @@ Py_NO_INLINE static pid_t do_fork_exec(/* ... */)
 
 As you can see, in their case, it's used as part of a vastly more complex
 process of forking children which is also _guaranteed_ to push to stack by
-calling child functions (see
-[here](https://github.com/python/cpython/blob/v3.12.1/Modules/_posixsubprocess.c#L812-L823)
-and
-[here](https://github.com/python/cpython/blob/v3.12.1/Modules/_posixsubprocess.c#L553-L571)).
-I think it would be safe to say that, despite some POSIX book banging and
-semantics discussion, the world has not collapsed into a fiery pit yet as a
-result.
+calling child functions. I think it would be safe to say that, despite some
+POSIX book banging and semantics discussion, the world has not collapsed into a
+fiery pit yet as a result.
 
 So why is this okay enough to make it into codebases like CPython's? Well, when
 the parent process continues its operation, additional stack data is simply
