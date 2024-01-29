@@ -79,7 +79,7 @@ Here's a real example of how that can manifest in a production environment with
 a container engine.
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10.7.0/dist/mermaid.min.js"></script>
-<div class="sidenote">
+<div class="sidenote sidenote-right">
 <div class="mermaid">
 sequenceDiagram
     participant CE as Container Engine
@@ -155,7 +155,7 @@ and the PID of the child when running in the parent. We use this to know which
 we are in and select the relevant code to run. The entire process looks
 something like this:
 
-<div class="sidenote">
+<div class="sidenote sidenote-right">
 <div class="mermaid">
 {% raw %}
 graph TD
@@ -166,28 +166,30 @@ graph TD
         d_exit{{Exit<br>D state}}
         return[return 0]
         vfork --> d_start
-        d_start -.- d_exit
+        d_start -. Wait for<br>child to<br>finish .- d_exit
         d_exit --> return
     end
 
     subgraph child[" "]
-        pause{{"pause()<br><br>Wait for<br>terminal<br>signal"}}
+        pause["pause()"]
         exit["Kernel<br>kills<br>child"]
         vfork -- Uncopied<br>clone<br>created --> pause
-        pause -.- exit
+        pause -. Wait for<br>terminal<br>signal .- exit
         exit --> d_exit
     end
 
-    send_sig["Signal sent<br>to child"] --> pause
+    send_sig["Signal sent<br>to child"] --> exit
 
     exit --> clone_exit["vforked child<br>exits without cleanup"]
     return --> prg_exit["Program exited"]
 {% endraw %}
 </div>
 
-<p>We'll never reach <code>_exit()</code> in the child because the kernel will
+<p>Dotted lines represent transitions that depend on some external action.
+We'll never reach <code>_exit()</code> in the child because the kernel will
 tear down the child the moment it sees that there's no userspace signal handler
-for the terminal signal, but the effects are basically the same.</p><span class="non-sidenote-only">
+for the terminal signal, but the effects are basically the same.</p><span
+class="non-sidenote-only">
 
 <p>And here's what the relevant code looks
 like:</p></span>

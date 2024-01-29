@@ -95,9 +95,12 @@ div.body {
 @media (min-width: 1900px) {
     .sidenote {
         width: 530px;
-        padding-left: 0.6em;
         overflow: auto;
         font-size: small;
+    }
+
+    .sidenote-right {
+        padding-left: 0.6em;
         border-left: 1px dotted #777;
         text-align: left;
         float: right;
@@ -105,13 +108,18 @@ div.body {
         margin-right: -555px;
     }
 
+    .sidenote-left {
+        padding-right: 0.6em;
+        border-right: 1px dotted #777;
+        text-align: right;
+        float: left;
+        clear: left;
+        margin-left: -555px;
+    }
+
     .non-sidenote-only {
         display: none;
         visibility: hidden;
-    }
-
-    .sidenote p {
-        margin-bottom: 0;
     }
 }
 
@@ -263,7 +271,7 @@ footer div p {
     margin: 1em 0 0;
 }
 
-article p {
+article > p {
     margin: 1em 0;
     text-align: justify;
 }
