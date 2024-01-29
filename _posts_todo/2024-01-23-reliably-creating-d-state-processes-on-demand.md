@@ -549,7 +549,7 @@ of those mechanisms that we can leverage here is `fsfreeze`.
 
 From `man 8 fsfreeze`:
 
-> `fsfreeze` suspends and resumes access to an filesystem. `fsfreeze` halts new
+> `fsfreeze` suspends and resumes access to a filesystem. `fsfreeze` halts new
 > access to the filesystem and creates a stable image on disk. `fsfreeze` is
 > intended to be used with hardware RAID devices that support the creation of
 > snapshots.
