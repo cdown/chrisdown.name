@@ -116,6 +116,14 @@ Here's a real example of how that can manifest in a production environment with
 a container engine.
 
 <script src="/js/mermaid.min.js?{{ site.data["gitrev"] }}"></script>
+<script>
+mermaid.initialize({
+  theme: 'default',
+  themeVariables: {
+    fontFamily: '"Open Sans", sans-serif'
+  }
+});
+</script>
 <div class="sidenote sidenote-right">
 <div class="mermaid">
 sequenceDiagram
