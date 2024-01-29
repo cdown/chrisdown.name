@@ -323,8 +323,12 @@ int main(void)
 
 `__attribute__((noinline))` is generally a good idea in order to make sure that
 the stack space used in the child is separate from the stack space used by the
-parent, avoiding the compiler potentially doing optimisations that might result
-in stack interleaving.
+parent. By preventing inlining, we ensure that the function creates a distinct
+stack frame on entry, and in the context of the `vfork()`ed child, this means
+that any stack manipulation occurs neatly in a separate frame, and not in the
+parent's stack frame. Without it, the compiler may perform optimisations that
+result in interleaved data between the parent and child, which could result in
+stack corruption when the parent resumes later.
 
 Here's an example of its use, showing that it can't simply be terminated by
 Ctrl-C:
