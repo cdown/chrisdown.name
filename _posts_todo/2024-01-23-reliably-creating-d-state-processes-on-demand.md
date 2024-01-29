@@ -179,20 +179,22 @@ them for all sorts of things in the kernel. As a general rule, the kernel uses
 D states to block processes in any situation where it's unsafe to allow the
 process to proceed further for the time being.
 
-Enter `vfork`. `vfork` is a specialized system call primarily designed to be
+Enter `vfork`. `vfork` is a specialised system call primarily designed to be
 used as part of the process of creating new processes. Unlike the more widely
 known `fork`, which typically uses copy-on-write and thus must at the very
 least create new virtual mappings to the physical pages in question, `vfork`
 allows the child process to directly share the parent's virtual address space
-temporarily (which is much cheaper if you are just going to `exec()`, as in the
-case of process creation).
+temporarily (which is much cheaper if you are just going to immediately clobber
+it with a new process image with `exec`, as in the case of process creation,
+where copying all the pages would be needlessly wasteful).
 
 But how can that be safe? Well, `vfork()` suspends the parent application for
 the period that the child is using its address space, and it suspends it in D
-state. As with `fork()`, `vfork()`s return code is 0 when running in the child,
-and the PID of the child when running in the parent. We use this to know which
-we are in and select the relevant code to run. The entire process looks
-something like this:
+state until the child either dies or calls an `exec` function to replace the
+process image. As with `fork()`, `vfork()`s return code is 0 when running in
+the child, and the PID of the child when running in the parent. We use this to
+know which we are in and select the relevant code to run. The entire process
+looks something like this:
 
 <div class="sidenote sidenote-right">
 <div class="mermaid">
