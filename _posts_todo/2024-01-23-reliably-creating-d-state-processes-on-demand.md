@@ -343,11 +343,11 @@ EXIT
 ## Why do we block signals in both the parent and child?
 
 In the example above one might typically visualise our intention as being to
-satisfy some condition in the child in order to unblock the parent. However,
-you may also notice that in this code example, signals are blocked not only in
-the child, but also the parent. But surely that's not necessary since the
-parent is in D state anyway, right? Well, let's try it without the signals
-blocked in the parent:
+satisfy some condition in the child (like writing "EXIT" in our second example)
+in order to unblock the parent. However, you may also notice that in this code
+example, signals are blocked not only in the child, but also the parent. But
+surely that's not necessary since the parent is in D state anyway, right? Well,
+let's try it without the signals blocked in the parent:
 
 {% highlight bash %}
 % ./dstate & { sleep 0.1; ps -o pid,state,cmd -p "$!"; kill "$!"; }
@@ -449,7 +449,8 @@ your system actually are terminable after all.
 
 I'm sure that some people reading the code I provided above are wondering
 whether it's legal or not, given the fact that we are sharing the parent's
-memory space. Here's what POSIX [has to say about
+memory space. Here's what the POSIX spec, which Linux generally tries to
+somewhat adhere to, [has to say about
 vfork](https://pubs.opengroup.org/onlinepubs/009696799/functions/vfork.html):
 
 > The `vfork()` function shall be equivalent to `fork()`, except that the
@@ -586,7 +587,8 @@ superblock. For our needs, per-CPU read-write locks in the kernel have a useful
 property: when the lock takes the slow path (i.e. the lock is held in such a
 way that we cannot acquire it right now), it puts the process requesting it in
 `TASK_UNINTERRUPTIBLE` without `TASK_KILLABLE`. This means that our process
-will survive a `SIGKILL`, and the only way out is to unfreeze the filesystem.
+will survive a `SIGKILL` while in D state, and the only way out is to unfreeze
+the filesystem.
 
 For example, here is the kernel stack we get trapped in trying to acquire the
 previously writer locked read-write semaphore when trying to do a `mkdir` on a
@@ -601,12 +603,25 @@ frozen filesystem:
     [<0>] do_syscall_64+0x61/0xe0
     [<0>] entry_SYSCALL_64_after_hwframe+0x6e/0x76
 
-No amount of killing will unblock this -- the filesystem must be unfrozen to
-make forward progress. As you can see, it still exists even after a `kill -9`:
+No amount of killing will unblock this for now -- the filesystem must be
+unfrozen to make forward progress. As you can see, it still exists even after a
+`kill -9`:
 
     % kill -9 21135
     % cat /proc/21135/comm
     mkdir
+
+To understand why this is, it helps to know that on Linux, signal delivery is
+not instantaneous and is instead handled by what's called a "signal queue". D
+state processes without <code>TASK_KILLABLE</code> receive pending signals when
+they transition out of D state, at which point the process terminates as usual.
+
+It's important to understand that while in the D state, these processes are not
+"ignoring" the signals -- rather, the kernel defers signal handling until the
+process is in a safe state to receive them. This is a mechanism to ensure
+system stability, especially during sensitive operations like DMA, where
+interrupting or prematurely terminating a process could lead to unsound
+behaviour.
 
 Here's how we can reproduce this reliably as a script. This example is in bash,
 but of course, you can more or less write this in any language that suits your
