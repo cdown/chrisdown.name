@@ -140,10 +140,10 @@ sequenceDiagram
     Note over CE: The container engine is now<br>blocked shutting down,<br> waiting for processes<br>to terminate.
 </div>
 
-In reality, sending signals like SIGTERM and SIGKILL goes through the kernel,
+<p>In reality, sending signals like SIGTERM and SIGKILL goes through the kernel,
 but that's omitted in this diagram for brevity. <span
 class="non-sidenote-only">Here's a more textual description of the same
-diagram.</span>
+diagram.</span></p>
 </div>
 
 Let's suppose that there is a job in production that interfaces with hardware.
@@ -232,11 +232,8 @@ graph TD
 <p>Dotted lines represent transitions that depend on some external action.
 We'll never reach <code>_exit()</code> in the child because the kernel will
 tear down the child the moment it sees that there's no userspace signal handler
-for the terminal signal, but the effects are basically the same.</p><span
-class="non-sidenote-only">
-
-<p>And here's what the relevant code looks
-like:</p></span>
+for the terminal signal, but the effects are basically the same. <span
+class="non-sidenote-only">Here's what the relevant code looks like:</span></p>
 </div>
 
 {% highlight c %}
@@ -445,7 +442,7 @@ int main(void)
 {% endhighlight %}
 
 <div class="sidenote sidenote-right">
-Let's take a look at how this might look on an x86_64 stack:
+<p>Let's take a look at how this might look on an x86_64 stack:</p>
 
 <table>
 <thead>
