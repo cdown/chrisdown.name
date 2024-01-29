@@ -120,7 +120,10 @@ a container engine.
 mermaid.initialize({
   theme: 'default',
   themeVariables: {
-    fontFamily: '"Open Sans", sans-serif'
+    fontFamily: '"Open Sans", sans-serif',
+    clusterBkg: '#fff5ad',
+    clusterBorder: '#aaaa33',
+    edgeLabelBackground: '#fff5ad',
   }
 });
 </script>
@@ -226,9 +229,6 @@ graph TD
         pause -. Wait for<br>terminal<br>signal .- exit
         exit --> d_exit
     end
-
-    style parent stroke:#aaaa33,fill:#fff5ad,stroke-width:1px;
-    style child stroke:#aaaa33,fill:#fff5ad,stroke-width:1px;
 
     send_sig["Signal sent<br>to child"] --> exit
 
