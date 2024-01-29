@@ -36,12 +36,12 @@ cannot be woken up in userspace. This can be necessary in some cases when the
 kernel or hardware is doing work on behalf of the application, and we'll go
 over some of the cases where it is needed in a moment.
 
-These D state processes can become a problem for things like init systems or
-containerisation platforms where the unwavering persistence of such processes
-must be planned for and have strategies in place in order to avoid them
-blocking forward progress. These processes are typically thought about as being
-the equivalent of an immovable object: a process where no signal and no input
-is likely to result in any forward progress, at least for the time being.
+These D state processes can become a problem for things like init
+systems or containerisation platforms where the unwavering persistence of such
+processes must be planned for and have strategies in place in order to avoid
+them blocking forward progress. These processes are typically thought about as
+being the equivalent of an immovable object: a process where no signal and no
+input is likely to result in any forward progress, at least for the time being.
 
 As a real world example, at [work](https://meta.com) several years ago I
 received what at the time I thought was a pretty niche request. One of the
@@ -565,9 +565,15 @@ SYSCALL_DEFINE0(vfork)
 }
 {% endhighlight %}
 
-`CLONE_VFORK` is the `clone()` flag that specifies to suspend the parent
-process until the child has completed. In `kernel_clone`, we see the following
-code:
+This is the definition of the `vfork` syscall, with no ("0") arguments, hence
+`SYSCALL_DEFINE0(vfork)`. `kernel_clone` is the kernel path that handles
+`clone`, which itself is a generic syscall for creating new processes. Setting
+its flags to `CLONE_VFORK | CLONE_VM` to share the virtual memory space, and
+suspend the parent process until the child has completed. That is, the effects
+of running `vfork()` or `clone(CLONE_VFORK | CLONE_VM)` in a program are
+effectively the same.
+
+In `kernel_clone`, we see the following code:
 
 {% highlight c %}
 if (clone_flags & CLONE_VFORK) {
@@ -586,23 +592,17 @@ static int wait_for_vfork_done(struct task_struct *child,
                          TASK_KILLABLE | TASK_FREEZABLE;
     int killed;
 
-    cgroup_enter_frozen();
+    /* ... */
+
     killed = wait_for_completion_state(vfork, state);
-    cgroup_leave_frozen(false);
 
-    if (killed) {
-        task_lock(child);
-        child->vfork_done = NULL;
-        task_unlock(child);
-    }
+    /* ... */
 
-    put_task_struct(child);
     return killed;
 }
 {% endhighlight c %}
 
-`TASK_KILLABLE` is a state that
-[Matthew][] introduced in 2.6.25. It was
+`TASK_KILLABLE` is a state that [Matthew][] introduced in 2.6.25. It was
 created because, while in some cases we do actually need to shield the process
 from any signal interaction at all, in some cases it's fine as long as we know
 the process will terminate with no more userspace instructions executed. For
