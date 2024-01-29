@@ -59,9 +59,9 @@ or five times in the years since. As three examples from the top of my head:
 2. A team building system monitoring tooling that wanted D state processes for
    their integration tests;
 3. Testing for the kernel team's diagnostics tool, which as part of its
-   functions gathers kernel stacks of D state tasks in order to work out what
-   they are waiting for, in case it's a kernel issue that bears investigating
-   further.
+   functions gathers kernel stack traces of D state tasks in order to work out
+   what they are waiting for, in case it's a kernel issue that bears
+   investigating further.
 
 So while this may still be a highly specialised request, there's clearly a
 noticeable void in readily accessible knowledge on the subject.
@@ -343,6 +343,84 @@ EXIT
 %
 {% endhighlight %}
 
+## Wait, that's illegal
+
+I'm sure that some people reading the code I provided above are wondering
+whether it's legal or not, given the fact that we are sharing the parent's
+memory space. Here's what the POSIX spec, which Linux generally tries to
+somewhat adhere to, [has to say about
+vfork](https://pubs.opengroup.org/onlinepubs/009696799/functions/vfork.html):
+
+> The `vfork()` function shall be equivalent to `fork()`, except that the
+> behavior is undefined if the process created by `vfork()` either modifies any
+> data other than a variable of type `pid_t` used to store the return value
+> from `vfork()`, or returns from the function in which `vfork()` was called,
+> or calls any other function before successfully calling `_exit()` or one of
+> the `exec` family of functions.
+
+It makes sense that access to the parent's memory (and thus doing basically
+anything other than `exec` (which replaces the process entirely) or `_exit`
+(which is really just a syscall) is not POSIX-legal in the child forked by
+vfork, because the parent cannot reasonably have its internal state mutated
+under it without its knowledge. But wait, didn't we just call a function?
+That's certainly going to make use of the stack, which will later be visible to
+the parent, right?
+
+The good news it that in reality (or at least for some version of reality on
+Linux with any real libc), things are not that dire. Just as one example,
+CPython -- which is used and tested with far more diversity than the vast
+majority of software in use today -- uses it in [much the same
+way](https://github.com/python/cpython/blob/v3.12.1/Modules/_posixsubprocess.c#L773-L782):
+
+{% highlight c %}
+Py_NO_INLINE static pid_t do_fork_exec(/* ... */)
+{
+    pid_t pid;
+    PyThreadState *vfork_tstate_save;
+
+    /* ... */
+
+    vfork_tstate_save = PyEval_SaveThread();
+    pid = vfork();
+    if (pid != 0) {
+        // Not in the child process, reacquire the GIL.
+        PyEval_RestoreThread(vfork_tstate_save);
+    }
+
+    /* ... */
+
+    if (pid != 0) {
+        // Parent process.
+        return pid;
+    }
+
+    /* Child process. */
+
+    if (preexec_fn != Py_None) {
+        PyOS_AfterFork_Child();
+    }
+
+    child_exec(exec_array, argv, envp, cwd,
+               /* ... */);
+    _exit(255);
+    return 0;
+}
+{% endhighlight %}
+
+As you can see, in their case, it's used as part of a vastly more complex
+process of forking children which is also _guaranteed_ to push to stack by
+calling child functions. I think it would be safe to say that, despite some
+POSIX book banging and semantics discussion, the world has not collapsed into a
+fiery pit yet as a result.
+
+So why is this okay enough to make it into codebases like CPython's? Well, when
+the parent process continues its operation, additional stack data is simply
+going to end up in what is -- from the parent's perspective, at least -- the
+unused portion of the stack. The paused parent's stack pointer and frame
+pointer registers are still independent, even with `vfork`, so things just
+continue about their merry way. All in all, despite standards ire, the whole
+thing is relatively safe.
+
 ## Why do we block signals in both the parent and child?
 
 In the example above one might typically visualise our intention as being to
@@ -447,84 +525,6 @@ We use this pretty widely in the kernel nowadays where possible:
 
 As such, you may well find that some of the D states that processes enter on
 your system actually are terminable after all.
-
-## Wait, that's illegal
-
-I'm sure that some people reading the code I provided above are wondering
-whether it's legal or not, given the fact that we are sharing the parent's
-memory space. Here's what the POSIX spec, which Linux generally tries to
-somewhat adhere to, [has to say about
-vfork](https://pubs.opengroup.org/onlinepubs/009696799/functions/vfork.html):
-
-> The `vfork()` function shall be equivalent to `fork()`, except that the
-> behavior is undefined if the process created by `vfork()` either modifies any
-> data other than a variable of type `pid_t` used to store the return value
-> from `vfork()`, or returns from the function in which `vfork()` was called,
-> or calls any other function before successfully calling `_exit()` or one of
-> the `exec` family of functions.
-
-It makes sense that access to the parent's memory (and thus doing basically
-anything other than `exec` (which replaces the process entirely) or `_exit`
-(which is really just a syscall) is not POSIX-legal in the child forked by
-vfork, because the parent cannot reasonably have its internal state mutated
-under it without its knowledge. But wait, didn't we just call a function?
-That's certainly going to make use of the stack, which will later be visible to
-the parent, right?
-
-The good news it that in reality (or at least for some version of reality on
-Linux with any real libc), things are not that dire. Just as one example,
-CPython -- which is used and tested with far more diversity than the vast
-majority of software in use today -- uses it in [much the same
-way](https://github.com/python/cpython/blob/v3.12.1/Modules/_posixsubprocess.c#L773-L782):
-
-{% highlight c %}
-Py_NO_INLINE static pid_t do_fork_exec(/* ... */)
-{
-    pid_t pid;
-    PyThreadState *vfork_tstate_save;
-
-    /* ... */
-
-    vfork_tstate_save = PyEval_SaveThread();
-    pid = vfork();
-    if (pid != 0) {
-        // Not in the child process, reacquire the GIL.
-        PyEval_RestoreThread(vfork_tstate_save);
-    }
-
-    /* ... */
-
-    if (pid != 0) {
-        // Parent process.
-        return pid;
-    }
-
-    /* Child process. */
-
-    if (preexec_fn != Py_None) {
-        PyOS_AfterFork_Child();
-    }
-
-    child_exec(exec_array, argv, envp, cwd,
-               /* ... */);
-    _exit(255);
-    return 0;
-}
-{% endhighlight %}
-
-As you can see, in their case, it's used as part of a vastly more complex
-process of forking children which is also _guaranteed_ to push to stack by
-calling child functions. I think it would be safe to say that, despite some
-POSIX book banging and semantics discussion, the world has not collapsed into a
-fiery pit yet as a result.
-
-So why is this okay enough to make it into codebases like CPython's? Well, when
-the parent process continues its operation, additional stack data is simply
-going to end up in what is -- from the parent's perspective, at least -- the
-unallocated portion of the stack. The paused parent's stack pointer register is
-still independent, even with `vfork`, so things just continue about their merry
-way. All in all, despite standards ire, the whole thing is relatively safe (if
-a little unpleasant).
 
 ## How can I survive SIGKILL, then?
 
