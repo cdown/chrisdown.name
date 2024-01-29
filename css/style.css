@@ -121,6 +121,14 @@ div.body {
         display: none;
         visibility: hidden;
     }
+
+    .sidenote > p:first-child {
+        margin-top: 0;
+    }
+
+    .sidenote > p:last-child {
+        margin-bottom: 0;
+    }
 }
 
 a {
