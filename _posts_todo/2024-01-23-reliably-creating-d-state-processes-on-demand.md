@@ -5,10 +5,10 @@ title: "Creating controllable D state (uninterruptible sleep) processes on deman
 
 tl;dr:
 
-- Use `vfork` for a D state that can be controlled via signals.
-- Use `fsfreeze` for a D state which cannot be controlled via signals.
+- Use `vfork` for a D state that is not immune to signals.
+- Use `fsfreeze` for a D state that is immune to signals.
 
-But wait, how can any D state process be controlled by signals anyway? Isn't
+But wait, how can any D state process be "not immune to signals" anyway? Isn't
 the whole point that they are uninterruptible? If you are wondering this, read
 on and you will likely find out some new things about how Linux works
 internally :-)
