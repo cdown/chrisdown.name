@@ -418,7 +418,9 @@ __attribute__((noinline)) static void run_child(void)
 {
     char input[sizeof(EXIT_STRING)];
     int c;
+
     /* ... */
+
     _exit(0);
 }
 
