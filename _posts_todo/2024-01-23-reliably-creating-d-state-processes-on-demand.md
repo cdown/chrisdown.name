@@ -458,9 +458,10 @@ vfork](https://pubs.opengroup.org/onlinepubs/009696799/functions/vfork.html):
 It makes sense that access to the parent's memory (and thus doing basically
 anything other than `exec` (which replaces the process entirely) or `_exit`
 (which is really just a syscall) is not POSIX-legal in the child forked by
-vfork, because the parent cannot reasonably have the stack mutated under it
-without its knowledge. But wait, didn't we just call a function? That's
-certainly going to make use of the stack, right?
+vfork, because the parent cannot reasonably have its internal state mutated
+under it without its knowledge. But wait, didn't we just call a function?
+That's certainly going to make use of the stack, which will later be visible to
+the parent, right?
 
 The good news it that in reality (or at least for some version of reality on
 Linux with any real libc), things are not that dire. Just as one example,
