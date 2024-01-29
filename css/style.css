@@ -401,7 +401,7 @@ table.light {
 }
 
 details {
-  padding: 0.6em 0;
+    padding: 0.6em 0;
 }
 
 summary:after {
@@ -465,7 +465,7 @@ table thead th {
     background-color: #f8f8f8;
 }
 
-table tr:nth-child(even) {
+table tr:nth-child(even) :not([rowspan]) {
     background-color: #f8f8f8;
 }
 

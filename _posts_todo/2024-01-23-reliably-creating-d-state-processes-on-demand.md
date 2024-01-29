@@ -442,7 +442,10 @@ int main(void)
 {% endhighlight %}
 
 <div class="sidenote sidenote-right">
-<p>Let's take a look at how this might look on an x86_64 stack:</p>
+<p>Let's take a look at how this might look on an x86_64 stack. In reality, the
+compiler may choose to use registers instead of the stack for storing some of
+these local variables since they are relatively small, but the general
+principle is the same.</p>
 
 <table>
 <thead>
@@ -459,48 +462,41 @@ int main(void)
     <td></td>
   </tr>
   <tr>
-    <td>main()</td>
+    <td rowspan=4>main()</td>
     <td>Return address</td>
     <td></td>
   </tr>
   <tr>
-    <td>main()</td>
     <td>Saved frame pointer</td>
     <td>Parent frame pointer</td>
   </tr>
   <tr>
-    <td>main()</td>
     <td>pid_t pid</td>
     <td></td>
   </tr>
   <tr>
-    <td>main()</td>
     <td>sigset_t set</td>
     <td></td>
   </tr>
   <tr>
-    <td>run_child()</td>
+    <td rowspan=4>run_child()</td>
     <td>Return address</td>
     <td>Parent stack pointer</td>
   </tr>
   <tr>
-    <td>run_child()</td>
     <td>Saved frame pointer</td>
     <td>Child frame pointer</td>
   </tr>
   <tr>
-    <td>run_child()</td>
     <td>char input[]</td>
     <td></td>
   </tr>
   <tr>
-    <td>run_child()</td>
     <td>int c</td>
     <td></td>
   </tr>
   <tr>
-    <td>run_child()</td>
-    <td>[unallocated]</td>
+    <td colspan=2><center>[unallocated]</center></td>
     <td>Child stack pointer</td>
   </tr>
 </tbody>
