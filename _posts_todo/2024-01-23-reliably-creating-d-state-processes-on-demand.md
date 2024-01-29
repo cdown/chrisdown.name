@@ -569,9 +569,9 @@ SYSCALL_DEFINE0(vfork)
 This is the definition of the `vfork` syscall, with no ("0") arguments, hence
 `SYSCALL_DEFINE0(vfork)`. `kernel_clone` is the kernel path that handles
 `clone`, which itself is a generic syscall for creating new processes. Setting
-its flags to `CLONE_VFORK | CLONE_VM` to share the virtual memory space, and
+its flags to `CLONE_VFORK` and `CLONE_VM` to share the virtual memory space, and
 suspend the parent process until the child has completed. That is, the effects
-of running `vfork()` or `clone(CLONE_VFORK | CLONE_VM)` in a program are
+of running `vfork()` or `clone()` with the appropriate flags in a program are
 effectively the same.
 
 In `kernel_clone`, [we see the following
