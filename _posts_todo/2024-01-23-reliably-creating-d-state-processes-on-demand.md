@@ -264,6 +264,9 @@ This will then reliably enter D state until a terminal signal is sent:
 [1]  + terminated  ./dstate
 {% endhighlight %}
 
+`$!` is the process ID of the last background pipeline, which in this case is
+`./dstate &`.
+
 The goal here is to keep the child going for as long as we want to have our
 parent in D state. `pause()` here waits until a terminal signal is sent, and
 can be modified to suit whatever needs you happen to have. For example, if your
