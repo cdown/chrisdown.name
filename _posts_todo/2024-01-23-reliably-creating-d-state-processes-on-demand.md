@@ -455,10 +455,10 @@ int main(void)
 {% endhighlight %}
 
 <div class="sidenote sidenote-right">
-<p>Let's take a look at how this might look on an x86_64 stack. In reality, the
-compiler may choose to use registers instead of the stack for storing some of
-these local variables since they are relatively small, but the general
-principle is the same.</p>
+<p>Let's take a look at how this might look on an x86_64 stack just before
+<code>_exit(0)</code>. In reality, the compiler may choose to use registers
+instead of the stack for storing some of these local variables since they are
+relatively small, but the general principle is the same.</p>
 
 <table>
 <thead>
