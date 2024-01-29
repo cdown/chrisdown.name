@@ -256,7 +256,7 @@ This will then reliably enter D state until a terminal signal is sent:
 
 {% highlight bash %}
 % cc -o dstate dstate.c
-% ./dstate & { sleep 0.1; ps -o pid,state,cmd -p "$!"; }
+% ./dstate & sleep 0.1; ps -o pid,state,cmd -p "$!"
 [1] 780629
     PID S CMD
  780629 D ./dstate
@@ -537,7 +537,7 @@ surely that's not necessary since the parent is in D state anyway, right? Well,
 let's try it without the signals blocked in the parent:
 
 {% highlight bash %}
-% ./dstate & { sleep 0.1; ps -o pid,state,cmd -p "$!"; kill "$!"; }
+% ./dstate & sleep 0.1; ps -o pid,state,cmd -p "$!"; kill "$!"
 [1] 866239
     PID S CMD
  866239 D ./dstate
