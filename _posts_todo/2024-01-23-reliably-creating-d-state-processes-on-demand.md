@@ -713,7 +713,9 @@ setup, are controllable and reliable, and can easily be modified to be suitable
 for different testing conditions.
 
 Many thanks to [Johannes](https://github.com/hnaz), [Matthew][],
-[Sam](https://samwho.dev/), [Tejun](https://github.com/htejun), and
-[Javier](https://hondu.co/) for reviewing this post.
+[Sam](https://samwho.dev/), [Tejun](https://github.com/htejun),
+[Javier](https://hondu.co/), and my wife
+[Lin](https://www.linkedin.com/in/linzhao1/) for reviewing this post and
+providing suggestions.
 
 [Matthew]: https://kernelnewbies.org/MatthewWilcox
