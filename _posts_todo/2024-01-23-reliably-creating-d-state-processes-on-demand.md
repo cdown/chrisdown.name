@@ -36,12 +36,12 @@ cannot be woken up in userspace. This can be necessary in some cases when the
 kernel or hardware is doing work on behalf of the application, and we'll go
 over some of the cases where it is needed in a moment.
 
-These D state processes can become a problem for things like init
-systems or containerisation platforms where the unwavering persistence of such
-processes must be planned for and have strategies in place in order to avoid
-them blocking forward progress. These processes are typically thought about as
-being the equivalent of an immovable object: a process where no signal and no
-input is likely to result in any forward progress, at least for the timebeing.
+These D state processes can become a problem for things like init systems or
+containerisation platforms where the unwavering persistence of such processes
+must be planned for and have strategies in place in order to avoid them
+blocking forward progress. These processes are typically thought about as being
+the equivalent of an immovable object: a process where no signal and no input
+is likely to result in any forward progress, at least for the time being.
 
 As a real world example, at [work](https://meta.com) several years ago I
 received what at the time I thought was a pretty niche request. One of the
