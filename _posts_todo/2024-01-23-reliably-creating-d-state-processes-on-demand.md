@@ -413,13 +413,121 @@ calling child functions. I think it would be safe to say that, despite some
 POSIX book banging and semantics discussion, the world has not collapsed into a
 fiery pit yet as a result.
 
-So why is this okay enough to make it into codebases like CPython's? Well, when
-the parent process continues its operation, additional stack data is simply
-going to end up in what is -- from the parent's perspective, at least -- the
-unused portion of the stack. The paused parent's stack pointer and frame
-pointer registers are still independent, even with `vfork`, so things just
-continue about their merry way. All in all, despite standards ire, the whole
-thing is relatively safe.
+So why is this okay enough to make it into codebases like CPython's? Well,
+let's come back to an elided form of our code from earlier:
+
+{% highlight c %}
+__attribute__((noinline)) static void run_child(void)
+{
+    char input[sizeof(EXIT_STRING)];
+    int c;
+    /* ... */
+    _exit(0);
+}
+
+int main(void)
+{
+    pid_t pid;
+    sigset_t set;
+
+    /* ... */
+
+    pid = vfork();
+
+    if (pid == 0) {
+        run_child();
+    } else if (pid < 0) {
+        return 1;
+    }
+
+    return 0;
+}
+{% endhighlight %}
+
+<div class="sidenote sidenote-right">
+Let's take a look at how this might look on an x86_64 stack:
+
+<table>
+<thead>
+  <tr>
+    <th>Function</th>
+    <th>Stack</th>
+    <th>Register</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>__libc_start_main()</td>
+    <td>[stuff before main]</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>main()</td>
+    <td>Return address</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>main()</td>
+    <td>Saved frame pointer</td>
+    <td>Parent frame pointer</td>
+  </tr>
+  <tr>
+    <td>main()</td>
+    <td>pid_t pid</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>main()</td>
+    <td>sigset_t set</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>run_child()</td>
+    <td>Return address</td>
+    <td>Parent stack pointer</td>
+  </tr>
+  <tr>
+    <td>run_child()</td>
+    <td>Saved frame pointer</td>
+    <td>Child frame pointer</td>
+  </tr>
+  <tr>
+    <td>run_child()</td>
+    <td>char input[]</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>run_child()</td>
+    <td>int c</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>run_child()</td>
+    <td>[unallocated]</td>
+    <td>Child stack pointer</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+When the parent process continues its operation, additional stack data is
+simply going to end up in what is -- from the parent's perspective, at least --
+the unused portion of the stack. It doesn't know that its stack pointer is
+pointing to the return address for `run_child()`, from its perspective,
+whatever is at that memory is semantically meaningless.
+
+This happens because, while `vfork` shares the address space, it importantly
+_does not_ share registers between the child and parent. This means that,
+importantly, the paused parent's stack pointer and frame pointer registers are
+still independent. This is also how the parent can resume at `vfork`, instead
+of trying to resume from what the child has already done.
+
+From the parent's perspective, while there might be some more stuff on the
+stack, it doesn't care: from its perspective what's contained in those
+addresses are just garbage and can be ignored or overwritten at will, and as
+such things just continue about their merry way.
+
+All in all, despite standards ire, the whole thing is relatively safe.
 
 ## Why do we block signals in both the parent and child?
 
