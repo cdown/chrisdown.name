@@ -21,10 +21,15 @@ found here: https://instant.page/license
 
 ---
 
+mermaid.js is made by Knut Sveidqvist and is licensed under an MIT license,
+found here: https://github.com/mermaid-js/mermaid/blob/develop/LICENSE
+
+---
+
 All content not otherwise licensed above is licensed under an ISC license,
 which is as follows:
 
-© 2013–2014 Christopher Down <chris@chrisdown.name>
+© 2013–present Christopher Down <chris@chrisdown.name>
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above

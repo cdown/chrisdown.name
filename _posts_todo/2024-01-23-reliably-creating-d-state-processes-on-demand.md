@@ -115,7 +115,7 @@ as such all systems like this must implement measures to deal with them.
 Here's a real example of how that can manifest in a production environment with
 a container engine.
 
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10.7.0/dist/mermaid.min.js"></script>
+<script src="/js/mermaid.min.js?{{ site.data["gitrev"] }}"></script>
 <div class="sidenote sidenote-right">
 <div class="mermaid">
 sequenceDiagram
