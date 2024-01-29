@@ -19,30 +19,38 @@ Imagine you're a system administrator responsible for maintaining containers
 across production. One day, you encounter a perplexing issue: while trying to
 roll out a new version of a container (and thus stop the old container and
 start a new one), a large portion of your fleet has some of the processes in
-the previous container stuck in uninterruptible sleep (D state), which is
-blocking the forward progress of the update. This scenario isn't just
-frustrating; it's a real threat to system stability and efficiency, and working
-out how to surface and deal with these kinds of issues is something that those
-of us working in the container space have had to think about for a long time.
-Thinking about it is only half the battle, though -- how can you build tests
-that mimic such issues in order to avoid regressions?
+the previous container stuck in a state in which they cannot be interacted with
+or killed, which is blocking the forward progress of the update.
 
-The D (typically written out as "uninterruptible sleep") state is a process
-state where a process is sleeping and cannot be woken up in userspace. This can
-become a problem for things like init systems or containerisation platforms
-where the unwavering persistence of such processes must be planned for and have
-strategies in place in order to avoid them blocking forward progress. These
-processes are typically thought about as being the equivalent of an immovable
-object: a process where no signal and no input is likely to result in any
-forward progress, at least for the timebeing.
+This scenario isn't just frustrating; it's a real threat to system stability
+and efficiency, and working out how to surface and deal with these kinds of
+issues is something that those of us working in the container space have had to
+think about for a long time. Thinking about it is only half the battle, though
+-- how can you build tests that mimic such issues in order to avoid
+regressions?
+
+These kinds of processes are typically represented with the code "D" in ps,
+top, and other similar tools. D state (typically written out as
+"uninterruptible sleep") is a process state where a process is sleeping and
+cannot be woken up in userspace. This can be necessary in some cases when the
+kernel or hardware is doing work on behalf of the application, and we'll go
+over some of the cases where it is needed in a moment.
+
+These D state processes can become a problem for things like init
+systems or containerisation platforms where the unwavering persistence of such
+processes must be planned for and have strategies in place in order to avoid
+them blocking forward progress. These processes are typically thought about as
+being the equivalent of an immovable object: a process where no signal and no
+input is likely to result in any forward progress, at least for the timebeing.
 
 As a real world example, at [work](https://meta.com) several years ago I
 received what at the time I thought was a pretty niche request. One of the
 teams that works on our internal containerisation system,
 [Twine](https://research.facebook.com/publications/twine-a-unified-cluster-management-system-for-shared-infrastructure/),
-was testing container teardown robustness, and wanted to make sure that their
-software was robust to D state processes holding things up. I gave them some
-ideas, they implemented it, and that was that.
+was testing container teardown robustness, and wanted to make sure that they
+could develop tests to ensure that their software was robust to D state
+processes holding things up. I gave them some ideas, they implemented it, and
+that was that.
 
 Fast forward to today, and I think I must have seen this request at least four
 or five times in the years since. As three examples from the top of my head:
@@ -51,15 +59,21 @@ or five times in the years since. As three examples from the top of my head:
 2. A team building system monitoring tooling that wanted D state processes for
    their integration tests;
 3. Testing for the kernel team's diagnostics tool, which as part of its
-   functions gathers kernel stacks of D state tasks.
+   functions gathers kernel stacks of D state tasks in order to work out what
+   they are waiting for, in case it's a kernel issue that bears investigating
+   further.
 
 So while this may still be a highly specialised request, there's clearly a
 noticeable void in readily accessible knowledge on the subject.
 
+Linux actively tries to avoid entering uninterruptible sleep whenever possible,
+as these processes can be particularly troubling to deal with. For this reason
+it's not immediately obvious in most cases how to reliably enter and exit them.
+
 While of course I will simply answer the question of how to go about this, for
 those who are interested, we will also discuss some interesting Linux arcana,
 some of the dangers of sharing virtual memory space, and some things you may
-well not know about D state process internals. :-)
+well not know about D state process internals along the way. :-)
 
 ## Why would anyone want to test this?
 
