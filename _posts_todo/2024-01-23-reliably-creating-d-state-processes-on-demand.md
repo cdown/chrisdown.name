@@ -219,6 +219,9 @@ graph TD
         exit --> d_exit
     end
 
+    style parent stroke:#aaaa33,fill:#fff5ad,stroke-width:1px;
+    style child stroke:#aaaa33,fill:#fff5ad,stroke-width:1px;
+
     send_sig["Signal sent<br>to child"] --> exit
 
     exit --> clone_exit["vforked child<br>exits without cleanup"]
