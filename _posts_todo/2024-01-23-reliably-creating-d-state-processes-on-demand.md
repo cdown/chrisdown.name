@@ -520,10 +520,11 @@ fiery pit yet as a result.
 
 So why is this okay enough to make it into codebases like CPython's? Well, when
 the parent process continues its operation, additional stack data is simply
-going to end up in the unallocated portion of the stack. The paused parent's
-stack pointer register is still independent, even with `vfork`, so things just
-continue about their merry way. All in all, despite standards ire, the whole
-thing is relatively safe (if a little unpleasant).
+going to end up in what is -- from the parent's perspective, at least -- the
+unallocated portion of the stack. The paused parent's stack pointer register is
+still independent, even with `vfork`, so things just continue about their merry
+way. All in all, despite standards ire, the whole thing is relatively safe (if
+a little unpleasant).
 
 ## How can I survive SIGKILL, then?
 
