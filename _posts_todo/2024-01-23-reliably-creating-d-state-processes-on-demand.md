@@ -470,12 +470,12 @@ relatively small, but the general principle is the same.</p>
 </thead>
 <tbody>
   <tr>
-    <td>__libc_start_main()</td>
+    <td><code>__libc_start_main()</code></td>
     <td>[stuff before main]</td>
     <td></td>
   </tr>
   <tr>
-    <td rowspan=4>main()</td>
+    <td rowspan=4><code>main()</code></td>
     <td>Return address</td>
     <td></td>
   </tr>
@@ -484,15 +484,15 @@ relatively small, but the general principle is the same.</p>
     <td>Parent frame pointer</td>
   </tr>
   <tr>
-    <td>pid_t pid</td>
+    <td><code>pid_t pid</code></td>
     <td></td>
   </tr>
   <tr>
-    <td>sigset_t set</td>
+    <td><code>sigset_t set</code></td>
     <td></td>
   </tr>
   <tr>
-    <td rowspan=4>run_child()</td>
+    <td rowspan=4><code>run_child()</code></td>
     <td>Return address</td>
     <td>Parent stack pointer</td>
   </tr>
@@ -501,11 +501,11 @@ relatively small, but the general principle is the same.</p>
     <td>Child frame pointer</td>
   </tr>
   <tr>
-    <td>char input[]</td>
+    <td><code>char input[]</code></td>
     <td></td>
   </tr>
   <tr>
-    <td>int c</td>
+    <td><code>int c</code></td>
     <td></td>
   </tr>
   <tr>
