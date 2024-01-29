@@ -614,7 +614,9 @@ unfrozen to make forward progress. As you can see, it still exists even after a
 To understand why this is, it helps to know that on Linux, signal delivery is
 not instantaneous and is instead handled by what's called a "signal queue". D
 state processes without <code>TASK_KILLABLE</code> receive pending signals when
-they transition out of D state, at which point the process terminates as usual.
+they transition out of D state, so this SIGKILL will still be properly
+delivered, but only when the filesystem that `mkdir` is acting upon is
+unfrozen.
 
 It's important to understand that while in the D state, these processes are not
 "ignoring" the signals -- rather, the kernel defers signal handling until the
