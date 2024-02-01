@@ -380,6 +380,10 @@ img:not(.nonstandard), video:not(.nonstandard) {
   white-space: nowrap;
 }
 
+.center {
+    text-align: center;
+}
+
 /* Damn son, Chrome's default margins for figure are crazy */
 figure {
   margin: 0;

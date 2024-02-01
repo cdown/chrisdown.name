@@ -458,7 +458,7 @@ int main(void)
 </thead>
 <tbody>
   <tr>
-    <td colspan=4><center>[stuff before <code>main()</code>]</center></td>
+    <td class=center colspan=4>[stuff before <code>main()</code>]</td>
   </tr>
   <tr>
     <td rowspan=4><code>main()</code></td>
@@ -503,7 +503,7 @@ int main(void)
     <td></td>
   </tr>
   <tr>
-    <td colspan=2><center>[unallocated]</center></td>
+    <td class=center colspan=2>[unallocated]</td>
     <td></td>
     <td>Stack pointer</td>
   </tr>
