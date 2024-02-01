@@ -102,7 +102,7 @@ div.body {
 
     .sidenote-right {
         padding-left: 15px;
-        border-left: 1px dotted #777;
+        border-left: 1px solid #ccc;
         text-align: left;
         float: right;
         clear: right;
