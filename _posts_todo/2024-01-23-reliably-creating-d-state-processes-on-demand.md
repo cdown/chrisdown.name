@@ -348,7 +348,7 @@ I'm sure that some people reading the code I provided above are wondering
 whether it's legal or not, given the fact that we are sharing the parent's
 memory space. Here's what the POSIX spec, which Linux generally tries to
 somewhat adhere to, [has to say about
-vfork()](https://pubs.opengroup.org/onlinepubs/009696799/functions/vfork().html):
+`vfork()`](https://pubs.opengroup.org/onlinepubs/009696799/functions/`vfork()`.html):
 
 > The `vfork()` function shall be equivalent to `fork()`, except that the
 > behavior is undefined if the process created by `vfork()` either modifies any
@@ -360,7 +360,7 @@ vfork()](https://pubs.opengroup.org/onlinepubs/009696799/functions/vfork().html)
 It makes sense that access to the parent's memory (and thus doing basically
 anything other than `exec` (which replaces the process entirely) or `_exit`
 (which is really just a syscall) is not POSIX-legal in the child forked by
-vfork(), because the parent cannot reasonably have its internal state mutated
+`vfork()`, because the parent cannot reasonably have its internal state mutated
 under it without its knowledge. But wait, didn't we just call a function?
 That's certainly going to make use of the stack, which will later be visible to
 the parent, right?
@@ -632,7 +632,7 @@ static int wait_for_vfork_done(struct task_struct *child,
 created because, while in some cases we do actually need to shield the process
 from any signal interaction at all, in some cases it's fine as long as we know
 the process will terminate with no more userspace instructions executed. For
-example, in this vfork() case, we have to block to avoid both tasks accessing the
+example, in this `vfork()` case, we have to block to avoid both tasks accessing the
 same address space, but there's no reason for us to continue to wait if the
 next thing we're going to do is simply terminate -- it's a waste of time and of
 a process.
