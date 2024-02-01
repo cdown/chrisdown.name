@@ -5,7 +5,7 @@ title: "Creating controllable D state (uninterruptible sleep) processes on deman
 
 tl;dr:
 
-- Use `vfork` for a D state that is not immune to signals.
+- Use `vfork()` for a D state that is not immune to signals.
 - Use `fsfreeze` for a D state that is immune to signals.
 
 But wait, how can any D state process be "not immune to signals" anyway? Isn't
@@ -175,10 +175,10 @@ them for all sorts of things in the kernel. As a general rule, the kernel uses
 D states to block processes in any situation where it's unsafe to allow the
 process to proceed further for the time being.
 
-Enter `vfork`. `vfork` is a specialised system call primarily designed to be
+Enter `vfork()`. `vfork()` is a specialised system call primarily designed to be
 used as part of the process of creating new processes. Unlike the more widely
 known `fork`, which typically uses copy-on-write and thus must at the very
-least create new virtual mappings to the physical pages in question, `vfork`
+least create new virtual mappings to the physical pages in question, `vfork()`
 allows the child process to directly share the parent's virtual address space
 temporarily (which is much cheaper if you are just going to immediately clobber
 it with a new process image with `exec`, as in the case of process creation,
@@ -348,7 +348,7 @@ I'm sure that some people reading the code I provided above are wondering
 whether it's legal or not, given the fact that we are sharing the parent's
 memory space. Here's what the POSIX spec, which Linux generally tries to
 somewhat adhere to, [has to say about
-vfork](https://pubs.opengroup.org/onlinepubs/009696799/functions/vfork.html):
+vfork()](https://pubs.opengroup.org/onlinepubs/009696799/functions/vfork().html):
 
 > The `vfork()` function shall be equivalent to `fork()`, except that the
 > behavior is undefined if the process created by `vfork()` either modifies any
@@ -360,7 +360,7 @@ vfork](https://pubs.opengroup.org/onlinepubs/009696799/functions/vfork.html):
 It makes sense that access to the parent's memory (and thus doing basically
 anything other than `exec` (which replaces the process entirely) or `_exit`
 (which is really just a syscall) is not POSIX-legal in the child forked by
-vfork, because the parent cannot reasonably have its internal state mutated
+vfork(), because the parent cannot reasonably have its internal state mutated
 under it without its knowledge. But wait, didn't we just call a function?
 That's certainly going to make use of the stack, which will later be visible to
 the parent, right?
@@ -530,12 +530,12 @@ the unused portion of the stack. It doesn't know that its stack pointer is
 pointing to the return address for `run_child()`, from its perspective,
 whatever is at that memory is semantically meaningless.
 
-This happens because even though `vfork` shares the address space, it _does
+This happens because even though `vfork()` shares the address space, it _does
 not_ share registers between the child and parent. Importantly, this means that
 the parent's stack pointer and frame pointer registers are still independent
 from those of the child. This also includes the instruction pointer register
 (which stores the next instruction to execute), and this is how the parent
-wakes up at `vfork` instead of trying to continue from what the child has
+wakes up at `vfork()` instead of trying to continue from what the child has
 already done.
 
 While there might be some more stuff on the stack, the parent doesn't care:
@@ -632,7 +632,7 @@ static int wait_for_vfork_done(struct task_struct *child,
 created because, while in some cases we do actually need to shield the process
 from any signal interaction at all, in some cases it's fine as long as we know
 the process will terminate with no more userspace instructions executed. For
-example, in this vfork case, we have to block to avoid both tasks accessing the
+example, in this vfork() case, we have to block to avoid both tasks accessing the
 same address space, but there's no reason for us to continue to wait if the
 next thing we're going to do is simply terminate -- it's a waste of time and of
 a process.
@@ -814,7 +814,7 @@ filesystem and take the process out of D state.
     % sudo ./dstate-fsfreeze
     PID 33088 is now in D state. Press <Enter> to unfreeze and clean up.
 
-While slightly less self-contained than the `vfork` method, since it requires
+While slightly less self-contained than the `vfork()` method, since it requires
 creating a filesystem and having elevated privileges, this method is the way
 you likely want to go if you need a non-`TASK_KILLABLE` D state.
 
@@ -838,7 +838,7 @@ the years with some assessments:
    potentially screwing up scheduling entirely depending on how you go about
    it.
 
-All in all, the simplicity and flexibility of the `vfork` and `fsfreeze`
+All in all, the simplicity and flexibility of the `vfork()` and `fsfreeze`
 approaches make them ideal for most use cases. They don't require complex
 setup, are controllable and reliable, and can easily be modified to be suitable
 for different testing conditions.
