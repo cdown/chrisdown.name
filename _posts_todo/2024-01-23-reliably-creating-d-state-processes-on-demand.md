@@ -16,10 +16,10 @@ internally :-)
 ---
 
 Imagine you're a system administrator responsible for maintaining containers
-across production. One day, you encounter a problem: while trying to
-roll out a new version of a container (and thus stop the old container and
-start a new one), the old container will not stop because some of the processes
-in the previous container are stuck and unresponsive.
+across production. One day, you encounter a problem: while trying to roll out a
+new version of a container (and thus stop the old container and start a new
+one), the old container will not stop because some of the processes in it are
+stuck and unresponsive.
 
 These kinds of processes are typically represented with the code "D" in `ps`,
 `top`, and other similar tools. D state (typically written out as
