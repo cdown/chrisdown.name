@@ -514,9 +514,9 @@ int main(void)
 
 <ol>
 <li>The compiler may choose to use registers instead of the stack for storing
-some of these local variables since they are relatively small, and;</li>
+some of the local variables due to their small size, and</li>
 <li>The compiler may omit the frame pointer entirely and just rely on using the
-stack pointer.</li>
+stack pointer</li>
 </ol>
 
 <p>...but the general principle and effects are nevertheless the same.</p>
