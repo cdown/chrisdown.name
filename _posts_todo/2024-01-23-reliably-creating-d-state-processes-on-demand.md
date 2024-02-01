@@ -21,8 +21,8 @@ roll out a new version of a container (and thus stop the old container and
 start a new one), the old container will not stop because some of the processes
 in the previous container are stuck and unresponsive.
 
-These kinds of processes are typically represented with the code "D" in ps,
-top, and other similar tools. D state (typically written out as
+These kinds of processes are typically represented with the code "D" in `ps`,
+`top`, and other similar tools. D state (typically written out as
 "uninterruptible sleep") is a process state where a process is sleeping and
 cannot be woken up in userspace. This can be necessary in some cases when the
 kernel or hardware is doing work on behalf of the application, and we'll go
@@ -32,9 +32,9 @@ As a real world example, at [work](https://meta.com) several years ago I
 received what at the time I thought was a relatively one-off request. One of
 the teams that works on our internal containerisation system,
 [Twine](https://research.facebook.com/publications/twine-a-unified-cluster-management-system-for-shared-infrastructure/),
-was checking that their software could properly destroyed containers with D
-state processes present, and wanted to simulate this as part of their
-integration tests.
+was checking that their software could properly destroy containers with D state
+processes present, and wanted to simulate this as part of their integration
+tests.
 
 Fast forward to today, and I think I must have seen this request at least four
 or five times in the years since. As three examples from the top of my head:
@@ -47,7 +47,7 @@ or five times in the years since. As three examples from the top of my head:
    what they are waiting for, in case it's a kernel issue that bears
    investigating further.
 
-So while this may still be a highly specialised request, there's clearly a
+So while this may still be a relatively specialised request, there's clearly a
 noticeable void in readily accessible knowledge on the subject.
 
 While of course I will simply answer the question of how to go about this, for
