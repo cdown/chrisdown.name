@@ -471,10 +471,7 @@ relatively small, but the general principle is the same.</p>
 </thead>
 <tbody>
   <tr>
-    <td><code>__libc_start_main()</code></td>
-    <td>[stuff before main]</td>
-    <td></td>
-    <td></td>
+    <td colspan=4><center>[stuff before <code>main()</code>]</center></td>
   </tr>
   <tr>
     <td rowspan=4><code>main()</code></td>
