@@ -858,8 +858,8 @@ for different testing conditions.
 
 Many thanks to [Johannes](https://github.com/hnaz), [Matthew][],
 [Sam](https://samwho.dev/), [Tejun](https://github.com/htejun),
-[Javier](https://hondu.co/), and my wife
-[Lin](https://www.linkedin.com/in/linzhao1/) for reviewing this post and
-providing suggestions.
+[Yonghong](https://github.com/yonghong-song), [Javier](https://hondu.co/), and
+my wife [Lin](https://www.linkedin.com/in/linzhao1/) for reviewing this post
+and providing suggestions.
 
 [Matthew]: https://kernelnewbies.org/MatthewWilcox
