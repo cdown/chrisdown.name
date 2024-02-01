@@ -88,9 +88,10 @@ data transfer process, but it also means that we must guard the process from
 interruption.
 
 These states can become a problem for things like init systems or
-containerisation platforms where these stubborn processes may block things like
-tearing down a container, a user session, or the entire system on shutdown, and
-as such all systems like this must implement measures to deal with them.
+containerisation platforms where the unwavering persistence of these stubborn
+processes may block things like tearing down a container, a user session, or
+the entire system on shutdown, and as such all systems like this must implement
+measures to deal with them.
 
 Here's a real example of how that can manifest in a production environment with
 a container engine.
@@ -194,7 +195,8 @@ space. Likewise, once the parent wakes up again, it too will see all and any
 changes performed in the child. The only safety is that both processes can't
 run at the same time, but other than that, pretty much all bets are off.
 
-The entire process looks something like this:
+To choreograph a long-lived D state process with `vfork()`, you can do
+something like the following:
 
 <div class="sidenote sidenote-right">
 <div class="mermaid">
