@@ -92,6 +92,7 @@ div.body {
     display: inline;
 }
 
+/* 720px main + (551px of sidenote + some buffer) * 2 */
 @media (min-width: 1900px) {
     .sidenote {
         width: 530px;
@@ -100,21 +101,17 @@ div.body {
     }
 
     .sidenote-right {
-        padding-left: 0.6em;
+        padding-left: 15px;
         border-left: 1px dotted #777;
         text-align: left;
         float: right;
         clear: right;
-        margin-right: -555px;
-    }
 
-    .sidenote-left {
-        padding-right: 0.6em;
-        border-right: 1px dotted #777;
-        text-align: right;
-        float: left;
-        clear: left;
-        margin-left: -555px;
+        /*
+         * At 530px we exactly clear. Then we have 15px of padding + 1px
+         * border, and 15px more to match.
+         */
+        margin-right: -561px;
     }
 
     .non-sidenote-only {
