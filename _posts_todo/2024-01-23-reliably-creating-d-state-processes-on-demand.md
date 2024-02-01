@@ -465,7 +465,8 @@ relatively small, but the general principle is the same.</p>
   <tr>
     <th>Function</th>
     <th>Stack</th>
-    <th>Register</th>
+    <th>Parent register</th>
+    <th>Child register</th>
   </tr>
 </thead>
 <tbody>
@@ -473,44 +474,54 @@ relatively small, but the general principle is the same.</p>
     <td><code>__libc_start_main()</code></td>
     <td>[stuff before main]</td>
     <td></td>
+    <td></td>
   </tr>
   <tr>
     <td rowspan=4><code>main()</code></td>
     <td>Return address</td>
     <td></td>
+    <td></td>
   </tr>
   <tr>
     <td>Saved frame pointer</td>
-    <td>Parent frame pointer</td>
+    <td>Frame pointer</td>
+    <td></td>
   </tr>
   <tr>
     <td><code>pid_t pid</code></td>
+    <td></td>
     <td></td>
   </tr>
   <tr>
     <td><code>sigset_t set</code></td>
     <td></td>
+    <td></td>
   </tr>
   <tr>
     <td rowspan=4><code>run_child()</code></td>
     <td>Return address</td>
-    <td>Parent stack pointer</td>
+    <td>Stack pointer</td>
+    <td></td>
   </tr>
   <tr>
     <td>Saved frame pointer</td>
-    <td>Child frame pointer</td>
+    <td></td>
+    <td>Frame pointer</td>
   </tr>
   <tr>
     <td><code>char input[]</code></td>
+    <td></td>
     <td></td>
   </tr>
   <tr>
     <td><code>int c</code></td>
     <td></td>
+    <td></td>
   </tr>
   <tr>
     <td colspan=2><center>[unallocated]</center></td>
-    <td>Child stack pointer</td>
+    <td></td>
+    <td>Stack pointer</td>
   </tr>
 </tbody>
 </table>
