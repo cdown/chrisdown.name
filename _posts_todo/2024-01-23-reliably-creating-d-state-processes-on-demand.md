@@ -203,9 +203,14 @@ But how can that be safe? Well, `vfork()` suspends the parent application for
 the period that the child is using its address space, and it suspends it in D
 state until the child either dies or calls an `exec` function to replace the
 process image. As with `fork()`, `vfork()`s return code is 0 when running in
-the child, and the PID of the child when running in the parent. We use this to
-know which we are in and select the relevant code to run. The entire process
-looks something like this:
+the child, and the PID of the child when running in the parent.
+
+Once spawned, the child can see and modify everything in the parent's address
+space. Likewise, once the parent wakes up again, it too will see all and any
+changes performed in the child. The only safety is that both processes can't
+run at the same time, but other than that, pretty much all bets are off.
+
+The entire process looks something like this:
 
 <div class="sidenote sidenote-right">
 <div class="mermaid">
@@ -456,9 +461,7 @@ int main(void)
 
 <div class="sidenote sidenote-right">
 <p>Let's take a look at how this might look on an x86_64 stack just before
-<code>_exit(0)</code>. In reality, the compiler may choose to use registers
-instead of the stack for storing some of these local variables since they are
-relatively small, but the general principle is the same.</p>
+<code>_exit(0)</code>:</p>
 
 <table>
 <thead>
@@ -522,6 +525,17 @@ relatively small, but the general principle is the same.</p>
   </tr>
 </tbody>
 </table>
+
+<p>In reality:</p>
+
+<ol>
+<li>The compiler may choose to use registers instead of the stack for storing
+some of these local variables since they are relatively small, and;</li>
+<li>The compiler may omit the frame pointer entirely and just rely on using the
+stack pointer.</li>
+</ol>
+
+<p>...but the general principle and effects are nevertheless the same.</p>
 </div>
 
 When the parent process continues its operation, additional stack data is
@@ -530,16 +544,18 @@ the unused portion of the stack. It doesn't know that its stack pointer is
 pointing to the return address for `run_child()`, from its perspective,
 whatever is at that memory is semantically meaningless.
 
-This happens because, while `vfork` shares the address space, it importantly
-_does not_ share registers between the child and parent. This means that,
-importantly, the paused parent's stack pointer and frame pointer registers are
-still independent. This is also how the parent can resume at `vfork`, instead
-of trying to resume from what the child has already done.
+This happens because even though `vfork` shares the address space, it _does
+not_ share registers between the child and parent. Importantly, this means that
+the parent's stack pointer and frame pointer registers are still independent
+from those of the child. This also includes the instruction pointer register
+(which stores the next instruction to execute), and this is how the parent
+wakes up at `vfork` instead of trying to continue from what the child has
+already done.
 
-From the parent's perspective, while there might be some more stuff on the
-stack, it doesn't care: from its perspective what's contained in those
-addresses are just garbage and can be ignored or overwritten at will, and as
-such things just continue about their merry way.
+While there might be some more stuff on the stack, the parent doesn't care:
+from its perspective what's contained in those addresses are just garbage and
+can be ignored or overwritten at will, and as such things just continue about
+their merry way.
 
 All in all, despite standards ire, the whole thing is relatively safe.
 
