@@ -9,32 +9,32 @@ tl;dr:
 - Use `fsfreeze` for a D state that is immune to signals.
 
 But wait, how can any D state process be "not immune to signals" anyway? Isn't
-the whole point that they are uninterruptible? If you are wondering this, read
-on and you will likely find out some new things about how Linux works
-internally :-)
+the whole point of D state processes that they are uninterruptible? If you are
+wondering this, read on and you will likely find out some new things about how
+Linux works internally :-)
 
 ---
 
 Imagine you're a system administrator responsible for maintaining containers
 across production. One day, you encounter a problem: while trying to roll out a
-new version of a container (and thus stop the old container and start a new
-one), the old container will not stop because some of the processes in it are
-stuck and unresponsive.
+new version of a container -- and thus first have to stop the old container --
+the old container will not stop because some of the processes in it are stuck
+and unresponsive.
 
 These kinds of processes are typically represented with the code "D" in `ps`,
-`top`, and other similar tools. D state (typically written out as
-"uninterruptible sleep") is a process state where a process is sleeping and
-cannot be woken up in userspace. This can be necessary in some cases when the
-kernel or hardware is doing work on behalf of the application, and we'll go
-over some of the cases where it is needed in a moment.
+`top`, and other similar tools. D state (typically written out in full as
+"uninterruptible sleep") is a process state where a process is forced to sleep
+and cannot be woken up in userspace. This can be necessary in some cases when
+it's unsafe for the process to continue execution, and we'll go over some of
+the cases where it is needed in a moment.
 
-As a real world example, at [work](https://meta.com) several years ago I
-received what at the time I thought was a relatively one-off request. One of
+As a real world example, at [work](https://meta.com) several years ago one of
 the teams that works on our internal containerisation system,
 [Twine](https://research.facebook.com/publications/twine-a-unified-cluster-management-system-for-shared-infrastructure/),
 was checking that their software could properly destroy containers with D state
-processes present, and wanted to simulate this as part of their integration
-tests.
+processes present, and needed to produce them on demand as part of their
+integration tests. I gave them some advice, it was implemented, and that was
+it.
 
 Fast forward to today, and I think I must have seen this request at least four
 or five times in the years since. As three examples from the top of my head:
@@ -42,13 +42,14 @@ or five times in the years since. As three examples from the top of my head:
 1. The aforementioned container teardown case;
 2. A team building system monitoring tooling that wanted D state processes for
    their integration tests;
-3. Testing for the kernel team's diagnostics tool, which as part of its
+3. Testing for the Meta kernel team's diagnostics tool, which as part of its
    functions gathers kernel stack traces of D state tasks in order to work out
    what they are waiting for, in case it's a kernel issue that bears
    investigating further.
 
-So while this may still be a relatively specialised request, there's clearly a
-noticeable void in readily accessible knowledge on the subject.
+Given the number of times this has now come up, while this may still be a
+relatively specialised request, there's clearly a noticeable void in readily
+accessible knowledge on the subject.
 
 While of course I will simply answer the question of how to go about this, for
 those who are interested, we will also discuss some interesting Linux arcana,
@@ -57,41 +58,39 @@ well not know about D state process internals along the way. :-)
 
 ## Why would anyone want to test this?
 
-D states are frequently entered while doing DMA transfers and other hardware
-interactions, and while waiting for certain kinds of kernel synchronisation
-primitives. DMA, for example, allows hardware subsystems to access the main
-system memory for reading/writing independently of the CPU, which is essential
-for efficient handling of large volumes of data. Because this access is gated
-as part of the process context itself, programs generally must not be
-interrupted in the midst of such operations because DMA transfers are not
-typically designed to accommodate or recover from partial or interrupted reads
-or writes.
+The most common way that processes enter D state is while doing DMA transfers
+and other hardware interactions, and while waiting for certain kinds of kernel
+synchronisation primitives. DMA, for example, allows hardware subsystems to
+access the main system memory for reading/writing independently of the CPU,
+which is essential for efficient handling of large volumes of data. Because
+this access is gated as part of the process context itself, programs generally
+must not be interrupted in the midst of such operations because DMA transfers
+are not typically designed to accommodate or recover from partial or
+interrupted reads or writes.
 
-{% comment %}
-TODO: process_mrelease seems relevant, but maybe a bit too deep?
+<div class="sidenote sidenote-right">
+On modern kernels, such processes can have their memory freed from the system
+perspective using `process_mrelease()` when they are scheduled to be killed
+before the next userspace instruction, but this still doesn't change the fact
+that that memory can't be used until they are fully cleaned up, since the
+physical pages are still pinned by the device.
+</div>
 
-<small>(Well, on modern kernels, such processes can have their memory freed
-from the system perspective using `process_mrelease()` when they are scheduled
-to be killed, but this still doesn't change the fact that that memory can't be
-used until they are fully cleaned up, since the physical pages are still pinned
-by the device.)</small>
-{% endcomment %}
-
-For example, when a program reads or writes from your disk drive, what is
-typically really happening is that the disk drive's hardware is directly
+For example, when a program reads or writes from your storage, what is
+typically really happening is that the storage device's hardware is directly
 accessing the system's main memory to transfer data. This is achieved through
 DMA, which bypasses the CPU. Instead of the CPU reading data into memory and
-then writing it to the disk (or vice versa), DMA allows the disk drive to read
-or write directly to or from the memory. This direct pathway is more efficient,
-particularly for large data transfers, as it reduces CPU load and speeds up the
-data transfer process, but it also means that we must guard the process from
-interruption.
+then writing it to the disk (or vice versa), DMA allows the storage device to read
+or write directly to or from the memory. This direct pathway is vastly more
+efficient than doing this through the CPU, but it also means that we must guard
+the process from interruption in order to keep this memory pinned for hardware
+use during the transaction.
 
 These states can become a problem for things like init systems or
-containerisation platforms where the unwavering persistence of these stubborn
+containerisation platforms, where the unwavering persistence of these stubborn
 processes may block things like tearing down a container, a user session, or
-the entire system on shutdown, and as such all systems like this must implement
-measures to deal with them.
+the entire system on shutdown. As such, all systems that implement teardown for
+groups of processes must implement measures to deal such issues.
 
 Here's a real example of how that can manifest in a production environment with
 a container engine.
