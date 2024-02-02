@@ -131,7 +131,7 @@ sequenceDiagram
     Note over CE: The container engine is now<br>blocked shutting down,<br> waiting for processes<br>to terminate.
 </div>
 
-<p>In reality, sending signals like SIGTERM and SIGKILL goes through the kernel,
+<p>In reality, sending signals like `SIGTERM` and `SIGKILL` goes through the kernel,
 but that's omitted in this diagram for brevity. <span
 class="non-sidenote-only">Here's a more textual description of the same
 diagram.</span></p>
@@ -147,7 +147,7 @@ Imagine that while we are stuck for some indefinite period in D state, the
 scheduler that decides which jobs should be on which machines (like Kubernetes'
 scheduler, for example) decides that this container should be evicted from this
 machine. Normally that's pretty straightforward: ask the container to shut down
-itself, and if it takes too long, send it SIGKILL. After that we can do some
+itself, and if it takes too long, send it `SIGKILL`. After that we can do some
 cleanup for any state we might have had, and we're more or less done.
 
 D states complicate this quite a bit, because they cannot typically be
@@ -329,14 +329,15 @@ int main(void)
 }
 {% endhighlight %}
 
-`__attribute__((noinline))` is generally a good idea in order to make sure that
+`__attribute__((noinline))` is a good idea in order to make sure that
 the stack space used in the child is separate from the stack space used by the
 parent. By preventing inlining, we ensure that the function creates a distinct
 stack frame on entry, and in the context of the `vfork()`ed child, this means
 that any stack manipulation occurs neatly in a separate frame, and not in the
 parent's stack frame. Without it, the compiler may perform optimisations that
 result in interleaved data between the parent and child, which could result in
-stack corruption when the parent resumes later.
+stack corruption when the parent resumes. We'll go a little more into how
+exactly that works and why it's necessary very shortly.
 
 Here's an example of its use, showing that it can't simply be terminated by
 Ctrl-C:
@@ -364,7 +365,7 @@ somewhat adhere to, [has to say about
 > the `exec` family of functions.
 
 It makes sense that access to the parent's memory (and thus doing basically
-anything other than `exec` (which replaces the process entirely) or `_exit`
+anything other than `exec` (which replaces the process entirely) or `_exit()`
 (which is really just a syscall) is not POSIX-legal in the child forked by
 `vfork()`, because the parent cannot reasonably have its internal state mutated
 under it without its knowledge. But wait, didn't we just call a function?
@@ -388,14 +389,8 @@ Py_NO_INLINE static pid_t do_fork_exec(/* ... */)
     vfork_tstate_save = PyEval_SaveThread();
     pid = vfork();
     if (pid != 0) {
-        // Not in the child process, reacquire the GIL.
+        /* Not in the child process, reacquire the GIL. */
         PyEval_RestoreThread(vfork_tstate_save);
-    }
-
-    /* ... */
-
-    if (pid != 0) {
-        // Parent process.
         return pid;
     }
 
@@ -532,24 +527,24 @@ stack pointer</li>
 
 When the parent process continues its operation, additional stack data is
 simply going to end up in what is -- from the parent's perspective, at least --
-the unused portion of the stack. It doesn't know that its stack pointer is
+the unallocated portion of the stack. It doesn't know that its stack pointer is
 pointing to the return address for `run_child()`, from its perspective,
 whatever is at that memory is semantically meaningless.
 
 This happens because even though `vfork()` shares the address space, it _does
 not_ share registers between the child and parent. Importantly, this means that
 the parent's stack pointer and frame pointer registers are still independent
-from those of the child. This also includes the instruction pointer register
-(which stores the next instruction to execute), and this is how the parent
-wakes up at `vfork()` instead of trying to continue from what the child has
-already done.
+from those in the child. This independence extends to all registers, including
+the instruction pointer register (which stores the next instruction to
+execute), and this is how the parent resumes at `vfork()` instead of trying to
+continue from what the child has already done when it wakes up.
 
 While there might be some more stuff on the stack, the parent doesn't care:
-from its perspective what's contained in those addresses are just garbage and
-can be ignored or overwritten at will, and as such things just continue about
-their merry way.
+from its perspective what's contained in those addresses is meaningless and can
+be ignored or overwritten at will, and as such things just continue about their
+merry way.
 
-All in all, despite standards ire, the whole thing is relatively safe.
+All in all, despite standards ire, the whole thing is pretty safe.
 
 ## Why do we block signals in both the parent and child?
 
@@ -577,7 +572,7 @@ userspace instructions, but blocking all signals is only one interpretation of
 how to achieve that, and it's not necessary in all circumstances.
 
 To see what I mean, let's look at the kernel source to see how `vfork()` is
-implemented. Depending on your libc and version, the `vfork` that you call from
+implemented. Depending on your libc and version, the `vfork()` that you call from
 your application is likely either a thin wrapper around the `clone()` or `vfork()`
 syscalls. They do the same thing behind the scenes -- [`vfork()` calls into the
 `clone()` code path
@@ -595,12 +590,14 @@ SYSCALL_DEFINE0(vfork)
 }
 {% endhighlight %}
 
-This is the definition of the `vfork` syscall, with no ("0") arguments, hence
-`SYSCALL_DEFINE0(vfork)`. `kernel_clone` is the kernel path that handles
-`clone`, which itself is a generic syscall for creating new processes. Setting
-its flags to `CLONE_VFORK` and `CLONE_VM` to share the virtual memory space, and
-suspend the parent process until the child has completed. That is, the effects
-of running `vfork()` or `clone()` with the appropriate flags in a program are
+This is the definition of the `vfork()` syscall, with no ("0") arguments, hence
+`SYSCALL_DEFINE0(vfork)`. `kernel_clone()` is the kernel path that handles
+`clone()`, which itself is a generic syscall for creating new processes.
+
+Setting `kernel_clone()`'s flags to `CLONE_VFORK` and `CLONE_VM` requests the
+traditional `vfork()` behaviour: share the virtual memory space, and suspend
+the parent process until the child has completed. That is, the effects of
+running `vfork()` or `clone()` with the appropriate flags in a program are
 effectively the same.
 
 In `kernel_clone()`, [we see the following
@@ -646,10 +643,11 @@ a process.
 `TASK_KILLABLE` was introduced to solve these kinds of cases. Instead of being
 fully uninterruptible, when we receive a signal we check if the signal is fatal
 (that is, it's either a non-trappable fatal signal, or the program has no
-userspace handler for it), and if it is, we terminate the process without
-allowing it to execute any more userspace instructions.
+userspace handler for a signal with a default terminal disposition), and if it
+is, we terminate the process without allowing it to execute any more userspace
+instructions.
 
-We use this pretty widely in the kernel nowadays where possible:
+We use `TASK_KILLABLE` pretty widely in the kernel nowadays where possible:
 
 {% highlight bash %}
 linux % git grep -ihc _killable | paste -sd+ | bc
@@ -662,10 +660,10 @@ your system actually are terminable after all.
 ## How can I survive SIGKILL, then?
 
 While the above approach is nice and self contained and serves most use cases
-for testing, its major downside is that it doesn't survive a SIGKILL, as
-SIGKILL is always a deadly signal, and cannot be caught in userspace. In order
-to survive that, we need to find a callsite which sets `TASK_UNINTERRUPTIBLE`
-without `TASK_KILLABLE`.
+for testing, its major downside is that it doesn't survive a `SIGKILL`, as
+`SIGKILL` is always a deadly signal, and cannot be caught in userspace. In
+order to survive that, we need to find a way from userspace to enter a state
+which sets `TASK_UNINTERRUPTIBLE` without `TASK_KILLABLE`.
 
 Those of you who have worked in the storage space may also know about disk and
 filesystem snapshots. Linux has, over time, added support for these kinds of
@@ -728,7 +726,12 @@ the filesystem.
 
 For example, here is the kernel stack we get trapped in trying to acquire the
 previously writer locked read-write semaphore when trying to do a `mkdir` on a
-frozen filesystem:
+frozen filesystem.
+
+<div class="sidenote sidenote-right">Kernel stack traces in
+<code>/proc/pid/stack</code> grow up even on architectures where the stack
+grows down, so </code>percpu_rwsem_wait+0x116/0x140</code> is the frame at the
+top of the stack.</div>
 
     % cat /proc/21135/stack
     [<0>] percpu_rwsem_wait+0x116/0x140
@@ -750,7 +753,7 @@ unfrozen to make forward progress. As you can see, it still exists even after a
 To understand why this is, it helps to know that on Linux, signal delivery is
 not instantaneous and is instead handled by what's called a "signal queue". D
 state processes without <code>TASK_KILLABLE</code> receive pending signals when
-they transition out of D state, so this SIGKILL will still be properly
+they transition out of D state, so this `SIGKILL` will still be properly
 delivered, but only when the filesystem that `mkdir` is acting upon is
 unfrozen.
 
