@@ -70,9 +70,9 @@ interrupted reads or writes.
 
 <div class="sidenote sidenote-right">
 On modern kernels, such processes can have their memory freed from the system
-perspective using `process_mrelease()` when they are scheduled to be killed
-before the next userspace instruction, but this still doesn't change the fact
-that that memory can't be used until they are fully cleaned up, since the
+perspective using <code>process_mrelease()</code> when they are scheduled to be
+killed before the next userspace instruction, but this still doesn't change the
+fact that that memory can't be used until they are fully cleaned up, since the
 physical pages are still pinned by the device.
 </div>
 
@@ -150,22 +150,22 @@ machine. Normally that's pretty straightforward: ask the container to shut down
 itself, and if it takes too long, send it SIGKILL. After that we can do some
 cleanup for any state we might have had, and we're more or less done.
 
-D states complicate this. Because D states cannot typically be interrupted in
-order to preserve system integrity, they typically don't even respond to
-`SIGKILL`, the most brutal of signals. This can cause problems: now we still
-have a process running from this container, and we want to tear it down right
-now.
+D states complicate this quite a bit, because they cannot typically be
+interrupted. In order to preserve system integrity, they typically don't even
+respond to `SIGKILL`, the most brutal of signals. This can cause problems: now
+we still have a process running in this container, and any forward progress is
+blocked.
 
 The right course of action here depends on what's decided by those making the
-container engine, but the exact choice is not really the point: once you've
-made your choice on how to handle this, the next step is to produce a test to
-make sure that the behaviour you've settled on for this scenario remains stable
-across versions and configurations, and that requires being able to create and
-destroy D state processes for testing on demand. Linux actively tries to avoid
-entering uninterruptible sleep whenever possible, as these processes can be
-particularly troubling to deal with. For this reason it's not immediately
-obvious how to reliably create and destroy them for testing, but there are a
-few options available.
+container engine, but the exact choice is not really the point. The more
+important bit is that once you've made your choice on how to handle this, the
+next step is to produce a test to make sure that the behaviour you've settled
+on for this scenario remains stable across versions and configurations, and
+that requires being able to create and destroy D state processes for testing on
+demand. Linux actively tries to avoid processes entering uninterruptible sleep
+whenever possible, as these processes can be particularly troublesome to deal
+with. For this reason it's not immediately obvious how to create a process
+which can reliably enter and exit uninterruptible sleep on demand for testing.
 
 ## D states outside of I/O context
 
@@ -174,28 +174,31 @@ them for all sorts of things in the kernel. As a general rule, the kernel uses
 D states to block processes in any situation where it's unsafe to allow the
 process to proceed further for the time being.
 
-Enter `vfork()`. `vfork()` is a specialised system call primarily designed to be
-used as part of the process of creating new processes. Unlike the more widely
-known `fork`, which typically uses copy-on-write and thus must at the very
-least create new virtual mappings to the physical pages in question, `vfork()`
-allows the child process to directly share the parent's virtual address space
-temporarily (which is much cheaper if you are just going to immediately clobber
-it with a new process image with `exec`, as in the case of process creation,
-where copying all the pages would be needlessly wasteful).
+Enter `vfork()`. `vfork()` is a specialised system call primarily designed to
+be used as part of the process of creating new processes. Unlike the more
+widely known `fork()`, which typically uses copy-on-write and thus must at the
+very least create new virtual mappings to the physical pages in question,
+`vfork()` allows the child process to directly share the parent's virtual
+address space temporarily without any copying whatsoever. This is much cheaper
+if you are just going to immediately clobber the child with a new process image
+using `exec`, as in the case of process creation, where copying all the pages
+would be needlessly wasteful.
 
-But how can that be safe? Well, `vfork()` suspends the parent application for
-the period that the child is using its address space, and it suspends it in D
-state until the child either dies or calls an `exec` function to replace the
-process image. As with `fork()`, `vfork()`s return code is 0 when running in
-the child, and the PID of the child when running in the parent.
+But how can that be safe? Surely two processes sharing the same virtual memory
+address space is a recipe for disaster? Well, `vfork()` suspends the parent
+application for the period that the child is using its address space, and it
+suspends it in D state until the child either dies or calls an `exec` function
+to replace the process image. As with `fork()`, `vfork()`s return code is 0
+when running in the child, and the PID of the child when running in the parent,
+which we can use to determine which we are in when resuming execution.
 
 Once spawned, the child can see and modify everything in the parent's address
 space. Likewise, once the parent wakes up again, it too will see all and any
 changes performed in the child. The only safety is that both processes can't
 run at the same time, but other than that, pretty much all bets are off.
 
-To choreograph a long-lived D state process with `vfork()`, you can do
-something like the following:
+Choreographing a long-lived D state process with `vfork()` works something like
+the following:
 
 <div class="sidenote sidenote-right">
 <div class="mermaid">
@@ -227,11 +230,15 @@ graph TD
 {% endraw %}
 </div>
 
-<p>Dotted lines represent transitions that depend on some external action.
-We'll never reach <code>_exit()</code> in the child because the kernel will
-tear down the child the moment it sees that there's no userspace signal handler
-for the terminal signal, but the effects are basically the same. <span
-class="non-sidenote-only">Here's what the relevant code looks like:</span></p>
+<p>Dotted lines represent transitions that depend on some external action.</p>
+
+<p>Also note that we'll never actually reach <code>_exit()</code> in the child
+because the kernel will tear down the child the moment it sees that there's no
+userspace signal handler for the terminal signal, but the effects are basically
+the same.</p>
+
+<span class="non-sidenote-only"><p>Here's what the relevant code looks
+like:</p></span>
 </div>
 
 {% highlight c %}
@@ -265,7 +272,7 @@ This will then reliably enter D state until a terminal signal is sent:
 `$!` is the process ID of the last background pipeline, which in this case is
 `./dstate &`.
 
-The goal here is to keep the child going for as long as we want to have our
+The goal here is to keep the child alive for as long as we want to have our
 parent in D state. `pause()` here waits until a terminal signal is sent, and
 can be modified to suit whatever needs you happen to have. For example, if your
 test involves sending signals and so you want to ignore those, you can instead
