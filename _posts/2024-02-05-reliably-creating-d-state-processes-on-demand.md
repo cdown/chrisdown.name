@@ -72,7 +72,7 @@ interrupted reads or writes.
 
 <div class="sidenote sidenote-right">
 On modern kernels, such processes can have their memory freed from the system
-perspective using <code>process_mrelease()</code> when they are scheduled to be
+perspective using <code><a href="https://lwn.net/Articles/864184/">process_mrelease()</a></code> when they are scheduled to be
 killed before the next userspace instruction, but this still doesn't change the
 fact that that memory can't be used until they are fully cleaned up, since the
 physical pages are still pinned by the device.
