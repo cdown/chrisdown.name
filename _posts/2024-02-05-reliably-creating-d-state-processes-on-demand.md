@@ -728,12 +728,7 @@ the filesystem.
 
 For example, here is the kernel stack we get trapped in trying to acquire the
 previously writer locked read-write semaphore when trying to do a `mkdir` on a
-frozen filesystem.
-
-<div class="sidenote sidenote-right">Kernel stack traces in
-<code>/proc/pid/stack</code> grow up even on architectures where the stack
-grows down, so <code>percpu_rwsem_wait+0x116/0x140</code> is the frame at the
-top of the stack.</div>
+frozen filesystem:
 
     % cat /proc/21135/stack
     [<0>] percpu_rwsem_wait+0x116/0x140
