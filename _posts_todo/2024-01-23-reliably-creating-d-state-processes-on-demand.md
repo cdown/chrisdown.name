@@ -1,12 +1,14 @@
 ---
 layout: post
-title: "Creating controllable D state (uninterruptible sleep) processes on demand"
+title: "Creating controllable D state (uninterruptible sleep) processes"
 ---
 
 tl;dr:
 
-- Use `vfork()` for a D state that is not immune to signals.
-- Use `fsfreeze` for a D state that is immune to signals.
+- Using `vfork()`, one can create a process in a D state that is not immune to
+  signals.
+- Using `fsfreeze`, one can create a process in a D state that is immune to
+signals.
 
 But wait, how can any D state process be "not immune to signals" anyway? Isn't
 the whole point of D state processes that they are uninterruptible? If you are
@@ -730,7 +732,7 @@ frozen filesystem.
 
 <div class="sidenote sidenote-right">Kernel stack traces in
 <code>/proc/pid/stack</code> grow up even on architectures where the stack
-grows down, so </code>percpu_rwsem_wait+0x116/0x140</code> is the frame at the
+grows down, so <code>percpu_rwsem_wait+0x116/0x140</code> is the frame at the
 top of the stack.</div>
 
     % cat /proc/21135/stack
