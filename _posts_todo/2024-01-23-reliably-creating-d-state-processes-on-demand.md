@@ -6,14 +6,14 @@ title: "Creating controllable D state (uninterruptible sleep) processes"
 tl;dr:
 
 - Using `vfork()`, one can create a process in a D state that is not immune to
-  signals.
+  signal interruption.
 - Using `fsfreeze`, one can create a process in a D state that is immune to
-signals.
+  signal interruption.
 
-But wait, how can any D state process be "not immune to signals" anyway? Isn't
-the whole point of D state processes that they are uninterruptible? If you are
-wondering this, read on and you will likely find out some new things about how
-Linux works internally :-)
+But wait, how can any D state process be "not immune to signal interruption"
+anyway? Isn't the whole point of D state processes that they are
+uninterruptible? If you are wondering this, read on and you will likely find
+out some new things about how Linux works internally :-)
 
 ---
 
