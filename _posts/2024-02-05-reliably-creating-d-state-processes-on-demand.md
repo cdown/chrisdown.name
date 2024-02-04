@@ -72,10 +72,12 @@ interrupted reads or writes.
 
 <div class="sidenote sidenote-right">
 On modern kernels, such processes can have their memory freed from the system
-perspective using <code><a href="https://lwn.net/Articles/864184/">process_mrelease()</a></code> when they are scheduled to be
-killed before the next userspace instruction, but this still doesn't change the
-fact that that memory can't be used until they are fully cleaned up, since the
-physical pages are still pinned by the device.
+perspective using <code><a
+href="https://lwn.net/Articles/864184/">process_mrelease()</a></code> when they
+are scheduled to be killed before the next userspace instruction, but this
+still doesn't change the fact that memory in use for DMA can't be used until
+the process fully terminates. This is because the physical pages are still
+pinned by the device for the lifetime of the DMA request.
 </div>
 
 For example, when a program reads or writes from your storage, what is
@@ -710,9 +712,11 @@ int freeze_super(struct super_block *sb,
                  enum freeze_holder who)
 {
     /* ... */
+
     sb_wait_write(sb, SB_FREEZE_WRITE);
     sb_wait_write(sb, SB_FREEZE_PAGEFAULT);
     sb_wait_write(sb, SB_FREEZE_FS);
+
     /* ... */
 }
 {% endhighlight %}
