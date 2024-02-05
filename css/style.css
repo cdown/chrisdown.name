@@ -91,6 +91,10 @@ div.body {
     margin: auto;
     display: inline;
 }
+.non-sidenote-only {
+    /* May be a div or span */
+    display: inline;
+}
 
 /* 720px main + (551px of sidenote + some buffer) * 2 */
 @media (min-width: 1900px) {

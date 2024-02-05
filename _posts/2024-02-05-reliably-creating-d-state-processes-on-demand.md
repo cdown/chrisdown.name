@@ -237,8 +237,8 @@ because the kernel will tear down the child the moment it sees that there's no
 userspace signal handler for the terminal signal, but the effects are basically
 the same.</p>
 
-<span class="non-sidenote-only"><p>Here's what the relevant code looks
-like:</p></span>
+<div class="non-sidenote-only"><p>Here's what the relevant code looks
+like:</p></div>
 </div>
 
 {% highlight c %}
