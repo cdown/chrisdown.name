@@ -108,7 +108,7 @@ mermaid.initialize({
 });
 </script>
 <div class="sidenote sidenote-right">
-<div class="mermaid">
+<pre class="mermaid">
 sequenceDiagram
     participant CE as Container Engine
     participant P as Process
@@ -129,7 +129,7 @@ sequenceDiagram
     P--xCE: No reaction
 
     Note over CE: The container engine is now<br>blocked shutting down,<br> waiting for processes<br>to terminate.
-</div>
+</pre>
 
 <p>In reality, sending signals like <code>SIGTERM</code> and
 <code>SIGKILL</code> goes through the kernel, but that's omitted in this
@@ -241,7 +241,7 @@ Choreographing a long-lived D state process with `vfork()` works something like
 the following:
 
 <div class="sidenote sidenote-right">
-<div class="mermaid">
+<pre class="mermaid">
 {% raw %}
 graph TD
     start[Program started] --> vfork
@@ -268,7 +268,7 @@ graph TD
     exit --> clone_exit["vforked child<br>exits without cleanup"]
     return --> prg_exit["Program exited"]
 {% endraw %}
-</div>
+</pre>
 
 <p>Dotted lines represent transitions that depend on some external action.</p>
 
