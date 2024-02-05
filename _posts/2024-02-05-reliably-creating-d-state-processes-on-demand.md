@@ -775,9 +775,7 @@ unfrozen. You can see these signals in `SigPnd` (signals pending) in
     % grep SigPnd: /proc/21135/status
     SigPnd:	0000000000000100
 
-{% comment %}
-TODO: put on the side i guess
-
+{% sidenote %}
 `SigPnd`, `SigBlk`, and other similar fields are bitmaps of signals, encoded in
 hexadecimal. Here's an example program which can decode them:
 
@@ -814,7 +812,7 @@ int main(int argc, char *argv[])
     }
 
     if (sscanf(argv[1], "%llx", &bitmap) != 1) {
-        fprintf(stderr, "Invalid signal mask hex: %s\n",
+        fprintf(stderr, "Invalid signal bitmap hex: %s\n",
                 argv[1]);
         return EXIT_FAILURE;
     }
@@ -831,7 +829,7 @@ you which signal(s) are pending:
     % cc -o signal-bitmap signal-bitmap.c
     % ./signal-bitmap 0000000000000100
     KILL
-{% endcomment %}
+{% endsidenote %}
 
 It's important to understand that while in the D state, these processes are not
 "ignoring" the signals -- rather, the kernel defers signal handling until the
