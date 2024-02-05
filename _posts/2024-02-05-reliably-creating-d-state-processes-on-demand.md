@@ -760,8 +760,9 @@ unfrozen to make forward progress. As you can see, it still exists even after a
 `kill -9`:
 
     % kill -9 21135
-    % cat /proc/21135/comm
-    mkdir
+    % ps -o pid,state,cmd -p 21135
+      PID S CMD
+    21135 D mkdir /tmp/tmp.dBgYmOjJOO/dir
 
 To understand why this is, it helps to know that on Linux, signal delivery is
 not instantaneous and is instead handled by what's called a "signal queue". D
