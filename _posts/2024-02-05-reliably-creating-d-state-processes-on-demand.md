@@ -5,15 +5,15 @@ title: "Creating controllable D state (uninterruptible sleep) processes"
 
 tl;dr:
 
-- Using `vfork()`, one can create a process in a D state that is not immune to
+- Using `vfork()`, one can create a process in a D state that is _not_ immune to
   signal interruption.
 - Using `fsfreeze`, one can create a process in a D state that is immune to
   signal interruption.
 
-But wait, how can any D state process be "not immune to signal interruption"
-anyway? Isn't the whole point of D state processes that they are
-uninterruptible? If you are wondering this, read on and you will likely find
-out some new things about how Linux works internally :-)
+But wait, how can any D state process be "not immune to signal interruption"?
+Isn't the whole point of D state processes that they are uninterruptible? If
+you are wondering this, read on and you will likely find out some new things
+about how Linux works internally :-)
 
 ---
 
@@ -39,19 +39,15 @@ integration tests. I gave them some advice, it was implemented, and that was
 it.
 
 Fast forward to today, and I think I must have seen this request at least four
-or five times in the years since. As three examples from the top of my head:
+or five times in the years since. Just as one recent additional example, I
+recently got asked about this as part of testing for the Meta kernel team's
+diagnostics tool, which as one of its functions gathers kernel stack traces of
+D state tasks in order to work out what they are waiting for, in case it's a
+kernel issue that bears investigating further.
 
-1. The aforementioned container teardown case;
-2. A team building system monitoring tooling that wanted D state processes for
-   their integration tests;
-3. Testing for the Meta kernel team's diagnostics tool, which as part of its
-   functions gathers kernel stack traces of D state tasks in order to work out
-   what they are waiting for, in case it's a kernel issue that bears
-   investigating further.
-
-Given the number of times this has now come up, while this may still be a
-relatively specialised request, there's clearly a noticeable void in readily
-accessible knowledge on the subject.
+While this may still be a relatively specialised request, there's clearly a
+noticeable void in readily accessible knowledge on the subject given the number
+of times that this has now come up.
 
 While of course I will simply answer the question of how to go about this, for
 those who are interested, we will also discuss some interesting Linux arcana,
