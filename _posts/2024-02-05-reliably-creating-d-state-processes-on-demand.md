@@ -244,15 +244,22 @@ like:</p></span>
 {% highlight c %}
 #include <unistd.h>
 
+__attribute__((noinline)) static void run_child(void)
+{
+    pause();
+    _exit(0);
+}
+
 int main(void)
 {
     pid_t pid = vfork();
+
     if (pid == 0) {
-        pause();
-        _exit(0);
+        run_child();
     } else if (pid < 0) {
         return 1;
     }
+
     return 0;
 }
 {% endhighlight %}
@@ -277,6 +284,16 @@ parent in D state. `pause()` here waits until a terminal signal is sent, and
 can be modified to suit whatever needs you happen to have. For example, if your
 test involves sending signals and so you want to ignore those, you can instead
 wait for the text "EXIT" on stdin:
+
+`__attribute__((noinline))` is a good idea in order to make sure that
+the stack space used in the child is separate from the stack space used by the
+parent. By preventing inlining, we ensure that the function creates a distinct
+stack frame on entry, and in the context of the `vfork()`ed child, this means
+that any stack manipulation occurs neatly in a separate frame, and not in the
+parent's stack frame. Without it, the compiler may perform optimisations that
+result in interleaved data between the parent and child, which could result in
+stack corruption when the parent resumes. We'll go a little more into how
+exactly that works and why it's necessary very shortly.
 
 {% highlight c %}
 #include <assert.h>
@@ -337,16 +354,6 @@ int main(void)
     return 0;
 }
 {% endhighlight %}
-
-`__attribute__((noinline))` is a good idea in order to make sure that
-the stack space used in the child is separate from the stack space used by the
-parent. By preventing inlining, we ensure that the function creates a distinct
-stack frame on entry, and in the context of the `vfork()`ed child, this means
-that any stack manipulation occurs neatly in a separate frame, and not in the
-parent's stack frame. Without it, the compiler may perform optimisations that
-result in interleaved data between the parent and child, which could result in
-stack corruption when the parent resumes. We'll go a little more into how
-exactly that works and why it's necessary very shortly.
 
 Here's an example of its use, showing that it can't simply be terminated by
 Ctrl-C:
