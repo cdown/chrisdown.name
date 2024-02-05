@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Creating controllable D state (uninterruptible sleep) processes"
+description: "tl;dr: using vfork(), one can create a process in a D state that is _not_ immune to signal interruption. But wait, how can any D state process be \"not immune to signal interruption\"?"
 ---
 
 tl;dr:
