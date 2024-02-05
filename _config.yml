@@ -64,7 +64,6 @@ header:
 plugins:
   - jekyll-sitemap
   - jekyll-purgecss
-  - jekyll-minifier
 
 # Disable smart quotes
 kramdown:
