@@ -10,6 +10,7 @@ cc_hdr = "Cache-Control: public, max-age=%d"
 html_hdr = "Content-Type: text/html; charset=utf-8"
 css_hdr = "Content-Type: text/css; charset=utf-8"
 ta_hdr = "Content-Type: application/trafficadvice+json; charset=utf-8"
+rss_hdr = "Content-Type: application/rss+xml; charset=utf-8"
 
 # 1 hour for anything unspecified
 generic_cc = cc_hdr % (60 * 60)
@@ -109,6 +110,7 @@ task :set_headers => :sync do
   sh "s3cmd modify --recursive --exclude '*' --include '*.html' --add-header='#{html_hdr}' s3://chrisdown.name"
   sh "s3cmd modify --recursive --exclude '*' --include '*.css' --add-header='#{css_hdr}' s3://chrisdown.name"
   sh "s3cmd modify --add-header='#{ta_hdr}' s3://chrisdown.name/.well-known/traffic-advice"
+  sh "s3cmd modify --add-header='#{rss_hdr}' s3://chrisdown.name/feed.xml"
 end
 
 task :setup_redirects do
