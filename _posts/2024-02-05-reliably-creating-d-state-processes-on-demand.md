@@ -156,6 +156,46 @@ respond to `SIGKILL`, the most brutal of signals. This can cause problems: now
 we still have a process running in this container, and any forward progress is
 blocked.
 
+In systemd, the way we handle D state processes remaining after the stop
+timeout has expired is by marking the unit as failed:
+
+    % systemctl --user status foo.service
+    Active: failed (Result: timeout)
+
+    [...]
+
+    State 'stop-sigterm' timed out. Killing.
+    Killing process 1282704 with signal SIGKILL.
+    Processes still around after final SIGKILL. Entering failed mode.
+    Failed with result 'timeout'.
+
+This is a fairly passive approach: it's still up to the user to decide what
+they should do with a "failed" unit, and we don't directly take any action to
+try to rectify the situation.
+
+Keeping the unit around keeps all the metadata around in one place (like which
+pids are causing the hold up), which is definitely a positive: it helps not
+only in debugging, but also helps container engines using systemd units to
+decide whether it's still safe to start a new service or not given the
+situation.
+
+Other more active interventions include (but are not limited to):
+
+1. **Reboot the machine**: This is dangerous and is generally not suitable for
+   a generic init system like systemd. Doing this must be decided by the user
+   directly (or a service they have written). Rebooting is very slow and
+   heavyweight, may lose state, reduces fleetwide capacity, and is very
+   cumbersome if the issue happens widely. This method may also hide actual
+   driver or kernel bugs, and definitely needs to be rate limited at the fleet
+   level in terms of number of reboots a second or minute.
+2. **Consider the D state processes as no longer part of the failed unit**: In
+   this case, resources are still taken by the process in D state, and are now
+   separately accounted for (and potentially are made more difficult to reason
+   about). On some rollouts that may actively hide issues, or introduce hard to
+   debug new ones. It may also not be safe to start the new container if the
+   old processes are still around because of reasons like resource usage or
+   synchronisation issues.
+
 The right course of action here depends on what's decided by those making the
 container engine, but the exact choice is not really the point. The more
 important bit is that once you've made your choice on how to handle this, the
