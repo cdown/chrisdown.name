@@ -782,21 +782,25 @@ hexadecimal. Here's an example program which can decode them:
 {% highlight c %}
 #define _GNU_SOURCE
 
+#include <inttypes.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-static void print_signals(unsigned long long mask)
+static int exit_code = 0;
+
+static void print_signals(uint64_t bitmap)
 {
     for (int sig = 1; sig < NSIG; ++sig) {
-        if (mask & (1ULL << (sig - 1))) {
+        if (bitmap & (1ULL << (sig - 1))) {
             const char *sig_name = sigabbrev_np(sig);
             if (sig_name) {
                 printf("%s\n", sig_name);
             } else {
                 fprintf(stderr, "Unknown signal: %d\n",
                         sig);
+                exit_code = 1;
             }
         }
     }
@@ -804,14 +808,14 @@ static void print_signals(unsigned long long mask)
 
 int main(int argc, char *argv[])
 {
-    unsigned long long bitmap;
+    uint64_t bitmap;
 
     if (argc != 2) {
         fprintf(stderr, "Usage: %s <bitmap>\n", argv[0]);
         return EXIT_FAILURE;
     }
 
-    if (sscanf(argv[1], "%llx", &bitmap) != 1) {
+    if (sscanf(argv[1], "%" SCNx64, &bitmap) != 1) {
         fprintf(stderr, "Invalid signal bitmap hex: %s\n",
                 argv[1]);
         return EXIT_FAILURE;
@@ -819,7 +823,7 @@ int main(int argc, char *argv[])
 
     print_signals(bitmap);
 
-    return 0;
+    return exit_code;
 }
 {% endhighlight %}
 
