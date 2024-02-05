@@ -769,7 +769,69 @@ not instantaneous and is instead handled by what's called a "signal queue". D
 state processes without <code>TASK_KILLABLE</code> receive pending signals when
 they transition out of D state, so this `SIGKILL` will still be properly
 delivered, but only when the filesystem that `mkdir` is acting upon is
-unfrozen.
+unfrozen. You can see these signals in `SigPnd` (signals pending) in
+`/proc/pid/status`:
+
+    % grep SigPnd: /proc/21135/status
+    SigPnd:	0000000000000100
+
+{% comment %}
+TODO: put on the side i guess
+
+`SigPnd`, `SigBlk`, and other similar fields are bitmaps of signals, encoded in
+hexadecimal. Here's an example program which can decode them:
+
+{% highlight c %}
+#define _GNU_SOURCE
+
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+static void print_signals(unsigned long long mask)
+{
+    for (int sig = 1; sig < NSIG; ++sig) {
+        if (mask & (1ULL << (sig - 1))) {
+            const char *sig_name = sigabbrev_np(sig);
+            if (sig_name) {
+                printf("%s\n", sig_name);
+            } else {
+                fprintf(stderr, "Unknown signal: %d\n",
+                        sig);
+            }
+        }
+    }
+}
+
+int main(int argc, char *argv[])
+{
+    unsigned long long bitmap;
+
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s <bitmap>\n", argv[0]);
+        return EXIT_FAILURE;
+    }
+
+    if (sscanf(argv[1], "%llx", &bitmap) != 1) {
+        fprintf(stderr, "Invalid signal mask hex: %s\n",
+                argv[1]);
+        return EXIT_FAILURE;
+    }
+
+    print_signals(bitmap);
+
+    return 0;
+}
+{% endhighlight %}
+
+Provide the signal bitmap from `/proc/pid/status`, and this program will tell
+you which signal(s) are pending:
+
+    % cc -o signal-bitmap signal-bitmap.c
+    % ./signal-bitmap 0000000000000100
+    KILL
+{% endcomment %}
 
 It's important to understand that while in the D state, these processes are not
 "ignoring" the signals -- rather, the kernel defers signal handling until the
