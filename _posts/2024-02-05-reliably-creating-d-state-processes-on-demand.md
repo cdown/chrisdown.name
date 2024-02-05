@@ -279,12 +279,6 @@ This will then reliably enter D state until a terminal signal is sent:
 `$!` is the process ID of the last background pipeline, which in this case is
 `./dstate &`.
 
-The goal here is to keep the child alive for as long as we want to have our
-parent in D state. `pause()` here waits until a terminal signal is sent, and
-can be modified to suit whatever needs you happen to have. For example, if your
-test involves sending signals and so you want to ignore those, you can instead
-wait for the text "EXIT" on stdin:
-
 `__attribute__((noinline))` is a good idea in order to make sure that
 the stack space used in the child is separate from the stack space used by the
 parent. By preventing inlining, we ensure that the function creates a distinct
@@ -294,6 +288,12 @@ parent's stack frame. Without it, the compiler may perform optimisations that
 result in interleaved data between the parent and child, which could result in
 stack corruption when the parent resumes. We'll go a little more into how
 exactly that works and why it's necessary very shortly.
+
+The goal here is to keep the child alive for as long as we want to have our
+parent in D state. `pause()` here waits until a terminal signal is sent, and
+can be modified to suit whatever needs you happen to have. For example, if your
+test involves sending signals and so you want to ignore those, you can instead
+wait for the text "EXIT" on stdin:
 
 {% highlight c %}
 #include <assert.h>
