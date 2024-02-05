@@ -264,7 +264,8 @@ int main(void)
 }
 {% endhighlight %}
 
-This will then reliably enter D state until a terminal signal is sent:
+This will then reliably enter D state until a terminal signal is sent to the
+child:
 
 {% highlight bash %}
 % cc -o dstate dstate.c
@@ -272,12 +273,12 @@ This will then reliably enter D state until a terminal signal is sent:
 [1] 780629
     PID S CMD
  780629 D ./dstate
-% kill "$!"
-[1]  + terminated  ./dstate
+% pkill -P "$!"
+[1]  + done       ./dstate
 {% endhighlight %}
 
 `$!` is the process ID of the last background pipeline, which in this case is
-`./dstate &`.
+`./dstate &`. `pkill -P` kills its child.
 
 `__attribute__((noinline))` is a good idea in order to make sure that
 the stack space used in the child is separate from the stack space used by the
