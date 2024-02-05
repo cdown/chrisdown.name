@@ -279,6 +279,7 @@ test involves sending signals and so you want to ignore those, you can instead
 wait for the text "EXIT" on stdin:
 
 {% highlight c %}
+#include <assert.h>
 #include <signal.h>
 #include <stdio.h>
 #include <string.h>
@@ -292,6 +293,14 @@ __attribute__((noinline)) static void run_child(void)
 
     while (1) {
         if (fgets(input, sizeof(input), stdin) == NULL) {
+            if (ferror(stdin)) {
+                fprintf(stderr,
+                        "Error reading stdin in child\n");
+            }
+            if (feof(stdin)) {
+                fprintf(stderr,
+                        "EOF waiting for exit string\n");
+            }
             break;
         }
         if (strcmp(input, EXIT_STRING) == 0) {
@@ -315,7 +324,7 @@ int main(void)
     sigset_t set;
 
     sigfillset(&set);
-    sigprocmask(SIG_BLOCK, &set, NULL);
+    assert(sigprocmask(SIG_BLOCK, &set, NULL) == 0);
 
     pid = vfork();
 
