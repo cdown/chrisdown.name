@@ -31,13 +31,13 @@ and cannot be woken up in userspace. This can be necessary in some cases when
 it's unsafe for the process to continue execution, and we'll go over some of
 the cases where it is needed in a moment.
 
-As a real world example, at [work](https://meta.com) several years ago one of
+As a real world example, at [work](https://meta.com) several years ago, one of
 the teams that works on our internal containerisation system,
 [Twine](https://research.facebook.com/publications/twine-a-unified-cluster-management-system-for-shared-infrastructure/),
 was checking that their software could properly destroy containers with D state
 processes present, and needed to produce them on demand as part of their
-integration tests. I gave them some advice, it was implemented, and that was
-it.
+integration tests. I gave them some advice, it was implemented, and I thought
+that's probably the last I'd ever hear of it.
 
 Fast forward to today, and I think I must have seen this request at least four
 or five times in the years since. Just as one recent additional example, I
@@ -46,14 +46,13 @@ diagnostics tool, which as one of its functions gathers kernel stack traces of
 D state tasks in order to work out what they are waiting for, in case it's a
 kernel issue that bears investigating further.
 
-While this may still be a relatively specialised request, there's clearly a
+So while this may still be a relatively specialised request, there's clearly a
 noticeable void in readily accessible knowledge on the subject given the number
-of times that this has now come up.
-
-While of course I will simply answer the question of how to go about this, for
-those who are interested, we will also discuss some interesting Linux arcana,
-some of the dangers of sharing virtual memory space, and some things you may
-well not know about D state process internals along the way. :-)
+of times that this has now come up. I will -- of course -- simply answer the
+question of how to go about this, but for those who are interested, we will
+also discuss some interesting Linux arcana, some of the dangers of sharing
+virtual memory space, and some things you may well not know about D state
+process internals along the way. :-)
 
 ## Why would anyone want to test this?
 
