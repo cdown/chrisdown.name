@@ -371,7 +371,7 @@ I'm sure that some people reading the code I provided above are wondering
 whether it's legal or not, given the fact that we are sharing the parent's
 memory space. Here's what the POSIX spec, which Linux generally tries to
 somewhat adhere to, [has to say about
-`vfork()`](https://pubs.opengroup.org/onlinepubs/009696799/functions/`vfork()`.html):
+`vfork()`](https://pubs.opengroup.org/onlinepubs/009696799/functions/vfork.html):
 
 > The `vfork()` function shall be equivalent to `fork()`, except that the
 > behavior is undefined if the process created by `vfork()` either modifies any
