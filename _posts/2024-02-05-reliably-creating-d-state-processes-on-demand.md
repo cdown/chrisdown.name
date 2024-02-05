@@ -131,10 +131,10 @@ sequenceDiagram
     Note over CE: The container engine is now<br>blocked shutting down,<br> waiting for processes<br>to terminate.
 </div>
 
-<p>In reality, sending signals like `SIGTERM` and `SIGKILL` goes through the kernel,
-but that's omitted in this diagram for brevity. <span
-class="non-sidenote-only">Here's a more textual description of the same
-diagram.</span></p>
+<p>In reality, sending signals like <code>SIGTERM</code> and
+<code>SIGKILL</code> goes through the kernel, but that's omitted in this
+diagram for brevity. <span class="non-sidenote-only">Here's a more textual
+description of the same diagram.</span></p>
 </div>
 
 Let's suppose that there is a job in production that interfaces with hardware.
