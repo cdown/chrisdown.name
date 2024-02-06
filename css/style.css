@@ -499,6 +499,13 @@ td.status-image a:hover {
     background-color: transparent;
 }
 
+/* Mermaid might not pad enough. At least on Windows, sometimes the text runs
+ * over, which is pretty nasty. This is a terrible hack, obviously. */
+.mermaid svg text.noteText tspan {
+    /* purgecss ignore current */
+    font-size: 15px !important;
+}
+
 /* Syntax highlighting. Suggested to use http://colormind.io/ to get */
 
 .highlight .c { color: #999999; font-style: italic } /* Comment */
