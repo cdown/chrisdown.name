@@ -13,7 +13,7 @@ tl;dr:
 
 But wait, how can any D state process be "not immune to signal interruption"?
 Isn't the whole point of D state processes that they are uninterruptible? If
-you are wondering this, read on and you will likely find out some new things
+you are wondering this, read on, and you will likely find out some new things
 about how Linux works internally :-)
 
 ---
@@ -39,7 +39,7 @@ processes present, and needed to produce them on demand as part of their
 integration tests. I gave them some advice, it was implemented, and I thought
 that's probably the last I'd ever hear of it.
 
-Fast forward to today, and I think I must have seen this request at least four
+Moving back to the present, I think I must have seen this request at least four
 or five times in the years since. Just as one recent additional example, I
 recently got asked about this as part of testing for the Meta kernel team's
 diagnostics tool, which as one of its functions gathers kernel stack traces of
@@ -89,7 +89,7 @@ These states can become a problem for things like init systems or
 containerisation platforms, where the unwavering persistence of these stubborn
 processes may block things like tearing down a container, a user session, or
 the entire system on shutdown. As such, all systems that implement teardown for
-groups of processes must implement measures to deal such issues.
+groups of processes must implement measures to deal with such issues.
 
 Here's a real example of how that can manifest in a production environment with
 a container engine.
@@ -134,7 +134,7 @@ Imagine that while we are stuck for some indefinite period in D state, the
 scheduler that decides which jobs should be on which machines (like Kubernetes'
 scheduler, for example) decides that this container should be evicted from this
 machine. Normally that's pretty straightforward: ask the container to shut down
-itself, and if it takes too long, send it `SIGKILL`. After that we can do some
+itself, and if it takes too long, send it `SIGKILL`. After that, we can do some
 cleanup for any state we might have had, and we're more or less done.
 
 D states complicate this quite a bit, because they cannot typically be
@@ -161,12 +161,12 @@ they should do with a "failed" unit, and we don't directly take any action to
 try to rectify the situation.
 
 Keeping the unit around keeps all the metadata around in one place (like which
-pids are causing the hold up), which is definitely a positive: it helps not
-only in debugging, but also helps container engines using systemd units to
+processes are causing the hold up), which is definitely a positive: it helps
+not only in debugging, but also helps container engines using systemd units to
 decide whether it's still safe to start a new service or not given the
 situation.
 
-Other more active interventions include (but are not limited to):
+More active interventions include (but are not limited to):
 
 1. **Reboot the machine**: This is dangerous and is generally not suitable for
    a generic init system like systemd. Doing this must be decided by the user
@@ -178,8 +178,8 @@ Other more active interventions include (but are not limited to):
 2. **Consider the D state processes as no longer part of the failed unit**: In
    this case, resources are still taken by the process in D state, and are now
    separately accounted for (and potentially are made more difficult to reason
-   about). On some rollouts that may actively hide issues, or introduce hard to
-   debug new ones. It may also not be safe to start the new container if the
+   about). On some rollouts, that may actively hide issues, or introduce hard
+   to debug new ones. It may also not be safe to start the new container if the
    old processes are still around because of reasons like resource usage or
    synchronisation issues.
 
@@ -191,7 +191,7 @@ on for this scenario remains stable across versions and configurations, and
 that requires being able to create and destroy D state processes for testing on
 demand. Linux actively tries to avoid processes entering uninterruptible sleep
 whenever possible, as these processes can be particularly troublesome to deal
-with. For this reason it's not immediately obvious how to create a process
+with. For this reason, it's not immediately obvious how to create a process
 which can reliably enter and exit uninterruptible sleep on demand for testing.
 
 ## D states outside of I/O context
@@ -201,15 +201,15 @@ them for all sorts of things in the kernel. As a general rule, the kernel uses
 D states to block processes in any situation where it's unsafe to allow the
 process to proceed further for the time being.
 
-Enter `vfork()`. `vfork()` is a specialised system call primarily designed to
-be used as part of the process of creating new processes. Unlike the more
-widely known `fork()`, which typically uses copy-on-write and thus must at the
-very least create new virtual mappings to the physical pages in question,
-`vfork()` allows the child process to directly share the parent's virtual
-address space temporarily without any copying whatsoever. This is much cheaper
-if you are just going to immediately clobber the child with a new process image
-using `exec`, as in the case of process creation, where copying all the pages
-would be needlessly wasteful.
+Enter `vfork()`. `vfork()` is a specialised system call that is primarily
+designed to be used as part of the process of creating new processes. Unlike
+the more widely known `fork()`, which typically uses copy-on-write and thus
+must at the very least create new virtual mappings to the physical pages in
+question, `vfork()` allows the child process to directly share the parent's
+virtual address space temporarily without any copying whatsoever. This is much
+cheaper if you are just going to immediately clobber the child with a new
+process image using `exec`, as in the case of process creation, where copying
+all the pages would be needlessly wasteful.
 
 But how can that be safe? Surely two processes sharing the same virtual memory
 address space is a recipe for disaster? Well, `vfork()` suspends the parent
@@ -405,9 +405,9 @@ somewhat adhere to, [has to say about
 > or calls any other function before successfully calling `_exit()` or one of
 > the `exec` family of functions.
 
-It makes sense that access to the parent's memory (and thus doing basically
+It makes sense that access to the parent's memory -- and thus doing basically
 anything other than `exec` (which replaces the process entirely) or `_exit()`
-(which is really just a syscall) is not POSIX-legal in the child forked by
+(which is really just a syscall) -- is not POSIX-legal in the child forked by
 `vfork()`, because the parent cannot reasonably have its internal state mutated
 under it without its knowledge. But wait, didn't we just call a function?
 That's certainly going to make use of the stack, which will later be visible to
@@ -572,11 +572,11 @@ whatever is at that memory is semantically meaningless.
 
 This happens because even though `vfork()` shares the address space, it _does
 not_ share registers between the child and parent. Importantly, this means that
-the parent's stack pointer and frame pointer registers are still independent
-from those in the child. This independence extends to all registers, including
-the instruction pointer register (which stores the next instruction to
-execute), and this is how the parent resumes at `vfork()` instead of trying to
-continue from what the child has already done when it wakes up.
+the parent's stack pointer and frame pointer registers are still independent of
+those in the child. This independence extends to all registers, including the
+instruction pointer register (which stores the next instruction to execute),
+and this is how the parent resumes at `vfork()` instead of trying to continue
+from what the child has already done when it wakes up.
 
 While there might be some more stuff on the stack, the parent doesn't care:
 from its perspective what's contained in those addresses is meaningless and can
@@ -587,7 +587,7 @@ All in all, despite standards ire, the whole thing is pretty safe.
 
 ## Why do we block signals in both the parent and child?
 
-In the example above one might typically visualise our intention as being to
+In the example above, one might typically visualise our intention as being to
 satisfy some condition in the child (like writing "EXIT" in our second example)
 in order to unblock the parent. However, you may also notice that in this code
 example, signals are blocked not only in the child, but also the parent. But
@@ -698,8 +698,8 @@ your system actually are terminable after all.
 
 ## How can I survive SIGKILL, then?
 
-While the above approach is nice and self contained and serves most use cases
-for testing, its major downside is that it doesn't survive a `SIGKILL`, as
+While the above approach is self-contained and serves most use cases for
+testing, its major downside is that it doesn't survive a `SIGKILL`, as
 `SIGKILL` is always a deadly signal, and cannot be caught in userspace. In
 order to survive that, we need to find a way from userspace to enter a state
 which sets `TASK_UNINTERRUPTIBLE` without `TASK_KILLABLE`.
@@ -728,7 +728,7 @@ From [`man 8 fsfreeze`](https://man.archlinux.org/man/fsfreeze.8):
 This freeze is implemented by (among other things) indefinitely taking
 exclusive write access over the filesystem's
 [superblock](https://unix.stackexchange.com/a/4403/10762). The filesystem
-superblock contains much of the high level, mission critical information for
+superblock contains much of the high level, mission-critical information for
 the filesystem, and taking exclusive write access over it is tantamount to
 denying any modification to the filesystem.
 
@@ -766,8 +766,7 @@ will survive a `SIGKILL` while in D state, and the only way out is to unfreeze
 the filesystem.
 
 For example, here is the kernel stack we get trapped in trying to acquire the
-previously writer locked read-write semaphore when trying to do a `mkdir` on a
-frozen filesystem:
+writer-locked semaphore when trying to do a `mkdir` on a frozen filesystem:
 
     % cat /proc/21135/stack
     [<0>] percpu_rwsem_wait+0x116/0x140
