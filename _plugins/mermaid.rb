@@ -22,9 +22,9 @@ mermaid.initialize({
 </script>"
     end
 
-    "#{script}<div class=\"mermaid\">
+    "#{script}<pre class=\"mermaid\">
 #{super(context)}
-</div>"
+</pre>"
   end
 
   Liquid::Template.register_tag "mermaid", self

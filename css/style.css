@@ -285,7 +285,7 @@ article > p {
     text-align: justify;
 }
 
-pre, code {
+pre:not(.mermaid), code {
     font-family: "Droid Sans Mono", monospace;
     font-size: 1em;
 }
@@ -298,7 +298,7 @@ pre > code {
     white-space: pre;
 }
 
-pre, :not(pre) > code {
+pre:not(.mermaid), :not(pre) > code {
     background-color: #f7f7f7;
     border: 1px solid #eee;
 }
@@ -308,7 +308,7 @@ a > code {
     border: none;
 }
 
-pre {
+pre:not(.mermaid) {
     padding: 0.6em;
     overflow: auto;
 }
