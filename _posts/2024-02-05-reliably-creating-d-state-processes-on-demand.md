@@ -66,15 +66,14 @@ must not be interrupted in the midst of such operations because DMA transfers
 are not typically designed to accommodate or recover from partial or
 interrupted reads or writes.
 
-<div class="sidenote sidenote-right">
+{% sidenote %}
 On modern kernels, such processes can have their memory freed from the system
-perspective using <code><a
-href="https://lwn.net/Articles/864184/">process_mrelease()</a></code> when they
-are scheduled to be killed before the next userspace instruction, but this
+perspective using [`process_mrelease()`](https://lwn.net/Articles/864184/) when
+they are scheduled to be killed before the next userspace instruction, but this
 still doesn't change the fact that memory in use for DMA can't be used until
 the process fully terminates. This is because the physical pages are still
 pinned by the device for the lifetime of the DMA request.
-</div>
+{% endsidenote %}
 
 For example, when a program reads or writes from your storage, what is
 typically really happening is that the storage device's hardware is directly
@@ -95,20 +94,8 @@ groups of processes must implement measures to deal such issues.
 Here's a real example of how that can manifest in a production environment with
 a container engine.
 
-<script src="/js/mermaid.min.js?{{ site.data["gitrev"] }}"></script>
-<script>
-mermaid.initialize({
-  theme: 'default',
-  themeVariables: {
-    fontFamily: '"Open Sans", sans-serif',
-    clusterBkg: '#fff5ad',
-    clusterBorder: '#aaaa33',
-    edgeLabelBackground: '#fff5ad',
-  }
-});
-</script>
-<div class="sidenote sidenote-right">
-<pre class="mermaid">
+{% sidenote %}
+{% mermaid %}
 sequenceDiagram
     participant CE as Container Engine
     participant P as Process
@@ -129,13 +116,13 @@ sequenceDiagram
     P--xCE: No reaction
 
     Note over CE: The container engine is now<br>blocked shutting down,<br> waiting for processes<br>to terminate.
-</pre>
+{% endmermaid %}
 
-<p>In reality, sending signals like <code>SIGTERM</code> and
-<code>SIGKILL</code> goes through the kernel, but that's omitted in this
-diagram for brevity. <span class="non-sidenote-only">Here's a more textual
-description of the same diagram.</span></p>
-</div>
+In reality, sending signals like `SIGTERM` and
+`SIGKILL` goes through the kernel, but that's omitted in this
+diagram for brevity. {% nso %}Here's a more textual
+description of the same diagram.{% endnso %}
+{% endsidenote %}
 
 Let's suppose that there is a job in production that interfaces with hardware.
 This hardware may -- legitimately or less legitimately -- take an indefinite
@@ -240,8 +227,8 @@ run at the same time, but other than that, pretty much all bets are off.
 Choreographing a long-lived D state process with `vfork()` works something like
 the following:
 
-<div class="sidenote sidenote-right">
-<pre class="mermaid">
+{% sidenote %}
+{% mermaid %}
 {% raw %}
 graph TD
     start[Program started] --> vfork
@@ -268,18 +255,15 @@ graph TD
     exit --> clone_exit["vforked child<br>exits without cleanup"]
     return --> prg_exit["Program exited"]
 {% endraw %}
-</pre>
+{% endmermaid %}
 
-<p>Dotted lines represent transitions that depend on some external action.</p>
+Dotted lines represent transitions that depend on some external action.
 
-<p>Also note that we'll never actually reach <code>_exit()</code> in the child
+Also note that we'll never actually reach `_exit()` in the child
 because the kernel will tear down the child the moment it sees that there's no
 userspace signal handler for the terminal signal, but the effects are basically
-the same.</p>
-
-<div class="non-sidenote-only"><p>Here's what the relevant code looks
-like:</p></div>
-</div>
+the same. {% nso %}Here's what the relevant code looks like:{% endnso %}
+{% endsidenote %}
 
 {% highlight c %}
 #include <unistd.h>
@@ -503,9 +487,9 @@ int main(void)
 }
 {% endhighlight %}
 
-<div class="sidenote sidenote-right">
-<p>Let's take a look at how this might look on an x86_64 stack just before
-<code>_exit(0)</code>:</p>
+{% sidenote %}
+Let's take a look at how this might look on an x86_64 stack just before
+`_exit(0)`:
 
 <table>
 <thead>
@@ -570,17 +554,15 @@ int main(void)
 </tbody>
 </table>
 
-<p>In reality:</p>
+Note that, in reality:
 
-<ol>
-<li>The compiler may choose to use registers instead of the stack for storing
-some of the local variables due to their small size, and</li>
-<li>The compiler may omit the frame pointer entirely and just rely on using the
-stack pointer</li>
-</ol>
+1. The compiler may choose to use registers instead of the stack for storing
+some of the local variables due to their small size, and
+2. The compiler may omit the frame pointer entirely and just rely on using the
+stack pointer
 
-<p>...but the general principle and effects are nevertheless the same.</p>
-</div>
+...but the general principle and effects are nevertheless the same.
+{% endsidenote %}
 
 When the parent process continues its operation, additional stack data is
 simply going to end up in what is -- from the parent's perspective, at least --
