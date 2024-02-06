@@ -32,11 +32,11 @@ find_names_arr = []
 end
 find_names = '\( ' + find_names_arr.join(" -or ") + ' \)'
 
-# 5 minutes for posts written in the last 7 days, as updates may be more
+# 5 minutes for posts written in the last day, as updates may be more
 # frequent
 this_week_post_cc = cc_hdr % (5 * 60)
 this_week_post_includes = ""
-(Date.today-6..Date.today).map do |date|
+(Date.today-1..Date.today).map do |date|
   date_glob = date.strftime("%Y/%m/%d") + "/*"
   this_week_post_includes += " --include '#{date_glob}' "
   generic_excludes += " --exclude '#{date_glob}' "
