@@ -865,6 +865,12 @@ system stability, especially during sensitive operations like DMA, where
 interrupting or prematurely terminating a process could lead to unsound
 behaviour.
 
+This is also part of why I wrote the article ["Signals in prod: dangers and
+pitfalls"](https://chrisdown.name/2022/09/27/signals-in-prod-dangers-and-pitfalls.html).
+Signals are fire and forget, and this means they are ironically not a very good
+way to signal processes in many cases, compared to other options that actually
+do communicate success, failure, or timeout.
+
 Here's how we can reproduce this reliably as a script. This example is in bash,
 but of course, you can more or less write this in any language that suits your
 needs.
