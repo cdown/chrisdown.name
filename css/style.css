@@ -470,7 +470,7 @@ table thead th {
     background-color: #f8f8f8;
 }
 
-table tr:nth-child(even) :not([rowspan]):not(a) {
+table tr:nth-child(even) {
     background-color: #f8f8f8;
 }
 
