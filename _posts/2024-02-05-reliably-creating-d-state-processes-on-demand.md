@@ -730,12 +730,15 @@ There are also other mechanisms which make use of some of the LVM
 infrastructure in order to do things like snapshots in an external context. One
 of those mechanisms that we can leverage here is `fsfreeze`.
 
-From [`man 8 fsfreeze`](https://man.archlinux.org/man/fsfreeze.8):
+From the manual page for `fsfreeze`:
 
+{% cc %}
 > `fsfreeze` suspends and resumes access to a filesystem. `fsfreeze` halts new
 > access to the filesystem and creates a stable image on disk. `fsfreeze` is
 > intended to be used with hardware RAID devices that support the creation of
 > snapshots.
+<div class="citation"><a href="https://man7.org/linux/man-pages/man8/fsfreeze.8.html">fsfreeze manual page</a> from util-linux 2.39</div>
+{% endcc %}
 
 This freeze is implemented by (among other things) indefinitely taking
 exclusive write access over the filesystem's
