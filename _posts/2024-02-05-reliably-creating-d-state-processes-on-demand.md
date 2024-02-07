@@ -395,15 +395,18 @@ EXIT
 I'm sure that some people reading the code I provided above are wondering
 whether it's legal or not, given the fact that we are sharing the parent's
 memory space. Here's what the POSIX spec, which Linux generally tries to
-somewhat adhere to, [has to say about
-`vfork()`](https://pubs.opengroup.org/onlinepubs/009696799/functions/vfork.html):
+somewhat adhere to has to say about
+`vfork()`:
 
+{% cc %}
 > The `vfork()` function shall be equivalent to `fork()`, except that the
 > behavior is undefined if the process created by `vfork()` either modifies any
 > data other than a variable of type `pid_t` used to store the return value
 > from `vfork()`, or returns from the function in which `vfork()` was called,
 > or calls any other function before successfully calling `_exit()` or one of
 > the `exec` family of functions.
+<div class="citation"><a href="https://pubs.opengroup.org/onlinepubs/009696799/functions/vfork.html">vfork</a> definition from POSIX.1-2004</div>
+{% endcc %}
 
 It makes sense that access to the parent's memory -- and thus doing basically
 anything other than `exec` (which replaces the process entirely) or `_exit()`
@@ -416,9 +419,9 @@ the parent, right?
 The good news it that in reality (or at least for some version of reality on
 Linux with any real libc), things are not that dire. Just as one example,
 CPython -- which is used and tested with far more diversity than the vast
-majority of software in use today -- uses it in [much the same
-way](https://github.com/python/cpython/blob/v3.12.1/Modules/_posixsubprocess.c#L773-L782):
+majority of software in use today -- uses it in much the same way:
 
+{% cc %}
 {% highlight c %}
 Py_NO_INLINE static pid_t do_fork_exec(/* ... */)
 {
@@ -447,6 +450,8 @@ Py_NO_INLINE static pid_t do_fork_exec(/* ... */)
     return 0;
 }
 {% endhighlight %}
+<div class="citation"><a href="https://github.com/python/cpython/blob/v3.12.1/Modules/_posixsubprocess.c#L773-L782">_posixsubprocess.c</a> from CPython 3.12.1</div>
+{% endcc %}
 
 As you can see, in their case, it's used as part of a vastly more complex
 process of forking children which is also _guaranteed_ to push to stack by
@@ -617,6 +622,7 @@ syscalls. They do the same thing behind the scenes -- [`vfork()` calls into the
 `clone()` code path
 `kernel_clone()`](https://github.com/torvalds/linux/blob/0dd3ee31125508cd67f7e7172247f05b7fd1753a/kernel/fork.c#L3005-L3013):
 
+{% cc %}
 {% highlight c %}
 SYSCALL_DEFINE0(vfork)
 {
@@ -628,6 +634,8 @@ SYSCALL_DEFINE0(vfork)
     return kernel_clone(&args);
 }
 {% endhighlight %}
+<div class="citation"><a href="https://github.com/torvalds/linux/blob/v6.7/kernel/fork.c#L3005-L3013">kernel/fork.c</a> from Linux 6.7</div>
+{% endcc %}
 
 This is the definition of the `vfork()` syscall, with no ("0") arguments, hence
 `SYSCALL_DEFINE0(vfork)`. `kernel_clone()` is the kernel path that handles
@@ -639,19 +647,21 @@ the parent process until the child has completed. That is, the effects of
 running `vfork()` or `clone()` with the appropriate flags in a program are
 effectively the same.
 
-In `kernel_clone()`, [we see the following
-code](https://github.com/torvalds/linux/blob/0dd3ee31125508cd67f7e7172247f05b7fd1753a/kernel/fork.c#L2944-L2947):
+In `kernel_clone()`, we see the following code:
 
+{% cc %}
 {% highlight c %}
 if (clone_flags & CLONE_VFORK) {
     if (!wait_for_vfork_done(p, &vfork))
         ptrace_event_pid(PTRACE_EVENT_VFORK_DONE, pid);
 }
 {% endhighlight %}
+<div class="citation"><a href="https://github.com/torvalds/linux/blob/v6.7/kernel/fork.c#L2944-L2947">kernel/fork.c</a> from Linux 6.7</div>
+{% endcc %}
 
-Okay, so [what does `wait_for_vfork_done()`
-do](https://github.com/torvalds/linux/blob/0dd3ee31125508cd67f7e7172247f05b7fd1753a/kernel/fork.c#L1588-L1606)?
+Okay, so what does `wait_for_vfork_done()` do?
 
+{% cc %}
 {% highlight c %}
 static int wait_for_vfork_done(struct task_struct *child,
                                struct completion *vfork)
@@ -669,6 +679,8 @@ static int wait_for_vfork_done(struct task_struct *child,
     return killed;
 }
 {% endhighlight c %}
+<div class="citation"><a href="https://github.com/torvalds/linux/blob/v6.7/kernel/fork.c#L1588-L1606">kernel/fork.c</a> from Linux 6.7</div>
+{% endcc %}
 
 `TASK_KILLABLE` is a state that [Matthew][] introduced in 2.6.25. It was
 created because, while in some cases we do actually need to shield the process
@@ -732,11 +744,10 @@ superblock contains much of the high level, mission-critical information for
 the filesystem, and taking exclusive write access over it is tantamount to
 denying any modification to the filesystem.
 
-[This is implemented in
-`freeze_super()`](https://github.com/torvalds/linux/blob/0dd3ee31125508cd67f7e7172247f05b7fd1753a/fs/super.c#L1961),
-which implements its freezing via an array of per-CPU read-write semaphores
-within the superblock structure:
+This is implemented in `freeze_super()`, which implements its freezing via an
+array of per-CPU read-write semaphores within the superblock structure:
 
+{% cc %}
 {% highlight c %}
 static void sb_wait_write(struct super_block *sb, int level)
 {
@@ -755,6 +766,8 @@ int freeze_super(struct super_block *sb,
     /* ... */
 }
 {% endhighlight %}
+<div class="citation"><a href="https://github.com/torvalds/linux/blob/v6.7/fs/super.c#L1961">fs/super.c</a> from Linux 6.7</div>
+{% endcc %}
 
 Importantly, we need to acquire the writer side of one of these semaphores when
 modifying files or directories in order to safely queue changes to the

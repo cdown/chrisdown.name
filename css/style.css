@@ -318,6 +318,19 @@ blockquote {
     margin-left: 1.5em;
     padding-left: 0.7em;
     border-left: 3px solid #ddd;
+    text-align: justify;
+    margin-right: 0;
+    font-style: italic;
+}
+
+.citation-container pre, .citation-container blockquote, .citation-container blockquote p {
+    margin-bottom: 0;
+}
+
+.citation {
+    margin-top: 0.2em;
+    text-align: right;
+    font-size: small;
     font-style: italic;
 }
 
