@@ -618,9 +618,8 @@ how to achieve that, and it's not necessary in all circumstances.
 To see what I mean, let's look at the kernel source to see how `vfork()` is
 implemented. Depending on your libc and version, the `vfork()` that you call from
 your application is likely either a thin wrapper around the `clone()` or `vfork()`
-syscalls. They do the same thing behind the scenes -- [`vfork()` calls into the
-`clone()` code path
-`kernel_clone()`](https://github.com/torvalds/linux/blob/0dd3ee31125508cd67f7e7172247f05b7fd1753a/kernel/fork.c#L3005-L3013):
+syscalls. They do the same thing behind the scenes -- `vfork()` calls into the
+`clone()` code path `kernel_clone()`:
 
 {% cc %}
 {% highlight c %}
