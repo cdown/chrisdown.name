@@ -3,10 +3,7 @@ class Sidenote < Liquid::Block
     site = context.registers[:site]
     converter = site.find_converter_instance(::Jekyll::Converters::Markdown)
     output = converter.convert(super(context))
-
-    "<div class=\"sidenote sidenote-right\">
-#{output}
-</div>"
+    "<aside>#{output}</aside>"
   end
 
   Liquid::Template.register_tag "sidenote", self

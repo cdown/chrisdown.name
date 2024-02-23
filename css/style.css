@@ -79,7 +79,7 @@ div.body {
     background-color: white;
 }
 
-.sidenote {
+aside {
     position: relative;
 }
 .sidenote-only {
@@ -97,13 +97,11 @@ div.body {
 
 /* 720px main + (551px of sidenote + some buffer) * 2 */
 @media (min-width: 1900px) {
-    .sidenote {
+    aside {
         width: 530px;
         overflow: auto;
         font-size: small;
-    }
 
-    .sidenote-right {
         padding-left: 15px;
         border-left: 1px solid #ccc;
         text-align: left;
@@ -122,11 +120,11 @@ div.body {
         visibility: hidden;
     }
 
-    .sidenote > p:first-child {
+    aside > p:first-child {
         margin-top: 0;
     }
 
-    .sidenote > p:last-child {
+    aside > p:last-child {
         margin-bottom: 0;
     }
 }
