@@ -30,6 +30,7 @@ and [sim racing](/racing.html).
 - ["1195725856" and other mysterious numbers](/2020/01/13/1195725856-and-friends-the-origins-of-mysterious-numbers.html)
 - [The curious case of stalled squashfs reads](/2018/04/17/kernel-adventures-the-curious-case-of-squashfs-stalls.html)
 - [Linux memory management at scale](/2019/07/18/linux-memory-management-at-scale.html)
+- [Controllable D state (uninterruptible sleep) processes](/2024/02/05/reliably-creating-d-state-processes-on-demand.html)
 
 More posts are available on the [archive page](/archive.html).
 
