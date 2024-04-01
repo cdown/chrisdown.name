@@ -1,0 +1,92 @@
+---
+layout: default
+title: "Bird lifers"
+---
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<div id="map" style="height: 400px;"></div>
+<table id="sightings-table">
+    <thead>
+        <tr>
+            <th>Common Name</th>
+            <th>Scientific Name</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Rows will be added here dynamically -->
+    </tbody>
+</table>
+
+<script>
+    var map = L.map('map').setView([0, 0], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
+
+    function processCSVData(csvURI) {
+        Papa.parse(csvURI, {
+            download: true,
+            header: true,
+            dynamicTyping: true,
+            complete: function(results) {
+                var data = results.data;
+                var firstSightings = {};
+                var markers = {};
+
+                data.forEach(sighting => {
+                    // TODO: huh, why does papa give an extra one?
+                    if (!sighting || sighting.id === null) {
+                        return;
+                    }
+
+                    var species = sighting.common_name;
+                    var sightingDate = new Date(sighting.date);
+                    var sightingDateUTC = new Date(sightingDate.getUTCFullYear(), sightingDate.getUTCMonth(), sightingDate.getUTCDate());
+
+                    if (!firstSightings[species] || new Date(firstSightings[species].date) > sightingDateUTC) {
+                        sighting.date = sightingDateUTC.toISOString().split('T')[0];
+                        firstSightings[species] = sighting;
+                    }
+                });
+
+                updateMapAndTable(firstSightings, markers);
+            }
+        });
+    }
+
+    function updateMapAndTable(sightings, markers) {
+        var tableBody = document.getElementById('sightings-table').getElementsByTagName('tbody')[0];
+
+        Object.values(sightings).forEach((sighting, index) => {
+            var roundedLatitude = sighting.latitude.toFixed(5);
+            var roundedLongitude = sighting.longitude.toFixed(5);
+            var markerId = `marker-${index}`;
+
+            var marker = L.marker([sighting.latitude, sighting.longitude]).addTo(map)
+                .bindPopup(`${sighting.common_name}<br><span style="font-style: italic">${sighting.scientific_name}</span><br>${sighting.date}<br>${roundedLatitude}, ${roundedLongitude}`);
+            markers[markerId] = marker;
+
+            var row = tableBody.insertRow();
+            row.setAttribute('data-marker-id', markerId);
+            row.insertCell(0).textContent = sighting.common_name;
+            row.insertCell(1).textContent = sighting.scientific_name;
+            row.insertCell(2).textContent = sighting.date;
+
+            // Zoom into the marker on click
+            row.addEventListener('click', function() {
+                var markerId = this.getAttribute('data-marker-id');
+                if (markers[markerId]) {
+                    map.setView(markers[markerId].getLatLng(), 10);
+                    markers[markerId].openPopup();
+                }
+            });
+        });
+    }
+
+    var csvURI = '/birds/data.csv'; // Updated CSV file URI
+    processCSVData(csvURI);
+</script>

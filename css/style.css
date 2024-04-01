@@ -375,14 +375,12 @@ iframe {
     }
 }
 
-img:not(.nonstandard), video:not(.nonstandard) {
-  display: block;
-  max-width:100%;
-  margin: 2em auto;
-  height: auto;
-  -webkit-box-shadow: 0 0 2em 0 rgba(0,0,0,0.35);
-  -moz-box-shadow: 0 0 2em 0 rgba(0,0,0,0.35);
-  box-shadow: 0 0 2em 0 rgba(0,0,0,0.35);
+img:not(.nonstandard):not(.leaflet-marker-icon), 
+video:not(.nonstandard) {
+    display: block;
+    max-width: 100%;
+    margin: 2em auto;
+    height: auto;
 }
 
 /* To avoid wrapping dashes for arguments in <code>, see
