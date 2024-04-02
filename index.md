@@ -82,12 +82,13 @@ list, I'm probably not actively developing or maintaining them.
 
 {: .twocol }
 - [Assorted technology-related articles](/archive.html)
-- [Project quality dashboard](/builds)
-- [Sim racing data/notes](/racing.html)
+- [Bird lifer list](/birds/)
 - [My old TF2 configs](/tf2)
-- [RYM profile export](/rym.html)
 - [Old game miscellany](/oldgames.html)
 - [Privacy policy](/privacy.html)
+- [Project quality dashboard](/builds)
+- [RYM profile export](/rym.html)
+- [Sim racing data/notes](/racing.html)
 
 ## Profiles elsewhere
 
