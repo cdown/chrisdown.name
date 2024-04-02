@@ -85,14 +85,14 @@ For those interested, I also have many photographs available on [Flickr](https:/
     function updateMapAndTable(sightings) {
         var tableBody = document.getElementById('sightings-table').getElementsByTagName('tbody')[0];
         sightings.reverse().forEach((sighting, index) => {
-            var date = sighting[0], common_name = sighting[1], scientific_name = sighting[2], latitude = sighting[3], longitude = sighting[4], country = sighting[5];
+            var datetime = sighting[0], common_name = sighting[1], scientific_name = sighting[2], latitude = sighting[3], longitude = sighting[4], country = sighting[5];
             var markerId = `marker-${index}`;
             var roundedLatitude = latitude.toFixed(5);
             var roundedLongitude = longitude.toFixed(5);
             var wikiLink = `https://en.wikipedia.org/wiki/${scientific_name.replace(/ /g, '_')}`;
 
             var marker = L.marker([latitude, longitude])
-                .bindPopup(`${common_name}<br><span style="font-style: italic">${scientific_name}</span><br>${date}<br>${roundedLatitude}, ${roundedLongitude}<br><a href="${wikiLink}" target="_blank">Wikipedia</a>`);
+                .bindPopup(`${common_name}<br><span style="font-style: italic">${scientific_name}</span><br>${datetime}<br>${roundedLatitude}, ${roundedLongitude}<br><a href="${wikiLink}" target="_blank">Wikipedia</a>`);
             markers.addLayer(marker);
 
             marker.on('click', function() {
@@ -120,6 +120,7 @@ For those interested, I also have many photographs available on [Flickr](https:/
             row.insertCell(0).textContent = sightings.length - index;
             row.insertCell(1).textContent = common_name;
             row.insertCell(2).textContent = country;
+            var date = datetime.split(" ")[0];
             row.insertCell(3).innerHTML = `<span class=nowrap>${date}</span>`;
 
             row.addEventListener('click', function() {
