@@ -1,7 +1,6 @@
 ---
 layout: default
 title: "Bird lifers"
-wide: true
 ---
 
 # Bird lifers
