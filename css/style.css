@@ -599,14 +599,51 @@ td.status-image a:hover {
     height: 350px;
     margin-bottom: 1em;
 }
-#sightings-table-container {
-    height: 350px;
-    overflow-y: auto;
-}
-
+w
 #sightings-table {
     display: table;
     width: 100%;
+}
+
+#sightings-table-container {
+    position: relative;
+    overflow-y: auto;
+    height: 350px;
+}
+
+#sightings-table-container::before,
+#sightings-table-container::after {
+    content: '';
+    position: sticky;
+    left: 0;
+    right: 0;
+    height: 20px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+#sightings-table-container::before {
+    top: 0;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.2), transparent);
+}
+
+#sightings-table-container::after {
+    bottom: 0;
+    background-image: linear-gradient(to top, rgba(0,0,0,0.2), transparent);
+}
+
+#sightings-table-container.has-top-content::before {
+    display: block;
+}
+
+#sightings-table-container.has-bottom-content::after {
+    display: block;
+}
+
+
+#sightings-table-container::before,
+#sightings-table-container::after {
+    display: none;
 }
 
 @media only screen and (max-height: 1080px) {

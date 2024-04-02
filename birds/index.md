@@ -34,6 +34,22 @@ For those interested, I also have many photographs available on [Flickr](https:/
 </div>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const container = document.getElementById('sightings-table-container');
+
+        var shadowSize = 20;
+        function toggleShadows() {
+            const hasTopContent = container.scrollTop > shadowSize;
+            const hasBottomContent = container.scrollTop < container.scrollHeight - container.offsetHeight - shadowSize;
+
+            container.classList.toggle('has-top-content', hasTopContent);
+            container.classList.toggle('has-bottom-content', hasBottomContent);
+        }
+
+        container.addEventListener('scroll', toggleShadows);
+        toggleShadows(); // Check initial state
+    });
+
     var map = L.map('map', {
         fullscreenControl: true,
         fullscreenControlOptions: {
