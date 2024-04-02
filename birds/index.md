@@ -20,9 +20,8 @@ For those interested, I also have many photographs available on [Flickr](https:/
     <table id="sightings-table">
         <thead>
             <tr>
-                <th>Lifer number</th>
-                <th>Common name</th>
-                <th>Scientific name</th>
+                <th>#</th>
+                <th>Bird</th>
                 <th>Date</th>
             </tr>
         </thead>
@@ -37,11 +36,12 @@ For those interested, I also have many photographs available on [Flickr](https:/
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
     }).addTo(map);
+
     L.Control.textbox = L.Control.extend({
         onAdd: function(map) {
-            var text = L.DomUtil.create('div');
+            var text = L.DomUtil.create('span');
             text.id = "bird_tips";
-            text.innerHTML = "<span style=\"background-color: rgba(0, 0, 0, 0.5); padding: 0.2em\">Click an entry in the table to focus the map</span>"
+            text.innerHTML = "<span style=\"background-color: rgba(255, 255, 255, 0.5); padding: 0.2em\">Click an entry in the table to focus the map</span>"
             return text;
         },
 
@@ -125,8 +125,7 @@ For those interested, I also have many photographs available on [Flickr](https:/
             row.setAttribute('data-marker-id', markerId);
             row.insertCell(0).textContent = liferNumber--;
             row.insertCell(1).textContent = sighting.common_name;
-            row.insertCell(2).textContent = sighting.scientific_name;
-            row.insertCell(3).textContent = sighting.date;
+            row.insertCell(2).innerHTML = `<span class=nowrap>${sighting.date}</span>`;
 
             row.addEventListener('click', function() {
                 document.querySelectorAll('#sightings-table tbody tr').forEach(tr => tr.style.fontWeight = 'normal');

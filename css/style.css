@@ -585,21 +585,31 @@ td.status-image a:hover {
 
 /* Birds */
 #map {
-    height: 35vh;
+    height: 350px;
     margin-bottom: 1em;
 }
 #sightings-table-container {
-    height: 40vh;
+    height: 350px;
     overflow-y: auto;
+}
+
+#sightings-table {
+    display: table;
+    width: 100%;
+}
+
+@media only screen and (max-height: 1080px) {
+    #map {
+        height: 150px;
+        margin-bottom: 0;
+    }
+    #sightings-table-container {
+        height: 150px;
+    }
 }
 
 #sightings-table tbody tr:hover {
     cursor: pointer;
-    background-color: #f5f5f5; /* Light grey background on hover to indicate interactivity */
-}
-
-#sightings-table tbody tr {
-    transition: background-color 0.3s ease;
 }
 
 @keyframes flashAnimation {
