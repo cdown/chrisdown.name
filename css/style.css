@@ -600,11 +600,10 @@ td.status-image a:hover {
 
 @media only screen and (max-height: 1080px) {
     #map {
-        height: 150px;
-        margin-bottom: 0;
+        height: 250px;
     }
     #sightings-table-container {
-        height: 150px;
+        height: 200px;
     }
 }
 
