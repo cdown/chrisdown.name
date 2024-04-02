@@ -585,7 +585,8 @@ td.status-image a:hover {
 
 /* Birds */
 #map {
-    height: 30vh;
+    height: 35vh;
+    margin-bottom: 1em;
 }
 #sightings-table-container {
     height: 40vh;
