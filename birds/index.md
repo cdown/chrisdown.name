@@ -9,6 +9,8 @@ For those interested, I also have many photographs available on [Flickr](https:/
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/3.0.1/Control.FullScreen.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/3.0.1/Control.FullScreen.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
@@ -30,7 +32,13 @@ For those interested, I also have many photographs available on [Flickr](https:/
 </div>
 
 <script>
-    var map = L.map('map').fitWorld();
+    var map = L.map('map', {
+        fullscreenControl: true,
+        fullscreenControlOptions: {
+            forceSeparateButton: true,
+            position: 'topright'
+        }
+    }).fitWorld();
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
     }).addTo(map);
