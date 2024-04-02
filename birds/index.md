@@ -14,10 +14,11 @@ For those interested, I also have many photographs available on [Flickr](https:/
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+<script src="/birds/sorttable.js"></script>
 
 <div id="map"></div>
 <div id="sightings-table-container">
-    <table id="sightings-table">
+    <table id="sightings-table" class="sortable">
         <thead>
             <tr>
                 <th>#</th>

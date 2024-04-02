@@ -383,7 +383,7 @@ iframe {
     }
 }
 
-img:not(.nonstandard):not(.leaflet-marker-icon), 
+img:not(.nonstandard):not(.leaflet-marker-icon),
 video:not(.nonstandard) {
     display: block;
     max-width: 100%;
@@ -629,4 +629,8 @@ td.status-image a:hover {
 
 .flash {
   animation: flashAnimation 0.5s 2; /* Run animation twice, 0.5s for each iteration */
+}
+
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
+    content: " \25B4\25BE"
 }
