@@ -112,6 +112,9 @@ For those interested, I also have many photographs available on [Flickr](https:/
         });
 
         map.addLayer(markers);
+
+        // Now that we have the markers, do a better zoom
+        map.fitBounds(markers.getBounds());
     }
 
     updateMapAndTable(sightings);
