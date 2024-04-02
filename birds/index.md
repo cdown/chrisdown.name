@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "Bird lifers map"
+title: "Bird lifers"
 wide: true
 ---
 
-# Bird lifers map
+# Bird lifers
 
 For those interested, I also have many photographs available on [Flickr](https://www.flickr.com/photos/chrisdown/albums/72157711447135721?layout=justified).
 
