@@ -583,6 +583,17 @@ td.status-image a:hover {
 .highlight .vi { color: #008080 } /* Name.Variable.Instance */
 .highlight .il { color: #324971 } /* Literal.Number.Integer.Long */
 
+#js-errors {
+    background-color: #ffdddd;
+    border-left: 6px solid #B6000F;
+    margin-bottom: 15px;
+    padding: 10px 20px;
+}
+
+#js-errors .error {
+    margin-top: 5px;
+}
+
 /* Birds */
 #map {
     height: 350px;
