@@ -49,7 +49,7 @@ wide: true
     var zoomLevel = 18;
 
     // disableClusteringAtZoom value should match the same as map.setView()
-    var markers = L.markerClusterGroup({ disableClusteringAtZoom: zoomLevel });
+    var markers = L.markerClusterGroup({ maxClusterRadius: 50, disableClusteringAtZoom: zoomLevel });
 
     function processCSVData(csvURI) {
         Papa.parse(csvURI, {
