@@ -8,19 +8,21 @@ wide: true
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
-<div id="map" style="height: 400px;"></div>
-<table id="sightings-table">
-    <thead>
-        <tr>
-            <th>Common Name</th>
-            <th>Scientific Name</th>
-            <th>Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Rows will be added here dynamically -->
-    </tbody>
-</table>
+<div id="map"></div>
+<div id="sightings-table-container">
+    <table id="sightings-table">
+        <thead>
+            <tr>
+                <th>Common Name</th>
+                <th>Scientific Name</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be added here dynamically -->
+        </tbody>
+    </table>
+</div>
 
 <script>
     var map = L.map('map').setView([0, 0], 2);
