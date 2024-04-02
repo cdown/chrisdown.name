@@ -129,6 +129,8 @@ For those interested, I also have many photographs available on [Flickr](https:/
             row.insertCell(3).textContent = sighting.date;
 
             row.addEventListener('click', function() {
+                document.querySelectorAll('#sightings-table tbody tr').forEach(tr => tr.style.fontWeight = 'normal');
+                row.style.fontWeight = 'bold';
                 map.setView(marker.getLatLng(), zoomLevel);
                 marker.openPopup();
             });
