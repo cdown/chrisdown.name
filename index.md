@@ -21,8 +21,8 @@ kernel](https://github.com/torvalds/linux/commits?author=cdown),
 technologies.
 
 Outside of that, I dabble in
-[photography](https://www.flickr.com/photos/chrisdown/albums/72157711447135721?layout=justified)
-and [sim racing](/racing.html).
+[photography](https://www.flickr.com/photos/chrisdown/albums/72157711447135721?layout=justified),
+[birding](/birds/), and [sim racing](/racing.html).
 
 ## Popular articles
 
