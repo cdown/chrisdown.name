@@ -69,9 +69,31 @@ wide: true
             var roundedLongitude = sighting.longitude.toFixed(5);
             var markerId = `marker-${index}`;
 
+            var wikiLink = `https://en.wikipedia.org/wiki/${sighting.scientific_name.replace(/ /g, '_')}`;
             var marker = L.marker([sighting.latitude, sighting.longitude]).addTo(map)
-                .bindPopup(`${sighting.common_name}<br><span style="font-style: italic">${sighting.scientific_name}</span><br>${sighting.date}<br>${roundedLatitude}, ${roundedLongitude}`);
+                .bindPopup(`${sighting.common_name}<br><span style="font-style: italic">${sighting.scientific_name}</span><br>${sighting.date}<br>${roundedLatitude}, ${roundedLongitude}<br><a href="${wikiLink}" target="_blank">Wikipedia</a>`);
             markers[markerId] = marker;
+
+            // Scroll table on view
+            marker.on('click', function() {
+                var row = document.querySelector(`[data-marker-id="${markerId}"]`);
+                if (row) {
+                    row.scrollIntoView({behavior: "smooth", block: "center"});
+                    document.querySelectorAll('#sightings-table tbody tr').forEach(tr => {
+                        tr.style.fontWeight = 'normal';
+                        tr.classList.remove('flash');
+                    });
+                    row.style.fontWeight = 'bold';
+                    row.classList.add('flash');
+                }
+
+                var row = document.querySelector(`[data-marker-id="${markerId}"]`);
+                if (row) {
+                    row.scrollIntoView({behavior: "instant", block: "center"});
+                    document.querySelectorAll('#sightings-table tbody tr').forEach(tr => tr.style.fontWeight = 'normal');
+                    row.style.fontWeight = 'bold';
+                }
+            });
 
             var row = tableBody.insertRow();
             row.setAttribute('data-marker-id', markerId);
@@ -79,7 +101,6 @@ wide: true
             row.insertCell(1).textContent = sighting.scientific_name;
             row.insertCell(2).textContent = sighting.date;
 
-            // Zoom into the marker on click
             row.addEventListener('click', function() {
                 var markerId = this.getAttribute('data-marker-id');
                 if (markers[markerId]) {
