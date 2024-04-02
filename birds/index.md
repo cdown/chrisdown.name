@@ -4,14 +4,16 @@ title: "Bird lifers map"
 wide: true
 ---
 
+# Bird lifers map
+
+For those interested, I also have many photographs available on [Flickr](https://www.flickr.com/photos/chrisdown/albums/72157711447135721?layout=justified).
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
-
-<h1>Bird lifers map</h1>
 
 <div id="map"></div>
 <div id="sightings-table-container">
