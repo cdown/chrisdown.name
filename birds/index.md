@@ -33,7 +33,7 @@ For those interested, I also have many photographs available on [Flickr](https:/
 </div>
 
 <script>
-    var map = L.map('map').setView([0, 0], 2);
+    var map = L.map('map').fitWorld();
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
     }).addTo(map);
