@@ -87,9 +87,10 @@ For those interested, I also have many photographs available on [Flickr](https:/
 
     function updateMapAndTable(sightings) {
         var tableBody = document.getElementById('sightings-table').getElementsByTagName('tbody')[0];
-        var liferNumber = 1;
+        var sightingsArray = Object.values(sightings).reverse();
+        var liferNumber = sightingsArray.length;
 
-        Object.values(sightings).forEach((sighting, index) => {
+        sightingsArray.forEach((sighting, index) => {
             var roundedLatitude = sighting.latitude.toFixed(5);
             var roundedLongitude = sighting.longitude.toFixed(5);
             var markerId = `marker-${index}`;
@@ -122,7 +123,7 @@ For those interested, I also have many photographs available on [Flickr](https:/
 
             var row = tableBody.insertRow();
             row.setAttribute('data-marker-id', markerId);
-            row.insertCell(0).textContent = liferNumber++;
+            row.insertCell(0).textContent = liferNumber--;
             row.insertCell(1).textContent = sighting.common_name;
             row.insertCell(2).textContent = sighting.scientific_name;
             row.insertCell(3).textContent = sighting.date;
@@ -131,10 +132,9 @@ For those interested, I also have many photographs available on [Flickr](https:/
                 map.setView(marker.getLatLng(), zoomLevel);
                 marker.openPopup();
             });
-
-            // Add the cluster group
-            map.addLayer(markers);
         });
+
+        map.addLayer(markers);
     }
 
     var csvURI = '/birds/data.csv'; // Updated CSV file URI
