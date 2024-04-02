@@ -4,9 +4,13 @@ title: "Bird lifers"
 wide: true
 ---
 
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
 
 <div id="map"></div>
 <div id="sightings-table-container">
@@ -29,6 +33,23 @@ wide: true
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
     }).addTo(map);
+    L.Control.textbox = L.Control.extend({
+        onAdd: function(map) {
+            var text = L.DomUtil.create('div');
+            text.id = "bird_tips";
+            text.innerHTML = "<span style=\"background-color: rgba(0, 0, 0, 0.5); padding: 0.2em\">Click an entry in the table to focus the map</span>"
+            return text;
+        },
+
+        onRemove: function(map) { }
+    });
+    L.control.textbox = function(opts) { return new L.Control.textbox(opts);}
+    L.control.textbox({ position: 'bottomleft' }).addTo(map);
+
+    var zoomLevel = 18;
+
+    // disableClusteringAtZoom value should match the same as map.setView()
+    var markers = L.markerClusterGroup({ disableClusteringAtZoom: zoomLevel });
 
     function processCSVData(csvURI) {
         Papa.parse(csvURI, {
@@ -38,7 +59,6 @@ wide: true
             complete: function(results) {
                 var data = results.data;
                 var firstSightings = {};
-                var markers = {};
 
                 data.forEach(sighting => {
                     // TODO: huh, why does papa give an extra one?
@@ -56,12 +76,12 @@ wide: true
                     }
                 });
 
-                updateMapAndTable(firstSightings, markers);
+                updateMapAndTable(firstSightings);
             }
         });
     }
 
-    function updateMapAndTable(sightings, markers) {
+    function updateMapAndTable(sightings) {
         var tableBody = document.getElementById('sightings-table').getElementsByTagName('tbody')[0];
 
         Object.values(sightings).forEach((sighting, index) => {
@@ -70,9 +90,9 @@ wide: true
             var markerId = `marker-${index}`;
 
             var wikiLink = `https://en.wikipedia.org/wiki/${sighting.scientific_name.replace(/ /g, '_')}`;
-            var marker = L.marker([sighting.latitude, sighting.longitude]).addTo(map)
+            var marker = L.marker([sighting.latitude, sighting.longitude])
                 .bindPopup(`${sighting.common_name}<br><span style="font-style: italic">${sighting.scientific_name}</span><br>${sighting.date}<br>${roundedLatitude}, ${roundedLongitude}<br><a href="${wikiLink}" target="_blank">Wikipedia</a>`);
-            markers[markerId] = marker;
+            markers.addLayer(marker);
 
             // Scroll table on view
             marker.on('click', function() {
@@ -102,12 +122,12 @@ wide: true
             row.insertCell(2).textContent = sighting.date;
 
             row.addEventListener('click', function() {
-                var markerId = this.getAttribute('data-marker-id');
-                if (markers[markerId]) {
-                    map.setView(markers[markerId].getLatLng(), 10);
-                    markers[markerId].openPopup();
-                }
+                map.setView(marker.getLatLng(), zoomLevel);
+                marker.openPopup();
             });
+
+            // Add the cluster group
+            map.addLayer(markers);
         });
     }
 
