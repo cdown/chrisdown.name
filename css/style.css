@@ -79,6 +79,14 @@ div.body {
     background-color: white;
 }
 
+div.body-wide {
+    max-width: 1200px;
+    margin: 1em auto;
+    padding: 0 0.7em;
+    font-family: "Open Sans", sans-serif;
+    background-color: white;
+}
+
 aside {
     position: relative;
 }
