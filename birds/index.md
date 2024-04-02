@@ -104,20 +104,19 @@ For those interested, I also have many photographs available on [Flickr](https:/
             marker.on('click', function() {
                 var row = document.querySelector(`[data-marker-id="${markerId}"]`);
                 if (row) {
-                    row.scrollIntoView({behavior: "smooth", block: "center"});
+                    var tableContainer = document.getElementById('sightings-table-container');
+                    var rowTopRelativeToContainer = row.offsetTop;
+                    var containerScrollTopToCenterRow = rowTopRelativeToContainer - (tableContainer.offsetHeight / 2) + (row.offsetHeight / 2);
+
+                    // not scrollIntoView, since that also moves the viewport
+                    tableContainer.scrollTop = containerScrollTopToCenterRow;
+
                     document.querySelectorAll('#sightings-table tbody tr').forEach(tr => {
                         tr.style.fontWeight = 'normal';
                         tr.classList.remove('flash');
                     });
                     row.style.fontWeight = 'bold';
                     row.classList.add('flash');
-                }
-
-                var row = document.querySelector(`[data-marker-id="${markerId}"]`);
-                if (row) {
-                    row.scrollIntoView({behavior: "instant", block: "center"});
-                    document.querySelectorAll('#sightings-table tbody tr').forEach(tr => tr.style.fontWeight = 'normal');
-                    row.style.fontWeight = 'bold';
                 }
             });
 
@@ -126,6 +125,7 @@ For those interested, I also have many photographs available on [Flickr](https:/
             row.insertCell(0).textContent = liferNumber--;
             row.insertCell(1).textContent = sighting.common_name;
             row.insertCell(2).innerHTML = `<span class=nowrap>${sighting.date}</span>`;
+
 
             row.addEventListener('click', function() {
                 document.querySelectorAll('#sightings-table tbody tr').forEach(tr => tr.style.fontWeight = 'normal');
