@@ -59,8 +59,11 @@ For those interested, I also have many photographs available on [Flickr](https:/
             position: 'topright'
         }
     }).fitWorld();
+
+    var zoomLevel = 15;
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
+        maxZoom: zoomLevel,
     }).addTo(map);
 
     L.Control.textbox = L.Control.extend({
@@ -76,7 +79,6 @@ For those interested, I also have many photographs available on [Flickr](https:/
     L.control.textbox = function(opts) { return new L.Control.textbox(opts);}
     L.control.textbox({ position: 'bottomleft' }).addTo(map);
 
-    var zoomLevel = 18;
 
     // disableClusteringAtZoom value should match the same as map.setView()
     var markers = L.markerClusterGroup({ maxClusterRadius: 50 });
