@@ -142,7 +142,7 @@ For those interested, I also have many photographs available on [Flickr](https:/
         // Now that we have the markers, do a better zoom
         // Padding is needed to avoid cut off clusters
         if (markers.getLayers().length > 0) {
-            map.fitBounds(markers.getBounds(), {padding: [10, 10]});
+            map.fitBounds(markers.getBounds(), {padding: [50, 100]});
         } else {
             map.setView([0, 0], 1);
         }
