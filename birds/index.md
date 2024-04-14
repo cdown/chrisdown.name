@@ -37,20 +37,19 @@ For those interested, I also have many photographs available on [Flickr](https:/
 </div>
 
 <script>
+    var shadowSize = 20;
+    function toggleShadows() {
+        const container = document.getElementById('sightings-table-container');
+        const hasTopContent = container.scrollTop > shadowSize;
+        const isScrollable = container.scrollHeight > container.clientHeight;
+        const hasBottomContent = isScrollable && (container.scrollTop < container.scrollHeight - container.offsetHeight - shadowSize);
+
+        container.classList.toggle('has-top-content', hasTopContent);
+        container.classList.toggle('has-bottom-content', hasBottomContent);
+    }
     document.addEventListener("DOMContentLoaded", function() {
         const container = document.getElementById('sightings-table-container');
-
-        var shadowSize = 20;
-        function toggleShadows() {
-            const hasTopContent = container.scrollTop > shadowSize;
-            const hasBottomContent = container.scrollTop < container.scrollHeight - container.offsetHeight - shadowSize;
-
-            container.classList.toggle('has-top-content', hasTopContent);
-            container.classList.toggle('has-bottom-content', hasBottomContent);
-        }
-
         container.addEventListener('scroll', toggleShadows);
-        toggleShadows(); // Check initial state
     });
 
     var map = L.map('map', {
@@ -137,6 +136,7 @@ For those interested, I also have many photographs available on [Flickr](https:/
             });
         });
 
+        toggleShadows();
         map.addLayer(markers);
 
         // Now that we have the markers, do a better zoom
