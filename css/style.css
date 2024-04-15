@@ -646,6 +646,15 @@ w
     display: none;
 }
 
+#name-filter {
+    width: 100%;
+    font-family: inherit;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-style: solid solid none;
+}
+
 @media only screen and (max-height: 1080px) {
     #map {
         height: 250px;
