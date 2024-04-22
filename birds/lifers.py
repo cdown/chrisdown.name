@@ -14,11 +14,6 @@ def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
 
-def to_utc(date_string):
-    dt = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S.%f %z")
-    return dt.astimezone(timezone.utc).replace(tzinfo=None).strftime("%Y-%m-%d %H:%M")
-
-
 def get_country(latitude, longitude, cache):
     tolerance_deg = 0.1  # 11.1km
 
@@ -57,12 +52,12 @@ def process_csv(file_path):
         reader = csv.DictReader(file)
 
         for row in reader:
-            if row["common_name"] not in first_sightings:
+            if row["commonName"] not in first_sightings:
                 country_name = get_country(row["latitude"], row["longitude"], cache)
-                first_sightings[row["common_name"]] = [
-                    to_utc(row["date"]),
-                    row["common_name"],
-                    row["scientific_name"],
+                first_sightings[row["commonName"]] = [
+                    datetime.fromisoformat(row["date"]).strftime("%Y-%m-%d %H:%M"),
+                    row["commonName"],
+                    row["scientificName"],
                     float(row["latitude"]),
                     float(row["longitude"]),
                     country_name,
