@@ -176,6 +176,7 @@ For those interested, I also have many photographs available on [Flickr](https:/
                             'normal');
                     row.style.fontWeight = 'bold';
                     markers.zoomToShowLayer(marker, () => {
+                        map.setView(marker.getLatLng(), zoomLevel);
                         marker.openPopup();
                     });
                 });
