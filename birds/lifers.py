@@ -52,7 +52,7 @@ def process_csv(file_path):
         reader = csv.DictReader(file)
 
         for row in reader:
-            if row["commonName"] not in first_sightings:
+            if row["commonName"] and row["commonName"] not in first_sightings:
                 country_name = get_country(row["latitude"], row["longitude"], cache)
                 first_sightings[row["commonName"]] = [
                     datetime.fromisoformat(row["date"]).strftime("%Y-%m-%d %H:%M"),
