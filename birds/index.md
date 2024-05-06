@@ -66,7 +66,7 @@ For those interested, I also have many photographs available on [Flickr](https:/
         })
         .fitWorld();
 
-    const zoomLevel = 15;
+    const zoomLevel = 16;
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: zoomLevel
         })
