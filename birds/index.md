@@ -189,7 +189,7 @@ For those interested, I also have many photographs available on [Flickr](https:/
         if (markers.getLayers()
             .length > 0) {
             map.fitBounds(markers.getBounds(), {
-                padding: [50, 100]
+                padding: [50, 50]
             });
         } else {
             map.setView([0, 0], 1);
