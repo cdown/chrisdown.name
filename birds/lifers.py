@@ -63,7 +63,7 @@ def process_csv(file_path):
                     country_name,
                 ]
 
-    sightings_list = list(first_sightings.values())
+    sightings_list = list(reversed(first_sightings.values()))
 
     return json.dumps(sightings_list)
 
