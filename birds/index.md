@@ -72,6 +72,15 @@ For those interested, I also have many photographs available on [Flickr](https:/
         })
         .addTo(map);
 
+    const southWest = L.latLng(-90, -180);
+    const northEast = L.latLng(90, 180);
+    const bounds = L.latLngBounds(southWest, northEast);
+
+    map.setMaxBounds(bounds);
+    map.on('drag', function() {
+        map.panInsideBounds(bounds, { animate: false });
+    });
+
     L.Control.textbox = L.Control.extend({
         onAdd: function(map) {
             const text = L.DomUtil.create('span');
