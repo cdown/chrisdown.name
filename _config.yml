@@ -45,13 +45,13 @@ header:
     - icon: camera
       url: https://www.flickr.com/photos/chrisdown/albums/72157711447135721?layout=justified
       title: My photos on Flickr
-      hide_if_small: true
     - icon: linkedin
       url: https://www.linkedin.com/in/chrisldown
       title: My LinkedIn profile
     - icon: stackoverflow
       url: https://unix.stackexchange.com/users/10762/chris-down?tab=profile
       title: My Unix & Linux Stack Exchange profile
+      hide_if_small: true
     - icon: github
       url: https://github.com/cdown
       title: My GitHub profile
