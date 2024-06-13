@@ -5,7 +5,7 @@ title: "Bird lifers"
 
 # Bird lifers
 
-For those interested, I also have many photographs available on [Flickr](https://www.flickr.com/photos/chrisdown/albums/72157711447135721?layout=justified).
+For those interested, I also have many photographs available in [my portfolio](https://chrisdown.photo/).
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
