@@ -92,6 +92,11 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
     <script>
         // Do it up here to make sure we capture any inline JS
         window.onerror = function(message, source, lineno, colno, error) {
+          // in-app browsers inject shite that ignores SOP, don't warn on that
+          if (!source && message === "Script error.") {
+              return;
+          }
+
           var errorContainer = document.getElementById('js-errors');
           errorContainer.style.display = 'block';
 
