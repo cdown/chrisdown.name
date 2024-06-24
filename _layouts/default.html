@@ -172,6 +172,9 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
             if (img.className.includes('nonstandard')) {
                 return;
             }
+            if (img.className.includes('leaflet-marker-icon')) {
+                return;
+            }
             const a = document.createElement('a');
             a.href = img.src;
             img.parentNode.replaceChild(a, img);
