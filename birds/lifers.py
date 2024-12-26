@@ -4,7 +4,9 @@ import csv
 import json
 import time
 import sys
+import zipfile
 from datetime import datetime
+from io import TextIOWrapper
 from geopy.geocoders import Nominatim
 
 CACHE_FILE = "loc_cache.json"
@@ -64,24 +66,23 @@ def get_country(lat, lng, cache):
     return country
 
 
-def process_csv(file_path):
+def process_csv(file):
     first_sightings = {}
     cache = load_cache()
 
-    with open(file_path, mode="r", encoding="utf-8") as file:
-        reader = csv.DictReader(file)
+    reader = csv.DictReader(file)
 
-        for row in reader:
-            if row["commonName"] and row["commonName"] not in first_sightings:
-                country_name = get_country(row["latitude"], row["longitude"], cache)
-                first_sightings[row["commonName"]] = [
-                    datetime.fromisoformat(row["date"]).strftime("%Y-%m-%d %H:%M"),
-                    row["commonName"],
-                    row["scientificName"],
-                    float(row["latitude"]),
-                    float(row["longitude"]),
-                    country_name,
-                ]
+    for row in reader:
+        if row["commonName"] and row["commonName"] not in first_sightings:
+            country_name = get_country(row["latitude"], row["longitude"], cache)
+            first_sightings[row["commonName"]] = [
+                datetime.fromisoformat(row["date"]).strftime("%Y-%m-%d %H:%M"),
+                row["commonName"],
+                row["scientificName"],
+                float(row["latitude"]),
+                float(row["longitude"]),
+                country_name,
+            ]
 
     save_cache(cache)
     sightings_list = list(reversed(first_sightings.values()))
@@ -91,12 +92,27 @@ def process_csv(file_path):
 
 def main():
     if len(sys.argv) != 2:
-        eprint("Missing CSV")
+        eprint("Missing zip file")
         sys.exit(1)
 
-    file_path = sys.argv[1]
-    js_array = process_csv(file_path)
-    print(f"const sightings = {js_array};")
+    zip_path = sys.argv[1]
+
+    try:
+        with zipfile.ZipFile(zip_path, "r") as z:
+            csv_files = [name for name in z.namelist() if name.endswith(".csv")]
+
+            if len(csv_files) != 1:
+                eprint("Zip file must contain exactly one CSV file")
+                sys.exit(1)
+
+            with z.open(csv_files[0]) as csv_file:
+                file = TextIOWrapper(csv_file, encoding="utf-8")
+                js_array = process_csv(file)
+                print(f"const sightings = {js_array};")
+
+    except zipfile.BadZipFile:
+        eprint("Invalid zip file")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
