@@ -5,7 +5,7 @@ import json
 import time
 import sys
 import zipfile
-from datetime import datetime
+from datetime import datetime, timezone
 from io import TextIOWrapper
 from geopy.geocoders import Nominatim
 
@@ -78,16 +78,23 @@ def get_country(lat, lng, cache):
 def process_csv(file):
     first_sightings = {}
     cache = load_cache()
-
     reader = csv.DictReader(file)
+
+    base_time = datetime(2017, 1, 1, 0, 0, tzinfo=timezone.utc)
 
     for row in reader:
         if row["commonName"] and row["commonName"] not in first_sightings:
             country_name = get_country(row["latitude"], row["longitude"], cache)
             lat = round_coordinate(float(row["latitude"]))
             lng = round_coordinate(float(row["longitude"]))
+            dt = datetime.fromisoformat(row["date"])
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            else:
+                dt = dt.astimezone(timezone.utc)
+            minutes_since = int((dt - base_time).total_seconds() // 60)
             first_sightings[row["commonName"]] = [
-                datetime.fromisoformat(row["date"]).strftime("%Y-%m-%d %H:%M"),
+                minutes_since,
                 row["commonName"],
                 row["scientificName"],
                 lat,
