@@ -37,6 +37,39 @@ For those interested, I also have many photographs available in [my portfolio](h
 </div>
 
 <script>
+    class SuffixTrie {
+        constructor() {
+            this.root = {};
+        }
+
+        insert(text, index) {
+            const lowerText = text.toLowerCase();
+            for (let i = 0; i < lowerText.length; i++) {
+                let node = this.root;
+                for (let j = i; j < lowerText.length; j++) {
+                    const char = lowerText[j];
+                    if (!node[char]) {
+                        node[char] = { indices: new Set() };
+                    }
+                    node = node[char];
+                    node.indices.add(index);
+                }
+            }
+        }
+
+        search(query) {
+            let node = this.root;
+            for (let i = 0; i < query.length; i++) {
+                const char = query[i];
+                if (!node[char]) {
+                    return new Set();
+                }
+                node = node[char];
+            }
+            return node.indices || new Set();
+        }
+    }
+
     const shadowSize = 20;
     const toggleShadows = () => {
         const container = document.getElementById(
@@ -109,6 +142,13 @@ For those interested, I also have many photographs available in [my portfolio](h
         iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
         iconSize: [25, 41],
         iconAnchor: [12, 0]
+    });
+
+    const suffixTrie = new SuffixTrie();
+    sightings.forEach((sighting, i) => {
+        const [datetime, common_name, scientific_name] = sighting;
+        suffixTrie.insert(common_name, i);
+        suffixTrie.insert(scientific_name, i);
     });
 
     const updateMapAndTable = (sightings) => {
@@ -208,15 +248,14 @@ For those interested, I also have many photographs available in [my portfolio](h
         const nameFilter = document.getElementById('name-filter')
             .value
             .toLowerCase();
-        const filteredSightings = sightings.filter(([datetime, common_name,
-                scientific_name
-            ]) =>
-            common_name.toLowerCase()
-            .includes(nameFilter) ||
-            scientific_name.toLowerCase()
-            .includes(nameFilter)
-        );
-
+        let filteredSightings;
+        if (nameFilter === "") {
+            filteredSightings = sightings;
+        } else {
+            const indicesSet = suffixTrie.search(nameFilter);
+            const indicesArray = Array.from(indicesSet).sort((a, b) => a - b);
+            filteredSightings = indicesArray.map(i => sightings[i]);
+        }
         updateMapAndTable(filteredSightings);
     };
 
