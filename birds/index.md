@@ -156,82 +156,96 @@ For those interested, I also have many photographs available in [my portfolio](h
         const tableBody = document.getElementById('sightings-table')
             .getElementsByTagName('tbody')[0];
         tableBody.innerHTML = '';
-        sightings
-            .forEach((sighting, index) => {
-                const [datetime, common_name, scientific_name, latitude,
-                    longitude, country
-                ] = sighting;
-                const markerId = `marker-${index}`;
-                const roundedLatitude = latitude.toFixed(5);
-                const roundedLongitude = longitude.toFixed(5);
-                const wikiLink =
-                    `https://en.wikipedia.org/wiki/${scientific_name.replace(/ /g, '_')}`;
+        const fragment = document.createDocumentFragment();
+        const markerArray = [];
 
-                const marker = L.marker([latitude, longitude], {
-                        icon: locationIcon
-                    })
-                    .bindPopup(
-                        `${common_name}<br><span style='font-style: italic'>${scientific_name}</span><br>${datetime}<br>${roundedLatitude}, ${roundedLongitude}<br><a href='${wikiLink}' target='_blank'>Wikipedia</a>`
-                    );
-                markers.addLayer(marker);
+        sightings.forEach((sighting, index) => {
+            const [datetime, common_name, scientific_name, latitude,
+                longitude, country
+            ] = sighting;
+            const markerId = `marker-${index}`;
+            const roundedLatitude = latitude.toFixed(5);
+            const roundedLongitude = longitude.toFixed(5);
+            const wikiLink =
+                `https://en.wikipedia.org/wiki/${scientific_name.replace(/ /g, '_')}`;
 
-                marker.on('click', () => {
-                    const row = document.querySelector(
-                        `[data-marker-id='${markerId}']`);
-                    if (row) {
-                        const tableContainer = document
-                            .getElementById(
-                                'sightings-table-container');
-                        const rowTopRelativeToContainer = row
-                            .offsetTop;
-                        const containerScrollTopToCenterRow =
-                            rowTopRelativeToContainer - (
-                                tableContainer.offsetHeight / 2
-                            ) + (row.offsetHeight / 2);
+            const marker = L.marker([latitude, longitude], {
+                    icon: locationIcon
+                })
+                .bindPopup(
+                    `${common_name}<br><span style='font-style: italic'>${scientific_name}</span><br>${datetime}<br>${roundedLatitude}, ${roundedLongitude}<br><a href='${wikiLink}' target='_blank'>Wikipedia</a>`
+                );
+            markerArray.push(marker);
 
-                        tableContainer.scrollTop =
-                            containerScrollTopToCenterRow;
-                        document.querySelectorAll(
-                                '#sightings-table tbody tr')
-                            .forEach(tr => {
-                                tr.style.fontWeight =
-                                    'normal';
-                                tr.classList.remove(
-                                    'flash');
-                            });
-                        row.style.fontWeight = 'bold';
-                        row.classList.add('flash');
-                    }
-                });
+            marker.on('click', () => {
+                const row = document.querySelector(
+                    `[data-marker-id='${markerId}']`);
+                if (row) {
+                    const tableContainer = document
+                        .getElementById(
+                            'sightings-table-container');
+                    const rowTopRelativeToContainer = row
+                        .offsetTop;
+                    const containerScrollTopToCenterRow =
+                        rowTopRelativeToContainer - (
+                            tableContainer.offsetHeight / 2
+                        ) + (row.offsetHeight / 2);
 
-                const row = tableBody.insertRow();
-                row.setAttribute('data-marker-id', markerId);
-                row.insertCell(0)
-                    .textContent = sightings.length -
-                    index;
-                row.insertCell(1)
-                    .textContent = common_name;
-                row.insertCell(2)
-                    .textContent = country;
-                const date = datetime.split(" ")[0];
-                row.insertCell(3)
-                    .innerHTML =
-                    `<span class='nowrap'>${date}</span>`;
-
-                row.addEventListener('click', () => {
+                    tableContainer.scrollTop =
+                        containerScrollTopToCenterRow;
                     document.querySelectorAll(
                             '#sightings-table tbody tr')
-                        .forEach(tr => tr.style.fontWeight =
-                            'normal');
+                        .forEach(tr => {
+                            tr.style.fontWeight =
+                                'normal';
+                            tr.classList.remove(
+                                'flash');
+                        });
                     row.style.fontWeight = 'bold';
-                    markers.zoomToShowLayer(marker, () => {
-                        map.setView(marker.getLatLng(), zoomLevel);
-                        marker.openPopup();
-                    });
+                    row.classList.add('flash');
+                }
+            });
+
+            const row = document.createElement('tr');
+            row.setAttribute('data-marker-id', markerId);
+
+            const cell0 = document.createElement('td');
+            cell0.textContent = sightings.length - index;
+            row.appendChild(cell0);
+
+            const cell1 = document.createElement('td');
+            cell1.textContent = common_name;
+            row.appendChild(cell1);
+
+            const cell2 = document.createElement('td');
+            cell2.textContent = country;
+            row.appendChild(cell2);
+
+            const cell3 = document.createElement('td');
+            cell3.innerHTML = `<span class='nowrap'>${datetime.split(" ")[0]}</span>`;
+            row.appendChild(cell3);
+
+            row.addEventListener('click', () => {
+                document.querySelectorAll(
+                        '#sightings-table tbody tr')
+                    .forEach(tr => tr.style.fontWeight =
+                        'normal');
+                row.style.fontWeight = 'bold';
+                markers.zoomToShowLayer(marker, () => {
+                    map.setView(marker.getLatLng(), zoomLevel);
+                    marker.openPopup();
                 });
             });
 
-        toggleShadows();
+            fragment.appendChild(row);
+        });
+
+        requestAnimationFrame(() => {
+            tableBody.appendChild(fragment);
+            toggleShadows();
+        });
+
+        markers.addLayers(markerArray);
         map.addLayer(markers);
 
         if (markers.getLayers()
