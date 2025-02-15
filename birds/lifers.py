@@ -34,14 +34,23 @@ def save_cache(cache):
         json.dump(cache, f, indent=4)
 
 
-def round_coordinate(coord):
+def round_coordinate_for_cache(coord):
     whole, fraction = coord.split(".")
     return f"{whole}.{fraction[:1]}"
 
 
+def round_coordinate(coord):
+    """
+    Rounds a coordinate to 5 decimal places (~1.1 meter accuracy).
+    This reduces the number of digits to shrink the size of the array in the
+    document.
+    """
+    return round(coord, 5)
+
+
 def get_country(lat, lng, cache):
-    lat_rounded = round_coordinate(lat)
-    lng_rounded = round_coordinate(lng)
+    lat_rounded = round_coordinate_for_cache(lat)
+    lng_rounded = round_coordinate_for_cache(lng)
     coord_key = f"{lat_rounded},{lng_rounded}"
 
     eprint(f"Checking ({lat_rounded}, {lng_rounded})")
@@ -75,12 +84,14 @@ def process_csv(file):
     for row in reader:
         if row["commonName"] and row["commonName"] not in first_sightings:
             country_name = get_country(row["latitude"], row["longitude"], cache)
+            lat = round_coordinate(float(row["latitude"]))
+            lng = round_coordinate(float(row["longitude"]))
             first_sightings[row["commonName"]] = [
                 datetime.fromisoformat(row["date"]).strftime("%Y-%m-%d %H:%M"),
                 row["commonName"],
                 row["scientificName"],
-                float(row["latitude"]),
-                float(row["longitude"]),
+                lat,
+                lng,
                 country_name,
             ]
 
