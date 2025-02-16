@@ -82,9 +82,10 @@ def process_csv(file):
 
     base_time = datetime(2017, 1, 1, 0, 0, tzinfo=timezone.utc)
 
+    raw_sightings = []
     for row in reader:
         if row["commonName"] and row["commonName"] not in first_sightings:
-            country_name = get_country(row["latitude"], row["longitude"], cache)
+            get_country(row["latitude"], row["longitude"], cache)
             lat = round_coordinate(float(row["latitude"]))
             lng = round_coordinate(float(row["longitude"]))
             dt = datetime.fromisoformat(row["date"])
@@ -93,19 +94,28 @@ def process_csv(file):
             else:
                 dt = dt.astimezone(timezone.utc)
             minutes_since = int((dt - base_time).total_seconds() // 60)
-            first_sightings[row["commonName"]] = [
+            raw_sightings.append([
                 minutes_since,
                 row["commonName"],
                 row["scientificName"],
                 lat,
-                lng,
-                country_name,
-            ]
+                lng
+            ])
+            first_sightings[row["commonName"]] = True
 
     save_cache(cache)
-    sightings_list = list(reversed(first_sightings.values()))
+    sightings = list(reversed(raw_sightings))
 
-    return json.dumps(sightings_list)
+    countries_json = json.dumps(cache["countries"])
+    lat_long_map_json = json.dumps(cache["coordinates"])
+    sightings_json = json.dumps(sightings)
+
+    output_lines = [
+        f"const countries = {countries_json};",
+        f"const lat_long_map = {lat_long_map_json};",
+        f"const sightings = {sightings_json};"
+    ]
+    return "\n".join(output_lines)
 
 
 def main():
@@ -125,8 +135,8 @@ def main():
 
             with z.open(csv_files[0]) as csv_file:
                 file = TextIOWrapper(csv_file, encoding="utf-8")
-                js_array = process_csv(file)
-                print(f"const sightings = {js_array};")
+                js_output = process_csv(file)
+                print(js_output)
 
     except zipfile.BadZipFile:
         eprint("Invalid zip file")
