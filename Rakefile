@@ -65,6 +65,9 @@ redirects = {
   "tmpfs" => "/2021/07/02/tmpfs-inode-corruption-introducing-inode64.html",
   "2020/01/13/1195725856-other-mysterious-numbers.html" => "/2020/01/13/1195725856-and-friends-the-origins-of-mysterious-numbers.html",
 
+  # Used on Reddit many moons ago...
+  "images/hccr.jpg" => "https://live.staticflickr.com/65535/54094892569_2219377b75_o.jpg",
+
   # Frequent 404s
   "feed" => "/feed.xml",
   "rss" => "/feed.xml",
@@ -78,17 +81,19 @@ task :create_local_redirects => :build do
       raise "Redirect stub would overwrite #{loc}"
     end
 
-    unless File.file?(Dir.pwd + "/_deploy/" + to)
-      raise "Missing redirect target to #{to}"
+    unless to.start_with?("http://", "https://")
+      unless File.file?(Dir.pwd + "/_deploy/" + to)
+        raise "Missing redirect target to #{to}"
+      end
     end
 
-    if loc.end_with?(".html")
+    if File.extname(loc).empty?
+      FileUtils.mkdir_p(loc)
+      File.open("#{loc}/index.html", "w") {}
+    else
       # Old redirects that used to be handled by jekyll-redirect-from
       FileUtils.mkdir_p(File.dirname(loc))
       File.open(loc, "w") {}
-    else
-      Dir.mkdir(loc)
-      File.open(loc + "/index.html", "w") {}
     end
   end
 end
@@ -115,7 +120,7 @@ end
 
 task :setup_redirects do
   redirects.each do |from, to|
-    unless from.end_with?(".html")
+    if File.extname(from).empty?
       from = "#{from}/index.html"
     end
     sh "s3cmd modify s3://chrisdown.name/#{from} --add-header='x-amz-website-redirect-location:#{to}'"
