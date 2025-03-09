@@ -55,9 +55,9 @@ header:
     - icon: github
       url: https://github.com/cdown
       title: My GitHub profile
-    - icon: twitter
-      url: https://twitter.com/unixchris
-      title: My Twitter profile
+    - icon: mastodon
+      url: https://fosstodon.org/@cdown
+      title: My Mastodon profile
 
 plugins:
   - jekyll-sitemap
