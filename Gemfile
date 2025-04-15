@@ -9,3 +9,7 @@ gem 'rake'
 
 # https://github.com/jekyll/jekyll/issues/8523
 gem 'webrick'
+
+# No longer in stdlib
+gem 'csv'
+gem 'base64'
