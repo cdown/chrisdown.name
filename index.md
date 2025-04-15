@@ -68,14 +68,13 @@ list, I'm probably not actively developing or maintaining them.
 ## Selected talks
 
 {: .light .tworight }
+| [Lies programmers believe about memory](https://www.usenix.org/conference/srecon25americas/presentation/down) | at [SREcon](https://www.usenix.org/conference/srecon25americas/presentation/down) |
 | [7 years of cgroup v2](https://www.youtube.com/watch?v=LX6fMlIYZcg) | at [FOSDEM](https://fosdem.org/2023/schedule/event/container_cgroup_v2/) |
 | [The future of Linux resource control](https://www.youtube.com/watch?v=kPMZYoRxtmg) | at [LISA](https://www.usenix.org/conference/lisa21) |
 | [Linux memory management at scale](/2019/07/18/linux-memory-management-at-scale.html) | at [SREcon](https://www.usenix.org/conference/srecon19asia/presentation/down)/[FOSDEM](https://fosdem.org/2020/schedule/event/containers_memory_management/) |
 | [cgroup v2: Linux's new unified resource hierarchy](https://www.youtube.com/watch?v=ikZ8_mRotT4) | at [FOSDEM](https://archive.fosdem.org/2017/schedule/event/cgroupv2/)/[ASG](https://twitter.com/ASGConf/status/922010850218725376) |
 | [Lessons learned running SSL at scale](https://www.youtube.com/watch?v=9Ya8H-9Hrp4) | at [FOSDEM](https://archive.fosdem.org/2016/schedule/event/sslmanagement/) |
 | The Web Foundation model | lecture at [UCL](https://www.ucl.ac.uk/) |
-| [Shell pitfalls and code smells](https://slides.com/chrisdown/avoiding-bash-pitfalls-and-code-smells/fullscreen) | at LVL.UP Kuala Lumpur |
-| [Pragmatic minimalism as a software design tool](https://slides.com/chrisdown/pragmaticminimalism/fullscreen) | at LVL.UP Kuala Lumpur |
 
 ## Other content on this domain
 
