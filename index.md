@@ -68,7 +68,7 @@ list, I'm probably not actively developing or maintaining them.
 ## Selected talks
 
 {: .light .tworight }
-| [Lies programmers believe about memory](https://www.usenix.org/conference/srecon25americas/presentation/down) | at [SREcon](https://www.usenix.org/conference/srecon25americas/presentation/down) |
+| [Lies programmers believe about memory](https://www.youtube.com/watch?v=7sjyqiMjmZk) | at [SREcon](https://www.usenix.org/conference/srecon25americas/presentation/down) |
 | [7 years of cgroup v2](https://www.youtube.com/watch?v=LX6fMlIYZcg) | at [FOSDEM](https://fosdem.org/2023/schedule/event/container_cgroup_v2/) |
 | [The future of Linux resource control](https://www.youtube.com/watch?v=kPMZYoRxtmg) | at [LISA](https://www.usenix.org/conference/lisa21) |
 | [Linux memory management at scale](/2019/07/18/linux-memory-management-at-scale.html) | at [SREcon](https://www.usenix.org/conference/srecon19asia/presentation/down)/[FOSDEM](https://fosdem.org/2020/schedule/event/containers_memory_management/) |
