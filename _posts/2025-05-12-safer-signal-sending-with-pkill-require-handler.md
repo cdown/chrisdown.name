@@ -281,7 +281,7 @@ $ grep SigCgt /proc/12345/status
 SigCgt: 0000000000000001
 
 $ pkill -H -HUP -F /tmp/test.pid
-$ # Process is still alive and handled the signal!
+$ # Process is still alive and handled the signal
 
 $ pkill -H -USR1 -F /tmp/test.pid
 $ # No match (no USR1 handler), so no signal sent
@@ -381,27 +381,17 @@ process. This includes:
 `--require-handler` adds a safety net, but where possible it's still ideal to
 clean up all signal senders when removing a handler.
 
-## Conclusion
-
-The new `--require-handler` flag in `pkill` provides a simple but effective
+All in all, the new `--require-handler` flag in `pkill` provides a simple but effective
 safeguard against one of the most common signal-related problems in production
-environments. By ensuring signals are only sent to processes that actually have
-handlers for them, it prevents unexpected terminations when signal handlers are
-removed.
+environments. This isn't a silver bullet for all signal related issues --
+signals still have many other problems as detailed in my previous article --
+but for systems where signals can't be entirely avoided, this flag adds a
+meaningful layer of protection.
 
-This isn't a silver bullet for all signal related issues -- signals still have
-many other problems as detailed in my previous article -- but for systems where
-signals can't be entirely avoided, this flag adds a meaningful layer of
-protection. The new functionality is in procps-ng 4.0.3, which should be in
-most distributions now.
-
-While signals might be deeply entrenched in Unix and Linux, that doesn't mean
-we can't make them safer to use. The `--require-handler` flag is one small step
-toward that goal. For new applications, I still recommend using more explicit
-IPC mechanisms when possible, but for existing systems, this flag can help
-prevent those dreaded midnight wake-up calls when logrotate innocently goes
-about its business. :-)
-
-The safest signal is the one you never have to send. But if you must send
-signals, at least make sure the recipient is actually ready to handle them with
-safeguards like `--require-handler`.
+The new functionality is in procps-ng 4.0.3, which should be in most
+distributions now. While signals might be deeply entrenched in Unix and Linux,
+that doesn't mean we can't make them safer to use. The `--require-handler` flag
+is one small step toward that goal. For new applications, I still recommend
+using more explicit IPC mechanisms when possible, but for existing systems,
+this flag can help prevent those dreaded midnight wake-up calls when logrotate
+innocently goes about its business. :-)
