@@ -395,3 +395,5 @@ is one small step toward that goal. For new applications, I still recommend
 using more explicit IPC mechanisms when possible, but for existing systems,
 this flag can help prevent those dreaded midnight wake-up calls when logrotate
 innocently goes about its business. :-)
+
+And many thanks to [Craig](https://gitlab.com/csmall) for reviewing the patch!
