@@ -1,27 +1,34 @@
 ---
 layout: post
-title: "Making signals safer with pkill's new --require-handler flag"
+title: "Preventing outages with pkill's new --require-handler"
 description: "A safer approach to using signals in production systems, avoiding service outages when signal handlers are removed."
 ---
 
 A little while ago, I wrote an [article about the dangers of signals in
 production](https://developers.facebook.com/blog/post/2022/09/27/signals-in-prod-dangers-and-pitfalls/),
-where I detailed a particularly frustrating outage caused by the removal of a
-SIGHUP handler. The story goes something like this:
+where I detailed a particularly frustrating outage in Meta production caused by
+the removal of an innocent looking SIGHUP handler. The story goes something
+like this:
 
 1. An application uses SIGHUP for some useful purpose (configuration reload,
-   log rotation)
+   log rotation).
 2. Later, this functionality is deprecated or removed, and the signal handler
-   is removed too
-3. But one callsite sending the signal (often in logrotate or a service
-   manager) is missed
-4. Suddenly the application begins terminating when it receives the now
-   unhandled signal
+   is removed too.
+3. However, one callsite sending the signal (often in logrotate or a service
+   manager) is missed.
+4. Later, when this callsite fires, the application begins terminating when it
+   receives the now unhandled signal.
+5. Production goes down in the middle of the night.
 
 While avoiding signals altogether is ideal for many cases, realistically
 they're deeply embedded in the Linux ecosystem, so as part of my work trying to
 improve Linux quality and safety I've been working on ways to make signals less
 dangerous when they're unavoidable.
+
+This type of outage is particularly insidious because the change that
+introduces it seems innocent, and the failure often happens weeks later. To
+address this exact problem, I've added the new `--require-handler` flag to
+`pkill` that provides a safety net for situations just like this.
 
 ## The dangers of signals
 
