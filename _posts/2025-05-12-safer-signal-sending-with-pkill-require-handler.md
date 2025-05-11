@@ -354,21 +354,6 @@ The `|| true` ensures that even if no processes match (because they don't have
 handlers), the logrotate script still succeeds. Use it if that's the behaviour
 you want.
 
-## Why not just... fix your code?
-
-Some might ask why one shouldn't just have the code keep the signal handler
-even if you don't need it any more. That's certainly an option -- you could
-keep an empty handler that does nothing. But there are several issues with this
-approach, most notably that over time, you'd accumulate handlers for signals
-that your application no longer uses, making the code less clear. Developers
-now need to remember which signals must keep handlers even though they're no
-longer used, and it's unclear if they can be used again for other purposes
-later.
-
-The `--require-handler` flag gives us a better solution by moving the safety
-check from the application to the signal sender, which is much closer to where
-the actual problem occurs.
-
 In general, when removing a signal handler from your application, do a thorough
 search for any code or configuration that might send that signal to your
 process. This includes:
@@ -381,12 +366,12 @@ process. This includes:
 `--require-handler` adds a safety net, but where possible it's still ideal to
 clean up all signal senders when removing a handler.
 
-All in all, the new `--require-handler` flag in `pkill` provides a simple but effective
-safeguard against one of the most common signal-related problems in production
-environments. This isn't a silver bullet for all signal related issues --
-signals still have many other problems as detailed in my previous article --
-but for systems where signals can't be entirely avoided, this flag adds a
-meaningful layer of protection.
+All in all, the new `--require-handler` flag in `pkill` provides a simple but
+effective safeguard against one of the most common signal-related problems in
+production environments. This isn't a silver bullet for all signal related
+issues -- signals still have many other problems as detailed in my previous
+article -- but for systems where signals can't be entirely avoided, this flag
+adds a meaningful layer of protection.
 
 The new functionality is in procps-ng 4.0.3, which should be in most
 distributions now. While signals might be deeply entrenched in Unix and Linux,
