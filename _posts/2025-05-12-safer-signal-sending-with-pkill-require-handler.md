@@ -270,7 +270,7 @@ int main() {
         exit(1);
     }
 
-    FILE *f = fopen("/tmp/test.pid", "w");
+    FILE *f = fopen("/tmp/handler.pid", "w");
     if (!f) {
         exit(1);
     }
@@ -296,10 +296,10 @@ handler using our new flag:
 $ grep SigCgt /proc/12345/status
 SigCgt: 0000000000000001
 
-$ pkill -H -HUP -F /tmp/test.pid
+$ pkill -H -HUP -F /tmp/handler.pid
 $ # Process is still alive and handled the signal
 
-$ pkill -H -USR1 -F /tmp/test.pid
+$ pkill -H -USR1 -F /tmp/handler.pid
 $ # No match (no USR1 handler), so no signal sent
 {% endhighlight %}
 
