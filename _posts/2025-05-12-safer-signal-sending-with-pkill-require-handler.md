@@ -49,7 +49,7 @@ perilous. Here are a few others that terminate by default that you might not
 expect:
 
 - `SIGUSR1` and `SIGUSR2`: These are "user-defined signals" that you can
-   ostensibly use however you like. But because these are terminal by default,
+   ostensibly use however you like. But because these terminate by default,
    if you implement USR1 for some specific need and later don't need that, you
    can't just safely remove the code. You have to consciously think to
    explicitly ignore the signal. That's really not going to be obvious even to
