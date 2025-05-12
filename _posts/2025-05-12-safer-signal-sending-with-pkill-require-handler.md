@@ -420,6 +420,7 @@ END {
 }
 {% endhighlight %}
 
+    $ sudo ./sigcheck.bt 882492
     Attaching 3 probes...
     Tracing signals sent to PID 882492, ^C to end
     from pid=1      comm=systemd          sig=1
