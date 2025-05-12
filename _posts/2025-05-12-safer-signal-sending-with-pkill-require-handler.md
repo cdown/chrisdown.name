@@ -375,6 +375,8 @@ match (because they don't have handlers), the logrotate script still succeeds.
 Use it only if that's the behaviour you want.
 {% endsidenote %}
 
+## Due diligence
+
 In general, when removing a signal handler from your application, it pays to do
 some spelunking and dig through any code or configuration that might send that
 signal to your process. This might include:
@@ -383,6 +385,51 @@ signal to your process. This might include:
 - Management scripts or tools
 - Monitoring systems that might send signals
 - Any other services that interact with yours
+
+Here is a small bpftrace program which can also help. Pass it a pid on the
+command line, and it will tell you which signals are being send to that pid,
+and by which process:
+
+{% highlight bash %}
+#!/usr/bin/env bpftrace
+
+BEGIN {
+    if ($# < 1) {
+        printf("Usage: ./sig.bt PID\n");
+        exit();
+    }
+    @target = $1;
+    printf("Tracing signals sent to PID %d, ^C to end\n", @target);
+}
+
+tracepoint:signal:signal_generate
+/ args->pid == @target /
+{
+    @sig_count[args->sig]++;
+    /* pid/comm are from the _sending_ pid */
+    printf("pid=%-6d comm=%-16s sig=%d\n", pid, comm, args->sig);
+}
+
+END {
+    printf("\nSignal summary for PID %d:\n", @target);
+    print(@sig_count);
+    clear(@target);
+    clear(@sig_count);
+}
+{% endhighlight %}
+
+    Attaching 3 probes...
+    Tracing signals sent to PID 882492, ^C to end
+    from pid=1      comm=systemd          sig=1
+    from pid=885998 comm=kill             sig=10
+    from pid=1      comm=systemd          sig=1
+    ^C
+    Signal summary for PID 882492:
+    @sig_count[1]: 2
+    @sig_count[10]: 1
+
+This program can help you find signals being sent that you might not be
+expecting before you land a change to remove a signal handler.
 
 Using `pkill -H` adds a safety net, but where possible it's still ideal to
 clean up all signal senders when removing a handler. All in all, `pkill -H`
