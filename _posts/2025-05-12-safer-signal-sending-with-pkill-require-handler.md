@@ -129,14 +129,12 @@ If you examine this file for any running process, you'll find several
 signal-related fields:
 
 {% highlight bash %}
-$ cat /proc/self/status
-...
-SigQ:   0/31367
+% grep '^Sig' /proc/self/status
+SigQ:   0/254456
 SigPnd: 0000000000000000
 SigBlk: 0000000000000000
-SigIgn: 0000000000380004
-SigCgt: 0000000180000000
-...
+SigIgn: 0000000000000000
+SigCgt: 0000000000000400
 {% endhighlight %}
 
 The key field here is `SigCgt` (that is, "signals caught"), which shows which
