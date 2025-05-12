@@ -70,7 +70,7 @@ insidious because:
    later
 3. The failure can occur weeks or months after the code change
 
-## Mitigating with --require-handler
+## Mitigating with \-\-require-handler
 
 As part of my work to mitigate some of the dangers around signals, I've added a
 new flag to `pkill` called `--require-handler` (or `-H` for short). This flag
