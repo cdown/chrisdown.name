@@ -74,8 +74,9 @@ insidious because:
 
 ## Mitigating with \-\-require-handler
 
-As part of my work to mitigate some of the dangers around signals, I've added a
-new flag to `pkill` called `--require-handler` (or `-H` for short). This flag
+As part of my work to mitigate some of the dangers around signals, I've [added a
+new flag to `pkill` called
+`--require-handler`](https://gitlab.com/procps-ng/procps/-/commit/866abacf8805a74fb7c59cae1f64963e0a540b14) (or `-H` for short). This flag
 ensures that signals are only sent to processes that have actually registered a
 handler for that signal.
 
