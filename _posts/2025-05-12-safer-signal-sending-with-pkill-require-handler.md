@@ -334,9 +334,9 @@ $ # Process terminated due to unhandled SIGHUP
 `pkill -H` is most valuable in system management contexts where signals are
 traditionally used for control, such as:
 
-1. **Log rotation scripts**: When telling a service to reopen its logs
-2. **Configuration management**: When asking a service to reload its config
-3. **Service control scripts**: When controlling long running processes
+1. When telling a service to reopen or rotate its logs
+2. When asking a service to reload its config
+3. When controlling long running processes through signals
 
 For example, you can audit your `/etc/logrotate.d/` directory and update any
 `postrotate` scripts that send signals from something like this:
