@@ -32,7 +32,7 @@ terminal connection was severed, making process continuation unnecessary. This
 original meaning remains valid today, and is used in places like remote SSH
 sessions where disconnection triggers process termination.
 
-However, SIGHUP has simultaneously evolved to serve an additional purpose:
+SIGHUP has, however, also started moonlighting with an additional purpose:
 requesting applications to reload their configuration or rotate their logs.
 This mixed interpretation of `SIGHUP` emerged because daemon processes
 typically run detached from any controlling terminal, so since these background
