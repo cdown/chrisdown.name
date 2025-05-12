@@ -140,7 +140,13 @@ SigCgt: 0000000000000400
 The key field here is `SigCgt` (that is, "signals caught"), which shows which
 signals have userspace handlers registered in this process. These fields are
 hexadecimal bitmaps where each bit represents a signal number. If bit N-1 is
-set, it means there's a handler for signal N.
+set, it means there's a handler for signal N. From `man 5 proc_pid_status`:
+
+{% cc %}
+> SigBlk, SigIgn, SigCgt: Masks (expressed in hexadecimal) indicating signals
+> being blocked, ignored, and caught (see `signal(7)`).
+<div class="citation">from <a href="https://man7.org/linux/man-pages/man5/proc_pid_status.5.html">man 5 proc_pid_status</a></div>
+{% endcc %}
 
 So to decode these, we first decode these from hexadecimal, and then check the
 relevant bit position. For `SIGUSR1`, for example, we can see the value the
@@ -378,15 +384,15 @@ signal to your process. This might include:
 - Monitoring systems that might send signals
 - Any other services that interact with yours
 
-`pkill -H` adds a safety net, but where possible it's still ideal to clean up
-all signal senders when removing a handler. All in all, `pkill -H` provides a
-simple but effective safeguard against one of the most common signal-related
-problems in production environments. This isn't a silver bullet for all signal
-related issues -- signals still have many other problems as detailed in my
-previous article -- but for systems where signals can't be entirely avoided,
-this flag adds a meaningful layer of protection.
+Using `pkill -H` adds a safety net, but where possible it's still ideal to
+clean up all signal senders when removing a handler. All in all, `pkill -H`
+provides a simple but effective safeguard against one of the most common
+signal-related problems in production environments. This isn't a silver bullet
+for all signal related issues -- signals still have many other problems as
+detailed in my previous article -- but for systems where signals can't be
+entirely avoided, this flag adds a meaningful layer of protection.
 
-The new functionality is in procps-ng 4.0.3, which should be in most
+`pkill -H` was released as part of procps-ng 4.0.3, which should be in most
 distributions now. While signals might be deeply entrenched in Unix and Linux,
 that doesn't mean we can't make them safer to use, and `pkill -H` is one step
 towards that goal. For new applications, I still recommend using more explicit
