@@ -25,6 +25,8 @@ configured to send SIGHUP to the process after rotating logs. With the handler
 now removed, the default behaviour for SIGHUP in the kernel kicked in instead:
 immediate termination.
 
+## Why are signals so problematic?
+
 The fundamental issue is that many signals, including the widely used `SIGHUP`,
 have a default disposition of terminating the process. This reflects the
 literal meaning embedded in `SIGHUP`'s name -- "hangup" -- which indicates the
