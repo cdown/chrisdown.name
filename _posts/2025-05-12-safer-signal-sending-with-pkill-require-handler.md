@@ -253,15 +253,24 @@ program that installs a SIGHUP handler:
 #include <unistd.h>
 
 static volatile sig_atomic_t hup;
-void handler(int sig){ (void)sig; hup = 1; }
+void handler(int sig) {
+    (void)sig;
+    hup = 1;
+}
 
-int main(){
-    struct sigaction sa = { .sa_handler = handler };
-    if (sigaction(SIGHUP, &sa, 0) < 0) exit(1);
+int main() {
+    struct sigaction sa = {.sa_handler = handler};
+    if (sigaction(SIGHUP, &sa, 0) < 0) {
+        exit(1);
+    }
 
     FILE *f = fopen("/tmp/test.pid", "w");
-    if (!f) exit(1);
-    if (fprintf(f, "%d\n", getpid()) < 0) exit(1);
+    if (!f) {
+        exit(1);
+    }
+    if (fprintf(f, "%d\n", getpid()) < 0) {
+        exit(1);
+    }
     fclose(f);
 
     for (;;) {
@@ -295,14 +304,17 @@ Now let's try a process without a handler:
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(){
+int main() {
     FILE *f = fopen("/tmp/nohandler.pid", "w");
-    if (!f) exit(1);
-    if (fprintf(f, "%d\n", getpid()) < 0) exit(1);
+    if (!f) {
+        exit(1);
+    }
+    if (fprintf(f, "%d\n", getpid()) < 0) {
+        exit(1);
+    }
     fclose(f);
     pause();
 }
-
 {% endhighlight %}
 
 And test it:
