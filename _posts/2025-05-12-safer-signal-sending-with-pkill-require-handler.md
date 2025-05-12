@@ -127,7 +127,7 @@ So how does `pkill` detect whether a process has a signal handler registered?
 The answer lies in the Linux procfs interface, specifically in
 `/proc/[pid]/status`.
 
-If you examine this file for any running process, you'll find several
+If you examine this file for any extant process, you'll find several
 signal-related fields:
 
 {% highlight bash %}
