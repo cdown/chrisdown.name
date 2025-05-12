@@ -7,8 +7,7 @@ description: "A safer approach to using signals in production systems, avoiding 
 A little while ago, I wrote an [article about the dangers of signals in
 production](https://developers.facebook.com/blog/post/2022/09/27/signals-in-prod-dangers-and-pitfalls/),
 where I detailed a particularly frustrating outage in Meta production caused by
-the removal of an innocent looking SIGHUP handler. At Meta, we have a service
-called
+the removal of a SIGHUP handler. At Meta, we have a service called
 [LogDevice](https://engineering.fb.com/2017/08/31/core-infra/logdevice-a-distributed-data-store-for-logs/).
 As many other daemons do, LogDevice had a signal handler registered for SIGHUP,
 with the goal being to reopen the log file after rotation. All pretty innocuous
@@ -16,7 +15,8 @@ stuff.
 
 One day, the team cleaned up their codebase and removed some unused features,
 including the code that responded to SIGHUP signals, which was now unneeded as
-it was handled in another way.
+it was handled in another way. They thought they had also removed all callsites
+which sent SIGHUP.
 
 Everything worked fine for a few weeks until, suddenly, service nodes started
 dropping at an alarming rate in the middle of the night, and a LogDevice outage
