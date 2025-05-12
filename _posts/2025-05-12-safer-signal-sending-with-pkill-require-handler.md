@@ -150,8 +150,8 @@ set, it means there's a handler for signal N. From `man 5 proc_pid_status`:
 <div class="citation">from <a href="https://man7.org/linux/man-pages/man5/proc_pid_status.5.html">man 5 proc_pid_status</a></div>
 {% endcc %}
 
-So to decode these, we first decode these from hexadecimal, and then check the
-relevant bit position. For `SIGUSR1`, for example, we can see the value the
+So to interpret these, we first decode these from hexadecimal, and then check
+the relevant bit position. For `SIGUSR1`, for example, we can see the value the
 value is 10:
 
 {% highlight bash %}
