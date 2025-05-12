@@ -355,9 +355,9 @@ The `|| true` ensures that even if no processes match (because they don't have
 handlers), the logrotate script still succeeds. Use it if that's the behaviour
 you want.
 
-In general, when removing a signal handler from your application, do a thorough
-search for any code or configuration that might send that signal to your
-process. This includes:
+In general, when removing a signal handler from your application, it pays to do
+some spelunking and dig through any code or configuration that might send that
+signal to your process. This might include:
 
 - System tools like logrotate, systemd units, or cron jobs
 - Management scripts or tools
@@ -374,10 +374,10 @@ this flag adds a meaningful layer of protection.
 
 The new functionality is in procps-ng 4.0.3, which should be in most
 distributions now. While signals might be deeply entrenched in Unix and Linux,
-that doesn't mean we can't make them safer to use. `pkill -H` is one step
+that doesn't mean we can't make them safer to use, and `pkill -H` is one step
 towards that goal. For new applications, I still recommend using more explicit
-IPC mechanisms when possible, but for existing systems using signals, this flag
-can help prevent those dreaded midnight wake-up calls when logrotate innocently
-goes about its business. :-)
+IPC mechanisms when possible, but for every system where that's not possible,
+using `pkill -H` is a great way to eliminate an entire class of outage
+entirely.
 
 Many thanks to [Craig](https://gitlab.com/csmall) for reviewing the patch.
