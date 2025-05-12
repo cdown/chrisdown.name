@@ -40,7 +40,7 @@ This mixed interpretation of `SIGHUP` emerged because daemon processes
 typically run detached from any controlling terminal, so since these background
 services wouldn't naturally receive terminal disconnection signals, `SIGHUP`
 was repurposed by application authors. Unfortunately, these mixed signals about
-`SIGHUP`'s meaning creates a confusing interface with competing
+`SIGHUP`'s meaning create a confusing interface with competing
 interpretations.
 
 {% sidenote %}
