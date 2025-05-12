@@ -7,66 +7,54 @@ description: "A safer approach to using signals in production systems, avoiding 
 A little while ago, I wrote an [article about the dangers of signals in
 production](https://developers.facebook.com/blog/post/2022/09/27/signals-in-prod-dangers-and-pitfalls/),
 where I detailed a particularly frustrating outage in Meta production caused by
-the removal of an innocent looking SIGHUP handler. The story goes something
-like this:
-
-1. An application uses SIGHUP for some useful purpose (configuration reload,
-   log rotation).
-2. Later, this functionality is deprecated or removed, and the signal handler
-   is removed too.
-3. However, one callsite sending the signal (often in logrotate or a service
-   manager) is missed.
-4. Later, when this callsite fires, the application begins terminating when it
-   receives the now unhandled signal.
-5. Production goes down in the middle of the night.
-
-While avoiding signals altogether is ideal for many cases, realistically
-they're deeply embedded in the Linux ecosystem, so as part of my work trying to
-improve Linux quality and safety I've been working on ways to make signals less
-dangerous when they're unavoidable.
-
-This type of outage is particularly insidious because the change that
-introduces it seems innocent, and the failure often happens weeks later. To
-address this exact problem, I've added the new `--require-handler` flag to
-`pkill` that provides a safety net for situations just like this.
-
-## The dangers of signals
-
-To understand the underlying problem here, let me briefly recap the incident
-that inspired it. At Meta, we have a service called
+the removal of an innocent looking SIGHUP handler. At Meta, we have a service
+called
 [LogDevice](https://engineering.fb.com/2017/08/31/core-infra/logdevice-a-distributed-data-store-for-logs/).
-Along with all its other useful functionality, it had a SIGHUP handler to
-manage log file rotation. One day, the team cleaned up their codebase and
-removed some unused features, including the code that responded to SIGHUP
-signals.
+As many other daemons do, LogDevice had a signal handler registered for SIGHUP,
+with the goal being to reopen the log file after rotation. All pretty innocuous
+stuff.
 
-Everything worked fine for a few weeks until suddenly, service nodes started
-dropping at an alarming rate in the middle of the night. As it turned out,
-there was a logrotate configuration that was still sending SIGHUP to the
-process when rotating logs. With the handler removed, the default behaviour for
-SIGHUP in the kernel kicked in: immediate termination.
+One day, the team cleaned up their codebase and removed some unused features,
+including the code that responded to SIGHUP signals, which was now unneeded as
+it was handled in another way.
 
-The fundamental issue is that many signals, including the commonly used
-`SIGHUP`, have a default disposition of terminating the process. This is a
-relic from the early Unix days when `SIGHUP` meant "hangup" -- that is, the
-terminal connection was severed, and there was no point in the process
-continuing to run. Today, `SIGHUP` is widely used for a different purpose: to
-request applications to reload their configuration or rotate their logs.
+Everything worked fine for a few weeks until, suddenly, service nodes started
+dropping at an alarming rate in the middle of the night, and a LogDevice outage
+occurred. As it turned out, there was a logrotate configuration that was still
+configured to send SIGHUP to the process after rotating logs. With the handler
+now removed, the default behaviour for SIGHUP in the kernel kicked in instead:
+immediate termination.
+
+The fundamental issue is that many signals, including the widely used `SIGHUP`,
+have a default disposition of terminating the process. This reflects the
+literal meaning embedded in `SIGHUP`'s name -- "hangup" -- which indicates the
+terminal connection was severed, making process continuation unnecessary. This
+original meaning remains valid today, and is used in places like remote SSH
+sessions where disconnection triggers process termination.
+
+However, SIGHUP has simultaneously evolved to serve an additional purpose:
+requesting applications to reload their configuration or rotate their logs.
+This mixed interpretation of `SIGHUP` emerged because daemon processes
+typically run detached from any controlling terminal, so since these background
+services wouldn't naturally receive terminal disconnection signals, `SIGHUP`
+was repurposed by application authors. Unfortunately, these mixed signals about
+`SIGHUP`'s meaning creates a confusing interface with competing
+interpretations.
 
 {% sidenote %}
 Many innocent looking signals have default dispositions that are actually quite
-perilous. Here are a few that terminate by default but are often repurposed:
+perilous. Here are a few others that terminate by default that you might not
+expect:
 
-- `SIGHUP`: Originally for "terminal hangup", and if this was used only as it
-   was originally intended, defaulting to terminate would be sensible. With the
-   current mixed usage meaning "reopen files," this is dangerous.
 - `SIGUSR1` and `SIGUSR2`: These are "user-defined signals" that you can
    ostensibly use however you like. But because these are terminal by default,
    if you implement USR1 for some specific need and later don't need that, you
    can't just safely remove the code. You have to consciously think to
    explicitly ignore the signal. That's really not going to be obvious even to
    every experienced programmer.
-- `SIGIO`: Used for asynchronous I/O. Or killing your process. It's a 50/50.
+- `SIGPROF`: Designed as part of profiling timer expiration. Apparently your
+  program's time may be up in more ways than one.
+- ...and `SIGIO`, `SIGPOLL`, `SIGHUP`, etc.
 
 Having these terminate by default is a dangerous footgun for application
 developers, but it's unfortunately one we have to live with due to backwards
@@ -78,7 +66,8 @@ heard similar stories from colleagues at other companies. It's particularly
 insidious because:
 
 1. The change that removes the signal handler often seems harmless
-2. Testing rarely catches it because the signal isn't triggered in test environments
+2. Testing rarely catches it because the signal isn't triggered until much
+   later
 3. The failure can occur weeks or months after the code change
 
 ## Mitigating with --require-handler
@@ -88,8 +77,8 @@ new flag to `pkill` called `--require-handler` (or `-H` for short). This flag
 ensures that signals are only sent to processes that have actually registered a
 handler for that signal.
 
-Let's look at a typical logrotate configuration that you might find in the
-wild:
+For an example of how it can avoid these kinds of incidents, let's look at a
+typical logrotate configuration that you might find in the wild:
 
 {% highlight bash %}
 /var/log/cron
@@ -106,11 +95,11 @@ wild:
 {% endhighlight %}
 
 This pattern is extremely common in system administration scripts. It reads a
-PID from a file and sends a signal directly. But it has no way to verify
+PID from a file and sends a signal directly. However, it has no way to verify
 whether the process actually has a handler for that signal before sending it.
 
-With the new `--require-handler` flag, we can combine it with pkill's existing
-`-F` flag (which reads PIDs from a file) to create a much safer alternative:
+We can combine the new `pkill -H` flag with pkill's existing `-F` flag (which
+reads PIDs from a file) to create a much safer alternative:
 
 {% highlight bash %}
 /var/log/cron
@@ -126,9 +115,9 @@ With the new `--require-handler` flag, we can combine it with pkill's existing
 }
 {% endhighlight %}
 
-This version only sends a SIGHUP signal if the process has a handler,
-preventing accidental termination. It's also a lot simpler than the original
-shell command, with fewer moving parts and subshells.
+This version only sends a `SIGHUP` signal if the process has a `SIGHUP`
+handler, preventing accidental termination. It's also a lot simpler than the
+original shell command, with fewer moving parts and subshells.
 
 ## How does it work?
 
@@ -151,18 +140,29 @@ SigCgt: 0000000180000000
 {% endhighlight %}
 
 The key field here is `SigCgt` (that is, "signals caught"), which shows which
-signals have userspace handlers registered. These fields are hexadecimal
-bitmaps where each bit represents a signal number. If bit N-1 is set, it means
-there's a handler for signal N.
+signals have userspace handlers registered in this process. These fields are
+hexadecimal bitmaps where each bit represents a signal number. If bit N-1 is
+set, it means there's a handler for signal N.
 
-The implementation of the `--require-handler` flag is quite straightforward. It
-reads this bitmap from `/proc/[pid]/status` and checks if the bit corresponding
-to the signal is set:
+So to decode these, we first decode these from hexadecimal, and then check the
+relevant bit position. For `SIGUSR1`, for example, we can see the value the
+value is 10:
+
+{% highlight bash %}
+% kill -l USR1
+10
+{% endhighlight %}
+
+So since we have a userspace signal handler if bit N-1 is set, we should check
+if bit 9 is set.
+
+That's exactly how this new feature works, too. When you call `pkill -H`, we
+read the bitmap from `/proc/[pid]/status` and check if the bit corresponding to
+the signal is set:
 
 {% cc %}
 {% highlight c %}
-static unsigned long long unhex (const char *restrict in)
-{
+static unsigned long long unhex(const char *restrict in) {
     unsigned long long ret;
     char *rem;
     errno = 0;
@@ -174,9 +174,10 @@ static unsigned long long unhex (const char *restrict in)
     return ret;
 }
 
-static int match_signal_handler (const char *restrict sigcgt, const int signal)
-{
-    return sigcgt && (((1UL << (signal - 1)) & unhex(sigcgt)) != 0);
+static int match_signal_handler(const char *restrict sigcgt,
+                                const int signal) {
+    return sigcgt &&
+           (((1UL << (signal - 1)) & unhex(sigcgt)) != 0);
 }
 {% endhighlight %}
 <div class="citation"><a href="https://gitlab.com/procps-ng/procps/-/blob/092ecde3601eb3979335ec1ff1fe598044c4b58f/src/pgrep.c">src/pgrep.c</a> from procps-ng</div>
@@ -318,8 +319,8 @@ $ # Process terminated due to unhandled SIGHUP
 
 ## Real world implementation
 
-`--require-handler` is most valuable in system management contexts where
-signals are traditionally used for control, such as:
+`pkill -H` is most valuable in system management contexts where signals are
+traditionally used for control, such as:
 
 1. **Log rotation scripts**: When telling a service to reopen its logs
 2. **Configuration management**: When asking a service to reload its config
@@ -363,22 +364,20 @@ process. This includes:
 - Monitoring systems that might send signals
 - Any other services that interact with yours
 
-`--require-handler` adds a safety net, but where possible it's still ideal to
-clean up all signal senders when removing a handler.
-
-All in all, the new `--require-handler` flag in `pkill` provides a simple but
-effective safeguard against one of the most common signal-related problems in
-production environments. This isn't a silver bullet for all signal related
-issues -- signals still have many other problems as detailed in my previous
-article -- but for systems where signals can't be entirely avoided, this flag
-adds a meaningful layer of protection.
+`pkill -H` adds a safety net, but where possible it's still ideal to clean up
+all signal senders when removing a handler. All in all, `pkill -H` provides a
+simple but effective safeguard against one of the most common signal-related
+problems in production environments. This isn't a silver bullet for all signal
+related issues -- signals still have many other problems as detailed in my
+previous article -- but for systems where signals can't be entirely avoided,
+this flag adds a meaningful layer of protection.
 
 The new functionality is in procps-ng 4.0.3, which should be in most
 distributions now. While signals might be deeply entrenched in Unix and Linux,
-that doesn't mean we can't make them safer to use. The `--require-handler` flag
-is one small step toward that goal. For new applications, I still recommend
-using more explicit IPC mechanisms when possible, but for existing systems,
-this flag can help prevent those dreaded midnight wake-up calls when logrotate
-innocently goes about its business. :-)
+that doesn't mean we can't make them safer to use. `pkill -H` is one step
+towards that goal. For new applications, I still recommend using more explicit
+IPC mechanisms when possible, but for existing systems using signals, this flag
+can help prevent those dreaded midnight wake-up calls when logrotate innocently
+goes about its business. :-)
 
-And many thanks to [Craig](https://gitlab.com/csmall) for reviewing the patch!
+Many thanks to [Craig](https://gitlab.com/csmall) for reviewing the patch.
