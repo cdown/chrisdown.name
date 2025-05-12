@@ -22,8 +22,8 @@ Everything worked fine for a few weeks until, suddenly, service nodes started
 dropping at an alarming rate in the middle of the night, and a LogDevice outage
 occurred. As it turned out, there was a logrotate configuration that was still
 configured to send SIGHUP to the process after rotating logs. With the handler
-now removed, the default behaviour for SIGHUP in the kernel kicked in instead:
-immediate termination.
+now removed, the default behaviour for SIGHUP in the kernel kicked in instead
+-- to immediately terminate the process.
 
 ## Why are signals so problematic?
 
