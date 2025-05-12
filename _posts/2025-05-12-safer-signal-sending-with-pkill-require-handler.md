@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Preventing outages with pkill's new --require-handler"
+title: "Preventing outages with pkill's new --require-handler flag"
 description: "A safer approach to using signals in production systems, avoiding service outages when signal handlers are removed."
 ---
 
