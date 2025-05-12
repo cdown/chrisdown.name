@@ -327,10 +327,9 @@ traditionally used for control, such as:
 3. **Service control scripts**: When controlling long running processes
 
 For example, you can audit your `/etc/logrotate.d/` directory and update any
-`postrotate` scripts that send signals:
+`postrotate` scripts that send signals from something like this:
 
 {% highlight bash %}
-# Before
 /var/log/nginx/*.log {
     daily
     rotate 14
@@ -339,8 +338,11 @@ For example, you can audit your `/etc/logrotate.d/` directory and update any
         kill -HUP $(cat /var/run/nginx.pid)
     endscript
 }
+{% endhighlight %}
 
-# After
+...to something like this:
+
+{% highlight bash %}
 /var/log/nginx/*.log {
     daily
     rotate 14
@@ -351,9 +353,11 @@ For example, you can audit your `/etc/logrotate.d/` directory and update any
 }
 {% endhighlight %}
 
-The `|| true` ensures that even if no processes match (because they don't have
-handlers), the logrotate script still succeeds. Use it if that's the behaviour
-you want.
+{% sidenote %}
+Using `|| true` in a logrotate configuration ensures that even if no processes
+match (because they don't have handlers), the logrotate script still succeeds.
+Use it only if that's the behaviour you want.
+{% endsidenote %}
 
 In general, when removing a signal handler from your application, it pays to do
 some spelunking and dig through any code or configuration that might send that
