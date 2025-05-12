@@ -435,8 +435,27 @@ END {
 This program can help you find signals being sent that you might not be
 expecting before you land a change to remove a signal handler.
 
+{% sidenote %}
+In general, consider using other forms of IPC to signal application state
+changes where possible. If your application doesn't have existing IPC
+dependencies, generally using sockets and processing events as part of your
+event loop tends to be a good alternative.
+
+If you already have some IPC mechanism (like Thrift or gRPC) then that can be a
+good choice too, and that also works better on a remote basis. It mostly
+depends on the behaviour your application wants. Another thing that's available
+on many Linux machines is a functioning D-Bus, but the implementation can be
+pretty heavyweight because it gives a lot of guarantees which most people that
+would use signals may not need.
+
+In general, though, the most "out of the box" replacement is to have a socket
+(or sockets) and look for FDs with updates on each event loop iteration. This
+is safer than `signalfd` because it avoids default signal disposition entirely.
+{% endsidenote %}
+
 Using `pkill -H` adds a safety net, but where possible it's still ideal to
-clean up all signal senders when removing a handler. All in all, `pkill -H`
+clean up all signal senders when removing a handler, and prefer to use other
+kinds of IPC to signal for state changes where possible. All in all, `pkill -H`
 provides a simple but effective safeguard against one of the most common
 signal-related problems in production environments. This isn't a silver bullet
 for all signal related issues -- signals still have many other problems as
@@ -451,4 +470,6 @@ IPC mechanisms when possible, but for every system where that's not possible,
 using `pkill -H` is a great way to eliminate an entire class of outage
 entirely.
 
-Many thanks to [Craig](https://gitlab.com/csmall) for reviewing the patch.
+Many thanks to [Craig](https://gitlab.com/csmall) for reviewing the patch, and
+[Diego](https://flameeyes.blog/) and [Michael](https://github.com/michaelneu)
+for providing suggestions on this post.
