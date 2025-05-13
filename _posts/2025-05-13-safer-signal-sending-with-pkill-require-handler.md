@@ -445,13 +445,23 @@ issues -- signals still have many other problems as detailed in my previous
 article -- but for systems where signals can't be entirely avoided, this flag
 adds a meaningful layer of protection.
 
+In terms of eliminating the straggling callers in our production environment,
+we've found that a combined strategy works best:
+
+- Using `pkill -H` as a safety net when setting up signal senders
+- Monitoring and providing data around signal use through eBPF
+- Improving process resilience and IPC strategy over time to not use signals
+  where possible
+
+This multi-layered approach helps us balance our production safety needs
+without producing long-term cruft in the form of unused signals.
+
 `pkill -H` was released as part of procps-ng 4.0.3, which should be in most
 distributions now. While signals might be deeply entrenched in Unix and Linux,
 that doesn't mean we can't make them safer to use, and `pkill -H` is one step
 towards that goal. For new applications, I still recommend using more explicit
-IPC mechanisms when possible, but for every system where that's not possible,
-using `pkill -H` is a great way to eliminate an entire class of outage
-entirely.
+IPC mechanisms when possible, but for every system where that's not practical,
+using `pkill -H` is a great way to eliminate this class of outage entirely.
 
 Many thanks to [Craig](https://gitlab.com/csmall) for reviewing the patch, and
 [Diego](https://flameeyes.blog/) and [Michael](https://github.com/michaelneu)
