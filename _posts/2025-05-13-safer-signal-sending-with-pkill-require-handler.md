@@ -398,7 +398,7 @@ send to that pid, and by which process:
 
 BEGIN {
     if ($# < 1) {
-        printf("Usage: ./sig.bt PID\n");
+        printf("Usage: ./sigcheck.bt PID\n");
         exit();
     }
     @target = $1;
