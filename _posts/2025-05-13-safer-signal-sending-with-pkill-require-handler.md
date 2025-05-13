@@ -146,6 +146,9 @@ catastrophic failure (termination of a service process widely across a fleet)
 into a controlled, traceable one (a failed log rotation that triggers an
 alert).
 
+At the scale we, Google, and similar companies operate at, even "perfect"
+solutions are fundamentally asymptotic, and we have to mitigate for that.
+
 ## Isn't this just papering over the cracks?
 
 One counterargument I've seen is basically this:
