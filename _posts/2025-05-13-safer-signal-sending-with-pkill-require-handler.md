@@ -25,6 +25,13 @@ configured to send SIGHUP to the process after rotating logs. With the handler
 now removed, the default behaviour for SIGHUP in the kernel kicked in instead
 -- to immediately terminate the process.
 
+Importantly this wasn't just on one machine, but across a whole cluster.
+Services, of course, must be designed to handle restarts or machines or racks
+falling offline, but when thousands of servers terminate at once, things become
+far more complicated. Replicas need to promote primaries en masse, connection
+pools collapse, cache coherency breaks down, and eventually, you simply don't
+have enough capacity to run your service properly.
+
 ## Why are signals so problematic?
 
 The fundamental issue is that many signals, including the widely used `SIGHUP`,
@@ -121,6 +128,23 @@ reads PIDs from a file) to create a much safer alternative:
 This version only sends a `SIGHUP` signal if the process has a `SIGHUP`
 handler, preventing accidental termination. It's also a lot simpler than the
 original shell command, with fewer moving parts and subshells.
+
+It's worth also noting that `pkill -H` doesn't silently hide the problem. When
+no process with a matching handler is found, it returns exit code 1, which
+means your log rotation or other scripts will explicitly fail, triggering
+alerts in monitoring systems. Instead of an unexpected process termination that
+might go undetected until service degradation occurs, you now have a specific,
+actionable error that points directly to the root cause: a missing signal
+handler.
+
+To be clear: `pkill -H` is not intended to replace proper engineering practices
+like thorough auditing of signal senders, rigorous testing, canaries, or
+careful code reviews. Rather, it provides an additional safety net when,
+inevitably, things slip through the cracks when those processes inevitably miss
+something in complex systems. The goal is to transform an uncontrolled,
+catastrophic failure (termination of a service process widely across a fleet)
+into a controlled, traceable one (a failed log rotation that triggers an
+alert).
 
 ## How does it work?
 
