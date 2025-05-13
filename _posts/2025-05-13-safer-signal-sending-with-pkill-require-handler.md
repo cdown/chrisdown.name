@@ -30,9 +30,9 @@ now removed, the default behaviour for SIGHUP in the kernel kicked in instead
 The fundamental issue is that many signals, including the widely used `SIGHUP`,
 have a default disposition of terminating the process. This reflects the
 literal meaning embedded in `SIGHUP`'s name -- "hangup" -- which indicates the
-terminal connection was severed, making process continuation unnecessary. This
-original meaning remains valid today, and is used in places like remote SSH
-sessions where disconnection triggers process termination.
+terminal connection was severed, making continued process execution
+unnecessary. This original meaning remains valid today, and is used in places
+like remote SSH sessions where disconnection triggers process termination.
 
 SIGHUP has, however, also started moonlighting with an additional purpose:
 requesting applications to reload their configuration or rotate their logs.
