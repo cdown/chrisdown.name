@@ -367,16 +367,16 @@ For example, you can audit your `/etc/logrotate.d/` directory and update any
     rotate 14
     # ...
     postrotate
-        pkill -H -HUP -F /var/run/nginx.pid || true
+        pkill -H -HUP -F /var/run/nginx.pid
     endscript
 }
 {% endhighlight %}
 
-{% sidenote %}
-Using `|| true` in a logrotate configuration ensures that even if no processes
-match (because they don't have handlers), the logrotate script still succeeds.
-Use it only if that's the behaviour you want.
-{% endsidenote %}
+With this, when there is no signal handler registered, the `pkill` command will
+exit with a non-zero status code, causing your logrotate job to fail. This
+failure becomes a useful signal in itself, as you can leverage this behaviour
+to find no longer needed signal senders and investigate the best course of
+action.
 
 ## Due diligence
 
@@ -445,8 +445,8 @@ issues -- signals still have many other problems as detailed in my previous
 article -- but for systems where signals can't be entirely avoided, this flag
 adds a meaningful layer of protection.
 
-In terms of eliminating the straggling callers in our production environment,
-we've found that a combined strategy works best:
+In terms of eliminating the straggling signal senders in our production
+environment, we've found that a combined strategy works best:
 
 - Using `pkill -H` as a safety net when setting up signal senders
 - Monitoring and providing data around signal use through eBPF
