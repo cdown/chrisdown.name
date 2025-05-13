@@ -4,6 +4,31 @@ title: "Preventing outages with pkill's new --require-handler flag"
 description: "A safer approach to using signals in production systems, avoiding service outages when signal handlers are removed."
 ---
 
+tl;dr:
+
+- **Do not use signals in production wherever possible.** Use safer
+alternatives like sockets or [varlink](https://varlink.org/) instead. See [my
+earlier
+article](https://developers.facebook.com/blog/post/2022/09/27/signals-in-prod-dangers-and-pitfalls/)
+for some reasons why.
+- However, if you have to use signals, it is important to know that one cause
+of production outages is missing the removal of signal senders when removing
+signal handlers (like SIGHUP). This can cause services to terminate
+unexpectedly fleetwide.
+- Many signals, like `SIGHUP`, `SIGUSR1`, and `SIGUSR2` terminate processes by
+default if no handler is present.
+- The new `pkill --require-handler` flag (`-H`) only sends signals to processes
+that have registered handlers for them, preventing such issues.
+- Using `pkill -H -F pidfile` instead of plain `pkill`, `kill` or similar can
+prevent outages, and turn midnight incidents into something much smaller and
+contained.
+- `pkill -H` exits with code 1 when no matching processes were found, so admins
+can still monitor for errant `pkill` calls without them piling up and becoming
+tech debt.
+
+---
+
+
 A little while ago, I wrote an [article about the dangers of signals in
 production](https://developers.facebook.com/blog/post/2022/09/27/signals-in-prod-dangers-and-pitfalls/),
 where I detailed a particularly frustrating outage in Meta production caused by
