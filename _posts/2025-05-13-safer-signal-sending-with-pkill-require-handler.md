@@ -92,7 +92,7 @@ typical logrotate configuration that you might find in the wild:
 {
     sharedscripts
     postrotate
-        /bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true
+        /bin/kill -HUP `cat /var/run/syslogd.pid` || true
     endscript
 }
 {% endhighlight %}
@@ -113,7 +113,7 @@ reads PIDs from a file) to create a much safer alternative:
 {
     sharedscripts
     postrotate
-        pkill -H -HUP -F /var/run/syslogd.pid 2> /dev/null || true
+        pkill -H -HUP -F /var/run/syslogd.pid
     endscript
 }
 {% endhighlight %}
