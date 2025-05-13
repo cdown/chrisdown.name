@@ -463,11 +463,11 @@ Using `pkill -H` adds a safety net, but where possible it's still ideal to
 clean up all signal senders when removing a handler, and prefer to use other
 kinds of IPC (like [varlink](https://varlink.org/) or similar) to signal for
 state changes where possible. All in all, `pkill -H` provides a simple but
-effective safeguard against one of the most common signal-related problems in
-production environments. This isn't a silver bullet for all signal related
-issues -- signals still have many other problems as detailed in my previous
-article -- but for systems where signals can't be entirely avoided, this flag
-adds a meaningful layer of protection.
+effective defence in depth safeguard against one of the most common
+signal-related problems in production environments. This isn't a silver bullet
+for all signal related issues -- signals still have many other problems as
+detailed in my previous article -- but for systems where signals can't be
+entirely avoided, this flag adds a meaningful layer of protection.
 
 In terms of eliminating the straggling signal senders in our production
 environment, we've found that a combined strategy works best:
