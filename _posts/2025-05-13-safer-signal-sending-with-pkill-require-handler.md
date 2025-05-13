@@ -391,7 +391,7 @@ signal to your process. This might include:
 
 Here is a small [bpftrace](https://bpftrace.org/) program which can also help.
 Pass it a pid on the command line, and it will tell you which signals are being
-send to that pid, and by which process:
+sent to that pid, and by which process:
 
 {% highlight bash %}
 #!/usr/bin/env bpftrace
