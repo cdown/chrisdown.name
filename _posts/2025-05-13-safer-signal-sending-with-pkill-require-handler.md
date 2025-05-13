@@ -146,6 +146,42 @@ catastrophic failure (termination of a service process widely across a fleet)
 into a controlled, traceable one (a failed log rotation that triggers an
 alert).
 
+## Isn't this just papering over the cracks?
+
+One counterargument I've seen is basically this:
+
+> If the handler is missing, shouldn't we let the process crash so that
+> monitoring detects it?
+
+The problem isn't a single process crashing, we can tolerate that. The problem
+is the cascading failure when thousands of processes crash simultaneously.
+Consider that:
+
+- Distributed systems like LogDevice rely on replicas. If too many nodes
+  terminate at once, the sudden promotion of primaries can overwhelm the
+  cluster.
+- Under such a thundering herd, connection pools collapse, cache coherency
+  breaks, and retry storms erupt as clients scramble to reconnect.
+
+Whereas, in the `pkill -H` case:
+
+- No signals are sent -- services keep running safely
+- logrotate fails immediately with exit code 1
+- Monitoring alerts surface the failed rotation
+- Engineers investigate why handlers are missing
+- The service briefly logs to the wrong log file: not great, but definitely
+  something that can be dealt with in business hours
+
+Quite a difference. This shifts the risk if a signal sender is missed from
+being a catastrophic, fleetwide outage to a localised operational failure that
+can be debugged during business hours. At scale, this is the difference between
+a midnight, all hands on deck, outage and a high priority task. I think I speak
+for anyone who works on these systems when I say I'd much prefer the latter :-)
+
+`pkill -H` doesn't hide the problem, it transforms it into something more
+manageable. The failure is still detected and fixed, just without the midnight
+wakeup call and frantic incident management.
+
 ## How does it work?
 
 So how does `pkill` detect whether a process has a signal handler registered?
