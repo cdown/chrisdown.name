@@ -435,22 +435,15 @@ END {
 This program can help you find signals being sent that you might not be
 expecting before you land a change to remove a signal handler.
 
-{% sidenote %}
-In general, consider using other forms of IPC to signal application state
-changes where possible. If your application doesn't have existing IPC
-dependencies, consider using something like [varlink](https://varlink.org/). If
-that's too heavy, using sockets and processing events as part of your event
-loop tends to be a good alternative.
-{% endsidenote %}
-
 Using `pkill -H` adds a safety net, but where possible it's still ideal to
 clean up all signal senders when removing a handler, and prefer to use other
-kinds of IPC to signal for state changes where possible. All in all, `pkill -H`
-provides a simple but effective safeguard against one of the most common
-signal-related problems in production environments. This isn't a silver bullet
-for all signal related issues -- signals still have many other problems as
-detailed in my previous article -- but for systems where signals can't be
-entirely avoided, this flag adds a meaningful layer of protection.
+kinds of IPC (like [varlink](https://varlink.org/) or similar) to signal for
+state changes where possible. All in all, `pkill -H` provides a simple but
+effective safeguard against one of the most common signal-related problems in
+production environments. This isn't a silver bullet for all signal related
+issues -- signals still have many other problems as detailed in my previous
+article -- but for systems where signals can't be entirely avoided, this flag
+adds a meaningful layer of protection.
 
 `pkill -H` was released as part of procps-ng 4.0.3, which should be in most
 distributions now. While signals might be deeply entrenched in Unix and Linux,
