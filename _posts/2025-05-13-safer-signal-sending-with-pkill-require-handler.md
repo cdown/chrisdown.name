@@ -193,7 +193,7 @@ Consider that:
 
 Whereas, in the `pkill -H` case:
 
-- No signals are sent -- services keep running safely
+- No signals are sent, and services keep running safely
 - logrotate fails immediately with exit code 1
 - Monitoring alerts surface the failed rotation
 - Engineers investigate why handlers are missing
