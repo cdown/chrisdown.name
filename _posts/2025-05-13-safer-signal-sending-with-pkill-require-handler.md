@@ -17,8 +17,9 @@ for some reasons why.
   unexpectedly fleetwide.
 - Many signals, like `SIGHUP`, `SIGUSR1`, and `SIGUSR2` terminate processes by
   default if no handler is present.
-- The new `pkill --require-handler` flag (`-H`) only sends signals to processes
-  that have registered handlers for them, preventing such issues.
+- The new `pkill --require-handler` flag (`-H`) and `kill --require-handler`
+flag only sends signals to processes that have registered handlers for them,
+preventing such issues.
 - Using `pkill -H -F pidfile` instead of plain `pkill`, `kill` or similar can
   prevent outages, and turn all hands on deck incidents into something much
   more contained.
@@ -111,6 +112,12 @@ new flag to `pkill` called
 `--require-handler`](https://gitlab.com/procps-ng/procps/-/merge_requests/165) (or `-H` for short). This flag
 ensures that signals are only sent to processes that have actually registered a
 handler for that signal.
+
+I have also implemented the same functionality in util-linux `kill` as `kill
+-r`, which you likely will have to call as `/bin/kill` since otherwise you will
+get a shell builtin. See
+[here](https://github.com/util-linux/util-linux/commit/30463e36ae953eb677de77c830cc5852e7ed98bf)
+for the code change.
 
 For an example of how it can avoid these kinds of incidents, let's look at a
 typical logrotate configuration that you might find in the wild:
