@@ -182,8 +182,15 @@ One counterargument I've seen is basically this:
 > monitoring detects it?
 
 The problem isn't a single process crashing, we can tolerate that. The problem
-is the cascading failure when thousands of processes crash simultaneously.
-Consider that:
+is the cascading failure when thousands of processes crash simultaneously. And
+yes, log rotation is already splayed out over time -- that's just standard
+practice -- but even with reasonable splay periods, when you're operating at
+scale, recovery simply can't keep pace with the rate of failure.
+
+The reason for that is that failover isn't instantaneous. When a service node
+terminates, it takes time to promote a new primary, reestablish connections,
+and rebuild state. If too many nodes go down within a short window, even if
+it's staggered, the system never gets a chance to catch up. Consider that:
 
 - Distributed systems like LogDevice rely on replicas. If too many nodes
   terminate at once, the sudden promotion of primaries can overwhelm the
