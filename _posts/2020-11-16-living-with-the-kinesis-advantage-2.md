@@ -75,9 +75,9 @@ For reasons I don't quite understand<sup>†</sup>, Scroll Lock on my model send
 
 The Advantage 2 has a few quick rebindings which can be useful. The bindings are as follows, from [here](https://kinesis-ergo.com/support/advantage/):
 
-- To enter Windows Mode, press and hold the equals key and tap the letter “w” (=w). The top four thumb keys while in Windows mode, from left to right, are: Ctrl, Alt, Windows, Ctrl.
-- To enter Mac Mode, press and hold the equals key and tap the letter “m” (=m). The top four thumb keys while in Mac mode, from left to right are: Command, Option, Ctrl, Command.
-- To enter PC Mode, press and hold the equals key and tap the letter “p” (=p). The top four thumb keys while in PC mode, from left to right are: Ctrl, Alt, Alt, Ctrl.
+- To enter Windows Mode, press and hold the equals key and tap the letter "w" (=w). The top four thumb keys while in Windows mode, from left to right, are: Ctrl, Alt, Windows, Ctrl.
+- To enter Mac Mode, press and hold the equals key and tap the letter "m" (=m). The top four thumb keys while in Mac mode, from left to right are: Command, Option, Ctrl, Command.
+- To enter PC Mode, press and hold the equals key and tap the letter "p" (=p). The top four thumb keys while in PC mode, from left to right are: Ctrl, Alt, Alt, Ctrl.
 
 "Option" here means Alt, and "Command" means "Super" (or the "Windows key"), just in Apple's reworded terminology.
 
