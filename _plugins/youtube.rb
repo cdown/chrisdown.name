@@ -13,7 +13,7 @@ class YouTube < Liquid::Tag
 
   def render(context)
     "<div class=\"youtube-container\">
-         <iframe allowfullscreen=\"allowfullscreen\"
+         <iframe allowfullscreen=\"allowfullscreen\" referrerpolicy=\"strict-origin-when-cross-origin\"
           src=\"//www.youtube.com/embed/#{@id}\"> </iframe>
      </div>"
   end
