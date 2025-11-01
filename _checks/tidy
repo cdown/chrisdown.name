@@ -3,7 +3,7 @@
 shopt -s globstar
 
 for file in _deploy/**/*.html; do
-    if ! t=$(tidy -config <(printf '%s\n' 'drop-empty-elements: no') -e "$file" 2>&1); then
+    if ! t=$(tidy -config <(printf '%s\n' 'drop-empty-elements: no' 'warn-proprietary-attributes: no') -e "$file" 2>&1); then
 	printf '%s\n%s\n' "$file" "$t"
 	err=1
     fi
