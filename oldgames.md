@@ -154,3 +154,12 @@ See
 [here](https://web.archive.org/web/20201109125821/https://steamcommunity.com/sharedfiles/filedetails/?id=1371539795).
 Also, reducing vehicle density/view distance/detail distance reduces
 stuttering.
+
+# AC Mirage
+
+Well, not exactly old, but still requires wading through the jank...
+
+1. Use [aspectpatcher](https://github.com/cdown/aspectpatcher) to remove black
+   bars on cutscenes (`% aspectpatcher -f 16:9 -t 3840x1600 ACMirage.exe`)
+2. Replace bytes `80 79 32 00 74 0C 48 8B` with `80 79 32 01 74 0C 48 8B` to
+   disable chromatic abberation.
