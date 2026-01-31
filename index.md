@@ -46,7 +46,7 @@ including:
 | [clipmenu](https://github.com/cdown/clipmenu) | clipboard manager with a dmenu frontend |
 | [dwm](https://dwm.suckless.org/) | dynamic window manager for X |
 | [exifrename](https://github.com/cdown/exifrename) | fast renames based on EXIF data |
-| [Linux](https://github.com/torvalds/linux/commits?author=cdown) | free and open-source OS kernel |
+| [Linux](https://github.com/torvalds/linux) | free and open-source OS kernel |
 | [mack](https://github.com/cdown/mack) | opinionated, fast music organiser |
 | [mpv](https://github.com/mpv-player/mpv) | videos on the command line |
 | [nota](https://github.com/cdown/nota) | simple daily logs with your $EDITOR + git |
