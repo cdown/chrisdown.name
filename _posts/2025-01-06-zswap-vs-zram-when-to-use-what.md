@@ -1,27 +1,33 @@
 ---
 layout: post
 title: "Debunking zswap and zram myths"
-description: "zswap and zram are fundamentally different approaches to compressed swap with different philosophies. The choice depends on your performance goals, not just whether you have a disk."
+description: "zswap and zram are fundamentally different approaches with different philosophies. If in doubt, use zswap."
 
 ---
 
 tl;dr:
 
-- zswap provides graceful degradation under memory pressure. zram provides a
-  hard limit, and is best managed alongside a userspace OOM manager like
-  [systemd-oomd](https://www.freedesktop.org/software/systemd/man/latest/systemd-oomd.service.html) if possible.
-- If you have fast storage and want graceful degradation, you probably want
-  zswap.
-- If you prefer hard limits or have very slow storage, you may prefer zram + a
-  userspace oom killer.
-- If you have multiple swap devices, zram's block device architecture creates
-  LRU inversions that can cause serious problems. There is now writeback
-  support, but it can be very difficult to reason about.
-- zswap integrates with memory management but can have performance cliffs when
-  the pool fills.
-- **In general, with tiered setups (that is, compressed RAM, then falling back
-  to disk for swap) prefer zswap unless you have a strong reason to use zram.
-  For setups with no disk, zram is fine.**
+**If in doubt, prefer to use zswap. Only use zram if you have a highly specific reason to.**
+
+- zswap sits in front of your disk swap, compresses pages in RAM, and
+  automatically tiers cold data to disk. It integrates directly with the
+  kernel's memory management and distributes pressure gracefully.
+- zram is a compressed RAM block device with a hard capacity limit. When it
+  fills, there is no automatic eviction, and the kernel has very little
+  leverage to do anything about the situation. The system either OOMs or falls
+  back to lower-priority swap. It only really makes sense for extremely memory
+  constrained embedded systems or diskless setups.
+- **Do not run zram alongside disk swap** wherever possible. In such setups,
+  zram fills fast RAM with cold, stale pages while pushing your active working
+  set onto slow disk, making things actively worse than if you had no
+  compressed swap at all.
+- **If you must use zram**, pair it with a userspace OOM manager like
+  [systemd-oomd](https://www.freedesktop.org/software/systemd/man/latest/systemd-oomd.service.html)
+  or [earlyoom](https://github.com/rfjakob/earlyoom). Without one, the kernel's
+  OOM killer can leave the system hung for minutes before acting.
+- **On servers, zram has additional significant problems.** One major one is
+  that its memory usage is totally segregated from the rest of the system, and as
+  such is not charged to any cgroup, breaking isolation semantics.
 
 ---
 
@@ -38,8 +44,8 @@ on Linux:
 > it and compare in real life. Again, a lot of "internet experts" just say
 > "zram - because you don't wear your SSD" ...
 
-First of all, since I'm writing this article, clearly flattery will get you
-everywhere ;-)
+Well, first of all, since I'm writing this article, clearly flattery will get
+you everywhere ;-)
 
 It is true that there is a lot of confusion and misinformation on the internet
 about when to use zswap versus zram, and the tradeoffs between them. I've
@@ -47,37 +53,44 @@ worked on kernel memory management and swap code for the better part of a
 decade now, and I've seen these technologies evolve and some of the common
 misconceptions that arise around them.
 
-The truth is that there is not a one size fits all solution. zswap and zram are
-architecturally quite distinct, and deciding which to use when requires some
-nuance and thought.
+The short answer for most people is: use zswap. Do not use zram without an
+extensive understanding of the risks it may pose to your workloads. But
+understanding why (and understanding when zram may actually be the right call)
+requires going into how each of these two technologies work in the kernel
+itself.
 
 ## Architectural differences
 
-The fundamental difference between zswap and zram lies in where they sit in the
-kernel's storage hierarchy.
+Most people think of zswap and zram simply as two different flavours of the
+same thing, compressed swap. Superficially that would be correct in that they
+both can contain swapped pages, but they make fundamentally different bets
+about how the kernel should handle memory pressure, and picking the wrong one
+for your situation can actively make things worse than having no swap at all.
+
+The most significant difference between them lies in where they sit in the
+kernel's storage hierarchy, and thus, what they are capable of signalling to
+the rest of the kernel:
 
 - zram acts as a compressed block device, essentially a virtual disk in RAM.
   When a process needs to swap, the kernel treats swap on zram like it does on
-  any other block device, sending I/O requests through the block layer. Once
-  zram fills up, it's just another storage device that's reached capacity.
-  There's no automatic mechanism to move data elsewhere.
+  any other block device, sending I/O requests through the block layer.
+  Importantly, once zram fills up, it's just another storage device that's
+  reached capacity. There's no automatic mechanism to move data elsewhere,
+  which means cold pages that were swapped out first stay locked in fast RAM
+  with no way to evict them. As you can imagine, that's typically very bad.
 - zswap, on the other hand, is more integrated with the memory management
-  subsystem overall. It acts as a compression layer that sits in front of your
-  disk swap. When a process needs to swap, zswap intercepts the page before it
-  reaches disk, decides whether to compress it, and if it does, it stores it
-  in a memory pool. When that pool fills up, zswap uses its own heuristics to
+  subsystem. It acts as a compression layer that sits in front of your disk
+  swap. When a process needs to swap, zswap intercepts the page before it
+  reaches disk, decides whether to compress it, and if it does, it stores it in
+  a memory pool. When that pool fills up, zswap uses its own heuristics to
   evict the least recently used pages to your backing swap device, aiming to
-  keep your hot data in the compressed RAM cache.
+  keep your hot data present in the compressed RAM cache.
 
-The result is basically that zram provides a hard capacity limit, whereas zswap
-provides a kind of automatic tiering between faster (zswap) and slower swap
-(disk swap) to gracefully degrade as memory pressure increases.
-
-So what are the ramifications? Well, for most workloads, the choice between
-zswap and zram depends on what you value more: graceful degradation or hard
-limits. But to understand why, let's look at how these technologies actually
-work at the kernel level, and why their architectural differences create
-fundamentally different performance characteristics.
+To put it another way, zram provides a hard capacity limit, whereas zswap
+provides automatic tiering between faster (that is, compressed RAM) and slower
+swap (that is, your disk) and gracefully degrades as memory pressure increases.
+For most people, graceful degradation is what you want, but let's look at how
+these play out in practice.
 
 ### zram's block device architecture
 
@@ -91,58 +104,57 @@ typical procedure for setting up swap on zram is to:
 
 You may notice that this looks pretty much exactly like what you would do if
 you were setting up swap on a partition, and that's not a coincidence: the
-kernel sees it as just another storage device through the block layer:
+kernel sees it as just another storage device through the block layer (see
+[zram_submit_bio()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/block/zram/zram_drv.c?h=v6.19#n2658)).
 
-{% cc %}
+This makes zram a natural fit for embedded systems: it's completely
+self-contained, with no dependency on disk storage, which these systems likely
+don't have in the first place. When you're on an embedded controller or a
+Raspberry Pi with an SD card, zram gives you some amount of memory offload
+without any external dependencies. All pretty reasonable so far.
 
-{% highlight c %}
-/*
- * Handler function for all zram I/O requests.
- */
-static void zram_submit_bio(struct bio *bio)
-{
-    struct zram *zram = bio->bi_bdev->bd_disk->private_data;
-
-    switch (bio_op(bio)) {
-    case REQ_OP_READ:
-        zram_bio_read(zram, bio);
-        break;
-    case REQ_OP_WRITE:
-        zram_bio_write(zram, bio);
-        break;
-    case REQ_OP_DISCARD:
-    case REQ_OP_WRITE_ZEROES:
-        zram_bio_discard(zram, bio);
-        break;
-    default:
-        WARN_ON_ONCE(1);
-        bio_endio(bio);
-    }
-}
-{% endhighlight %}
-
-<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/block/zram/zram_drv.c?h=v6.19#n2658">zram_submit_bio()</a> from Linux 6.19</div>
-
-{% endcc %}
-
-This block device approach makes zram perfect for the average embedded system:
-it's completely self-contained, and it doesn't depend on any disk storage. When
-you're on a Raspberry Pi with an SD card or in a diskless container, zram gives
-you some amount of memory offload without any external dependencies. All pretty
-reasonable so far.
-
-But when you *do* have disk storage available (like an SSD), zram's block
-device architecture creates both opportunities and constraints. The fact that
-the kernel is basically unaware of the nature of the backing device that
-provides the swap kernel (that is, it treats zram as just another disk) has
-fairly significant implications we'll explore in a moment.
+However, when you *do* have disk storage available (like an SSD), zram's block
+device architecture creates some significant constraints. The fact that the
+kernel is basically unaware of the nature of the backing device that provides
+the swap (that is, it treats zram as just another disk) has fairly significant
+implications we'll explore in a moment.
 
 ### zswap's memory management integration
 
-By comparison, zswap doesn't create a block device, and instead integrates
-directly into the kernel's memory management subsystem. When the kernel needs
-to swap out a page, it calls `swap_writeout()`, which gives zswap first dibs
-to intercept it:
+By comparison, zswap doesn't create a block device at all -- it integrates
+directly into the kernel's memory management subsystem. That distinction is
+more significant than it might sound: because zswap is woven into the reclaim
+path itself, the kernel actually knows which pages in the zswap pool are hot
+and which are cold. zram, being just another block device, has no such
+visibility.
+
+That awareness is the basis for automatic tiering, and it's the main reason
+that zswap degrades significantly better than zram when there is memory
+pressure.
+
+{% sidenote %}
+To enable zswap, check if it's already on with `cat
+/sys/module/zswap/parameters/enabled`. Most major distributions enable it by
+default. If not:
+
+    echo 1 > /sys/module/zswap/parameters/enabled
+
+To make it persistent across reboots, add `zswap.enabled=1` to your kernel
+command line.
+
+On allocator selection, prefer zsmalloc over the older z3fold or zbud
+allocators. zsmalloc achieves much higher compression ratios by grouping
+similar objects, whereas the older allocators use fixed-size objects that tend
+to waste space. z3fold and zbud (along with the zpool interface itself) have
+been removed from the upstream kernel, so on a current kernel you don't need to
+set this. On distro kernels that still carry them, you may need to explicitly
+select zsmalloc:
+
+    echo zsmalloc > /sys/module/zswap/parameters/zpool
+{% endsidenote %}
+
+So how does all of this work? Well, when the kernel needs to swap out a page,
+it calls `swap_writeout()`, which gives zswap first dibs to intercept it:
 
 {% cc %}
 
@@ -173,8 +185,8 @@ out_unlock:
 {% endcc %}
 
 If `zswap_store()` returns `true`, the page has been stored in compressed RAM
-and never touches disk. Only if zswap declines (or isn't enabled) does the
-kernel fall back to writing to the backing swap device.
+and never touches the disk. Only if zswap declines (or it isn't enabled) does
+the kernel fall back to writing to the backing swap device.
 
 Here's what `zswap_store()` does internally:
 
@@ -220,64 +232,40 @@ check_old:
 
 {% endcc %}
 
-The shrink worker automatically evicts cold pages to disk when zswap fills up:
-
-{% cc %}
-
-{% highlight c %}
-static void shrink_worker(struct work_struct *w)
-{
-    struct mem_cgroup *memcg;
-    int ret, failures = 0, attempts = 0;
-    unsigned long thr;
-
-    /* Reclaim down to the accept threshold */
-    thr = zswap_accept_thr_pages();
-
-    do {
-        /* ... memcg iteration logic ... */
-
-        ret = shrink_memcg(memcg);
-
-        /* No pages to writeback in this memcg, try the next */
-        if (ret == -ENOENT)
-            continue;
-
-        ++attempts;
-        if (ret && ++failures == MAX_RECLAIM_RETRIES)
-            break;
-
-        /* ... reschedule ... */
-    } while (zswap_total_pages() > thr);
-}
-{% endhighlight %}
-
-<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/zswap.c?h=v6.19#n1324">shrink_worker()</a> from Linux 6.19</div>
-
-{% endcc %}
+You might notice this `queue_work(shrink_wq, &zswap_shrink_work)` business.
+What that does is to, since we have just found out that zswap is full, queue a
+worker to automatically evict some cold pages to disk. It eventually calls into
+[shrink_worker()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/zswap.c?h=v6.19#n1324),
+which handles this reclamation.
 
 This tight integration with the rest of the memory management subsystem, and
-the fact that other mm code is aware of the nature of this storage is what
-makes zswap work differently from zram. zswap acts as a transparent compression
+the fact that other mm code is aware of the nature of this storage is what sets
+zswap significantly apart from zram. zswap acts as a transparent compression
 layer *in front of* your SSD swap, not as a separate storage tier, like how
 zram does it. When the pool fills up, it automatically triggers the shrinker to
-evict cold pages to disk. But as we'll see, this also has its own nuances and
-failure modes under extreme pressure.
+evict cold pages to disk.
 
 ## LRU inversion
 
-Just as one example, here is one very important architectural issue that can
-affects zram when tiering alongside regular disk swap. In it, the story goes
-something like this:
+But wait, Chris, I set a priority on my zram swap device. So isn't that the
+same as this "tiered" architecture with zswap?
 
-1. A page is ready to be swapped, and goes into `swap_writeout()`
-2. There's no zswap, only zram, so the kernel just looks down the list of swap devices
-3. zram is configured with the highest swap priority, so it gets chosen as
-   long as it has space.
+Unfortunately, this logic is one of the most common ways people hoist
+themselves with their own zram shaped petard. The story goes something like
+this:
 
-This all might seem fine on paper. But the problem is that when the kernel
-allocates swap space across multiple devices, it uses a priority-based
-allocation system:
+1. A page is ready to be swapped, and goes into `swap_writeout()`.
+2. There's no zswap, only zram, so the kernel just looks down the list of swap
+   devices to find the highest priority one.
+3. zram is configured with the highest swap priority, so it gets chosen as long
+   as it has space.
+
+This all sounds fine on paper, right? Sure, and that's exactly why it keeps
+catching people out. So what's the catch?
+
+Well, the problem is in how the kernel allocates swap space across multiple
+devices. The kernel has a function called `swap_alloc_slow()` which is
+responsible for finding the right device and cluster to write to:
 
 {% cc %}
 
@@ -311,22 +299,23 @@ start_over:
 }
 {% endhighlight %}
 
-<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/swapfile.c?h=v6.19#n1341">swap_alloc_slow()</a> from Linux 6.19</div>
+<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/swap file.c?h=v6.19#n1341">swap_alloc_slow()</a> from Linux 6.19</div>
 
 {% endcc %}
 
-Higher priority devices get used first. That sounds fine, right? Of course it
-does, that's why users [configure it this way all the
+What this code basically says is, higher priority devices get used first. That
+sounds fine, right? Of course it does, that's why users [configure it this way
+all the
 time](https://forum.endeavouros.com/t/zram-vs-zswap-why-choose-one-over-the-other/75980/5).
 But such users have unwittingly created a trap that grows more and more likely
 with more uptime.
 
-So why is that? Well, since the swap on the zram device has the highest
-priority, the kernel prefers zram for all allocations. When zram fills up, it
-switches to the disk based swap for all future allocations.
+The trap is this: since the swap on the zram device has the highest priority,
+the kernel prefers zram for all allocations. When zram fills up, it switches to
+the disk based swap for all future allocations.
 
 That means that without intervention, your precious zram gets filled with
-whatever pages *happened to be swapped out first*. That is usually totally
+whatever pages *happened to be swapped out first*. That is usually completely
 inversely correlated with the pages that you actually need *now*.
 
 In a typical desktop session, these pages are usually cold, initialisation time
@@ -336,19 +325,23 @@ session continues and memory pressure persists, the newer, potentially "hotter"
 pages (like recent browser tabs you are actively switching between) are forced
 to spill over to the lower-priority device: the slow mechanical disk or SSD.
 
-This is LRU inversion. Your fastest storage tier is effectively clogged with
-the coldest data with no way to evict it, and this forces your active working
-set onto the slowest storage tier, completely negating the performance benefits
-zram was meant to provide.
+This is what is termed *LRU inversion*: your fastest storage tier is clogged
+with the coldest data, with no way to evict it, and that actively forces your
+working set onto the slowest storage. In this case, zram isn't just failing to
+help here, it is, instead, actively making things worse than having no
+compressed swap at all. And even worse, the longer the system has been running,
+the more broken things get: warm pages drift to disk, cold pages calcify in
+zram, and the gap between what zram is holding and what you actually need keeps
+widening. Great!
 
 ### zram writeback and its limitations
 
 Now, that's where the discussion would end if I was writing this a few years
-ago. :-) But since kernel 4.14, zram has has writeback support, which is an
+ago. :-) But since kernel 4.14, zram has writeback support, which is an
 attempt to address this problem.
 
 With writeback configured, zram can write back pages that are idle or do not
-compress well. This means modern zram setups *can* implement
+compress well. This means modern zram setups *can* theoretically implement
 tiering, but:
 
 1. It requires manual configuration rather than happening automatically in the
@@ -359,12 +352,13 @@ tiering, but:
 Maybe that doesn't sound so difficult. Allow me to try to convince you
 otherwise.
 
-To achieve similar behavior to zswap, where incompressible or idle pages are
+To achieve similar behaviour to zswap, where incompressible or idle pages are
 moved to disk, you must create your own solution. One problem is that you
-cannot simply point zram writeback at a swapfile or your existing swap
-partition. The writeback interface requires a dedicated, unformatted block
-device. With [`zram-generator`](https://github.com/systemd/zram-generator),
-that looks something like this:
+cannot simply point zram writeback at a swap file or your existing swap
+partition. The writeback interface, instead, requires a dedicated, unformatted
+block device. With
+[`zram-generator`](https://github.com/systemd/zram-generator), that looks
+something like this:
 
 {% highlight ini %}
 [zram0]
@@ -410,54 +404,88 @@ no connection to the reclaim process or shrinkers, and if memory pressure
 suddenly rises, it may be too late to run your script.
 
 Compare that with zswap, where the LRU list is evaluated as part of the normal
-memory lifecycle. As soon as memory pressure rises, the kernel looks at the
-live list of pages as part of reclaim and evicts the oldest ones based on that
-behaviour. It is, in general, more resilient and integrated with the normal
-memory lifecycle.
+memory reclamation lifecycle. As soon as memory pressure rises, the kernel
+looks at the live list of pages as part of reclaim and evicts the oldest ones
+immediately. The effect in concrete terms is that with zram, a memory spike
+that hits between your script running means your application is going to disk
+swap at the worst possible moment. By comparison, with zswap, the kernel
+responds naturally as the pressure happens.
 
 There is also a granularity problem. With zram, you have to guess a magic
 number to perform eviction based on time (like 24 hours). If you guess too
 high, you waste RAM. If you guess too low, you flush data that you might have
-actually wanted. The system does what you say, and without extensive profiling
-over time, it is hard to know what to tell it to be effective.
+actually wanted. The system, after all, only does what you say, and without
+extensive profiling over time, it is hard to know what to tell it to be
+effective.
 
 By comparison, in zswap, there is no magic number, and it dynamically balances
 the LRU based on pressure. If you have plenty of RAM and there's no pressure,
 it keeps data indefinitely. If you are starving for RAM, it aggressively evicts
-the oldest data, whether it's 24 hours old or 24 minutes old.
+the oldest data, whether it's 24 hours old or 24 minutes old. It has
+instrospection into and the ability to negotiate with the rest of the system,
+and thus it can make better decisions.
 
-So, I would argue that while the LRU inversion problem in zram has *some* kind
-of solution, it's not exactly an intuitive or easily usable one, and for most
-users, the way zswap handles LRU inversion avoidance is significantly better.
+Ultimately, I would treat zram's writeback as a workaround rather than
+something that's usable for the vast majority of user in practice.It  requires
+you to recreate what zswap gives you automatically (and responds in real time
+to) in a brittle and error-prone fashion, and I would strongly recommend that
+you do not go about managing your memory in this way.
 
 ## zswap's automatic tiering (and its performance cliffs)
 
-As we discussed, zswap is much more tightly integrated with the memory
-management subsystem than zram is, and one of the main things it benefits from
-that is the ability to do proper tiering through the shrinker interface. Here's
-the code, with some comments added to aid those unfamiliar with this code:
+zswap's tight mm integration, by comparison, has the suspicious smell of a free
+lunch. One gets automatic tiering, live LRU eviction, pressure-responsive
+behaviour, and all of this comes without any of the previously mentioned
+cumbersome configuration. And for most workloads, it is indeed somewhat of a
+free lunch, but there are some catches worth being aware of.
+
+zswap's tiering mechanism works through two distinct shrinker mechanisms that
+are easy to conflate, so it's worth understanding both upfront.
+
+The first -- `zswap_shrinker_count()` (and its companion
+`zswap_shrinker_scan()`) -- exist as part of the *dynamic* shrinker. It is
+triggered independently by memory reclaimers (like kswapd, direct reclaimers,
+and by proactive reclaimers like
+[Senpai](https://github.com/facebookincubator/senpai)), not by pool limits. Its
+job is to dynamically size the zswap pool based on memory access patterns,
+compressibility, and memory pressure, with the goal that you ideally never hit
+the static pool limits at all. In practice in production at Meta, hitting the
+static pool limit is rare, because this dynamic shrinker keeps things in check
+before they get that far. On memory-constrained systems like laptops, you may
+see it more.
+
+The *second* shrinker,
+[shrink_worker()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/zswap.c?h=v6.19#n1324),
+is the limit-based fallback that only fires when the pool limit is actually
+hit. That's where the performance cliff lives -- more on that below.
+
+Here's what the `zswap_shrinker_count()` does as part of dynamic shrinking:
 
 {% cc %}
 
 {% highlight c %}
-static unsigned long zswap_shrinker_count(struct shrinker *shrinker,
+static unsigned long zswap_shrinker_count(
+        struct shrinker *shrinker,
         struct shrink_control *sc)
 {
-    /* zswap shrinker_count basically answers the question of how many pages we
-     * should evict from zswap to the backing swap device. */
+    /* zswap shrinker_count basically answers the question of
+     * how many pages we should evict from zswap to the
+     * backing swap device. */
 
-    struct lruvec *lruvec = mem_cgroup_lruvec(sc->memcg, NODE_DATA(sc->nid));
+    struct lruvec *lruvec =
+        mem_cgroup_lruvec(sc->memcg, NODE_DATA(sc->nid));
 
-    /* This is how often we had to fetch data from slow disk recently. We track
-     * this to avoid thrashing. */
+    /* This is how often we had to fetch data from slow disk
+     * recently. We track this to avoid thrashing. */
     atomic_long_t *nr_disk_swapins =
         &lruvec->zswap_lruvec_state.nr_disk_swapins;
 
     /* ... */
 
-    /* Subtract from the lru size the number of pages that are recently swapped
-     * in from disk. The idea is that had we protect the zswap's LRU by this
-     * amount of pages, these disk swapins would not have happened. */
+    /* Subtract from the lru size the number of pages that
+     * are recently swapped in from disk. The idea is that
+     * had we protect the zswap's LRU by this amount of
+     * pages, these disk swapins would not have happened. */
     nr_disk_swapins_cur = atomic_long_read(nr_disk_swapins);
     do {
         if (nr_freeable >= nr_disk_swapins_cur)
@@ -471,8 +499,9 @@ static unsigned long zswap_shrinker_count(struct shrinker *shrinker,
     if (!nr_freeable)
         return 0;
 
-    /* Scale eviction by compression ratio. If compression is good (stored is small),
-     * we evict fewer pages to avoid wasting I/O for small gains. */
+    /* Scale eviction by compression ratio. If compression is
+     * good (stored is small), we evict fewer pages to avoid
+     * wasting I/O for small gains. */
     return mult_frac(nr_freeable, nr_backing, nr_stored);
 }
 {% endhighlight %}
@@ -481,57 +510,44 @@ static unsigned long zswap_shrinker_count(struct shrinker *shrinker,
 
 {% endcc %}
 
-This means that with zswap, the kernel itself is helping keep your compressed
-RAM working towards containing the hottest data, and cold pages automatically
-trickle down to the SSD. The shrinker also accounts for compression ratios --
-that is, the better zswap compresses, the fewer pages it evicts to avoid
-unnecessary I/O.
+Note the amount of care and attention that goes into choosing what to evict.
+zswap tracks recent disk swap-ins to avoid thrashing, and scales eviction by
+compression ratio -- the better zswap compresses, the fewer pages it evicts to
+avoid unnecessary I/O. Cold pages trickle down to the SSD automatically.
 
 But there is, as always, a catch. When zswap hits its `max_pool_percent` limit,
 `zswap_check_limits()` causes `zswap_store()` to reject the page and return
-false. As you can see in the code above, a rejection does wake up the
-limit-based shrink worker (`shrink_worker()`) to evict cold pages to disk, but
-that work happens *asynchronously* -- the current page is not stored in zswap
-and has to go somewhere right now.
+false. This wakes up `shrink_worker()` to evict cold pages to disk, but that
+work happens *asynchronously* -- the current page is not stored in zswap and
+has to go somewhere right now.
 
-What happens next depends on the cgroup's writeback mode. If writeback is
-enabled (the default), the page falls through to `__swap_writepage()` and goes
-directly to disk, bypassing the zswap cache entirely. If writeback is disabled
-for that cgroup, the page cycles back to the active list instead, which avoids
-disk I/O but means the reclaimer must try again later.
+What happens next depends on the cgroup's writeback mode:
+
+1. If writeback is enabled for that cgroup (which is the default), the page
+   falls through to `__swap_writepage()` and goes directly to disk, bypassing
+   the zswap cache entirely.
+2. If writeback is disabled for that cgroup, the page cycles back to the active
+   list instead, which avoids disk I/O but means the reclaimer must try again
+   later.
 
 This means that under heavy memory pressure with writeback enabled, zswap can
-start sending pages straight to disk without warning. This creates a performance
-cliff where the system suddenly drops swap performance from the magnitude you
-might expect from RAM access to the magnitude you might expect from disk access.
-This is not worse than zram with tiering, but it is something to bear in mind.
+start sending pages straight to disk without warning. This creates a
+performance cliff where the system suddenly drops swap performance from the
+magnitude you might expect from RAM access to the magnitude you might expect
+from disk access. This is not worse than zram's behaviour, but it is something
+to bear in mind.
 
-{% sidenote %}
-Also, some advice on allocator selection. When configuring zswap, the choice of
-allocator matters significantly for this cliff. Prefer zsmalloc over the older
-z3fold or zbud allocators. zsmalloc achieves much higher compression ratios by
-grouping similar objects, whereas the older allocators use fixed-size objects
-that tend to waste space. It also interacts better with writeback throttling.
-
-You can enable it with:
-
-    echo zsmalloc > /sys/module/zswap/parameters/zpool
-
-z3fold and zbud have been removed from the upstream kernel, along with the
-older zpool interface. However, they may still be present in and be the default
-on some distro kernels.
-
-{% endsidenote %}
 ## Performance characteristics and trade-offs
 
-Before we discuss when to use each technology, let's understand their
-performance implications. Both technologies trade CPU cycles for reduced I/O,
-but they have different overhead profiles and failure modes.
+Both technologies trade CPU cycles for reduced I/O -- and under normal
+operation, their overhead profiles are broadly comparable. The differences that
+matter are in the failure modes, and those differences are significant.
 
 ### Handling incompressible data
 
-There is a subtle but important difference in how the two technologies handle
-data that doesn't compress well:
+Compressed swap is obviously useful when data compresses well. What's less
+obvious is what happens when it doesn't, and the two technologies make opposite
+bets here.
 
 zswap can detect incompressible pages during compression and reject them,
 sending them straight to disk. This saves both RAM (by not storing poorly
@@ -539,40 +555,37 @@ compressed data) and CPU cycles (by not repeatedly trying to compress
 incompressible data). You can see how often zswap has done that in the
 `reject_compress_poor` counter in `/sys/kernel/debug/zswap/`.
 
-By comparison, by default zram compresses everything regardless of compression
-ratio. zram tracks these poorly-compressed pages in its `huge_pages` statistic,
-but without specific writeback configuration, zram will store even 4KB pages
-that compress to 3.9KB, wasting both memory and CPU.
+By comparison, zram compresses everything regardless of compression ratio by
+default. zram tracks these poorly-compressed pages in its `huge_pages`
+statistic, but will happily store even 4KB pages that compress to 3.9KB,
+wasting both memory and CPU.
 
-This means zswap has better worst-case behavior for workloads with lots of
-incompressible data (encrypted files, compressed media, already-compressed
-application data), though the difference is often negligible in practice for
-typical mixed workloads.
+This means zswap usually has better worst-case behaviour for workloads with lots
+of incompressible data, though the difference is often negligible in practice
+for typical mixed workloads.
 
-The behavior when zswap rejects an incompressible page has also evolved in
-recent kernel versions. By default, as you saw in `swap_writeout()`, a rejected
-page falls through to `__swap_writepage()` and goes to disk. But for workloads
-where any swap I/O is undesirable, the kernel now supports a per-cgroup
-writeback disabled mode. When disabled for a cgroup, any page rejected by
-zswap -- whether for incompressibility, pool limits, or any other reason --
-cycles back to the active list rather than going to disk. This prevents a form
-of LRU inversion where warm incompressible pages hit disk ahead of much colder
-but compressible pages.
+The behaviour when zswap rejects an incompressible page has also evolved in
+recent kernel versions. By default, as you saw earlier in `swap_writeout()`, a
+rejected page falls through to `__swap_writepage()` and goes to disk. But for
+workloads where any swap I/O is undesirable, the kernel now supports a
+per-cgroup writeback disabled mode (kernel 6.8+). When disabled for a cgroup,
+any page rejected by zswap -- whether for incompressibility, pool limits, or
+any other reason -- cycles back to the active list rather than going to disk.
+This prevents a form of LRU inversion where warm incompressible pages hit disk
+ahead of much colder but compressible pages. To enable it:
+
+    echo 0 > /sys/fs/cgroup/<cgroup>/memory.zswap.writeback
 
 There is, however, a downside to writeback-disabled mode: if memory pressure is
 high and a cgroup is generating a lot of incompressible data, reclaimers can
 end up in a pathological loop -- repeatedly attempting to compress the same
 incompressible pages, failing, cycling them back to the active list, and trying
 again. With no disk fallback, there is no way to make forward progress, which
-can cause serious problems in production.
+can cause serious problems in production. This is something we are actively working on: the approach would keep
+incompressible pages in the zswap pool as-is rather than cycling them,
+organised in a per-cgroup LRU so the shrinker can evict them to disk once they
+turn cold.
 
-To address this, a newer upstream mechanism now allows zswap to store
-incompressible pages *uncompressed* in the zswap pool, similar to how zram
-handles them. These pages are tracked in a per-cgroup, per-node LRU, and can
-be evicted to disk by the zswap shrinker once they become cold. This gives the
-best of both worlds: avoiding repeated compression attempts and immediate disk
-I/O for warm pages, while still allowing cold incompressible data to be evicted
-to disk under pressure.
 
 ### SSD wear considerations
 
@@ -581,15 +594,18 @@ that it [reduces SSD
 wear](https://forums.kicksecure.com/t/enable-and-use-zram-instead-for-swap/654/2) -- that is to say, they believe
 using it reduces disk I/O.
 
-But this is a mistake. RAM is finite. If you are filling your RAM with some
-kind of data, eventually, when all of your RAM is used, the data needs to go
-somewhere.
+But this is folly. RAM is finite. If you are filling your RAM with some kind of
+data, eventually, when all of your RAM is used, the data needs to go somewhere.
 
-You might think you will never use all of your RAM. But on Linux, we don't
-actually leave RAM empty. The kernel follows the philosophy that unused RAM is
-wasted RAM, and automatically filling any slack space with the page cache and
-other nice to have things, that is, things like copies
-of files, libraries, and disk data to speed up future access.
+To back that up with some concrete data, when working on improving Instagram's
+performance, enabling zswap drove down disk writes for some services by up to
+25% compared to disk swap alone. So how can this be?
+
+Well, you might think you will never use all of your RAM. But on Linux, we
+don't actually leave RAM empty. The kernel follows the philosophy that unused
+RAM is wasted RAM, and automatically filling any slack space with the page
+cache and other nice-to-have things, like copies of files, libraries, and disk
+data to speed up future access.
 
 As part of this, the kernel daemon `kswapd` proactively wakes up to reclaim
 memory when free space dips below certain watermarks and works to balance
@@ -598,14 +614,14 @@ immediately allocate without having to sleep for reclaim, so it manages
 pressure as a normal state of operation to ensure there is always a buffer for
 immediate allocation.
 
-**zram-only removes disk swap I/O, but it can shift pressure onto the page
-cache. Under memory pressure, more file cache may be dropped (leading to
-rereads) or written back (if dirty). With disk-backed swap (or zswap), the
-system can often evict cold anonymous pages instead, which may reduce cache
-churn, and thus reduce I/O. That means that zram can actually _increase_ total
-disk I/O if not well managed.**
+**Using only zram removes disk swap I/O, but it instead simply serves to shift
+pressure on to the page cache. Under memory pressure, more file cache may be
+dropped (leading to rereads) or written back (if dirty). With disk-backed swap
+(or zswap), the system can often evict cold anonymous pages instead, which may
+reduce cache churn, and thus reduce I/O. That means that zram can actually
+_increase_ total disk I/O if not well managed.**
 
-So how can that be? Well, memory in most cases on both servers and desktop is
+Memory in most cases on both servers and desktops is
 dominated by two types of pages. One is anonymous pages, like your program heap
 and stack data. The other is file pages, that is, the disk cache. If you use
 zram without a physical backing device, you effectively lock all anonymous data
@@ -620,53 +636,52 @@ anonymous data to a physical disk via zswap or swap partition, you strangle
 the page cache. This forces the system to constantly flush and re-read active
 files.
 
-The real goal here is to load the right things into RAM, keeping the
-active "working set" in memory, not to overuse zram.
+The real goal is to keep the active working set in RAM -- and disk swap,
+used well, helps you do that by giving cold anonymous pages somewhere to go
+rather than forcing cold and hot data to compete for the same pool.
 
-And, in defense of zswap, it too also dramatically reduces SSD wear by acting
-as a write-reduction filter. It absorbs high-frequency page-out/page-in
-transients in RAM, compressing data before it ever touches the disk. Only truly
-cold data that survives the cache gets written there.
+And, in defense of zswap, it also dramatically reduces SSD wear by acting as a
+write-reduction filter. It absorbs high-frequency page-out/page-in transients
+in RAM, compressing data before it ever touches the disk. Only truly cold data
+that survives the cache gets written there. In the Instagram case I mentioned
+above, the reason disk writes are reduced by 25% is because the in-memory cache
+absorbs the hot write churn that would otherwise have reached the SSD.
 
 Modern SSDs are also capable of typically handling hundreds of terabytes of
 writes. Consumer SSDs typically offer 150-600 TB
 [TBW](https://www.kingston.com/en/blog/servers-and-data-centers/understanding-ssd-endurance-tbw-dwpd).
-In 2025, this whole conversation is largely moot anyway unless you are using
+In 2026, this whole conversation is largely moot anyway unless you are using
 very cheap eMMC storage, and even then zram may not be your best bet.
 
-That said, if swap I/O is genuinely a hard requirement for particular workloads,
-zswap's per-cgroup writeback disabled mode (discussed above in the
+That said, if swap I/O is genuinely a hard requirement for particular
+workloads, zswap's per-cgroup writeback disabled mode (see the above
 incompressible data section) lets you completely prevent disk swap I/O for
 specific cgroups without giving up zswap's integration with the rest of the
-memory management subsystem. You can even mix and match: latency-sensitive
-services can use zswap with writeback disabled, while other services use the
-full zswap-then-disk tiering. This is considerably more flexible than the
-one-size-fits-all zram approach.
+memory management subsystem. You can even do some mixing and matching:
+latency-sensitive services can use zswap with writeback disabled, while other
+services use the full zswap-then-disk tiering. This is considerably more
+flexible than the one-size-fits-all zram approach.
 
 ### Performance under memory pressure
 
-The only place most users will see real performance differences between zswap
-and zram is in their failure modes, which are extremely different, and will
-suit different audiences.
+Both zswap and zram have similar overheads under normal operation. Where they
+diverge sharply is in their failure modes under memory pressure, and
+understanding those failure modes is the key to understanding which to use.
 
-Both zswap and zram compress pages in RAM under normal operation, and there's
-very little difference in the overheads that can be seen outside of
-benchmarking.
+Under load, when using zswap:
 
-However, under load, when using zswap:
-
-1. When the pool is filling, there is automatic LRU based eviction to disk
-2. When the pool is full, we can can start rejecting pages and bypassing the
-   cache, so there is a performance cliff
-3. Under extreme pressure the system can degrade to disk swap speed
+1. When the pool is *filling*, there is automatic LRU based eviction to disk.
+2. When the pool is *full*, we can start rejecting pages and bypassing the
+   cache, so there is a performance cliff.
+3. Under extreme pressure the system can degrade to disk swap speed.
 
 With zram, by comparison:
 
-1. When the device is filling, it simply continues accepting pages until full
-2. When the device is full, it switches to next priority swap device (or OOMs
-   if there is none). There is no automatic eviction.
+1. When the device is *filling*, it simply continues accepting pages until full
+2. When the device is *full*, it switches to next priority swap device (or OOMs
+   if there is none). There is no automatic eviction at all.
 3. Under extreme pressure, when there's no other backing device, the system
-   tends to OOM rather than thrashing.
+   simply OOMs.
 
 You might think hey, if the system is swapping heavily to disk, desktop
 responsiveness is already ruined. I'd rather have the system OOM kill a process
@@ -683,61 +698,68 @@ Before the OOM killer is ever invoked, the kernel enters a cycle of aggressive
 reclaim:
 
 - It scans LRU lists looking for clean pages to drop.
-- It attempts to flush dirty pages to disk (if writeback is available).
+- It attempts to flush dirty pages to disk.
 - It cycles through various memory types trying to free anything.
+- It negotiates shrinking with drivers.
 
-This process can take seconds or even minutes. During this time, your
-application is suspended, and the system appears to hang. By the time the OOM
-killer actually fires, the user has likely already experienced significant
-unresponsiveness, and the system may be locked up to the point that the user
-can do very little about it.
+We have frequently seen that this process can take seconds or even minutes even
+for simple production workloads. During this time, your application is
+suspended, and the system appears to hang. By the time the OOM killer actually
+fires, the user has likely already experienced significant unresponsiveness,
+and the system may be locked up to the point that the user can do very little
+about it.
 
-The kernel OOM killer is also very imprecise. It uses user-provided scores to
-decide who to kill, which often results in simply killing the largest process,
-rather than necessarily the process that is actually leaking memory.
+The kernel OOM killer is also very imprecise. It uses a heuristic "score" to
+decide who to kill -- and if "score" sounds like a weasel word, that's because
+it is. It's the kernel admitting it doesn't know who the right victim is either,
+and hoping you'll fill the gap with `oom_score_adj`. The practical result is
+that it often just kills the largest process, rather than the one that is
+actually leaking memory.
 
 ## zram on Fedora
 
-So if I've spent so long going over why zram is so difficult, why are
-distributions like Fedora defaulting to zram-only setups even on desktops with
-fast SSDs?
+Why are distributions like Fedora defaulting to zram-only setups on desktops
+with fast SSDs? And why not just use zswap?
 
-The reason is that they try to avoid using the kernel OOM killer at all. Modern
-Fedora uses systemd-oomd in order to get ahead of shortages and apply a
-userspace policy to decide what to do about it. They want a hard limit, and
-they want the system to kill something to make forward process rather than
-degrade performance.
+The answer is that zswap was never actually on the table. Fedora's goal for a
+while now has been to [eliminate disk swap
+entirely](https://fedoraproject.org/wiki/Changes/SwapOnZRAM), and since zswap
+is architecturally a cache *in front of* disk swap, it's simply not a
+candidate.
 
-In order to do this one _has_ to have userspace tools (like systemd-oomd or
-Android's lmkd) that monitor [Pressure Stall Information
-(PSI)](https://facebookmicrosites.github.io/psi/docs/overview). These tools can
-see when memory pressure is slowing the system and kill processes proactively
-based on highly nuanced policy before the kernel enters its pathological
-reclaim loop. Without those tools, you will likely still experience the system
-hangs you were trying to avoid.
+Their reasons for eliminating disk swap aren't primarily about memory
+management -- they're about other system properties. When swap evicts pages to
+disk, private keys, passwords, session tokens, and browser state end up on a
+persistent partition. On SSDs, wear-levelling means the kernel can't guarantee
+a sector is actually zeroed when erased; data may linger in overprovisioned
+blocks the OS can never reach. zram sidesteps this entirely: it lives in RAM,
+and a reboot wipes it. Swap encryption can help here too, but it adds
+configuration complexity and still requires trusting the key management
+story -- Fedora's goal is to eliminate the surface area, not layer
+mitigations on top of it.
 
-This is a fundamentally different philosophy from zswap's graceful degradation
-approach. Fedora doesn't want to smoothly degrade performance as memory
-pressure increases using all available storage tiers. Instead, they want to
-maintain performance at all costs and hard fail if one exceeds the available
-capacity.
+Fedora pairs zram with systemd-oomd, which monitors
+[PSI](https://facebookmicrosites.github.io/psi/docs/overview) to proactively
+kill processes based on policy ahead of time. They also sidestep LRU inversion
+by having only one swap device -- with no disk swap at all, there is nothing to
+invert against.
 
-Fedora also sidesteps the LRU inversion issues I mentioned earlier by having
-only one swap device. There is no swap partition or swap file on the disk, so
-because there is no second order storage, there is no relationship to invert.
+This works for interactive desktop workloads. A desktop user under heavy memory
+pressure is probably already seeing low responsiveness, and a userspace OOM
+daemon terminating the problematic process cleanly is often better than waiting
+for the system to thrash through disk swap for minutes.
 
-This is also a totally valid way of going about things. It is totally
-defensible to say you'd rather your browser tabs load slowly from disk than
-have the system kill my work, and it's also totally defensible to conversely
-argue that you'd rather have the system kill a process than hang for 30
-seconds. But you have to decide.
+But, and this is important -- this only works with a userspace OOM daemon
+running and configured, and no disk swap device whatsoever. Without
+systemd-oomd, you get the hard limit without the clean kill, and the system
+will hang just as badly or worse.
 
-For interactive desktop workloads, the Fedora approach has merit. A desktop
-user experiencing significant swapping activity is probably already
-experiencing low responsiveness, and may be better served by a userspace OOM
-daemon terminating the problematic process. Compared to a server, it may be
-much less destructive to restart the killed process rather than waiting for
-swap I/O.
+It's not the optimal setup purely for memory management: zswap's tighter mm
+integration and LRU tiering offer real advantages that zram doesn't match. But
+memory efficiency wasn't the only thing Fedora was optimising for, and several
+of their constraints had nothing to do with memory management at all. Within
+those constraints, the decision is coherent: optimality is always relative to
+what you're trying to achieve.
 
 ## If I use zram, how should I size the device?
 
@@ -749,72 +771,73 @@ So how does Fedora size it? Well, they [size it up to 100% of your
 RAM](https://fedoraproject.org/wiki/Changes/Scale_ZRAM_to_full_memory_size).
 Job's a goodun.
 
-Okay, maybe that does require a little more explanation. :-)
+...okay, maybe that does require a little more explanation. :-)
 
 Fedora takes an aggressive approach here. They size the zram device to 100% of
 your physical RAM, capped at 8GB. You may be wondering how that makes any sense
-at all -- how can one have a swap device the size of one's RAM? And surely to
-read a page from zram, I have to decompress it into main RAM, right?. If zram
-is full, where do I put the decompressed page?
+at all -- how can one have a swap device that's potentially the entire size of
+one's RAM? And surely to read a page from zram, I have to decompress it into
+main RAM, right? If zram is full, where does it even put the decompressed
+page? What is this madness?!
 
 Fedora solves this with a bit of educated gambling. First, zram is thin
 provisioned. Until pages are actually faulted, there's no memory use. So a zram
 device sized to 100% with nothing in it occupies no space except for the space
 used for bookkeeping.
 
-In addition to that, they are betting that your data compresses well, let's say
-ratio 3:1. So then, a 100% sized zram device will only physically occupy one
-third of RAM. This leaves 66% of RAM free for the OS and decompression buffers.
+In addition to that, they are betting that your data compresses well -- say,
+3:1. So then, a 100% sized zram device will only physically occupy one third of
+RAM, leaving 66% free for the OS and decompression buffers.
 
-Then then use systemd-oomd to watch memory pressure. If it sees zram physically
+Then they use systemd-oomd to watch memory pressure. If it sees zram physically
 filling up RAM, it kills something based on policy before you hit the deadlock
-wall where where there wouldn't be enough space to compress.
+wall where there wouldn't be enough space to decompress.
 
 ## How to decide which to use
 
-So that's a lot of information and nuance. Based on that, how should one decide
-what to use?
-
-I would argue that one should probably should choose zswap when tiering with
-disk based swap. It is much more tightly integrated with the rest of the memory
-management subsystem, has much better heuristics around reclaim and eviction,
-and generally has better behaviour at the extreme edge cases. It also handles
-hibernation transparently if you care about that. Disk based swap still has
+If you are in doubt, I strongly recommend you use zswap with disk-backed swap.
+It is much more tightly integrated with the rest of the memory management
+subsystem than zram, has much better heuristics around reclaim and eviction,
+handles incompressible data much better, and degrades gracefully under
+pressure. It also handles hibernation transparently. Disk based swap still has
 [significant upsides in many
 cases](https://chrisdown.name/2018/01/02/in-defence-of-swap.html), even if you
-have a lot of RAM, so I would suggest using it if possible.
+have a lot of RAM.
 
-But, as Fedora shows, zram is also quite usable on the desktop, as long as you
-have the commensurate tooling to support it, like `systemd-oomd`, and avoid
-having any other swap devices. By going this way you may not be getting the
-theoretical maximum out of your memory, but you also are avoiding some of the
-gnarly edge cases from tiering overall. So it's swings and roundabouts.
+The cases where zram makes sense are more nuanced. In embedded systems, zram is
+extremely simple and self-contained. When there is no disk at all, it is the
+obvious choice, and in those environments the predictability of a hard limit is
+often a feature rather than a bug. Another case is when you are deliberately
+going entirely disk-free by design, like in Fedora's case.
 
-On embedded systems, zram makes significantly more sense. It is extremely
-simple, extremely predictable, and in those environments usually manually
-sizing things makes more sense, and the workloads are much better understood
-and regulated.
+Android is the most prominent example of the diskless approach: billions of
+devices run zram with no disk swap at all, paired with a userspace kill daemon
+(lmkd). That combination completely sidesteps LRU inversion, because there is
+no disk swap tier to invert against. But Android's zram setup works because it
+has been extensively tuned for phone hardware and phone workloads -- and those
+assumptions don't travel. When we brought a similar setup to Quest, we found
+that the kernel's defaults actively worked against us in ways that weren't
+obvious. For example, the `vm.page-cluster` sysctl controls how many
+consecutive pages the kernel reads from swap at once, and defaults to 3 (this
+is logarithmic, so 2^3 pages). On disk, that may well be a sensible readahead
+optimisation. On zram, it's pure overhead: compressed pages have no locality,
+so pre-fetching neighbours buys you nothing and multiplies the cost of every
+swap-in. Getting it right required us to go back to basics and revisit
+assumptions the kernel makes for disk that simply don't hold for zram.
 
-On servers, in my opinion zram is a hard sell for a general audience. You are
-effectively telling the kernel to crash a service rather than let it run slowly
-for a few minutes, which might be okay for some services, but for some services
-restarting can be very expensive or disruptive. It can also manifest even more
-poorly at scale, where a minor memory spike across a fleet can turn into a mass
-outage rather than being absorbed as a temporary latency increase. It also
-doesn't work well with tiering. I can imagine use cases for it on the server
-too, but they are not well generalised or easy to recommend.
+Servers are where zram becomes an especially hard sell. Aside from the way in
+which zram (doesn't) degrade, zram's memory usage is basically opaque to the
+kernel and is not charged to any cgroup. The kernel has no visibility into how
+much memory zram is consuming on behalf of a given cgroup, which can break
+resource isolation and pressure signals between services. This gap alone has
+been a hard blocker for zram adoption at a number of organisations, including
+Meta, that run containerised or isolated workloads.
 
-There is also a subtler but operationally significant problem on servers: zram's
-memory usage is not accounted to any cgroup. On systems using cgroup-based
-memory limits -- which is essentially every container or service isolation setup
--- the kernel has no visibility into how much memory zram is consuming on behalf
-of a given cgroup. This means per-cgroup memory accounting is off, which can
-badly skew memory pressure signals and resource attribution. Extending zram to
-support cgroup accounting is non-trivial architecturally, and this gap alone
-has been a hard blocker for zram adoption at a number of organisations running
-containerised workloads.
+In practice, across the services we've deployed zswap on at scale, it has
+consistently reduced OOMs, cut disk write pressure, and done so without any
+manual intervention. zram can work well, but it requires committing to the kind
+of full setup it was designed for. If you are not sure whether you have done
+that, you almost certainly want zswap.
 
-Both technologies are valid, and both have their place. The real answer depends
-on your performance philosophy, your workload, and your tolerance for
-complexity. Hopefully this post has helped you to understand the tradeoffs
-better so you can make an informed decision.
+Many thanks to [Nhat Pham](https://github.com/nhatsmrt) for his extensive
+feedback on this post.
