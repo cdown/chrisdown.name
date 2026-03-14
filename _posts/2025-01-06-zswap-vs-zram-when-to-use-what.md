@@ -270,7 +270,7 @@ Just as one example, here is one very important architectural issue that can
 affects zram when tiering alongside regular disk swap. In it, the story goes
 something like this:
 
-1. A page is ready to be swapped, and goes into [give kernel function]
+1. A page is ready to be swapped, and goes into `swap_writeout()`
 2. There's no zswap, only zram, so the kernel just looks down the list of swap devices
 3. zram is configured with the highest swap priority, so it gets chosen as
    long as it has space.
