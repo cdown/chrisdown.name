@@ -121,7 +121,7 @@ static void zram_submit_bio(struct bio *bio)
 }
 {% endhighlight %}
 
-<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/block/zram/zram_drv.c?h=v6.18#n2393">zram_submit_bio()</a> from Linux 6.18</div>
+<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/block/zram/zram_drv.c?h=v6.19#n2658">zram_submit_bio()</a> from Linux 6.19</div>
 
 {% endcc %}
 
@@ -141,7 +141,7 @@ fairly significant implications we'll explore in a moment.
 
 By comparison, zswap doesn't create a block device, and instead integrates
 directly into the kernel's memory management subsystem. When the kernel needs
-to swap out a page, it calls `swap_writepage()`, which gives zswap first dibs
+to swap out a page, it calls `swap_writeout()`, which gives zswap first dibs
 to intercept it:
 
 {% cc %}
@@ -168,7 +168,7 @@ out_unlock:
 }
 {% endhighlight %}
 
-<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/page_io.c?h=v6.18#n240">swap_writeout()</a> from Linux 6.18</div>
+<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/page_io.c?h=v6.19#n240">swap_writeout()</a> from Linux 6.19</div>
 
 {% endcc %}
 
@@ -196,6 +196,7 @@ bool zswap_store(struct folio *folio)
 
     /* Try to compress and store each page in the folio */
     for (index = 0; index < nr_pages; ++index) {
+        struct page *page = folio_page(folio, index);
         if (!zswap_store_page(page, objcg, pool))
             goto put_pool;
     }
@@ -215,7 +216,7 @@ check_old:
 }
 {% endhighlight %}
 
-<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/zswap.c#n1494">zswap_store()</a> from <a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/zswap.c">mm/zswap.c</a></div>
+<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/zswap.c?h=v6.19#n1494">zswap_store()</a> from Linux 6.19</div>
 
 {% endcc %}
 
@@ -236,29 +237,22 @@ static void shrink_worker(struct work_struct *w)
     do {
         /* ... memcg iteration logic ... */
 
-        ret = zswap_shrink_memcg(memcg, thr);
-        if (ret == -ENOENT) {
-            /* No writeback candidate found, try next memcg */
-            failures++;
-        } else if (ret == -EAGAIN) {
-            /* Writeback is disabled or in progress */
-            failures++;
-        } else if (ret) {
-            /* Other errors */
-            failures++;
-        } else {
-            /* Success */
-            attempts++;
-            failures = 0;
-        }
+        ret = shrink_memcg(memcg);
 
-        /* ... continue to next memcg ... */
-    } while (attempts < MAX_RECLAIM_RETRIES &&
-             failures < MAX_RECLAIM_RETRIES);
+        /* No pages to writeback in this memcg, try the next */
+        if (ret == -ENOENT)
+            continue;
+
+        ++attempts;
+        if (ret && ++failures == MAX_RECLAIM_RETRIES)
+            break;
+
+        /* ... reschedule ... */
+    } while (zswap_total_pages() > thr);
 }
 {% endhighlight %}
 
-<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/zswap.c?h=v6.18#n1325">shrink_worker()</a> from Linux 6.18</div>
+<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/zswap.c?h=v6.19#n1324">shrink_worker()</a> from Linux 6.19</div>
 
 {% endcc %}
 
@@ -317,7 +311,7 @@ start_over:
 }
 {% endhighlight %}
 
-<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/swapfile.c?h=v6.18#n1353">swap_alloc_slow()</a> from Linux 6.18</div>
+<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/swapfile.c?h=v6.19#n1341">swap_alloc_slow()</a> from Linux 6.19</div>
 
 {% endcc %}
 
@@ -452,6 +446,8 @@ static unsigned long zswap_shrinker_count(struct shrinker *shrinker,
     /* zswap shrinker_count basically answers the question of how many pages we
      * should evict from zswap to the backing swap device. */
 
+    struct lruvec *lruvec = mem_cgroup_lruvec(sc->memcg, NODE_DATA(sc->nid));
+
     /* This is how often we had to fetch data from slow disk recently. We track
      * this to avoid thrashing. */
     atomic_long_t *nr_disk_swapins =
@@ -481,7 +477,7 @@ static unsigned long zswap_shrinker_count(struct shrinker *shrinker,
 }
 {% endhighlight %}
 
-<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/zswap.c?h=v6.18#n1209">zswap_shrinker_count()</a> from Linux 6.18</div>
+<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/zswap.c?h=v6.19#n1208">zswap_shrinker_count()</a> from Linux 6.19</div>
 
 {% endcc %}
 
