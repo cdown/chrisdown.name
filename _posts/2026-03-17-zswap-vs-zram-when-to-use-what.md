@@ -724,26 +724,28 @@ Both zswap and zram have similar overheads under normal operation. Where they
 diverge sharply is in their failure modes under memory pressure, and
 understanding those failure modes is the key to understanding which to use.
 
-Under load, when using zswap:
+With zswap, pressure is handled continuously and proactively. As the pool
+fills, the dynamic shrinker (`zswap_shrinker_count`) wakes up and evicts cold
+pages to disk ahead of time, tracking disk swap-in rates and compression ratios
+to avoid thrashing. In practice, this means the pool limit is rarely hit at
+all. On production servers at Meta, it almost never fires -- the dynamic
+shrinker keeps things in check long before that. When the limit *is* hit, there
+is a performance cliff where pages start bypassing the cache and going directly
+to disk. That's not great, but it is a *gradual* degradation: the system slows
+down rather than falling off a cliff.
 
-1. When the pool is *filling*, there is automatic LRU based eviction to disk.
-2. When the pool is *full*, we can start rejecting pages and bypassing the
-   cache, so there is a performance cliff.
-3. Under extreme pressure the system can degrade to disk swap speed.
+With zram, there is no equivalent process. Nothing is watching the device fill
+up and taking action. When it hits capacity, it simply stops accepting pages.
+If there is a lower-priority disk swap device, the kernel spills to that --
+with all the LRU inversion problems described above. If there is no other
+device, the system either hangs while the kernel desperately tries to reclaim
+anything it can, or the OOM killer fires. In neither case does the system
+degrade gracefully.
 
-With zram, by comparison:
-
-1. When the device is *filling*, it simply continues accepting pages until full
-2. When the device is *full*, it switches to next priority swap device (or OOMs
-   if there is none). There is no automatic eviction at all.
-3. Under extreme pressure, when there's no other backing device, the system
-   simply OOMs.
-
-You might think hey, if the system is swapping heavily to disk, desktop
-responsiveness is already ruined. I'd rather have the system OOM kill a process
-than slowly thrash the user to death. But there is a dangerous nuance here that
-is often overlooked -- the kernel OOM killer is not even close to
-instantaneous.
+You might think: if the system is swapping heavily to disk, responsiveness is
+already ruined. I'd rather have the system OOM kill a process than slowly
+thrash the user to death. But there is a dangerous nuance here that is often
+overlooked -- the kernel OOM killer is not even close to instantaneous.
 
 As I went over in my [SREcon talk](https://www.youtube.com/watch/beefUhRH5lU),
 relying on the kernel's built-in OOM killer to save responsiveness is often a
