@@ -681,11 +681,20 @@ immediately allocate without having to sleep for reclaim, so it manages
 pressure as a normal state of operation to ensure there is always a buffer for
 immediate allocation.
 
-Of course, Instagram's workload is particularly favourable for zswap, in that
-it's fork-heavy with highly compressible heap, so take the exact numbers with a
-grain of salt. But nonetheless, directionally this maps for almost all use
-cases: workloads generally do accumulate cold anonymous pages over time, and
-those pages tend to compress well.
+That reclaim has to go somewhere, and the choice of where determines what I/O
+happens. With only zram, kswapd cannot push cold anonymous pages out of the
+way, so it is forced to evict or write back file cache instead -- which is
+often the wrong thing to flush, and often something you will immediately need
+again. With disk-backed swap (or zswap in front of it), the kernel can make
+the right call: park cold anonymous pages in the compressed pool, defer actual
+disk I/O until those pages are truly cold, and leave the file cache intact for
+the reads and writes that actually matter. The I/O that does happen is
+deliberate rather than desperate.
+
+Of course, Instagram's workload is particularly favourable for zswap, so take
+the exact numbers with a grain of salt. But nonetheless, directionally this
+maps for almost all use cases: workloads generally do accumulate cold anonymous
+pages over time, and those pages tend to compress well.
 
 Beyond that, zswap also dramatically reduces SSD wear by acting as a
 write-reduction filter. It absorbs high-frequency page-out/page-in transients
