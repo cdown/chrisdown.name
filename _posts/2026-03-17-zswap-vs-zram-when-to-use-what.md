@@ -774,39 +774,42 @@ entirely](https://fedoraproject.org/wiki/Changes/SwapOnZRAM), and since zswap
 is architecturally a cache *in front of* disk swap, it's simply not a
 candidate.
 
-Their reasons for eliminating disk swap aren't primarily about memory
-management -- they're about other system properties. When swap evicts pages to
-disk, private keys, passwords, session tokens, and browser state end up on a
-persistent partition. On SSDs, wear-levelling means the kernel can't guarantee
-a sector is actually zeroed when erased; data may linger in overprovisioned
-blocks the OS can never reach. zram sidesteps this entirely: it lives in RAM,
-and a reboot wipes it. Swap encryption can help here too, but it adds
-configuration complexity and still requires trusting the key management
-story -- Fedora's goal is to eliminate the surface area, not layer
+Their reasons for eliminating disk swap aren't entirely about memory
+management, and are largely also being driven by other system properties. For
+example, when swap evicts pages to disk, private keys, passwords, session
+tokens, and browser state end up on a persistent partition. zram sidesteps this
+entirely: it lives in RAM, and a reboot wipes it, so there's no risk of
+anything getting to disk. Swap encryption can help here too, but it adds
+configuration complexity and still requires trusting the key management story,
+and ultimately Fedora's goal is to eliminate the surface area, not layer
 mitigations on top of it.
 
 Fedora pairs zram with systemd-oomd, which monitors
 [PSI](https://facebookmicrosites.github.io/psi/docs/overview) to proactively
 kill processes based on policy ahead of time. They also sidestep LRU inversion
-by having only one swap device -- with no disk swap at all, there is nothing to
-invert against.
+by having only one swap device (on zram), and so with no disk swap at all,
+there is nothing to invert against.
 
-This works for interactive desktop workloads. A desktop user under heavy memory
-pressure is probably already seeing low responsiveness, and a userspace OOM
-daemon terminating the problematic process cleanly is often better than waiting
-for the system to thrash through disk swap for minutes.
+This setup makes sense given the constraints they are operating under, and with
+the mitigations using `systemd-oomd` that they have in place. With their setup,
+a desktop user under heavy memory pressure is probably already seeing low
+responsiveness, and a userspace OOM daemon terminating the problematic process
+cleanly is often better than waiting for the system to thrash through disk swap
+for minutes.
 
-But, and this is important -- this only works with a userspace OOM daemon
-running and configured, and no disk swap device whatsoever. Without
-systemd-oomd, you get the hard limit without the clean kill, and the system
-will hang just as badly or worse.
+But, and this is important, this only works with a userspace OOM daemon running
+and configured, and no disk swap device whatsoever. Without systemd-oomd, you
+get the hard limit without the clean kill, and the system will hang just as
+badly or worse.
 
-It's not the optimal setup purely for memory management: zswap's tighter mm
-integration and LRU tiering offer real advantages that zram doesn't match. But
-memory efficiency wasn't the only thing Fedora was optimising for, and several
-of their constraints had nothing to do with memory management at all. Within
-those constraints, the decision is coherent: optimality is always relative to
-what you're trying to achieve.
+So suffice to say that this is almost certainly not the optimal setup purely
+for memory management, and zswap's tighter mm integration and LRU tiering offer
+real advantages that zram doesn't match. But memory efficiency wasn't the only
+thing Fedora was optimising for, and several of their constraints had nothing
+to do with memory management at all. Within those constraints, the decision is
+coherent: optimality is always relative to what you're trying to achieve (and
+that point goes to you too, dear reader -- you know better than me what you are
+trying to do).
 
 ## If I use zram, how should I size the device?
 
