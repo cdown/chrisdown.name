@@ -115,10 +115,30 @@ Raspberry Pi with an SD card, zram gives you some amount of memory offload
 without any external dependencies. All pretty reasonable so far.
 
 However, when you *do* have disk storage available (like an SSD), zram's block
-device architecture creates some significant constraints. The fact that the
-kernel is basically unaware of the nature of the backing device that provides
-the swap (that is, it treats zram as just another disk) has fairly significant
-implications we'll explore in a moment.
+device architecture creates some significant constraints. The kernel is
+essentially naive to zram being any different from a typical block device on a
+slow disk, and so applies its normal disk-oriented defaults to it. As just one
+example, there is a kernel tunable called `vm.page-cluster` that decides how
+many pages we want to read ahead when we are faulting in a single swap page.
+It is logarithmic, so for example, if `vm.page-cluster` is 4, we would read in
+2^4 pages to try to amortise disk work ahead of time while it's cheap and
+sequential. This is more important on hard drives, but there is still a
+meaningful performance delta between random and sequential reads even on modern
+NAND.
+
+When we started working on using zram on Quest (since it runs on Android, which
+makes use of zram), one problem we ran into was `vm.page-cluster`: it defaults
+to 3, meaning the kernel reads 2^3 pages at once from swap as a readahead
+optimisation. When reading from disk, that's sensible: pages near each other on
+disk tend to be needed near each other in time, so it's good to amortise. But
+with zram, this assumption no longer holds at all, and in fact works against
+you quite considerably. With zram, compressed pages have no locality, so you're
+paying for 8 swap-ins every time you need 1. Importantly, this is neither
+something specific to Quest, nor `vm.page-cluster`, it's more a consequence of
+the kernel treating zram like any other block device. `vm.page-cluster` is at
+least tunable, but there are other assumptions baked into the kernel that
+aren't even exposed as sysctls. In many cases the kernel will fight against
+you, and it takes a lot of effort and knowledge to get this right.
 
 ### zswap's memory management integration
 
@@ -300,7 +320,7 @@ start_over:
 }
 {% endhighlight %}
 
-<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/swap file.c?h=v6.19#n1341">swap_alloc_slow()</a> from Linux 6.19</div>
+<div class="citation"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/swapfile.c?h=v6.19#n1341">swap_alloc_slow()</a> from Linux 6.19</div>
 
 {% endcc %}
 
@@ -512,10 +532,13 @@ static unsigned long zswap_shrinker_count(
 
 {% endcc %}
 
-Note the amount of care and attention that goes into choosing what to evict.
-zswap tracks recent disk swap-ins to avoid thrashing, and scales eviction by
-compression ratio -- the better zswap compresses, the fewer pages it evicts to
-avoid unnecessary I/O. Cold pages trickle down to the SSD automatically.
+That is to say, rather than relying on static thresholds or periodic polls,
+zswap evicts based on live feedback from the reclaim path, tracking actual disk
+swap-in rates and compression ratios. Cold pages drain to the SSD the moment
+pressure builds. When memory is truly scarce, the compressed pool is holding
+your active working set rather than data you stopped touching hours ago, and
+the page faults that matter most stay in fast compressed RAM rather than going
+to disk.
 
 But there is, as always, a catch. When zswap hits its `max_pool_percent` limit,
 `zswap_check_limits()` causes `zswap_store()` to reject the page and return
@@ -583,7 +606,7 @@ high and a cgroup is generating a lot of incompressible data, reclaimers can
 end up in a pathological loop -- repeatedly attempting to compress the same
 incompressible pages, failing, cycling them back to the active list, and trying
 again. With no disk fallback, there is no way to make forward progress, which
-can cause serious problems in production. This is something we are actively working on: the approach would keep
+can cause serious problems in production. We are working on an approach that would keep
 incompressible pages in the zswap pool as-is rather than cycling them,
 organised in a per-cgroup LRU so the shrinker can evict them to disk once they
 turn cold.
@@ -824,33 +847,11 @@ going entirely disk-free by design, like in Fedora's case.
 Android is the most prominent example of the diskless approach: billions of
 devices run zram with no disk swap at all, paired with a userspace kill daemon
 (lmkd). That combination completely sidesteps LRU inversion, because there is
-no disk swap tier to invert against. But Android's zram setup works because it
-has been extensively tuned for phone hardware and phone workloads -- and those
-assumptions don't travel. The deeper problem is that zram sits outside the mm
-subsystem, and as such the kernel's own disk-oriented heuristics actively work
-against you.
-
-As just one example, there is a kernel tunable called `vm.page-cluster` that
-decides how many pages we want to read ahead when we are faulting in a single
-swap page. It is logarithmic, so for example, is `vm.page-cluster` is 4, we
-would read in 2^4 pages to try to amortise disk work ahead of time while it's
-cheap and sequential. This is more important on hard drives, but there is still
-a meaningful performance delta between random and sequential reads even on
-modern NAND.
-
-When we started working on using zram on Quest (since it runs on Android, which
-makes use of zram), one problem we ran into was `vm.page-cluster`: it defaults
-to 3, meaning the kernel reads 2^3 pages at once from swap as a readahead
-optimisation. When reading from disk, that's sensible: pages near each other on
-disk tend to be needed near each other in time, so it's good to amortise. But
-with zram, this assumption no longer holds at all, and in fact works against
-you quite considerably. With zram, compressed pages have no locality, so you're
-paying for 8 swap-ins every time you need 1. Importantly, this is neither
-something specific to Quest, nor `vm.page-cluster`, it's more a consequence of
-the kernel treating zram like any other block device. `vm.page-cluster` is at
-least tunable, but there are other assumptions baked into the kernel that
-aren't even exposed as sysctls. In many cases the kernel will fight against
-you, and it takes a lot of effort and knowledge to get this right.
+no disk swap tier to invert against. But Android's zram works because it has
+been extensively tuned for phone hardware and phone workloads -- and as
+described above, even things as basic as readahead defaults work against you
+out of the box, and those are just the knobs that are visible. Those
+assumptions don't travel, and neither does Android's tuning.
 
 Servers are another place where zram becomes an especially hard sell. Aside
 from the way in which zram (doesn't) degrade, zram's memory usage is basically
@@ -862,9 +863,12 @@ organisations, including Meta, that run containerised or isolated workloads.
 
 In practice, across the services we've deployed zswap on at scale, it has
 consistently reduced OOMs, cut disk write pressure, and done so without any
-manual intervention. zram can work well, but it requires committing to the kind
-of full setup it was designed for. If you are not sure whether you have done
-that, you almost certainly want zswap.
+manual intervention. The right mental model is that zram is a completely
+manual part of the memory management subsystem: you take on the responsibility
+of managing it correctly yourself, or you bear the consequences. zswap, by
+contrast, is managed by the kernel itself, with all the live feedback, reclaim
+integration, and automatic tiering that entails. For the vast majority of Linux
+systems, you want the kernel doing that work.
 
 Many thanks to [Nhat Pham](https://github.com/nhatsmrt) for his extensive
 feedback on this post.
