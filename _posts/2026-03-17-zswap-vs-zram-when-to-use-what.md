@@ -446,11 +446,12 @@ the oldest data, whether it's 24 hours old or 24 minutes old. It has
 introspection into and the ability to negotiate with the rest of the system,
 and thus it can make better decisions.
 
-Ultimately, I would treat zram's writeback as a workaround rather than
-something that's usable for the vast majority of users in practice. It requires
-you to recreate what zswap gives you automatically (and responds in real time
-to) in a brittle and error-prone fashion, and I would strongly recommend that
-you do not go about managing your memory in this way.
+Ultimately, zram writeback is a workaround, not a solution. It's not so much
+that it can't be made to work in some academic sense -- of course it can. The
+problem is that all of the nasty edge cases show up at exactly the wrong moment:
+mid-spike, when memory pressure is highest and your carefully guessed thresholds
+are most likely to be wrong. I would strongly recommend that you do not go about
+managing your memory in this way.
 
 ## zswap's automatic tiering (and its performance cliffs)
 
@@ -627,15 +628,18 @@ is largely memory bound, we ran a test where we moved from their existing setup
 (with swap entirely disabled) to a setup with disk swap and zswap tiering.
 Django workers accumulate significant cold heap state over their lifetime --
 forked processes with duplicated memory, growing request caches, Python object
-overhead -- and that data compresses very well. This is broadly representative:
-most workloads, from server processes to desktop applications, accumulate cold
-anonymous pages that sit idle and compress efficiently. The results were
-twofold:
+overhead. The results were twofold:
 
 - We achieved roughly 5:1 compression. That's a huge benefit for such a memory
   bound workload, and also enables us to consider further stacking workloads.
 - Enabling zswap reduced disk writes by up to 25% compared to having no swap at
   all(!).
+
+Of course, Instagram's workload is particularly favourable for zswap, in that
+it's fork-heavy with highly compressible heap, so take the exact numbers with a
+grain of salt. But nonetheless, directionally this maps for almost all use
+cases: workloads generally do accumulate cold anonymous pages over time, and
+those pages tend to compress well.
 
 Some of you may be looking at this wondering how adding swap could ever reduce
 disk I/O. So how on Earth can this be?
