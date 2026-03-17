@@ -15,8 +15,9 @@ tl;dr:
 - zram is a compressed RAM block device with a hard capacity limit. When it
   fills, there is no automatic eviction, and the kernel has very little
   leverage to do anything about the situation. The system either OOMs or falls
-  back to lower-priority swap. It only really makes sense for extremely memory
-  constrained embedded systems or diskless setups.
+  back to lower-priority swap. It only really makes sense for extremely
+  memory-constrained embedded systems, diskless setups, or cases with specific
+  security requirements around keeping private data off persistent storage.
 - **Do not run zram alongside disk swap** wherever possible. In such setups,
   zram fills fast RAM with cold, stale pages while pushing your active working
   set onto slow disk, making things actively worse than if you had no
@@ -422,22 +423,21 @@ By comparison, in zswap, there is no magic number, and it dynamically balances
 the LRU based on pressure. If you have plenty of RAM and there's no pressure,
 it keeps data indefinitely. If you are starving for RAM, it aggressively evicts
 the oldest data, whether it's 24 hours old or 24 minutes old. It has
-instrospection into and the ability to negotiate with the rest of the system,
+introspection into and the ability to negotiate with the rest of the system,
 and thus it can make better decisions.
 
 Ultimately, I would treat zram's writeback as a workaround rather than
-something that's usable for the vast majority of user in practice.It  requires
+something that's usable for the vast majority of users in practice. It requires
 you to recreate what zswap gives you automatically (and responds in real time
 to) in a brittle and error-prone fashion, and I would strongly recommend that
 you do not go about managing your memory in this way.
 
 ## zswap's automatic tiering (and its performance cliffs)
 
-zswap's tight mm integration, by comparison, has the suspicious smell of a free
-lunch. One gets automatic tiering, live LRU eviction, pressure-responsive
-behaviour, and all of this comes without any of the previously mentioned
-cumbersome configuration. And for most workloads, it is indeed somewhat of a
-free lunch, but there are some catches worth being aware of.
+As described above, zswap's tight mm integration gives you all of that for
+free, which has the suspicious smell of a free lunch. And for most workloads,
+it is indeed somewhat of a free lunch, but there are some catches worth being
+aware of.
 
 zswap's tiering mechanism works through two distinct shrinker mechanisms that
 are easy to conflate, so it's worth understanding both upfront.
@@ -597,9 +597,18 @@ using it reduces disk I/O.
 But this is folly. RAM is finite. If you are filling your RAM with some kind of
 data, eventually, when all of your RAM is used, the data needs to go somewhere.
 
-To back that up with some concrete data, when working on improving Instagram's
-performance, enabling zswap drove down disk writes for some services by up to
-25% compared to disk swap alone. So how can this be?
+To back that up with some concrete data, on Instagram, which runs on Django and
+is largely memory bound, we ran a test where we moved from their existing setup
+(with swap entirely disabled) to a setup with disk swap and zswap tiering. The
+results were twofold:
+
+- We achieved roughly 5:1 compression. That's a huge benefit for such a memory
+  bound workload, and also enables us to consider further stacking workloads.
+- Enabling zswap reduced disk writes by up to 25% compared to having no swap at
+  all(!).
+
+Some of you may be looking at this wondering how adding swap could ever reduce
+disk I/O. So how on Earth can this be?
 
 Well, you might think you will never use all of your RAM. But on Linux, we
 don't actually leave RAM empty. The kernel follows the philosophy that unused
@@ -815,23 +824,39 @@ devices run zram with no disk swap at all, paired with a userspace kill daemon
 (lmkd). That combination completely sidesteps LRU inversion, because there is
 no disk swap tier to invert against. But Android's zram setup works because it
 has been extensively tuned for phone hardware and phone workloads -- and those
-assumptions don't travel. When we brought a similar setup to Quest, we found
-that the kernel's defaults actively worked against us in ways that weren't
-obvious. For example, the `vm.page-cluster` sysctl controls how many
-consecutive pages the kernel reads from swap at once, and defaults to 3 (this
-is logarithmic, so 2^3 pages). On disk, that may well be a sensible readahead
-optimisation. On zram, it's pure overhead: compressed pages have no locality,
-so pre-fetching neighbours buys you nothing and multiplies the cost of every
-swap-in. Getting it right required us to go back to basics and revisit
-assumptions the kernel makes for disk that simply don't hold for zram.
+assumptions don't travel. The deeper problem is that zram sits outside the mm
+subsystem, and as such the kernel's own disk-oriented heuristics actively work
+against you.
 
-Servers are where zram becomes an especially hard sell. Aside from the way in
-which zram (doesn't) degrade, zram's memory usage is basically opaque to the
-kernel and is not charged to any cgroup. The kernel has no visibility into how
-much memory zram is consuming on behalf of a given cgroup, which can break
-resource isolation and pressure signals between services. This gap alone has
-been a hard blocker for zram adoption at a number of organisations, including
-Meta, that run containerised or isolated workloads.
+As just one example, there is a kernel tunable called `vm.page-cluster` that
+decides how many pages we want to read ahead when we are faulting in a single
+swap page. It is logarithmic, so for example, is `vm.page-cluster` is 4, we
+would read in 2^4 pages to try to amortise disk work ahead of time while it's
+cheap and sequential. This is more important on hard drives, but there is still
+a meaningful performance delta between random and sequential reads even on
+modern NAND.
+
+When we started working on using zram on Quest (since it runs on Android, which
+makes use of zram), one problem we ran into was `vm.page-cluster`: it defaults
+to 3, meaning the kernel reads 2^3 pages at once from swap as a readahead
+optimisation. When reading from disk, that's sensible: pages near each other on
+disk tend to be needed near each other in time, so it's good to amortise. But
+with zram, this assumption no longer holds at all, and in fact works against
+you quite considerably. With zram, compressed pages have no locality, so you're
+paying for 8 swap-ins every time you need 1. Importantly, this is neither
+something specific to Quest, nor `vm.page-cluster`, it's more a consequence of
+the kernel treating zram like any other block device. `vm.page-cluster` is at
+least tunable, but there are other assumptions baked into the kernel that
+aren't even exposed as sysctls. In many cases the kernel will fight against
+you, and it takes a lot of effort and knowledge to get this right.
+
+Servers are another place where zram becomes an especially hard sell. Aside
+from the way in which zram (doesn't) degrade, zram's memory usage is basically
+opaque to the kernel and is not charged to any cgroup. The kernel has no
+visibility into how much memory zram is consuming on behalf of a given cgroup,
+which can break resource isolation and pressure signals between services. This
+gap alone has been a hard blocker for zram adoption at a number of
+organisations, including Meta, that run containerised or isolated workloads.
 
 In practice, across the services we've deployed zswap on at scale, it has
 consistently reduced OOMs, cut disk write pressure, and done so without any
