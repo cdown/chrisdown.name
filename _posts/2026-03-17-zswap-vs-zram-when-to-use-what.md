@@ -457,9 +457,11 @@ see it more.
 The *second* shrinker,
 [shrink_worker()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/zswap.c?h=v6.19#n1324),
 is the limit-based fallback that only fires when the pool limit is actually
-hit. That's where the performance cliff lives -- more on that below.
+hit. That's where the performance cliff lives, and there's more on that below.
 
-Here's what the `zswap_shrinker_count()` does as part of dynamic shrinking:
+The tricky part is deciding how many pages to evict. Evict too few and the pool
+keeps filling, evict too many and you thrash pages back in from disk
+immediately after. Here's how `zswap_shrinker_count()` handles that:
 
 {% cc %}
 
