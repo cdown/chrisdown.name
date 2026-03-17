@@ -623,26 +623,50 @@ using it reduces disk I/O.
 But this is folly. RAM is finite. If you are filling your RAM with some kind of
 data, eventually, when all of your RAM is used, the data needs to go somewhere.
 
-To back that up with some concrete data, on Instagram, which runs on Django and
-is largely memory bound, we ran a test where we moved from their existing setup
-(with swap entirely disabled) to a setup with disk swap and zswap tiering.
-Django workers accumulate significant cold heap state over their lifetime --
-forked processes with duplicated memory, growing request caches, Python object
-overhead. The results were twofold:
+Memory in most cases on both servers and desktops is dominated by two types of
+pages. One is anonymous pages, like your program heap and stack data. The other
+is file pages, that is, the disk cache. If you use zram without a physical
+backing device, you effectively lock all anonymous data in RAM. When memory
+pressure hits, the kernel has no choice but to aggressively evict the file
+cache to make room.
+
+If those evicted file pages are "dirty" (that is, they contain modified data),
+the kernel is forced to write them to the SSD to free up space and make forward
+progress. Even if they are "clean" (that is, they are unmodified), they are
+dropped, forcing the SSD to read them again the next time they are needed. By
+refusing to swap out cold, unused anonymous data to a physical disk via zswap
+or swap partition, you strangle the page cache. This forces the system to
+constantly flush and re-read active files.
+
+**Using only zram removes disk swap I/O, but it instead simply serves to shift
+pressure on to the page cache. Under memory pressure, more file cache may be
+dropped (leading to rereads) or written back (if dirty). With disk-backed swap
+(or zswap), the system can often evict cold anonymous pages instead, which may
+reduce cache churn, and thus reduce I/O. That means that zram can actually
+_increase_ total disk I/O if not well managed.**
+
+The real goal is to keep the active working set in RAM -- and disk swap,
+used well, helps you do that by giving cold anonymous pages somewhere to go
+rather than forcing cold and hot data to compete for the same pool.
+
+We have some concrete numbers to show this in practice. On Instagram, which
+runs on Django and is largely memory bound, we ran a test where we moved from
+their existing setup (with swap entirely disabled) to a setup with disk swap
+and zswap tiering. Django workers accumulate significant cold heap state over
+their lifetime -- forked processes with duplicated memory, growing request
+caches, Python object overhead. The results were twofold:
 
 - We achieved roughly 5:1 compression. That's a huge benefit for such a memory
   bound workload, and also enables us to consider further stacking workloads.
 - Enabling zswap reduced disk writes by up to 25% compared to having no swap at
   all(!).
 
-Of course, Instagram's workload is particularly favourable for zswap, in that
-it's fork-heavy with highly compressible heap, so take the exact numbers with a
-grain of salt. But nonetheless, directionally this maps for almost all use
-cases: workloads generally do accumulate cold anonymous pages over time, and
-those pages tend to compress well.
+As you can imagine, as a result of this test, Instagram has been using zswap
+for many years now.
 
-Some of you may be looking at this wondering how adding swap could ever reduce
-disk I/O. So how on Earth can this be?
+Now, some of you may be looking at this wondering how adding swap could ever
+reduce disk I/O. How on Earth can it be that ever adding _more_ disk-based
+memory offloading would decrease that?
 
 Well, you might think you will never use all of your RAM. But on Linux, we
 don't actually leave RAM empty. The kernel follows the philosophy that unused
@@ -657,33 +681,13 @@ immediately allocate without having to sleep for reclaim, so it manages
 pressure as a normal state of operation to ensure there is always a buffer for
 immediate allocation.
 
-**Using only zram removes disk swap I/O, but it instead simply serves to shift
-pressure on to the page cache. Under memory pressure, more file cache may be
-dropped (leading to rereads) or written back (if dirty). With disk-backed swap
-(or zswap), the system can often evict cold anonymous pages instead, which may
-reduce cache churn, and thus reduce I/O. That means that zram can actually
-_increase_ total disk I/O if not well managed.**
+Of course, Instagram's workload is particularly favourable for zswap, in that
+it's fork-heavy with highly compressible heap, so take the exact numbers with a
+grain of salt. But nonetheless, directionally this maps for almost all use
+cases: workloads generally do accumulate cold anonymous pages over time, and
+those pages tend to compress well.
 
-Memory in most cases on both servers and desktops is
-dominated by two types of pages. One is anonymous pages, like your program heap
-and stack data. The other is file pages, that is, the disk cache. If you use
-zram without a physical backing device, you effectively lock all anonymous data
-in RAM. When memory pressure hits, the kernel has no choice but to aggressively
-evict the file cache to make room.
-
-If those evicted file pages are "dirty" (that is, they contain modified data), the kernel is forced
-to write them to the SSD to free up space and make forward progress. Even if they are "clean"
-(that is, they are unmodified), they are dropped, forcing the SSD to read them
-again the next time they are needed. By refusing to swap out cold, unused
-anonymous data to a physical disk via zswap or swap partition, you strangle
-the page cache. This forces the system to constantly flush and re-read active
-files.
-
-The real goal is to keep the active working set in RAM -- and disk swap,
-used well, helps you do that by giving cold anonymous pages somewhere to go
-rather than forcing cold and hot data to compete for the same pool.
-
-And, in defense of zswap, it also dramatically reduces SSD wear by acting as a
+Beyond that, zswap also dramatically reduces SSD wear by acting as a
 write-reduction filter. It absorbs high-frequency page-out/page-in transients
 in RAM, compressing data before it ever touches the disk. Only truly cold data
 that survives the cache gets written there. In the Instagram case I mentioned
