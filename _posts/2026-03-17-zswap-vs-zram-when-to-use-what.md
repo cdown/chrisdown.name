@@ -624,8 +624,13 @@ data, eventually, when all of your RAM is used, the data needs to go somewhere.
 
 To back that up with some concrete data, on Instagram, which runs on Django and
 is largely memory bound, we ran a test where we moved from their existing setup
-(with swap entirely disabled) to a setup with disk swap and zswap tiering. The
-results were twofold:
+(with swap entirely disabled) to a setup with disk swap and zswap tiering.
+Django workers accumulate significant cold heap state over their lifetime --
+forked processes with duplicated memory, growing request caches, Python object
+overhead -- and that data compresses very well. This is broadly representative:
+most workloads, from server processes to desktop applications, accumulate cold
+anonymous pages that sit idle and compress efficiently. The results were
+twofold:
 
 - We achieved roughly 5:1 compression. That's a huge benefit for such a memory
   bound workload, and also enables us to consider further stacking workloads.
@@ -863,12 +868,12 @@ organisations, including Meta, that run containerised or isolated workloads.
 
 In practice, across the services we've deployed zswap on at scale, it has
 consistently reduced OOMs, cut disk write pressure, and done so without any
-manual intervention. The right mental model is that zram is a completely
-manual part of the memory management subsystem: you take on the responsibility
-of managing it correctly yourself, or you bear the consequences. zswap, by
-contrast, is managed by the kernel itself, with all the live feedback, reclaim
-integration, and automatic tiering that entails. For the vast majority of Linux
-systems, you want the kernel doing that work.
+manual intervention. zram is a completely manual part of the memory management subsystem -- you
+take on the responsibility of managing it correctly, or you bear the
+consequences -- whereas zswap is managed by the kernel itself, with all the
+live feedback, reclaim integration, and automatic tiering that entails. For the
+vast majority of Linux systems, you really want the kernel doing that work with
+zswap.
 
 Many thanks to [Nhat Pham](https://github.com/nhatsmrt) for his extensive
 feedback on this post.
