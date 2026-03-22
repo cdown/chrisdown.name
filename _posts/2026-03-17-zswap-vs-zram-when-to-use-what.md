@@ -25,7 +25,9 @@ tl;dr:
 - **If you must use zram**, pair it with a userspace OOM manager like
   [systemd-oomd](https://www.freedesktop.org/software/systemd/man/latest/systemd-oomd.service.html)
   or [earlyoom](https://github.com/rfjakob/earlyoom). Without one, the kernel's
-  OOM killer can leave the system hung for minutes before acting.
+  OOM killer can leave the system hung for minutes before acting -- it only
+  fires after exhausting many cycles of aggressive reclaim that often accomplish
+  nothing (more on this below).
 - **On servers, zram has additional significant problems.** One major one is
   that its memory usage is totally segregated from the rest of the system, and as
   such is not charged to any cgroup, breaking isolation semantics.
@@ -63,7 +65,8 @@ itself.
 ## Architectural differences
 
 Most people think of zswap and zram simply as two different flavours of the
-same thing, compressed swap. Superficially that would be correct in that they
+same thing, compressed swap -- a mechanism to offload pages from physical RAM,
+typically to disk, to compressed RAM, or through both in sequence. Superficially that would be correct in that they
 both can contain swapped pages, but they make fundamentally different bets
 about how the kernel should handle memory pressure, and picking the wrong one
 for your situation can actively make things worse than having no swap at all.
@@ -339,7 +342,7 @@ That means that without intervention, your precious zram gets filled with
 whatever pages *happened to be swapped out first*. That is usually completely
 inversely correlated with the pages that you actually need *now*.
 
-In a typical desktop session, these pages are usually cold, initialisation time
+In a typical desktop session, these pages are usually cold, initialisation-time
 data that is evicted early to make room for (say) the browser you just opened.
 These cold pages then permanently occupy the fast zram. Meanwhile, as your
 session continues and memory pressure persists, the newer, potentially "hotter"
@@ -873,7 +876,7 @@ going entirely disk-free by design, like in Fedora's case.
 
 Android is the most prominent example of the diskless approach: billions of
 devices run zram with no disk swap at all, paired with a userspace kill daemon
-(lmkd). That combination completely sidesteps LRU inversion, because there is
+([lmkd](https://android.googlesource.com/platform/system/memory/lmkd/)). That combination completely sidesteps LRU inversion, because there is
 no disk swap tier to invert against. But Android's zram works because it has
 been extensively tuned for phone hardware and phone workloads -- and as
 described above, even things as basic as readahead defaults work against you
@@ -897,5 +900,5 @@ live feedback, reclaim integration, and automatic tiering that entails. For the
 vast majority of Linux systems, you really want the kernel doing that work with
 zswap.
 
-Many thanks to [Nhat Pham](https://github.com/nhatsmrt) for his extensive
+Many thanks to [Nhat Pham](https://github.com/nhatsmrt) and [Javier Honduvilla Coto](https://hondu.co/) for their extensive
 feedback on this post.
