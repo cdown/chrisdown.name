@@ -757,6 +757,21 @@ device, the system either hangs while the kernel desperately tries to reclaim
 anything it can, or the OOM killer fires. In neither case does the system
 degrade gracefully.
 
+The situation can actually be worse still -- in some cases the OOM killer may
+not fire at all. In March 2026, Matt Fleming at Cloudflare
+[reported](https://lore.kernel.org/r/20260303115358.1323188-1-matt@readmodwrite.com)
+20 to 30 minute brownouts on production machines with 377 GiB of RAM and a 377
+GiB zram device, with the OOM killer never once triggering. The cause is a
+direct consequence of zram's block device architecture:
+`should_reclaim_retry()` estimates reclaimable memory by checking how many swap
+slots are free. With disk-backed swap, a free slot genuinely means a page can
+be written there without consuming more RAM. With zram, a 377 GiB device at 10%
+usage reports ~340 GiB of free slots -- but filling them requires physical RAM
+the system doesn't have. The estimate is off by orders of magnitude,
+`should_reclaim_retry()` keeps returning true, and the kernel spins in direct
+reclaim indefinitely. And even when the OOM killer does eventually fire, it is
+not the clean escape valve many expect.
+
 You might think: if the system is swapping heavily to disk, responsiveness is
 already ruined. I'd rather have the system OOM kill a process than slowly
 thrash the user to death. But there is a dangerous nuance here that is often
@@ -908,6 +923,34 @@ which can break resource isolation and pressure signals between services. This
 gap alone has been a hard blocker for zram adoption at a number of
 organisations, including Meta, that run containerised or isolated workloads.
 
+Even the embedded and diskless cases are narrowing. Many of us working in this
+area share similar views on where things are heading. Christoph, who maintains
+the block layer, has been direct:
+
+> No way. Stop adding hacks to the block layer just because you're abusing a
+> block driver for compressed swap. Please everyone direct their energy to
+> pluggable zswap backends and backing-store-less zswap now instead of making
+> the zram mess even worse.
+
+<div class="citation"><a href="https://lore.kernel.org/r/aabrv_xrsKPx9jZf@infradead.org">Christoph Hellwig</a>, block layer maintainer</div>
+
+Johannes, one of the memory management maintainers, agreed:
+
+> Compression is a *memory* consumer. A big one. And with swap it sits in the
+> reclaim path. So now you have to solve intricate MM problems with the block
+> layer in between. [...] We should try to make zswap the single compressed
+> swap implementation. It would simplify things dramatically for kernel
+> developers working on MM and the swap subsystem. It would make things better
+> for users too.
+
+<div class="citation"><a href="https://lore.kernel.org/r/aacTW_FEp6c1coDf@cmpxchg.org">Johannes Weiner</a>, MM maintainer</div>
+
+The "pluggable zswap backends and backing-store-less zswap" Christoph mentions
+refers to active work to allow zswap to operate without any disk swap device at
+all -- which would close the remaining use case for zram even in diskless
+setups. For what it's worth, zram is already 2.6× the lines of code of zswap.
+The direction of travel is fairly clear.
+
 In practice, across the services we've deployed zswap on at scale, it has
 consistently reduced OOMs, cut disk write pressure, and done so without any
 manual intervention. zram is a completely manual part of the memory management subsystem -- you
@@ -917,4 +960,4 @@ live feedback, reclaim integration, and automatic tiering that entails. For the
 vast majority of Linux systems, you really want the kernel doing that work with
 zswap.
 
-Many thanks to [Nhat Pham](https://github.com/nhatsmrt), [Javier Honduvilla Coto](https://hondu.co/), and [Sam Rose](https://samwho.dev/) for their feedback on this post.
+Many thanks to [Nhat Pham](https://github.com/nhatsmrt), [Javier Honduvilla Coto](https://hondu.co/), [Sam Rose](https://samwho.dev/), and [Johannes Weiner](https://github.com/hnaz) for their feedback on this post.
