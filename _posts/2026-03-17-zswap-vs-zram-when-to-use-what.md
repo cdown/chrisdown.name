@@ -102,7 +102,7 @@ zram creates a compressed block device that acts as standalone swap. The
 typical procedure for setting up swap on zram is to:
 
 1. Create a zram device by loading the module with `modprobe zram`
-2. Set `comp_algorithm` and `disksize` to taste
+2. Set `/sys/block/zram0/comp_algorithm` (the compression algorithm to use) and `/sys/block/zram0/disksize` (the virtual device capacity)
 3. `mkswap` on `/dev/zram0`
 4. `swapon` on `/dev/zram0`
 
@@ -358,6 +358,13 @@ the more broken things get: warm pages drift to disk, cold pages calcify in
 zram, and the gap between what zram is holding and what you actually need keeps
 widening. Great!
 
+Beyond the placement problem, there is also a real overhead being paid on both
+sides. Every page entering zram costs CPU cycles to compress. Every access to a
+page still in zram requires a minor fault and decompression back into main
+memory before it can be used. You are paying compression and decompression
+overhead entirely on data you are not actively using, while the data you do
+need grinds through slow disk I/O.
+
 ### zram writeback and its limitations
 
 Now, that's where the discussion would end if I was writing this a few years
@@ -417,6 +424,10 @@ tell zram to write them out.
 
     echo 3600 > /sys/block/zram0/idle # 1h
     echo idle > /sys/block/zram0/writeback
+
+As [Sam](https://samwho.dev/) put it while reviewing this article, it's "the
+IKEA of memory management" -- fine when you're assembling a [DOMBÅS wardrobe](https://manuall.co.uk/ikea-dombas-wardrobe/),
+but it's going to be you that's feeling like a dombås when this comes to bite you in production.
 
 As well as the complexity, zram is architecturally at quite a disadvantage
 compared to zswap's native LRU tiering.
@@ -509,9 +520,10 @@ static unsigned long zswap_shrinker_count(
     /* ... */
 
     /* Subtract from the lru size the number of pages that
-     * are recently swapped in from disk. The idea is that
-     * had we protect the zswap's LRU by this amount of
-     * pages, these disk swapins would not have happened. */
+     * were recently swapped in from disk. The idea is that
+     * had we protected this many more pages in the zswap
+     * LRU from eviction, those disk swapins would not have
+     * happened. */
     nr_disk_swapins_cur = atomic_long_read(nr_disk_swapins);
     do {
         if (nr_freeable >= nr_disk_swapins_cur)
@@ -752,8 +764,10 @@ overlooked -- the kernel OOM killer is not even close to instantaneous.
 
 As I went over in my [SREcon talk](https://www.youtube.com/watch/beefUhRH5lU),
 relying on the kernel's built-in OOM killer to save responsiveness is often a
-losing battle. The kernel doesn't actually know when it is out of memory, it
-only knows that it has tried very hard to reclaim memory and failed.
+losing battle. The kernel doesn't actually know when it is out of memory in any
+direct sense: being "out of memory" means not just that memory is full, but
+that there is nothing left to reclaim -- and the only way to determine that is
+to attempt the full reclaim cycle and have it fail.
 
 Before the OOM killer is ever invoked, the kernel enters a cycle of aggressive
 reclaim:
@@ -763,7 +777,7 @@ reclaim:
 - It cycles through various memory types trying to free anything.
 - It negotiates shrinking with drivers.
 
-We have frequently seen that this process can take seconds or even minutes even
+We have frequently seen that this process can take seconds or even minutes
 for simple production workloads. During this time, your application is
 suspended, and the system appears to hang. By the time the OOM killer actually
 fires, the user has likely already experienced significant unresponsiveness,
@@ -775,7 +789,10 @@ decide who to kill -- and if "score" sounds like a weasel word, that's because
 it is. It's the kernel admitting it doesn't know who the right victim is either,
 and hoping you'll fill the gap with `oom_score_adj`. The practical result is
 that it often just kills the largest process, rather than the one that is
-actually leaking memory.
+actually leaking memory. Consider a system where Chrome holds 80% of RAM and a
+background daemon starts leaking: the OOM killer targets Chrome, killing it
+stabilises the system, and the daemon is never identified. Next time it leaks,
+Chrome dies again. The daemon, for its part, continues to leak.
 
 ## zram on Fedora
 
@@ -900,5 +917,4 @@ live feedback, reclaim integration, and automatic tiering that entails. For the
 vast majority of Linux systems, you really want the kernel doing that work with
 zswap.
 
-Many thanks to [Nhat Pham](https://github.com/nhatsmrt) and [Javier Honduvilla Coto](https://hondu.co/) for their extensive
-feedback on this post.
+Many thanks to [Nhat Pham](https://github.com/nhatsmrt), [Javier Honduvilla Coto](https://hondu.co/), and [Sam Rose](https://samwho.dev/) for their feedback on this post.
