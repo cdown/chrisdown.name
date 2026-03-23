@@ -358,6 +358,59 @@ the more broken things get: warm pages drift to disk, cold pages calcify in
 zram, and the gap between what zram is holding and what you actually need keeps
 widening. Great!
 
+{% animation %}
+{
+  "type": "storage-tiers",
+  "panels": {
+    "zram": "zram (priority) + disk swap",
+    "zswap": "zswap + disk swap"
+  },
+  "fastCap": 4,
+  "outcomes": {
+    "zram": {"text": "Pages 5 and 6 have to be read from slow disk", "good": false},
+    "zswap": {"text": "Pages 5 and 6 can be read from RAM", "good": true}
+  },
+  "steps": [
+    {
+      "desc": "System starts. Pages are swapped out over time as memory fills. Page 1 is the first (oldest) page evicted; page 6 will be the most recently evicted.",
+      "zram":  {"fast": [],         "slow": []},
+      "zswap": {"fast": [],         "slow": []},
+      "need": []
+    },
+    {
+      "desc": "Pages 1 and 2 swapped out, this is cold startup data (init processes, early libraries). Both land in the fast tier.",
+      "zram":  {"fast": [1, 2],     "slow": []},
+      "zswap": {"fast": [1, 2],     "slow": []},
+      "need": []
+    },
+    {
+      "desc": "Pages 3 and 4 arrive. The fast tier (4 slots) is now full in both cases.",
+      "zram":  {"fast": [1, 2, 3, 4], "slow": []},
+      "zswap": {"fast": [1, 2, 3, 4], "slow": []},
+      "need": []
+    },
+    {
+      "desc": "Page 5 arrives. zram's fast tier is full so it goes straight to disk. zswap evicts the coldest page (1) to disk and keeps page 5 in fast RAM.",
+      "zram":  {"fast": [1, 2, 3, 4], "slow": [5]},
+      "zswap": {"fast": [2, 3, 4, 5], "slow": [1]},
+      "need": []
+    },
+    {
+      "desc": "Page 6 arrives. zram sends it to disk again. zswap evicts page 2, keeping the freshest data in fast RAM.",
+      "zram":  {"fast": [1, 2, 3, 4], "slow": [5, 6]},
+      "zswap": {"fast": [3, 4, 5, 6], "slow": [1, 2]},
+      "need": []
+    },
+    {
+      "desc": "Memory pressure hits. You switch to browser tabs opened recently that require pages 5 and 6. They to be faulted back in. Where are they?",
+      "zram":  {"fast": [1, 2, 3, 4], "slow": [5, 6]},
+      "zswap": {"fast": [3, 4, 5, 6], "slow": [1, 2]},
+      "need": [5, 6]
+    }
+  ]
+}
+{% endanimation %}
+
 Beyond the placement problem, there is also a real overhead being paid on both
 sides. Every page entering zram costs CPU cycles to compress. Every access to a
 page still in zram requires a minor fault and decompression back into main
@@ -959,5 +1012,31 @@ consequences -- whereas zswap is managed by the kernel itself, with all the
 live feedback, reclaim integration, and automatic tiering that entails. For the
 vast majority of Linux systems, you really want the kernel doing that work with
 zswap.
+
+## Migrating from zram to zswap
+
+If you're currently on a zram-only setup (such as Fedora's default) and want
+to switch, order of operations matters. Before you `swapoff` the zram device,
+ensure disk swap is already active. If zram is your only swap and it contains
+live pages, `swapoff` needs somewhere to put them -- without another device, it
+will either fail or attempt to bring everything back into RAM at once.
+
+If you don't already have a disk swap device, create and activate a swap file
+first:
+
+    fallocate -l 4G /swapfile
+    chmod 600 /swapfile
+    mkswap /swapfile
+    swapon /swapfile
+
+Add `/swapfile swap swap defaults 0 0` to `/etc/fstab` to persist it. Then
+enable zswap if it isn't already (see the sidenote earlier in this post), and
+disable zram live:
+
+    swapoff /dev/zram0
+
+The kernel migrates any live pages to disk swap for you. To stop zram coming
+back on the next boot, on Fedora remove or empty
+`/etc/systemd/zram-generator.conf`.
 
 Many thanks to [Nhat Pham](https://github.com/nhatsmrt), [Javier Honduvilla Coto](https://hondu.co/), [Sam Rose](https://samwho.dev/), and [Johannes Weiner](https://github.com/hnaz) for their feedback on this post.
