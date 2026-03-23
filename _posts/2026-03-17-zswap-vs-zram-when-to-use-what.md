@@ -479,7 +479,7 @@ tell zram to write them out.
     echo idle > /sys/block/zram0/writeback
 
 As [Sam](https://samwho.dev/) put it while reviewing this article, it's "the
-IKEA of memory management" -- fine when you're assembling a [DOMBÅS wardrobe](https://manuall.co.uk/ikea-dombas-wardrobe/),
+IKEA of memory management" -- fine when you're assembling a [dombås wardrobe](https://manuall.co.uk/ikea-dombas-wardrobe/),
 but it's going to be you that's feeling like a dombås when this comes to bite you in production.
 
 As well as the complexity, zram is architecturally at quite a disadvantage
