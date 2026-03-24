@@ -1008,8 +1008,7 @@ Johannes, one of the memory management maintainers, agreed:
 The "pluggable zswap backends and backing-store-less zswap" Christoph mentions
 refers to active work to allow zswap to operate without any disk swap device at
 all -- which would close the remaining use case for zram even in diskless
-setups. For what it's worth, zram is already 2.6× the lines of code of zswap.
-The direction of travel is fairly clear.
+setups. The direction of travel is fairly clear.
 
 In practice, across the services we've deployed zswap on at scale, it has
 consistently reduced OOMs, cut disk write pressure, and done so without any
