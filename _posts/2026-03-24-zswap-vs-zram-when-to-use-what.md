@@ -44,7 +44,8 @@ My advice is:
 I recently received a question from a reader about compressed swap technologies
 on Linux:
 
-> I read your articles about memory management (swap) on Linux, finally some
+> I read [your
+> articles](https://chrisdown.name/2018/01/02/in-defence-of-swap.html) about memory management (swap) on Linux, finally some
 > words from the expert :) instead of internet experts "you have 32GB - disable
 > it".
 >
