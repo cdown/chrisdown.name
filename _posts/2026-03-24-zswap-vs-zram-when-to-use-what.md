@@ -9,15 +9,22 @@ tl;dr:
 
 **If in doubt, prefer to use zswap. Only use zram if you have a highly specific reason to.**
 
-- zswap sits in front of your disk swap, compresses pages in RAM, and
+In terms of architecture:
+
+- *zswap* sits in front of your disk swap, compresses pages in RAM, and
   automatically tiers cold data to disk. It integrates directly with the
   kernel's memory management and distributes pressure gracefully.
-- zram is a compressed RAM block device with a hard capacity limit. When it
-  fills, there is no automatic eviction, and the kernel has very little
-  leverage to do anything about the situation. The system either OOMs or falls
-  back to lower-priority swap. It only really makes sense for extremely
+- *zram* is a compressed RAM block device with a hard capacity limit. When you
+  put swap on it and it fills up, there is no automatic eviction, and the
+  kernel has very little leverage to do anything about the situation. The
+  system either OOMs or falls back to lower-priority swap, causing LRU
+  inversion (see below). It only really makes sense for extremely
   memory-constrained embedded systems, diskless setups, or cases with specific
   security requirements around keeping private data off persistent storage.
+  Swap on zram is also increasingly unsupported upstream.
+
+My advice is:
+
 - **Do not run zram alongside disk swap** wherever possible. In such setups,
   zram fills fast RAM with cold, stale pages while pushing your active working
   set onto slow disk, making things actively worse than if you had no
@@ -25,9 +32,9 @@ tl;dr:
 - **If you must use zram**, pair it with a userspace OOM manager like
   [systemd-oomd](https://www.freedesktop.org/software/systemd/man/latest/systemd-oomd.service.html)
   or [earlyoom](https://github.com/rfjakob/earlyoom). Without one, the kernel's
-  OOM killer can leave the system hung for minutes before acting -- it only
-  fires after exhausting many cycles of aggressive reclaim that often accomplish
-  nothing (more on this below).
+  OOM killer can leave the system hung for minutes before acting, as it often
+  only fires after exhausting many cycles of aggressive reclaim that often
+  accomplish nothing (more on this below).
 - **On servers, zram has additional significant problems.** One major one is
   that its memory usage is totally segregated from the rest of the system, and as
   such is not charged to any cgroup, breaking isolation semantics.
