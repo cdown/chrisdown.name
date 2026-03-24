@@ -746,7 +746,7 @@ memory offloading would decrease that?
 
 Well, you might think you will never use all of your RAM. But on Linux, we
 don't actually leave RAM empty. The kernel follows the philosophy that unused
-RAM is wasted RAM, and automatically filling any slack space with the page
+RAM is wasted RAM, and thus automatically fills any slack space with the page
 cache and other nice-to-have things, like copies of files, libraries, and disk
 data to speed up future access.
 
