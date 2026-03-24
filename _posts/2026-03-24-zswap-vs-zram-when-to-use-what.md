@@ -409,7 +409,7 @@ widening. Great!
       "need": []
     },
     {
-      "desc": "Memory pressure hits. You switch to browser tabs opened recently that require pages 5 and 6. They to be faulted back in. Where are they?",
+      "desc": "Memory pressure hits. You switch to browser tabs opened recently that require pages 5 and 6. They need to be faulted back in. Where are they?",
       "zram":  {"fast": [1, 2, 3, 4], "slow": [5, 6]},
       "zswap": {"fast": [3, 4, 5, 6], "slow": [1, 2]},
       "need": [5, 6]
