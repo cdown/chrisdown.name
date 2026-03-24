@@ -1049,4 +1049,7 @@ The kernel migrates any live pages to disk swap for you. To stop zram coming
 back on the next boot, on Fedora remove or empty
 `/etc/systemd/zram-generator.conf`.
 
-Many thanks to [Nhat Pham](https://github.com/nhatsmrt), [Javier Honduvilla Coto](https://hondu.co/), [Sam Rose](https://samwho.dev/), and [Johannes Weiner](https://github.com/hnaz) for their feedback on this post.
+Many thanks to [Nhat](https://github.com/nhatsmrt),
+[Javier](https://hondu.co/), [Sam](https://samwho.dev/),
+[Johannes](https://github.com/hnaz), and
+[Andreas](https://github.com/andreasbackx) for their feedback on this post.
