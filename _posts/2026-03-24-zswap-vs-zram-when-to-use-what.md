@@ -757,15 +757,11 @@ immediately allocate without having to sleep for reclaim, so it manages
 pressure as a normal state of operation to ensure there is always a buffer for
 immediate allocation.
 
-That reclaim has to go somewhere, and the choice of where determines what I/O
-happens. With only zram, kswapd cannot push cold anonymous pages out of the
-way, so it is forced to evict or write back file cache instead -- which is
-often the wrong thing to flush, and often something you will immediately need
-again. With disk-backed swap (or zswap in front of it), the kernel can make
-the right call: park cold anonymous pages in the compressed pool, defer actual
-disk I/O until those pages are truly cold, and leave the file cache intact for
-the reads and writes that actually matter. The I/O that does happen is
-deliberate rather than desperate.
+That reclaim has to go somewhere, and with only zram, there's only one place
+for it to go: the file cache. With disk-backed swap (or zswap in front of it),
+the kernel has a choice -- it can reclaim whichever is colder, whether that's
+anonymous pages or file cache, based on recency and access patterns. The I/O
+that does happen is deliberate rather than desperate.
 
 Of course, Instagram's workload is particularly favourable for zswap, so take
 the exact numbers with a grain of salt. But nonetheless, directionally this
