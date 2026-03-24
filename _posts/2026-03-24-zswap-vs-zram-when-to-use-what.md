@@ -72,9 +72,8 @@ itself.
 ## Architectural differences
 
 Most people think of zswap and zram simply as two different flavours of the
-same thing, compressed swap -- a mechanism to offload pages from physical RAM,
-typically to disk, to compressed RAM, or through both in sequence. Superficially,
-that's correct -- they both hold swapped pages -- but they make fundamentally
+same thing: compressed swap. At a surface level, that's correct -- both
+compress pages that would otherwise end up on disk -- but they make fundamentally
 different bets about how the kernel should handle memory pressure, and picking
 the wrong one for your situation can actively make things worse than having no
 swap at all.
@@ -130,26 +129,26 @@ device architecture creates some significant constraints. The kernel is
 essentially naive to zram being any different from a typical block device on a
 slow disk, and so applies its normal disk-oriented defaults to it. As just one
 example, there is a kernel tunable called `vm.page-cluster` that decides how
-many pages we want to read ahead when we are faulting in a single swap page.
-It is logarithmic, so for example, if `vm.page-cluster` is 4, we would read in
-2^4 pages to try to amortise disk work ahead of time while it's cheap and
-sequential. This is more important on hard drives, but there is still a
-meaningful performance delta between random and sequential reads even on modern
-NAND.
+many pages we want to read ahead when faulting in a single swap page. It
+defaults to 3 -- meaning the kernel reads 2^3 = 8 pages at once -- to amortise
+disk work that's cheap when sequential. This is more important on hard drives,
+but there is still a meaningful performance delta between random and sequential
+reads even on modern NAND.
 
 When we started working on using zram on [Quest](https://en.wikipedia.org/wiki/Meta_Quest) (since it runs on Android, which
-makes use of zram), one problem we ran into was `vm.page-cluster`: it defaults
-to 3, meaning the kernel reads 2^3 pages at once from swap as a readahead
-optimisation. When reading from disk, that's sensible: pages near each other on
-disk tend to be needed near each other in time, so it's good to amortise. But
-with zram, this assumption no longer holds at all, and in fact works against
-you quite considerably. With zram, compressed pages have no locality, so you're
-paying for 8 swap-ins every time you need 1. Importantly, this is neither
-something specific to Quest, nor `vm.page-cluster`, it's more a consequence of
-the kernel treating zram like any other block device. `vm.page-cluster` is at
-least tunable, but there are other assumptions baked into the kernel that
-aren't even exposed as sysctls. In many cases the kernel will fight against
-you, and it takes a lot of effort and knowledge to get this right.
+makes use of zram), this readahead behaviour was one of the first problems we
+hit. With disk, the readahead assumption holds: pages near each other on disk
+tend to be needed near each other in time, so it's good to amortise. With zram,
+compressed pages have no locality, so the assumption inverts: you're now
+polluting the swap cache with 7 pages you don't need every time you want 1,
+working against you quite considerably.
+
+Importantly, this is neither something specific to Quest, nor `vm.page-cluster`
+-- it's more a consequence of the kernel treating zram like any other block
+device. `vm.page-cluster` is at least tunable, but there are other assumptions
+baked into the kernel that aren't even exposed as sysctls. In many cases the
+kernel will fight against you, and it takes a lot of effort and knowledge to
+get this right.
 
 ### zswap's memory management integration
 
@@ -165,7 +164,7 @@ that zswap degrades significantly better than zram when there is memory
 pressure.
 
 {% sidenote %}
-To enable zswap, check if it's already on with `cat
+In terms of how to enable zswap, check if it's already on with `cat
 /sys/module/zswap/parameters/enabled`. Most major distributions enable it by
 default. If not:
 
@@ -185,7 +184,7 @@ select zsmalloc:
     echo zsmalloc > /sys/module/zswap/parameters/zpool
 {% endsidenote %}
 
-So how does all of this work? Well, when the kernel needs to swap out a page,
+So how does zswap's tiering actually work? When the kernel needs to swap out a page,
 it calls `swap_writeout()`, which gives zswap first dibs to intercept it:
 
 {% cc %}
@@ -817,17 +816,17 @@ gracefully.
 The situation can actually be worse still -- in some cases the OOM killer may
 not fire at all. In March 2026, Matt Fleming at Cloudflare
 [reported](https://lore.kernel.org/r/20260303115358.1323188-1-matt@readmodwrite.com)
-20 to 30 minute brownouts on production machines with 377 GiB of RAM and a 377
-GiB zram device, with the OOM killer never once triggering. The cause is a
-direct consequence of zram's block device architecture:
-`should_reclaim_retry()` estimates reclaimable memory by checking how many swap
-slots are free. With disk-backed swap, a free slot genuinely means a page can
-be written there without consuming more RAM. With zram, a 377 GiB device at 10%
-usage reports ~340 GiB of free slots -- but filling them requires physical RAM
-the system doesn't have. The estimate is off by orders of magnitude,
-`should_reclaim_retry()` keeps returning true, and the kernel spins in direct
-reclaim indefinitely. And even when the OOM killer does eventually fire, it is
-not the clean escape valve many expect.
+20 to 30 minute brownouts on production machines, with the OOM killer never
+once triggering. The cause is a direct consequence of zram's block device
+architecture. `should_reclaim_retry()` estimates reclaimable memory by checking
+free swap slots. With disk-backed swap, a free slot means a page can land there
+without consuming more RAM. With zram, the device is thin-provisioned: it
+reports its full configured size as available capacity, even when the physical
+RAM that would back those slots is exhausted. A 377 GiB device at 10% usage
+reports ~340 GiB of free slots -- but writing to them requires RAM the system
+no longer has. `should_reclaim_retry()` keeps returning true, and the kernel
+spins in direct reclaim indefinitely. And even when the OOM killer does
+eventually fire, it is not the clean escape valve many expect.
 
 You might think: if the system is swapping heavily to disk, responsiveness is
 already ruined. I'd rather have the system OOM kill a process than slowly
@@ -912,7 +911,9 @@ thing Fedora was optimising for, and several of their constraints had nothing
 to do with memory management at all. Within those constraints, the decision is
 coherent: optimality is always relative to what you're trying to achieve (and
 that point goes to you too, dear reader -- you know better than me what you are
-trying to do). That said, I would be surprised if over the coming years there
+trying to do).
+
+That said, I would be surprised if over the coming years there
 is not some movement towards zswap there too once zswap gains the upcoming
 disk-free mode, especially given that kernel developers are increasingly moving
 away from supporting zram (more on that below).
@@ -981,7 +982,7 @@ opaque to the kernel and is not charged to any cgroup. The kernel has no
 visibility into how much memory zram is consuming on behalf of a given cgroup,
 which can break resource isolation and pressure signals between services. This
 gap alone has been a hard blocker for zram adoption at a number of
-organisations, including Meta, that run containerised or isolated workloads.
+organisations running containerised or isolated workloads.
 
 Even the embedded and diskless cases are narrowing. Many of us working in this
 area share similar views on where things are heading. Christoph, who maintains
