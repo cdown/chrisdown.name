@@ -137,7 +137,7 @@ sequential. This is more important on hard drives, but there is still a
 meaningful performance delta between random and sequential reads even on modern
 NAND.
 
-When we started working on using zram on Quest (since it runs on Android, which
+When we started working on using zram on [Quest](https://en.wikipedia.org/wiki/Meta_Quest) (since it runs on Android, which
 makes use of zram), one problem we ran into was `vm.page-cluster`: it defaults
 to 3, meaning the kernel reads 2^3 pages at once from swap as a readahead
 optimisation. When reading from disk, that's sensible: pages near each other on
