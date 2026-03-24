@@ -122,7 +122,7 @@
 
     var legend = config.legend || [
       { color: COLD_COLORS[0], label: 'Cold page (swapped out first, unlikely to be needed)' },
-      { color: WARM_COLORS[0], label: 'Warm page (recently swapped, likely still needed)' }
+      { color: WARM_COLORS[0], label: 'Warm page (recently swapped, more likely to be needed)' }
     ];
 
     container.innerHTML =
