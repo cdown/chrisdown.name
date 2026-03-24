@@ -73,10 +73,11 @@ itself.
 
 Most people think of zswap and zram simply as two different flavours of the
 same thing, compressed swap -- a mechanism to offload pages from physical RAM,
-typically to disk, to compressed RAM, or through both in sequence. Superficially that would be correct in that they
-both can contain swapped pages, but they make fundamentally different bets
-about how the kernel should handle memory pressure, and picking the wrong one
-for your situation can actively make things worse than having no swap at all.
+typically to disk, to compressed RAM, or through both in sequence. Superficially,
+that's correct -- they both hold swapped pages -- but they make fundamentally
+different bets about how the kernel should handle memory pressure, and picking
+the wrong one for your situation can actively make things worse than having no
+swap at all.
 
 The most significant difference between them lies in where they sit in the
 kernel's storage hierarchy, and thus, what they are capable of signalling to
