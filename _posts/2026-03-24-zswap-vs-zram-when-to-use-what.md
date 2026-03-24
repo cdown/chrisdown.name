@@ -728,8 +728,8 @@ We have some concrete numbers to show this in practice. On Instagram, which
 runs on Django and is largely memory bound, we ran a test where we moved from
 their existing setup (with swap entirely disabled) to a setup with disk swap
 and zswap tiering. Django workers accumulate significant cold heap state over
-their lifetime -- forked processes with duplicated memory, growing request
-caches, Python object overhead. The results were twofold:
+their lifetime, like forked processes with duplicated memory, growing request
+caches, Python object overhead, you get the idea. The results were twofold:
 
 - We achieved roughly 5:1 compression. That's a huge benefit for such a memory
   bound workload, and also enables us to consider further stacking workloads.
@@ -811,11 +811,11 @@ down rather than falling off a cliff.
 
 With zram, there is no equivalent process. Nothing is watching the device fill
 up and taking action. When it hits capacity, it simply stops accepting pages.
-If there is a lower-priority disk swap device, the kernel spills to that --
-with all the LRU inversion problems described above. If there is no other
-device, the system either hangs while the kernel desperately tries to reclaim
-anything it can, or the OOM killer fires. In neither case does the system
-degrade gracefully.
+If there is a lower-priority disk swap device, the kernel spills to that, with
+all the LRU inversion problems described above. If there is no other device,
+the system either hangs while the kernel desperately tries to reclaim anything
+it can, or the OOM killer fires. In neither case does the system degrade
+gracefully.
 
 The situation can actually be worse still -- in some cases the OOM killer may
 not fire at all. In March 2026, Matt Fleming at Cloudflare
@@ -896,12 +896,12 @@ kill processes based on policy ahead of time. They also sidestep LRU inversion
 by having only one swap device (on zram), and so with no disk swap at all,
 there is nothing to invert against.
 
-This setup makes sense given the constraints they are operating under, and with
-the mitigations using `systemd-oomd` that they have in place. With their setup,
-a desktop user under heavy memory pressure is probably already seeing low
-responsiveness, and a userspace OOM daemon terminating the problematic process
-cleanly is often better than waiting for the system to thrash through disk swap
-for minutes.
+This setup makes some amount of sense given the constraints they are operating
+under, and with the mitigations using `systemd-oomd` that they have in place.
+With their setup, a desktop user under heavy memory pressure is probably
+already seeing low responsiveness, and a userspace OOM daemon terminating the
+problematic process cleanly is often better than waiting for the system to
+thrash through disk swap for minutes.
 
 But, and this is important, this only works with a userspace OOM daemon running
 and configured, and no disk swap device whatsoever. Without systemd-oomd, you
@@ -915,7 +915,10 @@ thing Fedora was optimising for, and several of their constraints had nothing
 to do with memory management at all. Within those constraints, the decision is
 coherent: optimality is always relative to what you're trying to achieve (and
 that point goes to you too, dear reader -- you know better than me what you are
-trying to do).
+trying to do). That said, I would be surprised if over the coming years there
+is not some movement towards zswap there too once zswap gains the upcoming
+disk-free mode, especially given that kernel developers are increasingly moving
+away from supporting zram (more on that below).
 
 ## If I use zram, how should I size the device?
 
