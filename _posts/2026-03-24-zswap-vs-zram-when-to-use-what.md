@@ -1019,32 +1019,6 @@ live feedback, reclaim integration, and automatic tiering that entails. For the
 vast majority of Linux systems, you really want the kernel doing that work with
 zswap.
 
-## Migrating from zram to zswap
-
-If you're currently on a zram-only setup (such as Fedora's default) and want
-to switch, order of operations matters. Before you `swapoff` the zram device,
-ensure disk swap is already active. If zram is your only swap and it contains
-live pages, `swapoff` needs somewhere to put them -- without another device, it
-will either fail or attempt to bring everything back into RAM at once.
-
-If you don't already have a disk swap device, create and activate a swap file
-first:
-
-    fallocate -l 4G /swapfile
-    chmod 600 /swapfile
-    mkswap /swapfile
-    swapon /swapfile
-
-Add `/swapfile swap swap defaults 0 0` to `/etc/fstab` to persist it. Then
-enable zswap if it isn't already (see the sidenote earlier in this post), and
-disable zram live:
-
-    swapoff /dev/zram0
-
-The kernel migrates any live pages to disk swap for you. To stop zram coming
-back on the next boot, on Fedora remove or empty
-`/etc/systemd/zram-generator.conf`.
-
 Many thanks to [Nhat](https://github.com/nhatsmrt),
 [Javier](https://hondu.co/), [Sam](https://samwho.dev/),
 [Johannes](https://github.com/hnaz), and
