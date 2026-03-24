@@ -985,15 +985,15 @@ gap alone has been a hard blocker for zram adoption at a number of
 organisations running containerised or isolated workloads.
 
 Even the embedded and diskless cases are narrowing. Many of us working in this
-area share similar views on where things are heading. Christoph, who maintains
-the block layer, has been direct:
+area share similar views on where things are heading. Christoph, who is one of
+the core contributors to the block layer, has been direct:
 
 > No way. Stop adding hacks to the block layer just because you're abusing a
 > block driver for compressed swap. Please everyone direct their energy to
 > pluggable zswap backends and backing-store-less zswap now instead of making
 > the zram mess even worse.
 
-<div class="citation"><a href="https://lore.kernel.org/r/aabrv_xrsKPx9jZf@infradead.org">Christoph Hellwig</a>, block layer maintainer</div>
+<div class="citation"><a href="https://lore.kernel.org/r/aabrv_xrsKPx9jZf@infradead.org">Christoph Hellwig</a>, NVMe maintainer and block developer</div>
 
 Johannes, one of the memory management maintainers, agreed:
 
