@@ -24,7 +24,7 @@ the only way out of this situation is to manually trigger an OOM kill with Alt +
 SysRq + F, and even then that's not foolproof, since the OOM killer [may not
 pick the right target to kill](https://youtu.be/beefUhRH5lU?t=1139). Even if it
 *does* pick the right target to kill, system responsiveness after the fact can
-still be impacted since the thrashing has pushed many pages into swap.
+still be impacted since the thrashing has pushed many pages into [swap](/2018/01/02/in-defence-of-swap.html).
 
 Logging [PSI metrics](https://facebookmicrosites.github.io/psi/) on her machine
 leading up to these incidents, it was pretty obvious that there was always an

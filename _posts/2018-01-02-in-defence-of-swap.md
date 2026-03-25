@@ -436,6 +436,10 @@ at around the 25:05 mark:
 
 ---
 
+If you're interested in compressed swap specifically — zswap or zram — I
+wrote a follow-up covering [how they differ architecturally and which to
+use](/2026/03/24/zswap-vs-zram-when-to-use-what.html).
+
 Many thanks to [Rahul](https://github.com/rahulg),
 [Tejun](https://github.com/torvalds/linux/commits?author=htejun), and
 [Johannes](https://github.com/torvalds/linux/commits?author=hnaz) for

@@ -272,4 +272,9 @@ lead into the kernel. Hopefully this post can help you become more familiar
 with some of the common tropes encountered when looking at kernel issues, and
 possibly give you the confidence to dive into a few yourself :-)
 
+D state processes featured prominently in this investigation. If you ever
+need to reproduce uninterruptible sleep reliably for testing, I later wrote
+about [how to create controllable D state processes on
+demand](/2024/02/05/reliably-creating-d-state-processes-on-demand.html).
+
 Many thanks to [Rahul](https://github.com/rahulg) for proofreading this post.

@@ -34,7 +34,7 @@ it useful. Please feel free to e-mail me with any questions or comments.
 
 ## Key timestamps
 
-I recommend watching the whole talk, since each section helps set up the next, but here are some key takeaways:
+I recommend watching the whole talk, since each section helps set up the next, but here are some key takeaways. If you'd prefer to read, I've also written on [swap](/2018/01/02/in-defence-of-swap.html) and [compressed swap (zswap vs zram)](/2026/03/24/zswap-vs-zram-when-to-use-what.html) in more depth.
 
 - 2:18: [Resource control is important, you need it both for reliability and efficiency](https://youtu.be/beefUhRH5lU?t=138)
 - 6:34: [If you just limit one resource alone, it may actually make things worse](https://youtu.be/beefUhRH5lU?t=395)
