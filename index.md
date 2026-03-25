@@ -15,7 +15,7 @@ wider industry better.
 
 Most of my active work revolves around making operating systems more efficient
 at scale, developing things like [the Linux
-kernel](https://github.com/torvalds/linux/commits?author=cdown),
+kernel](https://github.com/torvalds/linux),
 [cgroups](https://www.youtube.com/watch?v=ikZ8_mRotT4),
 [systemd](https://github.com/systemd/systemd), and a number of other emerging
 technologies.
