@@ -65,7 +65,7 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
     <header>
       <nav>
         <div class="home">
-          <h1>
+          {% if page.url == "/" %}<h1>{% else %}<p>{% endif %}
           <a href="/">
           {% if page.lang == "ja" %}
             クリス・ダウン
@@ -73,7 +73,7 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
             {{ site.personal.name }}
           {% endif %}
           </a>
-          </h1>
+          {% if page.url == "/" %}</h1>{% else %}</p>{% endif %}
         </div>
         <ul class="extra">
           {% for link in site.header.links %}

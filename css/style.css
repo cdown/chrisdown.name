@@ -232,9 +232,11 @@ header nav div.home a {
     padding: 0 0.4em;
 }
 
-header nav div.home h1 {
+header nav div.home h1,
+header nav div.home p {
     display: inline;
     font-size: 1em;
+    margin: 0;
 }
 
 :not(header) h1 {
