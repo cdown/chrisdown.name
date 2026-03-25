@@ -115,15 +115,27 @@ list, I'm probably not actively developing or maintaining them.
 [last.fm]: https://last.fm/user/unixchris
 [Reddit]: https://www.reddit.com/user/chrisdown/
 
-<!-- Structured data for Google -->
-
-<div itemscope="" itemtype="http://schema.org/Person">
-<meta itemprop="gender" content="Male">
-<meta itemprop="jobTitle" content="Production Engineer at Meta">
-<meta itemprop="email" content="chris@chrisdown.name">
-<meta itemprop="url" content="https://chrisdown.name">
-<meta itemprop="image" content="https://chrisdown.name/images/hnr.jpg">
-<meta itemprop="worksFor" content="Meta">
-<meta itemprop="name" content="Chris Down">
-<meta itemprop="description" content="Chris Down is a software developer, currently working as a Production Engineer/SRE at Meta. He works as part of the Linux Kernel team, responsible for kernel-related developments that improve the overall scalability, performance, and reliability of Meta’s user-facing products.">
-</div>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Chris Down",
+  "url": "https://chrisdown.name",
+  "jobTitle": "Linux Kernel Developer and SRE",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Meta"
+  },
+  "sameAs": [
+    "https://github.com/cdown",
+    "https://www.linkedin.com/in/chrisldown",
+    "https://fosstodon.org/@cdown",
+    "https://unix.stackexchange.com/users/10762/chris-down",
+    "https://keybase.io/cdown",
+    "https://twitter.com/unixchris"
+  ],
+  "image": "https://chrisdown.name/images/hnr.jpg",
+  "email": "chris@chrisdown.name",
+  "description": "Linux kernel developer and SRE at Meta, specialising in memory management. Developer of cgroup v2, contributor to the Linux kernel, systemd, and related projects."
+}
+</script>
