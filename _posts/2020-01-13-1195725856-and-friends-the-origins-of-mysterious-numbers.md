@@ -157,7 +157,7 @@ int main(void) {
 
     for (i = 0; i < sizeof(methods) / sizeof(methods[0]); i++) {
         int ret;
-        char hdr[16];
+        char hdr[32];
         unsigned const char *check =
             (unsigned const char *)methods[i];
 
