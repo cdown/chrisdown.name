@@ -128,14 +128,14 @@ static int system_is_little_endian(void) {
 #define print_reinterpreted_inner(type, fmt, bs_func, hdr)      \
     do {                                                        \
         if (strlen(hdr) >= sizeof(type)) {                      \
-            type *_hdr_conv = (type *)hdr;                      \
-            type _le, _be;                                      \
+            type _hdr_conv, _le, _be;                           \
+            memcpy(&_hdr_conv, hdr, sizeof(type));              \
             if (system_is_little_endian()) {                    \
-                _le = *_hdr_conv;                               \
-                _be = bs_func(*_hdr_conv);                      \
+                _le = _hdr_conv;                                \
+                _be = bs_func(_hdr_conv);                       \
             } else {                                            \
-                _le = bs_func(*_hdr_conv);                      \
-                _be = *_hdr_conv;                               \
+                _le = bs_func(_hdr_conv);                       \
+                _be = _hdr_conv;                                \
             }                                                   \
             printf("%.*s,%zu,%" fmt ",%" fmt "\n",              \
                    (int)strlen(hdr) - 2, hdr, sizeof(type),     \
