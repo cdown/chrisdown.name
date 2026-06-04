@@ -33,13 +33,6 @@ Mono][]. These are stored locally in WOFF2.
 [Open Sans]: http://www.google.com/fonts/specimen/Open+Sans
 [Droid Sans Mono]: http://www.google.com/fonts/specimen/Droid+Sans+Mono
 
-## Testing
-
-[![Build status][travis-image]][travis-builds]
-
-[travis-builds]: https://travis-ci.org/cdown/chrisdown.name
-[travis-image]: https://travis-ci.org/cdown/chrisdown.name.png?branch=master
-
 ## License
 
 Since this repository contains part code and part content, the contents is
