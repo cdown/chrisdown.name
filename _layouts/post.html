@@ -28,7 +28,6 @@ layout: default
 {% assign published_day = page.date | date: "%Y-%m-%d" %}
 {% assign modified_day = page.last_modified_at | default: page.date | date: "%Y-%m-%d" %}
 <p class="post-meta">
-  {{ site.personal.name }} &middot;
   {% if page.lang == "ja" %}公開{% else %}Published{% endif %}
   <time datetime="{{ page.date | date_to_xmlschema }}">{{ published_day }}</time>
   {% if modified_day != published_day %}
