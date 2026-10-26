@@ -24,6 +24,15 @@ Outside of that, I dabble in
 [photography](https://chrisdown.photo/),
 [birding](/birds/), and [sim racing](/racing.html).
 
+## Recent writing
+
+{% assign recent_posts = site.posts | where_exp: "post", "post.hidden != true" %}
+<ul>
+{% for post in recent_posts limit:3 %}
+  <li><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time> &mdash; <a href="{{ post.url }}">{{ post.title | escape }}</a></li>
+{% endfor %}
+</ul>
+
 ## Popular articles
 
 - [In defence of swap: common misconceptions](/2018/01/02/in-defence-of-swap.html)
