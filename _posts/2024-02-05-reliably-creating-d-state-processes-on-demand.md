@@ -97,6 +97,8 @@ a container engine.
 {% sidenote %}
 {% mermaid %}
 sequenceDiagram
+    accTitle: Container shutdown blocked by a D state process
+    accDescr: A process waiting for DMA cannot react to TERM or KILL signals, leaving the container engine waiting for it to terminate.
     participant CE as Container Engine
     participant P as Process
     participant K as Kernel
@@ -231,6 +233,8 @@ the following:
 {% mermaid %}
 {% raw %}
 graph TD
+    accTitle: Controlling a D state parent with vfork
+    accDescr: The parent waits in D state while its child pauses. Sending a terminal signal to the child kills it, releases the parent from D state and lets both exit.
     start[Program started] --> vfork
     subgraph parent[" "]
         vfork["vfork()"]

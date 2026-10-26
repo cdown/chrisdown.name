@@ -95,7 +95,11 @@ aside {
 }
 .mermaid {
     margin: auto;
-    display: inline;
+    display: block;
+}
+.mermaid svg {
+    max-width: 100%;
+    height: auto;
 }
 .non-sidenote-only {
     /* May be a div or span */

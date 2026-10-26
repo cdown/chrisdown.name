@@ -14,6 +14,9 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
 {% endif %}
 <html lang="{{ page.lang | default: "en" }}">
   <head>
+{% if page.mermaid_styles %}
+<style>{{ page.mermaid_styles | join: "\n" }}</style>
+{% endif %}
     <meta charset="utf-8">
     <title>{{ page.title }}</title>
     {% if page.description %}

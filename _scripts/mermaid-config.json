@@ -1,0 +1,12 @@
+{
+  "theme": "default",
+  "look": "classic",
+  "themeVariables": {
+    "fontFamily": "\"Open Sans\", sans-serif",
+    "clusterBkg": "#fff5ad",
+    "clusterBorder": "#aaaa33",
+    "edgeLabelBackground": "#fff5ad"
+  },
+  "deterministicIds": true,
+  "flowchart": { "htmlLabels": true }
+}

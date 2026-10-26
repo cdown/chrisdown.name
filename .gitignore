@@ -1,6 +1,4 @@
 /_deploy
 .jekyll-cache/
-package-lock.json
-package.json
 node_modules/
 __pycache__/
