@@ -23,10 +23,12 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
     <meta name="description" content="{{ page.description | escape_once }}">
     {% endif %}
     <meta name="viewport" content="width=device-width">
+    <link rel="preload" crossorigin as="font" type="font/woff2" href="/fonts/open-sans.woff2">
+    <link rel="preload" crossorigin as="font" type="font/woff2" href="/fonts/fontawesome-stripped.woff2">
     <link rel="canonical" href="{{ page.url | replace: '/index.html', '/' | absolute_url | escape }}">
 
     {% if page.id %}{% comment %} This is a post, which is likely to use mono {% endcomment %}
-    <link rel="preload" crossorigin as="font" href="/fonts/droid-sans-mono.woff2">
+    <link rel="preload" crossorigin as="font" type="font/woff2" href="/fonts/droid-sans-mono.woff2">
     {% endif %}
 
     <link rel="stylesheet" href="/css/style.css?{{ site.data["gitrev"] }}">
