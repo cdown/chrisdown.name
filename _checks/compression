@@ -1,0 +1,81 @@
+#!/usr/bin/env python3
+"""Check content negotiation and decoded response equality at the CDN."""
+
+import hashlib
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+
+
+def fetch(url, accept_encoding):
+    with tempfile.TemporaryDirectory() as directory:
+        headers = Path(directory) / "headers"
+        body = Path(directory) / "body"
+        subprocess.run([
+            "curl", "--silent", "--show-error", "--fail", "--compressed",
+            "--connect-timeout", "10", "--max-time", "60",
+            "--header", f"Accept-Encoding: {accept_encoding}",
+            "--dump-header", str(headers), "--output", str(body), url,
+        ], check=True)
+        # Ignore intermediate proxy/100 responses and use the final block.
+        response = headers.read_text().strip().split("\n\n")[-1].splitlines()
+        status = int(response[0].split()[1])
+        if status != 200:
+            raise RuntimeError(f"{url}: expected 200, got {status}")
+        fields = {}
+        for line in response[1:]:
+            name, value = line.split(":", 1)
+            fields[name.lower()] = value.strip()
+        return fields, body.read_bytes()
+
+
+def main():
+    urls = sys.argv[1:] or [
+        "https://chrisdown.name/",
+        "https://chrisdown.name/css/style.css",
+        "https://chrisdown.name/js/animation.js",
+        "https://chrisdown.name/feed.xml",
+    ]
+    observed = set()
+    cases = [
+        ("identity", set()),
+        ("", set()),
+        ("deflate", set()),
+        ("gzip;q=0, br;q=0", set()),
+        ("gzip", {"gzip"}),
+        ("br", {"br"}),
+        ("gzip, br", {"gzip", "br"}),
+    ]
+    for url in urls:
+        expected = None
+        content_type = None
+        for requested, allowed in cases:
+            headers, body = fetch(url, requested)
+            encoding = headers.get("content-encoding", "")
+            if encoding and encoding not in allowed:
+                raise RuntimeError(
+                    f"{url}: requested {requested or '(absent)'}, got {encoding}")
+            if not encoding and body.startswith(b"\x1f\x8b"):
+                raise RuntimeError(f"{url}: gzip body without Content-Encoding")
+            if expected is None:
+                expected = body
+                content_type = headers.get("content-type")
+            if body != expected:
+                raise RuntimeError(f"{url}: decoded content differs for {requested}")
+            if headers.get("content-type") != content_type:
+                raise RuntimeError(f"{url}: Content-Type differs for {requested}")
+            observed.add(encoding)
+            print(f"{url} accept={requested or '(absent)'} "
+                  f"encoding={encoding or 'identity'} decoded={len(body)} "
+                  f"sha256={hashlib.sha256(body).hexdigest()}", flush=True)
+    # Small/ineligible objects may be plain, but the suite must demonstrate
+    # that both compressed formats actually work on at least one URL.
+    missing = {"gzip", "br"} - observed
+    if missing:
+        raise RuntimeError(f"No compressed response observed for: {sorted(missing)}")
+    print(f"PASS: {len(urls)} URLs, {len(cases)} encoding requests each")
+
+
+if __name__ == "__main__":
+    main()

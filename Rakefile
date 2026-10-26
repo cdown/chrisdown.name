@@ -3,7 +3,6 @@ require 'fileutils'
 
 task :default => [:deploy]
 
-gzip_hdr = "Content-Encoding: gzip"
 cc_hdr = "Cache-Control: public, max-age=%d"
 
 # With charset
@@ -23,14 +22,6 @@ static_includes = ""
   static_includes += " --include '#{path}' "
   generic_excludes += " --exclude '#{path}' "
 end
-
-gzip_includes = ""
-find_names_arr = []
-["*.html", "*.css", "*.js"].each do |path|
-  gzip_includes += " --include '#{path}' "
-  find_names_arr.push("-name '#{path}'")
-end
-find_names = '\( ' + find_names_arr.join(" -or ") + ' \)'
 
 # 5 minutes for posts written in the last day, as updates may be more
 # frequent
@@ -99,14 +90,11 @@ task :create_local_redirects => :build do
 end
 
 task :sync => :build do
-  # First pass for gzipped content only, second will leave them alone
-  sh "s3cmd sync --no-mime-magic --no-preserve --verbose --add-header='#{gzip_hdr}' --exclude '*' #{gzip_includes} _deploy/ s3://chrisdown.name"
+  # Store plain files at the origin; CloudFront negotiates compression.
   sh "s3cmd sync --no-mime-magic --no-preserve --delete-removed --verbose --add-header='#{generic_cc}' _deploy/ s3://chrisdown.name"
 end
 
 task :set_headers => :sync do
-  # gzip header might not be there the very first time, since --add-header in sync will only update new files
-  sh "s3cmd modify --recursive --exclude '*' #{gzip_includes} --add-header='#{gzip_hdr}' s3://chrisdown.name"
   sh "s3cmd modify --recursive #{generic_excludes} --add-header='#{generic_cc}' s3://chrisdown.name"
   sh "s3cmd modify --recursive --exclude '*' #{this_week_post_includes} --add-header='#{this_week_post_cc}' s3://chrisdown.name"
   sh "s3cmd modify --recursive --exclude '*' #{static_includes} --add-header='#{static_cc}' s3://chrisdown.name"
@@ -129,7 +117,7 @@ end
 
 task :deploy => [:create_local_redirects, :sync, :set_headers, :setup_redirects]
 
-task :build => [:build_raw, :check, :gzip]
+task :build => [:build_raw, :check]
 
 task :check => :build_raw do
   sh "_checks/tidy"
@@ -143,8 +131,9 @@ task :check => :build_raw do
   sh "! grep -IFR '][]' _deploy/"
 end
 
-task :gzip => :build_raw do
-  sh "find _deploy/ -type f #{find_names}" + ' -exec gzip -n -9 {} \; -exec mv {}.gz {} \;'
+desc "Check compression negotiation on the live site"
+task :check_compression do
+  sh "_checks/compression"
 end
 
 task :build_raw do
