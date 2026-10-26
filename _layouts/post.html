@@ -24,6 +24,20 @@ layout: default
 </script>
 <h1>{{ page.title }}</h1>
 
+{% if page.date %}
+{% assign published_day = page.date | date: "%Y-%m-%d" %}
+{% assign modified_day = page.last_modified_at | default: page.date | date: "%Y-%m-%d" %}
+<p class="post-meta">
+  {{ site.personal.name }} &middot;
+  {% if page.lang == "ja" %}公開{% else %}Published{% endif %}
+  <time datetime="{{ page.date | date_to_xmlschema }}">{{ published_day }}</time>
+  {% if modified_day != published_day %}
+  &middot; {% if page.lang == "ja" %}更新{% else %}Updated{% endif %}
+  <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ modified_day }}</time>
+  {% endif %}
+</p>
+{% endif %}
+
 {% if page.hidden %}
 <b>Note: this page is hidden from the main index, likely because it is out of
 date. Please bear that in mind while reading.</b>
