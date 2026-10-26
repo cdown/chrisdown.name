@@ -26,6 +26,7 @@ TYPES = {
     '.json': 'application/json; charset=utf-8',
     '.xml': 'application/xml; charset=utf-8', '.txt': 'text/plain; charset=utf-8',
     '.woff2': 'font/woff2',
+    '.avif': 'image/avif', '.webp': 'image/webp',
 }
 FINGERPRINT = re.compile(r'assets/([0-9a-f]{64})-[^/]+\.(?:css|js|woff2|webp|avif)\Z')
 

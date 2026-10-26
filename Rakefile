@@ -78,5 +78,6 @@ task :build_raw do
   # output as input on the next build; retain .jekyll-cache for costly renders.
   FileUtils.rm_rf('_deploy')
   sh "JEKYLL_ENV=production jekyll build"
+  sh 'python3', '_scripts/optimise_media.py'
   sh 'python3', '_scripts/fingerprint.py'
 end

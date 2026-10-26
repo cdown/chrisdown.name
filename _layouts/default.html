@@ -32,6 +32,9 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
     {% endif %}
 
     <link rel="stylesheet" href="/css/style.css">
+    {% if page.video_facades %}
+    <script defer src="/js/media.js"></script>
+    {% endif %}
     {% if page.flags_css %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flagpack@1.0.5/dist/flagpack.css">
     {% endif %}
@@ -171,10 +174,14 @@ https://github.com/cdown/chrisdown.name/blob/master/LICENSE
             if (img.className.includes('leaflet-marker-icon')) {
                 return;
             }
+            if (img.closest('a')) {
+                return;
+            }
+            const media = img.closest('picture') || img;
             const a = document.createElement('a');
             a.href = img.src;
-            img.parentNode.replaceChild(a, img);
-            a.appendChild(img);
+            media.parentNode.replaceChild(a, media);
+            a.appendChild(media);
         });
     </script>
     </div>

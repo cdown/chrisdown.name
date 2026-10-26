@@ -207,6 +207,13 @@ class DeploymentTests(unittest.TestCase):
         self.assertEqual('font/woff2', self.client.objects[key]['ContentType'])
         self.assertEqual('public, max-age=31536000, immutable', self.client.objects[key]['CacheControl'])
 
+    def test_photo_derivatives_have_explicit_mime_types(self):
+        for extension in ('avif', 'webp'):
+            key = self.asset(b'encoded image', f'photo.{extension}')
+            self.run_deploy()
+            self.assertEqual(f'image/{extension}', self.client.objects[key]['ContentType'])
+            self.assertEqual('public, max-age=31536000, immutable', self.client.objects[key]['CacheControl'])
+
     def test_new_upload_has_final_headers_without_later_copy(self):
         self.file('feed.xml')
         self.file('.well-known/traffic-advice')

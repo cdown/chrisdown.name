@@ -1,3 +1,5 @@
+require 'uri'
+
 class FbVideo < Liquid::Tag
   Syntax = /^\s*([^\s]+)(\s+(\d+)\s+(\d+)\s*)?/
 
@@ -12,10 +14,15 @@ class FbVideo < Liquid::Tag
   end
 
   def render(context)
-    "<div class=\"youtube-container\">
-         <iframe allowfullscreen=\"allowfullscreen\"
-          src=\"#{@url}\"> </iframe>
-     </div>"
+    uri = URI.parse(@url)
+    unless uri.scheme == 'https' && uri.host == 'www.facebook.com' && uri.path == '/plugins/video.php'
+      raise 'Invalid Facebook video embed URL'
+    end
+    watch = URI.decode_www_form(uri.query || '').to_h['href']
+    unless watch&.start_with?('https://www.facebook.com/')
+      raise 'Missing Facebook video watch URL'
+    end
+    VideoFacade.render(context, @url, watch, 'Facebook')
   end
 
   Liquid::Template.register_tag "fbvideo", self
