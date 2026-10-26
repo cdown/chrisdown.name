@@ -1,71 +1,20 @@
-require 'date'
+require 'json'
 require 'fileutils'
 
 task :default => [:deploy]
 
-cc_hdr = "Cache-Control: public, max-age=%d"
-
-# With charset
-html_hdr = "Content-Type: text/html; charset=utf-8"
-css_hdr = "Content-Type: text/css; charset=utf-8"
-ta_hdr = "Content-Type: application/trafficadvice+json; charset=utf-8"
-rss_hdr = "Content-Type: application/rss+xml; charset=utf-8"
-
-# 1 hour for anything unspecified
-generic_cc = cc_hdr % (60 * 60)
-generic_excludes = ""
-
-# 24 hours for static content
-static_cc = cc_hdr % (24 * 60 * 60)
-static_includes = ""
-["css/*", "images/*", "fonts/*", "photos/*", "talks/*"].each do |path|
-  static_includes += " --include '#{path}' "
-  generic_excludes += " --exclude '#{path}' "
-end
-
-# 5 minutes for posts written in the last day, as updates may be more
-# frequent
-this_week_post_cc = cc_hdr % (5 * 60)
-this_week_post_includes = ""
-(Date.today-1..Date.today).map do |date|
-  date_glob = date.strftime("%Y/%m/%d") + "/*"
-  this_week_post_includes += " --include '#{date_glob}' "
-  generic_excludes += " --exclude '#{date_glob}' "
-end
-
-# HACK: s3cmd modify returns 1 if there was nothing matched, what? This will
-# get overwritten by the next step, but ugh...
-this_week_post_includes += " --include 404.html "
-
-# Cache 404s for 2 minutes, since if something is broken we want to fix it
-# fast, but a mass storm to S3 backend should still be avoided
-enoent_cc = cc_hdr % (2 * 60)
-generic_excludes += " --exclude 404.html "
-
-# These files must exist to avoid being deleted by --delete-removed
-redirects = {
-  "swap" => "/2018/01/02/in-defence-of-swap.html",
-  "swap-ja" => "/ja/2018/01/02/in-defence-of-swap.html",
-  "ssl" => "/2016/02/17/lessons-learned-running-ssl-at-scale.html",
-  "srt" => "/2016/09/04/cleaning-up-muxing-extracting-subtitles-using-ffmpeg-srt-tools.html",
-  "cgroupv2" => "/2017/03/01/cgroupv2-linux-new-cgroup-hierarchy.html",
-  "squashfs" => "/2018/04/17/kernel-adventures-the-curious-case-of-squashfs-stalls.html",
-  "lmmas" => "/2019/07/18/linux-memory-management-at-scale.html",
-  "numbers" => "/2020/01/13/1195725856-and-friends-the-origins-of-mysterious-numbers.html",
-  "1195725856" => "/2020/01/13/1195725856-and-friends-the-origins-of-mysterious-numbers.html",
-  "tmpfs" => "/2021/07/02/tmpfs-inode-corruption-introducing-inode64.html",
-  "2020/01/13/1195725856-other-mysterious-numbers.html" => "/2020/01/13/1195725856-and-friends-the-origins-of-mysterious-numbers.html",
-
-  # Used on Reddit many moons ago...
-  "images/hccr.jpg" => "https://live.staticflickr.com/65535/54094892569_2219377b75_o.jpg",
-
-  # Frequent 404s
-  "feed" => "/feed.xml",
-  "rss" => "/feed.xml",
-  "feeds" => "/feed.xml",
-}
+redirects = JSON.parse(File.read('redirects.json'))
 
 task :create_local_redirects => :build do
+  # Reject unsafe redirect sources before writing any stubs.
+  redirects.each do |from, to|
+    if from.start_with?('/') || from.include?('\\') || from.split('/', -1).any? { |part| ['', '.', '..'].include?(part) }
+      raise "Invalid redirect source: #{from}"
+    end
+    if to.include?("\r") || to.include?("\n")
+      raise "Invalid redirect target: #{to}"
+    end
+  end
   redirects.each do |from, to|
     loc = "_deploy/" + from
     if File.exist?(loc)
@@ -89,33 +38,21 @@ task :create_local_redirects => :build do
   end
 end
 
-task :sync => :build do
-  # Store plain files at the origin; CloudFront negotiates compression.
-  sh "s3cmd sync --no-mime-magic --no-preserve --delete-removed --verbose --add-header='#{generic_cc}' _deploy/ s3://chrisdown.name"
+task :sync => :create_local_redirects do
+  sh 'python3', '_scripts/deploy.py'
 end
 
-task :set_headers => :sync do
-  sh "s3cmd modify --recursive #{generic_excludes} --add-header='#{generic_cc}' s3://chrisdown.name"
-  sh "s3cmd modify --recursive --exclude '*' #{this_week_post_includes} --add-header='#{this_week_post_cc}' s3://chrisdown.name"
-  sh "s3cmd modify --recursive --exclude '*' #{static_includes} --add-header='#{static_cc}' s3://chrisdown.name"
-  sh "s3cmd modify --add-header='#{enoent_cc}' s3://chrisdown.name/404.html"
+task :deploy => :sync
 
-  sh "s3cmd modify --recursive --exclude '*' --include '*.html' --add-header='#{html_hdr}' s3://chrisdown.name"
-  sh "s3cmd modify --recursive --exclude '*' --include '*.css' --add-header='#{css_hdr}' s3://chrisdown.name"
-  sh "s3cmd modify --add-header='#{ta_hdr}' s3://chrisdown.name/.well-known/traffic-advice"
-  sh "s3cmd modify --add-header='#{rss_hdr}' s3://chrisdown.name/feed.xml"
+desc "Preview content and metadata changes without writing to S3"
+task :deploy_dry_run => :create_local_redirects do
+  sh 'python3', '_scripts/deploy.py', '--dry-run'
 end
 
-task :setup_redirects do
-  redirects.each do |from, to|
-    if File.extname(from).empty?
-      from = "#{from}/index.html"
-    end
-    sh "s3cmd modify s3://chrisdown.name/#{from} --add-header='x-amz-website-redirect-location:#{to}'"
-  end
+desc "Test deployment reconciliation and edge cases without AWS access"
+task :check_deploy do
+  sh 'python3', '-m', 'unittest', 'discover', '-s', '_checks', '-p', 'test_deploy.py', '-v'
 end
-
-task :deploy => [:create_local_redirects, :sync, :set_headers, :setup_redirects]
 
 task :build => [:build_raw, :check]
 

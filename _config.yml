@@ -26,6 +26,7 @@ exclude:
   - package.json
   - package-lock.json
   - _checks
+  - _scripts
   - .clang-format
   - birds/lifers.py
 

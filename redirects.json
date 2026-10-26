@@ -1,0 +1,17 @@
+{
+  "swap": "/2018/01/02/in-defence-of-swap.html",
+  "swap-ja": "/ja/2018/01/02/in-defence-of-swap.html",
+  "ssl": "/2016/02/17/lessons-learned-running-ssl-at-scale.html",
+  "srt": "/2016/09/04/cleaning-up-muxing-extracting-subtitles-using-ffmpeg-srt-tools.html",
+  "cgroupv2": "/2017/03/01/cgroupv2-linux-new-cgroup-hierarchy.html",
+  "squashfs": "/2018/04/17/kernel-adventures-the-curious-case-of-squashfs-stalls.html",
+  "lmmas": "/2019/07/18/linux-memory-management-at-scale.html",
+  "numbers": "/2020/01/13/1195725856-and-friends-the-origins-of-mysterious-numbers.html",
+  "1195725856": "/2020/01/13/1195725856-and-friends-the-origins-of-mysterious-numbers.html",
+  "tmpfs": "/2021/07/02/tmpfs-inode-corruption-introducing-inode64.html",
+  "2020/01/13/1195725856-other-mysterious-numbers.html": "/2020/01/13/1195725856-and-friends-the-origins-of-mysterious-numbers.html",
+  "images/hccr.jpg": "https://live.staticflickr.com/65535/54094892569_2219377b75_o.jpg",
+  "feed": "/feed.xml",
+  "rss": "/feed.xml",
+  "feeds": "/feed.xml"
+}
