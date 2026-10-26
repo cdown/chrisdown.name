@@ -28,41 +28,42 @@
 .font-awesome-github:before { content: '\f113'; } /* '' */
 .font-awesome-stackoverflow:before { content: '\f16c'; } /* '' */
 
-/* Keep fonts separately cacheable from the stylesheet. */
+/* Keep fonts separately cacheable from the stylesheet. Wait briefly for the
+   intended face before showing text, with a fallback if loading stalls. */
 @font-face {
   font-family: 'Droid Sans Mono';
   font-style: normal;
   font-weight: 400;
   src: local('Droid Sans Mono'), local('DroidSansMono'), url(/fonts/droid-sans-mono.woff2) format('woff2');
-  font-display: fallback;
+  font-display: block;
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
   src: local('Open Sans'), local('OpenSans'), url(/fonts/open-sans.woff2) format('woff2');
-  font-display: fallback;
+  font-display: block;
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 700;
   src: local('Open Sans Bold'), local('OpenSans-Bold'), url(/fonts/open-sans-bold.woff2) format('woff2');
-  font-display: fallback;
+  font-display: block;
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 400;
   src: local('Open Sans Italic'), local('OpenSans-Italic'), url(/fonts/open-sans-italic.woff2) format('woff2');
-  font-display: fallback;
+  font-display: block;
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 700;
   src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url(/fonts/open-sans-bold-italic.woff2) format('woff2');
-  font-display: fallback;
+  font-display: block;
 }
 
 html {
