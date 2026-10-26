@@ -13,6 +13,7 @@ personal:
     account: chris
 
 exclude:
+  - .build
   - Gemfile
   - Gemfile.lock
   - LICENSE

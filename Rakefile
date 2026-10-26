@@ -1,6 +1,15 @@
 require 'json'
 require 'fileutils'
 
+def site_python(*args)
+  sh 'python3', '-I', '_scripts/python_env.py', *args
+end
+
+desc "Prepare the private Python environment (installs dependencies on first use)"
+task :python_env do
+  site_python '--prepare'
+end
+
 task :default => [:deploy]
 
 redirects = JSON.parse(File.read('redirects.json'))
@@ -39,19 +48,24 @@ task :create_local_redirects => :build do
 end
 
 task :sync => :create_local_redirects do
-  sh 'python3', '_scripts/deploy.py'
+  site_python '_scripts/deploy.py'
 end
 
 task :deploy => :sync
 
 desc "Preview content and metadata changes without writing to S3"
 task :deploy_dry_run => :create_local_redirects do
-  sh 'python3', '_scripts/deploy.py', '--dry-run'
+  site_python '_scripts/deploy.py', '--dry-run'
 end
 
 desc "Test deployment reconciliation and edge cases without AWS access"
-task :check_deploy do
-  sh 'python3', '-m', 'unittest', 'discover', '-s', '_checks', '-p', 'test_deploy.py', '-v'
+task :check_deploy => :python_env do
+  site_python '-m', 'unittest', 'discover', '-s', '_checks', '-p', 'test_deploy.py', '-v'
+end
+
+desc "Test Python environment, media, asset and deployment edge cases without AWS access"
+task :check_python => :python_env do
+  site_python '-m', 'unittest', 'discover', '-s', '_checks', '-p', 'test_*.py', '-v'
 end
 
 task :build => [:build_raw, :check]
@@ -73,11 +87,11 @@ task :check_compression do
   sh "_checks/compression"
 end
 
-task :build_raw do
+task :build_raw => :python_env do
   # Postprocessors change copied static HTML too. Do not let Jekyll reuse that
   # output as input on the next build; retain .jekyll-cache for costly renders.
   FileUtils.rm_rf('_deploy')
   sh "JEKYLL_ENV=production jekyll build"
-  sh 'python3', '_scripts/optimise_media.py'
-  sh 'python3', '_scripts/fingerprint.py'
+  site_python '_scripts/optimise_media.py'
+  site_python '_scripts/fingerprint.py'
 end
