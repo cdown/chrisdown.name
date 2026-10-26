@@ -41,7 +41,8 @@ Outside of that, I dabble in
 - [Linux memory management at scale](/2019/07/18/linux-memory-management-at-scale.html)
 - [Controllable D state (uninterruptible sleep) processes](/2024/02/05/reliably-creating-d-state-processes-on-demand.html)
 
-More posts are available on the [archive page](/archive.html).
+More posts are available on the [archive page](/archive.html). You can
+[subscribe via RSS](/feed.xml) to follow new writing.
 
 ## Software
 

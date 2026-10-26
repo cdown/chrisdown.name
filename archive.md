@@ -6,6 +6,8 @@ description: Recent articles by Chris Down on Linux and other technologies.
 
 # Articles
 
+You can [subscribe via RSS](/feed.xml) to follow new articles.
+
 {% assign posts = site.posts %}
 
 <table class="light tworight">
