@@ -139,6 +139,74 @@ class DeploymentTests(unittest.TestCase):
         self.run_deploy(redirects, **kwargs)
         self.client.calls.clear()
 
+    def asset(self, body=b'body{}', name='style.css'):
+        key = f'assets/{hashlib.sha256(body).hexdigest()}-{name}'
+        self.file(key, body)
+        return key
+
+    def test_fingerprinted_assets_have_immutable_headers_and_precede_html(self):
+        key = self.asset()
+        self.file('2020/post.html')
+        self.run_deploy()
+        self.assertEqual('public, max-age=31536000, immutable', self.client.objects[key]['CacheControl'])
+        self.assertEqual('text/css; charset=utf-8', self.client.objects[key]['ContentType'])
+        writes = self.client.writes()
+        self.assertLess(writes.index(('put', key)), writes.index(('put', '2020/post.html')))
+        self.assertLess(writes.index(('put', key)), writes.index(('put', 'index.html')))
+
+    def test_old_fingerprints_are_retained_with_prefix_but_old_pages_are_removed(self):
+        old = self.asset()
+        self.file('old.html')
+        self.deploy_once(prefix='preview/')
+        (self.root / old).unlink()
+        (self.root / 'old.html').unlink()
+        new = self.asset(b'body{color:red}')
+        result = self.run_deploy(prefix='preview/')
+        self.assertIn('preview/' + old, self.client.objects)
+        self.assertIn('preview/' + new, self.client.objects)
+        self.assertNotIn('preview/old.html', self.client.objects)
+        self.assertEqual(1, result['delete'])
+
+    def test_bad_fingerprint_or_unversioned_asset_fails_before_s3_access(self):
+        key = self.asset()
+        self.file(key, b'changed')
+        with self.assertRaisesRegex(ValueError, 'does not match content'):
+            self.run_deploy()
+        self.assertEqual([], self.client.calls)
+        (self.root / key).unlink()
+        self.file('assets/style.css')
+        with self.assertRaisesRegex(ValueError, 'Invalid fingerprinted asset name'):
+            self.run_deploy()
+        self.assertEqual([], self.client.calls)
+
+    def test_existing_immutable_asset_is_never_overwritten(self):
+        key = self.asset()
+        self.client.seed(key, b'different bytes')
+        with self.assertRaisesRegex(ValueError, 'Refusing to overwrite immutable asset'):
+            self.run_deploy()
+        self.assertEqual([], self.client.writes())
+
+    def test_failed_asset_upload_leaves_html_and_stale_pages_untouched(self):
+        key = self.asset()
+        self.file('2020/post.html')
+        self.client.seed('stale.html')
+        self.client.fail_write = key
+        with self.assertRaises(RuntimeError):
+            self.run_deploy()
+        self.assertNotIn('index.html', self.client.objects)
+        self.assertNotIn('2020/post.html', self.client.objects)
+        self.assertIn('stale.html', self.client.objects)
+
+    def test_immutable_metadata_can_be_repaired_without_changing_bytes(self):
+        key = self.asset(b'font', 'font.woff2')
+        self.deploy_once()
+        self.client.objects[key]['CacheControl'] = 'max-age=0'
+        result = self.run_deploy()
+        self.assertEqual(1, result['metadata'])
+        self.assertEqual([('copy', key)], self.client.writes())
+        self.assertEqual('font/woff2', self.client.objects[key]['ContentType'])
+        self.assertEqual('public, max-age=31536000, immutable', self.client.objects[key]['CacheControl'])
+
     def test_new_upload_has_final_headers_without_later_copy(self):
         self.file('feed.xml')
         self.file('.well-known/traffic-advice')

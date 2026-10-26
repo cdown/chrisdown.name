@@ -27,6 +27,7 @@ TYPES = {
     '.xml': 'application/xml; charset=utf-8', '.txt': 'text/plain; charset=utf-8',
     '.woff2': 'font/woff2',
 }
+FINGERPRINT = re.compile(r'assets/([0-9a-f]{64})-[^/]+\.(?:css|js|woff2|webp|avif)\Z')
 
 
 def safe_key(key):
@@ -59,7 +60,9 @@ def headers_for(key, redirects, today):
         content_type = 'application/rss+xml; charset=utf-8'
     if key == '.well-known/traffic-advice':
         content_type = 'application/trafficadvice+json; charset=utf-8'
-    return {'ContentType': content_type, 'CacheControl': f'public, max-age={lifetime}',
+    cache_control = ('public, max-age=31536000, immutable' if FINGERPRINT.fullmatch(key)
+                     else f'public, max-age={lifetime}')
+    return {'ContentType': content_type, 'CacheControl': cache_control,
             'ContentEncoding': None, 'WebsiteRedirectLocation': redirects.get(key)}
 
 
@@ -94,6 +97,13 @@ def local_objects(root, redirects, today):
             for chunk in iter(lambda: stream.read(1024 * 1024), b''):
                 digest.update(chunk)
         size = path.stat().st_size
+        fingerprint = FINGERPRINT.fullmatch(key)
+        if key.startswith('assets/') and not fingerprint:
+            raise ValueError(f'Invalid fingerprinted asset name: {key}')
+        if fingerprint:
+            with path.open('rb') as stream:
+                if hashlib.file_digest(stream, 'sha256').hexdigest() != fingerprint[1]:
+                    raise ValueError(f'Fingerprint does not match content: {key}')
         if size > 5 * 1024 ** 3:
             raise ValueError(f'Object exceeds single-PUT limit: {key}')
         result.append(LocalObject(key, path, size, digest.hexdigest(), headers_for(key, redirects, today)))
@@ -168,6 +178,8 @@ def reconcile(client, root, redirects, bucket='chrisdown.name', prefix='', today
         # Read real metadata on every deployment, including unchanged bodies.
         remote = client.head_object(Bucket=bucket, Key=key)
         if not same_content(client, bucket, key, remote, obj):
+            if FINGERPRINT.fullmatch(obj.key):
+                raise ValueError(f'Refusing to overwrite immutable asset: {key}')
             return ('upload', obj, remote)
         matches = all((remote.get(name) or None) == value for name, value in obj.headers.items())
         matches = matches and remote.get('Metadata', {}) == user_metadata(remote, obj)
@@ -178,7 +190,9 @@ def reconcile(client, root, redirects, bucket='chrisdown.name', prefix='', today
         counts = {name: sum(action[0] == name for action in actions)
                   for name in ('upload', 'metadata', 'unchanged')}
         wanted = {prefix + obj.key for obj in objects}
-        stale = [obj for key, obj in remote_objects.items() if key not in wanted]
+        # Older HTML (browser/CDN caches, open tabs) can still refer to these.
+        stale = [obj for key, obj in remote_objects.items()
+                 if key not in wanted and not FINGERPRINT.fullmatch(key[len(prefix):])]
         counts['delete'] = len(stale)
         output_lock = Lock()
 
@@ -216,7 +230,9 @@ def reconcile(client, root, redirects, bucket='chrisdown.name', prefix='', today
                                       ContentMD5=base64.b64encode(bytes.fromhex(obj.md5)).decode())
 
         # Finish all writes successfully before considering any deletions.
-        list(pool.map(apply, actions))
+        # New HTML must never become visible before its dependencies exist.
+        list(pool.map(apply, [action for action in actions if FINGERPRINT.fullmatch(action[1].key)]))
+        list(pool.map(apply, [action for action in actions if not FINGERPRINT.fullmatch(action[1].key)]))
 
         def delete(obj):
             log(f'{"Would " if dry_run else ""}delete: {obj["Key"]}')
