@@ -482,7 +482,7 @@ table.light th, table.light td {
 table.tworight td:nth-child(2) {
     padding-left: 0.5em;
     text-align: right;
-    opacity: 50%;
+    color: #555;
 }
 
 table.twowrap td:nth-child(1) {
