@@ -106,6 +106,7 @@ list, I'm probably not actively developing or maintaining them.
 - [Flickr](https://www.flickr.com/photos/chrisdown/albums/72157711447135721)
 - [GitHub][]
 - [Keybase](https://keybase.io/cdown)
+- [Keyoxide](https://keyoxide.org/084929ACFBC23B0B1A26A841DF8D21B616118070)
 - [last.fm][]
 - [LinkedIn](https://www.linkedin.com/in/chrisldown)
 - <a rel="me" href="https://fosstodon.org/@cdown">Mastodon</a>
@@ -142,6 +143,7 @@ list, I'm probably not actively developing or maintaining them.
     "https://fosstodon.org/@cdown",
     "https://unix.stackexchange.com/users/10762/chris-down",
     "https://keybase.io/cdown",
+    "https://keyoxide.org/084929ACFBC23B0B1A26A841DF8D21B616118070",
     "https://twitter.com/unixchris"
   ],
   "image": "https://chrisdown.name/images/hnr.jpg",
