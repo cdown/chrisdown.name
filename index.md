@@ -72,8 +72,7 @@ including:
 | [zcfan](https://github.com/cdown/zcfan) | zero-configuration fan control for ThinkPad |
 | [zsh](https://www.zsh.org/) | modern Bourne-like shell |
 
-You can find other projects on my [GitHub][], although if they're not on this
-list, I'm probably not actively developing or maintaining them.
+You can find other projects on my [GitHub][].
 
 ## Selected talks
 
